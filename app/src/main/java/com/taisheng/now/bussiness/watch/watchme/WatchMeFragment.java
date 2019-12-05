@@ -104,7 +104,8 @@ public class WatchMeFragment extends BaseFragment {
         ll_chiyao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), WatchChiYaoListActivity.class);
+                startActivity(intent);
             }
         });
         ll_xinlv=rootView.findViewById(R.id.ll_xinlv);

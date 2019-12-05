@@ -13,15 +13,11 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.bean.post.UserInfoPostBean;
-import com.taisheng.now.bussiness.bean.result.ModifyUserInfoResultBean;
-import com.taisheng.now.bussiness.bean.result.UserInfo;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.util.SPUtil;
 import com.taisheng.now.util.ToastUtil;
 
 import retrofit2.Call;
@@ -31,7 +27,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class UpdateNickActivity extends BaseActivity {
+public class UpdateRelationShipActivity extends BaseActivity {
     View iv_back;
     EditText et_nickname;
     ImageView iv_nickname_guanbi;
@@ -40,7 +36,7 @@ public class UpdateNickActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_updatenickname);
+        setContentView(R.layout.activity_updaterelationship);
         initView();
     }
 
@@ -64,16 +60,16 @@ public class UpdateNickActivity extends BaseActivity {
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.relationShip = WatchInstance.getInstance().relationShip;
+                bean.deviceNickName = WatchInstance.getInstance().deviceNickName;
                 bean.headUrl = WatchInstance.getInstance().headUrl;
-                bean.deviceNickName = et_nickname.getText().toString();
+                bean.relationShip = et_nickname.getText().toString();
 
                 ApiUtils.getApiService().updateDeviceInfo(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                WatchInstance.getInstance().deviceNickName = bean.deviceNickName;
+                                WatchInstance.getInstance().relationShip = bean.relationShip;
                                 finish();
                                 break;
                         }
@@ -124,7 +120,7 @@ public class UpdateNickActivity extends BaseActivity {
 
             }
         });
-        et_nickname.setText(WatchInstance.getInstance().deviceNickName);
+        et_nickname.setText(WatchInstance.getInstance().relationShip);
         CharSequence text = et_nickname.getText();
         //Debug.asserts(text instanceof Spannable);
         if (text instanceof Spannable) {

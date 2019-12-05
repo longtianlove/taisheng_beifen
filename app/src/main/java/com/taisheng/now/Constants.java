@@ -164,6 +164,11 @@ public class Constants {
             //            手表预警记录-查询
             public static final String getWatchWarningAll = "jeecg-boot/app/watchWarning/getWatchWarningAll";
 
+
+            //更新昵称
+            public static final String updateDeviceInfo = "jeecg-boot/app/watchDevice/updateDeviceInfo";
+
+
         }
 
 

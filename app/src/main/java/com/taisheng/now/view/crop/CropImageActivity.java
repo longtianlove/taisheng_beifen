@@ -47,6 +47,7 @@ import com.taisheng.now.bussiness.me.FillInMessageActivity;
 import com.taisheng.now.bussiness.me.FillInMessageSecondActivity;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
+import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.Apputil;
@@ -153,6 +154,40 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
 
             @Override
             public void onFail(Call<BaseBean<ModifyUserInfoResultBean>> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
+    public void upLoadSucess(EventManage.uploadWatchImageSuccess event) {
+
+        UpdateWatchPostBean bean = new UpdateWatchPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.deviceId = WatchInstance.getInstance().deviceId;
+        bean.deviceNickName = WatchInstance.getInstance().deviceNickName;
+        bean.headUrl = event.path;
+        bean.relationShip = WatchInstance.getInstance().relationShip;
+
+        ApiUtils.getApiService().updateDeviceInfo(bean).enqueue(new TaiShengCallback<BaseBean>() {
+            @Override
+            public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        WatchInstance.getInstance().headUrl = bean.headUrl;
+                        finish();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean> call, Throwable t) {
 
             }
         });

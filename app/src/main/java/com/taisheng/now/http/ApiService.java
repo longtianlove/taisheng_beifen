@@ -97,6 +97,7 @@ import com.taisheng.now.bussiness.watch.bean.post.KaiGuanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.XinlvXueyaYujingPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
@@ -217,7 +218,8 @@ public interface ApiService {
     @POST(Constants.Url.Watch.getWatchWarningAll)
     Call<BaseBean<YujingResultBean>> getWatchWarningAll(@Body YuJingListPostBean bean);
 
-
+    @POST(Constants.Url.Watch.updateDeviceInfo)
+    Call<BaseBean> updateDeviceInfo(@Body UpdateWatchPostBean bean);
 
     /*
     App接口

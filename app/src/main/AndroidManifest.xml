@@ -444,6 +444,18 @@
         </activity>
 
 
+
+        <activity
+            android:name="com.taisheng.now.bussiness.watch.watchme.UpdateRelationShipActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+
+
+        </activity>
+
+
         <activity
             android:name="com.taisheng.now.bussiness.first.MoreShipinActivity"
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"

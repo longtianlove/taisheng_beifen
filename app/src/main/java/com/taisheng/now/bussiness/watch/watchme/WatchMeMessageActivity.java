@@ -58,6 +58,7 @@ public class WatchMeMessageActivity extends BaseActivity implements ActivityComp
     View ll_nickname;
     View ll_avatar;
     SimpleDraweeView sdv_header;
+    View ll_guanxi;
     TextView tv_relative;
     TextView tv_device_bianhao;
     TextView tv_nickname;
@@ -88,8 +89,15 @@ public class WatchMeMessageActivity extends BaseActivity implements ActivityComp
                 finish();
             }
         });
+        ll_guanxi=findViewById(R.id.ll_guanxi);
+        ll_guanxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(WatchMeMessageActivity.this,UpdateRelationShipActivity.class);
+                startActivity(intent);
+            }
+        });
         tv_relative = findViewById(R.id.tv_relative);
-        tv_relative.setText(WatchInstance.getInstance().relationShip);
 
 
         ll_avatar = findViewById(R.id.ll_avatar);
@@ -113,7 +121,6 @@ public class WatchMeMessageActivity extends BaseActivity implements ActivityComp
             }
         });
         tv_nickname = findViewById(R.id.tv_nickname);
-        tv_nickname.setText(WatchInstance.getInstance().deviceNickName);
 
         tv_realname = findViewById(R.id.tv_realname);
         tv_realname.setText(WatchInstance.getInstance().realName);
@@ -268,10 +275,13 @@ public class WatchMeMessageActivity extends BaseActivity implements ActivityComp
     @Override
     protected void onStart() {
         super.onStart();
-        if (UserInstance.getInstance().userInfo.avatar != null) {
-            Uri uri = Uri.parse(Constants.Url.File_Host + UserInstance.getInstance().userInfo.avatar);
+        if (WatchInstance.getInstance().headUrl != null) {
+            Uri uri = Uri.parse(Constants.Url.File_Host + WatchInstance.getInstance().headUrl );
             sdv_header.setImageURI(uri);
         }
+        tv_relative.setText(WatchInstance.getInstance().relationShip);
+        tv_nickname.setText(WatchInstance.getInstance().deviceNickName);
+
 
     }
 
@@ -281,7 +291,7 @@ public class WatchMeMessageActivity extends BaseActivity implements ActivityComp
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
-    public void uploadImageSuccess(EventManage.uploadImageSuccess event) {
+    public void uploadImageSuccess(EventManage.uploadWatchImageSuccess event) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Uri source = FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider", new File(Environment
                     .getExternalStorageDirectory(), "temp.jpg"));
