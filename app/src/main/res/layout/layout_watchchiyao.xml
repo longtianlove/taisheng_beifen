@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_shangchengtitle"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_shangchengtitle"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:paddingTop="10dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingRight="10dp"
+            android:src="@drawable/icon_back_new" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="新增闹钟"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="#f8f8f8" />
+
+
+    <RelativeLayout
+        android:id="@+id/all_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/date_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_item_alarm"
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="选择时间"
+                android:textColor="#fff"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line_and_outline_grey" />
+
+            <RelativeLayout
+                android:id="@+id/repeat_rl"
+                style="@style/item_style">
+
+                <TextView
+                    android:id="@+id/tv_repeat"
+                    style="@style/item_text_style"
+                    android:layout_alignParentLeft="true"
+                    android:text="重复" />
+
+                <TextView
+                    android:id="@+id/arrow_one"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@mipmap/ic_next_arrow"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_repeat_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/arrow_one"
+                    android:textColor="@color/black_33"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line_and_outline_grey" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:background="@color/line_and_outline_grey" />
+
+            <RelativeLayout
+                android:id="@+id/ring_rl"
+                style="@style/item_style"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/ring_tv"
+                    style="@style/item_text_style"
+                    android:layout_alignParentLeft="true"
+                    android:text="铃声" />
+
+                <TextView
+                    android:id="@+id/arrow_two"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@mipmap/ic_next_arrow"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_ring_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/arrow_two"
+                    android:text="Normal to wake up"
+                    android:textColor="@color/black_33"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_and_outline_grey"
+                android:visibility="gone" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_beizu"
+                style="@style/item_style"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_beizu"
+                    style="@style/item_text_style"
+                    android:layout_alignParentLeft="true"
+                    android:text="备注" />
+
+                <EditText
+                    android:id="@+id/et_beizu"
+                    style="@style/item_text_style"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/tv_beizu"
+                    android:background="@null"
+                    android:hint="输入备注">
+
+                </EditText>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_and_outline_grey"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="100dp"
+
+            android:background="@drawable/xinzhengdizhi_button"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="#ffffffff"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/naozhongcancel_button"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#ff999999"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>
