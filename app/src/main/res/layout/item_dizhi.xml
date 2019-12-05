@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_all"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="20dp"
+    android:paddingBottom="17dp"
+    android:paddingLeft="10dp"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="李先生"
+                android:textColor="#ff333333"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:gravity="center"
+                android:text="152****8219"
+                android:textColor="#ff666666"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_ismdefault"
+                android:layout_width="22dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="20dp"
+                android:text="默认"
+                android:textColor="#ffffad02"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_marginTop="9dp"
+            android:text="陕西省 西安市 雁塔区 万象汇B座1608超出区域的地址等DVR"
+            android:textColor="#ff666666"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:background="#999999" />
+
+    <TextView
+        android:id="@+id/tv_bianji"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:text="编辑"
+        android:textColor="#ff999999"
+        android:textSize="13sp" />
+
+</LinearLayout>

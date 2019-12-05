@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+    <SurfaceView
+        android:id="@+id/preview_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <com.uuzuche.lib_zxing.view.ViewfinderView
+        android:id="@+id/viewfinder_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:inner_width="280dp"
+        app:inner_height="280dp"
+        app:inner_margintop="143dp"
+        app:inner_corner_color="#ff529ffb"
+        app:inner_corner_length="20dp"
+        app:inner_corner_width="3dp"
+        app:inner_scan_speed="20"
+        app:inner_scan_orientation="vertical"
+        app:inner_scan_iscircle="false"/>
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="443dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="扫描手环中的设备二维码，即可完成绑定"/>
+
+
+</RelativeLayout>

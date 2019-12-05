@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <Button
+        android:id="@+id/btn_star1"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="30dp"
+
+        />
+    <Button
+        android:id="@+id/btn_star2"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="10dp"
+
+        />
+    <Button
+        android:id="@+id/btn_star3"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="10dp"
+
+        />
+    <Button
+        android:id="@+id/btn_star4"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="10dp"
+
+        />
+    <Button
+        android:id="@+id/btn_star5"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="10dp"
+
+        />
+    <!--<TextView-->
+        <!--android:id="@+id/tv_score"-->
+        <!--android:layout_width="15dp"-->
+        <!--android:layout_height="14dp"-->
+        <!--android:text="4.8"-->
+        <!--android:textColor="#ffffa037"-->
+        <!--android:textSize="10sp"-->
+        <!--android:gravity="center"-->
+        <!--/>-->
+    <TextView
+        android:id="@+id/tv_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="非常好"
+        android:layout_marginLeft="10dp"
+        android:textColor="#ff999999"
+        android:textSize="14sp"
+        />
+</LinearLayout>

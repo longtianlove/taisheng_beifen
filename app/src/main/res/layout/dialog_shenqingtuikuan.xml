@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_dialog_background">
+
+    <TextView
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:gravity="center"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        android:text="如需退款，请拨打客服电话
+010-8008208820"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/two_button_message"/>
+
+
+
+
+</LinearLayout>

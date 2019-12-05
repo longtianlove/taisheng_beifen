@@ -1,0 +1,56 @@
+ext {
+    var = '28.0.0'
+}
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+
+        }
+
+    }
+    dependencies {
+
+        classpath 'com.android.tools.build:gradle:3.4.2'
+//        classpath 'com.android.tools.build:gradle:2.3.2'
+
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+
+        classpath "com.tencent.bugly:tinker-support:1.1.5"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+
+        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
+
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.0.0'
+
+    }
+}
+
+allprojects {
+    repositories {
+
+
+        // 添加下面的内容
+        flatDir {
+            dirs 'libs'
+        }
+
+        google()
+        mavenCentral()
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        maven { url 'https://www.jitpack.io' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

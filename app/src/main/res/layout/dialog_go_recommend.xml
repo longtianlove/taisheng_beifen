@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_dialog_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="17dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="针对本次咨询，您是否还满意？
+说说您的心得，分享给别的小伙伴吧"
+        android:textColor="#ff333333"
+        android:textSize="@dimen/after_word_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ffdddddd" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="2"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textColor="#ff999999"
+            android:textSize="18sp"
+            android:background="#fff"
+            android:gravity="center"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ffdddddd"
+            />
+
+
+
+        <Button
+            android:id="@+id/btn_go_recommend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="去评价"
+            android:textColor="#ff529ffb"
+            android:textSize="18sp"
+            android:background="#fff"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

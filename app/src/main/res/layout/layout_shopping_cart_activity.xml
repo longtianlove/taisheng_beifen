@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#529FFB"
+    android:orientation="vertical">
+
+<!--    <include-->
+<!--        android:id="@+id/shopping_title"-->
+<!--        layout="@layout/layout_title" />-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        >
+
+<!--        <com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"-->
+<!--            android:id="@+id/ptr_refresh"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="#fff"-->
+<!--            cube_ptr:ptr_duration_to_close="300"-->
+<!--            cube_ptr:ptr_duration_to_close_header="2000"-->
+<!--            cube_ptr:ptr_keep_header_when_refresh="true"-->
+<!--            cube_ptr:ptr_pull_to_fresh="false"-->
+<!--            cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"-->
+<!--            cube_ptr:ptr_resistance="1.7">-->
+
+
+
+            <com.taisheng.now.view.TaishengListView
+                android:id="@+id/list_shopping_cart"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:background="#fff"
+                android:divider="#fff"
+                android:dividerHeight="9dp"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
+                android:listSelector="@android:color/transparent"
+                android:scrollbars="none" />
+
+<!--        </com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout>-->
+、
+
+        <LinearLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@color/white_c">
+
+
+            <CheckBox
+                android:id="@+id/ck_all"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:button="@drawable/check_box_style"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                android:text="全选"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_show_price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="合计:0.00"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_settlement"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="#529FFB"
+                android:gravity="center"
+                android:text="结算(0)"
+                android:textColor="@color/white_c" />
+
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+</LinearLayout>

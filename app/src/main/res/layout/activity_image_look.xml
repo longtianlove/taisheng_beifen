@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+
+    <!--// 这是第三方库提供的，也就是默认的布局文件-->
+    <!--<include layout="@layout/activity_image_preview_photo"/>-->
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.previewlibrary.wight.PhotoViewPager
+            android:id="@+id/viewPager"
+            android:background="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/ltAddDot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_vertical"
+            android:layout_margin="12dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:text="1/2"
+            >
+        </TextView>
+        <com.previewlibrary.wight.BezierBannerView
+            android:id="@+id/bezierBannerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:background="@color/transparent"
+            app:selectedRaduis="4dp"
+            app:unSelectedRaduis="4dp"
+            android:visibility="gone"
+            app:selectedColor="@android:color/white"
+            app:unSelectedColor="@android:color/darker_gray"
+            app:spacing="6dp"
+            android:layout_gravity="bottom|center_vertical|center_horizontal"
+            />
+
+    </FrameLayout>
+
+
+</FrameLayout>

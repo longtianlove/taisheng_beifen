@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Crop.DoneCancelBar">
+
+    <FrameLayout
+        android:id="@+id/btn_cancel"
+        style="@style/Crop.ActionButton">
+        <TextView style="@style/Crop.ActionButtonText.Cancel"
+            android:text="取消" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btn_done"
+        style="@style/Crop.ActionButton">
+        <TextView style="@style/Crop.ActionButtonText.Done"
+            android:text="确定" />
+    </FrameLayout>
+
+</LinearLayout>

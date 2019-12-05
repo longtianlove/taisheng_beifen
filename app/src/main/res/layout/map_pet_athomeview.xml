@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!--<com.xiaomaoqiu.old.widgets.CircleImageView-->
+    <!--android:id="@+id/map_pet_loca_avater"-->
+    <!--android:layout_marginTop="2dp"-->
+    <!--android:layout_width="57dp"-->
+    <!--android:layout_height="57dp"-->
+    <!--android:src="@drawable/tab_health_head_defult"-->
+    <!--app:inner_padding="1.5dp"-->
+    <!--app:border_width="1.5dp"-->
+    <!--app:border_color="@color/total_color_2"/>-->
+    <!--<com.facebook.drawee.view.SimpleDraweeView-->
+    <!--android:id="@+id/map_pet_loca_avater"-->
+    <!--android:layout_width="32dp"-->
+    <!--android:layout_height="32dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:gravity="center"-->
+    <!--android:scaleType="fitXY"-->
+    <!--fresco:actualImageScaleType="focusCrop"-->
+    <!--fresco:placeholderImage="@drawable/tab_health_head_defult"-->
+    <!--fresco:placeholderImageScaleType="fitCenter"-->
+
+    <!--fresco:failureImage="@drawable/tab_health_head_defult"-->
+    <!--fresco:failureImageScaleType="centerInside"-->
+    <!--fresco:roundedCornerRadius="16dp"-->
+    <!--/>-->
+    <!--<include layout="@layout/view_main_header_location" />-->
+
+<!--    <com.facebook.drawee.view.SimpleDraweeView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:gravity="center"-->
+<!--        android:scaleType="fitXY"-->
+<!--        fresco:actualImageScaleType="focusCrop"-->
+<!--        fresco:fadeDuration="300"-->
+<!--        fresco:failureImage="@drawable/pet_athome"-->
+<!--        fresco:failureImageScaleType="centerInside"-->
+<!--        fresco:placeholderImage="@drawable/pet_athome"-->
+<!--        fresco:placeholderImageScaleType="fitCenter"-->
+<!--        fresco:roundedCornerRadius="16dp" />-->
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/map_pet_athome_avater"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="19dp"
+        android:gravity="center"
+        android:scaleType="fitXY"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:fadeDuration="300"
+
+        fresco:failureImage="@drawable/icon_anquanweilanhome"
+        fresco:failureImageScaleType="centerInside"
+
+        fresco:placeholderImage="@drawable/icon_anquanweilanhome"
+        fresco:placeholderImageScaleType="fitCenter"
+        fresco:roundedCornerRadius="21dp" />
+
+</FrameLayout>

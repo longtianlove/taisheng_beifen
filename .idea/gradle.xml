@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT" />
+        </compositeConfiguration>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/addresspickerlib" />
+            <option value="$PROJECT_DIR$/alarmmanagerclock" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/lib-zxing" />
+            <option value="$PROJECT_DIR$/lib-zxing1" />
+            <option value="$PROJECT_DIR$/libskywebrtc" />
+            <option value="$PROJECT_DIR$/libskywebrtc2" />
+            <option value="$PROJECT_DIR$/libwebrtc" />
+            <option value="$PROJECT_DIR$/libwebrtc3" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

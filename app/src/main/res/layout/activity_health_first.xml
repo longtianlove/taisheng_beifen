@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingRight="10dp"
+
+        android:src="@drawable/icon_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="健康档案"
+            android:textColor="#ff333333"
+            android:textSize="18sp" />
+
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f8f8f8" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/health_first"
+        android:layout_marginTop="40dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="完善健康档案，享受精准服务！"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginTop="23dp"
+        />
+    <TextView
+        android:id="@+id/tv_back_memessage"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="59dp"
+        android:background="@drawable/xml_login_background"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="完善健康档案"
+        android:textColor="@color/white"
+        android:textSize="14sp"></TextView>
+
+</LinearLayout>

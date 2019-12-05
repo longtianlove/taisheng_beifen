@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/btn_take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_change_avater_item_height"
+        android:orientation="horizontal"
+        android:background="#fff"        android:gravity="center"
+        android:layout_marginBottom="1dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:text="拍照"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_pick_from_library"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_change_avater_item_height"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:gravity="center"
+        android:layout_marginBottom="1.5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:text="从手机相册选择"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_change_avater_item_height"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:padding="6dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:text="取消"/>
+
+    </LinearLayout>
+
+</LinearLayout>

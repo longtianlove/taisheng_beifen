@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/map_start"
+        />
+    <!--<com.xiaomaoqiu.old.widgets.CircleImageView-->
+        <!--android:id="@+id/map_pet_loca_avater"-->
+        <!--android:layout_marginTop="2dp"-->
+        <!--android:layout_width="57dp"-->
+        <!--android:layout_height="57dp"-->
+        <!--android:src="@drawable/tab_health_head_defult"-->
+        <!--app:inner_padding="1.5dp"-->
+        <!--app:border_width="1.5dp"-->
+        <!--app:border_color="@color/total_color_2"/>-->
+    <!--<com.facebook.drawee.view.SimpleDraweeView-->
+        <!--android:id="@+id/map_phone_loca_avater"-->
+        <!--android:layout_width="32dp"-->
+        <!--android:layout_height="32dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="center"-->
+        <!--android:scaleType="fitXY"-->
+        <!--fresco:fadeDuration="300"-->
+        <!--fresco:actualImageScaleType="focusCrop"-->
+
+        <!--fresco:placeholderImage="@drawable/map_location_phone"-->
+        <!--fresco:placeholderImageScaleType="fitCenter"-->
+        <!--fresco:roundedCornerRadius="16dp"-->
+        <!--/>-->
+
+
+</LinearLayout>
