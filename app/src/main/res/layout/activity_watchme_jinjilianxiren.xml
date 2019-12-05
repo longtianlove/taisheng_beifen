@@ -55,7 +55,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff">
+        <com.taisheng.now.view.WithListViewScrollView
+            android:id="@+id/scl_bag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.taisheng.now.view.WithScrolleViewListView
+                    android:id="@+id/lv_naozhongs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:background="#fff"
+                    android:divider="#EEEEEE"
+                    android:dividerHeight="1dp"
+                    android:footerDividersEnabled="false"
+                    android:headerDividersEnabled="false"
+                    android:listSelector="@android:color/transparent"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp" />
+            </LinearLayout>
+        </com.taisheng.now.view.WithListViewScrollView>
 
         <ImageView
             android:id="@+id/iv_addjinjilianxiren"

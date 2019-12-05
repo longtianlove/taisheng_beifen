@@ -93,10 +93,12 @@ import com.taisheng.now.bussiness.watch.bean.post.AnquanweiilanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.BindDevicePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.KaiGuanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.MiandaraoShijianduanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
+import com.taisheng.now.bussiness.watch.bean.post.SosListpostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.XinlvXueyaYujingPostBean;
@@ -105,7 +107,9 @@ import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.SosListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
@@ -174,6 +178,16 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.getWatchREMINDList)
     Call<BaseBean<NaozhongListResultBean>> getWatchREMINDList(@Body BaseWatchBean bean);
+
+
+    @POST(Constants.Url.Watch.listSosContactSetting)
+    Call<BaseBean<NewSosJijinlianxirenlIstResultBean>> listSosContactSetting(@Body SosListpostBean bean);
+
+
+    @POST(Constants.Url.Watch.insertSosContactSetting)
+    Call<BaseBean> insertSosContactSetting(@Body InsertSosJinjilianxirenPostBean bean);
+
+
 
     @POST(Constants.Url.Watch.setWatchREMIND)
     Call<BaseBean> setWatchREMIND(@Body SetNaozhongPostBean bean);

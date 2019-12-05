@@ -173,6 +173,12 @@ public class Constants {
 
             public static final String notDisturbSetting = "jeecg-boot/app/watch/setting/notDisturbSetting";
 
+
+            //            APP-SOS联系人列表
+            public static final String listSosContactSetting = "jeecg-boot/app/watch/setting/listSosContactSetting";
+
+            //            APP-【SOS增加】联系人
+            public static final String insertSosContactSetting = "jeecg-boot/app/watch/setting/insertSosContactSetting";
         }
 
 

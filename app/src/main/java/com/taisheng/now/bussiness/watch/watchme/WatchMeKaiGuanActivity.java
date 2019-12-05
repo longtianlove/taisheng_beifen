@@ -141,7 +141,8 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
 
             @Override
             public void onClick(View v) {
-                //todo 进入紧急联系人
+                Intent intent = new Intent(WatchMeKaiGuanActivity.this, WatchMejinjilianxirenActivity.class);
+                startActivity(intent);
             }
         });
         iv_kaiguan_sos = findViewById(R.id.iv_kaiguan_sos);
@@ -335,9 +336,9 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
                             iv_kaiguan_jibu.setSelected(false);
                         }
 
-                        if("1".equals(message.result.watchSleeptimeSwitch)){
+                        if ("1".equals(message.result.watchSleeptimeSwitch)) {
                             iv_kaiguan_fanzhuan.setSelected(true);
-                        }else{
+                        } else {
                             iv_kaiguan_fanzhuan.setSelected(false);
                         }
 

@@ -579,6 +579,17 @@
 
 
         <activity
+            android:name=".bussiness.watch.watchme.WatchMeJinjilianxirenXinzengActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+
+        </activity>
+
+
+
+        <activity
             android:name=".bussiness.me.YijianfankuiActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
