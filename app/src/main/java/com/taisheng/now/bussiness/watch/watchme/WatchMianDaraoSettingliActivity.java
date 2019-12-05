@@ -7,23 +7,37 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
+import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.watch.WatchInstance;
+import com.taisheng.now.bussiness.watch.bean.post.MiandaraoShijianduanPostBean;
+import com.taisheng.now.http.ApiUtils;
+import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.ToastUtil;
 
 import java.util.Calendar;
 
+import retrofit2.Call;
+import retrofit2.Response;
 
-public class WatchMianDaraoSettingliActivity extends BaseActivity  {
+
+public class WatchMianDaraoSettingliActivity extends BaseActivity {
     public View iv_back;
     private TextView date_tv_start;
     private TimePickerDialog timePickerDialog;
     private String time;
 
 
-
     private TextView date_tv_end;
     private TimePickerDialog timePickerDialog_end;
     private String time_end;
+
+
+    View tv_save;
+    View tv_cancel;
 
 
     @Override
@@ -78,8 +92,6 @@ public class WatchMianDaraoSettingliActivity extends BaseActivity  {
         });
 
 
-
-
         date_tv_end = (TextView) findViewById(R.id.date_tv_end);
         final int hour_end;
         final int miniute_end;
@@ -115,6 +127,53 @@ public class WatchMianDaraoSettingliActivity extends BaseActivity  {
 
                 timePickerDialog_end.show();
 
+            }
+        });
+
+
+        tv_save = findViewById(R.id.tv_save);
+        tv_save.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if ("起始时间".equals(date_tv_start.getText().toString()) || "结束时间".equals(date_tv_end.getText().toString())) {
+                    ToastUtil.showAtCenter("请选择时间");
+                    return;
+                }
+
+                MiandaraoShijianduanPostBean bean = new MiandaraoShijianduanPostBean();
+                bean.userId = UserInstance.getInstance().getUid();
+                bean.token = UserInstance.getInstance().getToken();
+                bean.deviceId = WatchInstance.getInstance().deviceId;
+                bean.timeSlot1 = date_tv_start.getText() + "-" + date_tv_end.getText();
+                //todo 埋下
+                bean.timeSlot2 = "";
+                bean.timeSlot3 = "";
+                bean.timeSlot4 = "";
+                ApiUtils.getApiService().notDisturbSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                        switch (message.code) {
+                            case Constants.HTTP_SUCCESS:
+                                ToastUtil.showAtCenter("设置成功");
+                                finish();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Call<BaseBean> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+        tv_cancel = findViewById(R.id.tv_cancel);
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

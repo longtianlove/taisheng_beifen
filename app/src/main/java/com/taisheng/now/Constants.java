@@ -169,6 +169,10 @@ public class Constants {
             public static final String updateDeviceInfo = "jeecg-boot/app/watchDevice/updateDeviceInfo";
 
 
+//            免打扰时间段设-添加
+
+            public static final String notDisturbSetting = "jeecg-boot/app/watch/setting/notDisturbSetting";
+
         }
 
 
