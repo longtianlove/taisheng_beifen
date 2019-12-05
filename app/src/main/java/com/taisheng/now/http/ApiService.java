@@ -98,6 +98,7 @@ import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.XinlvXueyaYujingPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
@@ -108,6 +109,7 @@ import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueYaDayResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.test.WechatResultBean;
 
 
@@ -212,6 +214,8 @@ public interface ApiService {
     @POST(Constants.Url.Watch.setWatchWarning)
     Call<BaseBean> setWatchWarning(@Body XinlvXueyaYujingBean bean);
 
+    @POST(Constants.Url.Watch.getWatchWarningAll)
+    Call<BaseBean<YujingResultBean>> getWatchWarningAll(@Body YuJingListPostBean bean);
 
 
 
