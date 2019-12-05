@@ -34,6 +34,7 @@ public class WatchMeFragment extends BaseFragment {
     View tv_qiandao;
 
     View ll_naozhong;
+    View ll_chiyao;
 
     View ll_xinlv;
     View ll_xueya;
@@ -97,6 +98,13 @@ public class WatchMeFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WatchMeNaozhongListActivity.class);
                 startActivity(intent);
+            }
+        });
+        ll_chiyao=rootView.findViewById(R.id.ll_chiyao);
+        ll_chiyao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
         ll_xinlv=rootView.findViewById(R.id.ll_xinlv);
