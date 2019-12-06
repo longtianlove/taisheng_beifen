@@ -31,7 +31,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="新增闹钟"
+            android:text="新增吃药"
             android:textColor="#ffffffff"
             android:textSize="18sp" />
 
@@ -121,16 +121,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:orientation="horizontal"
-                >
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
+                    style="@style/item_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="提醒内容"
                     android:textColor="#ff333333"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
+
                 <EditText
                     android:id="@+id/et_shuru"
                     android:layout_width="0dp"
