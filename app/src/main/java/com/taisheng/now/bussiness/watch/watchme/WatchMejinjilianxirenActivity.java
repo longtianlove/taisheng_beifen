@@ -3,6 +3,7 @@ package com.taisheng.now.bussiness.watch.watchme;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,9 +43,22 @@ import retrofit2.Response;
 public class WatchMejinjilianxirenActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     ImageView iv_back;
 
-    View iv_bianji;
-    com.taisheng.now.view.WithScrolleViewListView lv_articles;
-    ArticleAdapter madapter;
+//    View iv_bianji;
+
+
+    View ll_first;
+    TextView tv_first_name;
+    TextView tv_first_phone;
+
+    View view2;
+    View ll_second;
+    TextView tv_second_name;
+    TextView tv_second_phone;
+
+    View view3;
+    View ll_third;
+    TextView tv_third_name;
+    TextView tv_third_phone;
 
     View iv_addjinjilianxiren;
 
@@ -64,19 +78,31 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
             }
         });
 
-        iv_bianji = findViewById(R.id.iv_bianji);
-        iv_bianji.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeXueyajingBianjiActivity.class);
-//                startActivity(intent);
-            }
-        });
+//        iv_bianji = findViewById(R.id.iv_bianji);
+//        iv_bianji.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeXueyajingBianjiActivity.class);
+////                startActivity(intent);
+//            }
+//        });
 
 
-        lv_articles = (WithScrolleViewListView) findViewById(R.id.lv_naozhongs);
-        madapter = new ArticleAdapter(this);
-        lv_articles.setAdapter(madapter);
+        ll_first = findViewById(R.id.ll_first);
+        tv_first_name = findViewById(R.id.tv_first_name);
+        tv_first_phone = findViewById(R.id.tv_first_phone);
+
+
+        view2 = findViewById(R.id.view2);
+        ll_second = findViewById(R.id.ll_second);
+        tv_second_name = findViewById(R.id.tv_second_name);
+        tv_second_phone = findViewById(R.id.tv_second_phone);
+
+        view3=findViewById(R.id.view3);
+        ll_third = findViewById(R.id.ll_third);
+        tv_third_name = findViewById(R.id.tv_third_name);
+        tv_third_phone = findViewById(R.id.tv_third_phone);
+
 
         iv_addjinjilianxiren = findViewById(R.id.iv_addjinjilianxiren);
         iv_addjinjilianxiren.setOnClickListener(new View.OnClickListener() {
@@ -104,30 +130,34 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
         ApiUtils.getApiService().listSosContactSetting(bean).enqueue(new TaiShengCallback<BaseBean<NewSosJijinlianxirenlIstResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<NewSosJijinlianxirenlIstResultBean>> response, BaseBean<NewSosJijinlianxirenlIstResultBean> message) {
-//                switch (message.code) {
-//                    case Constants.HTTP_SUCCESS:
-//                        if (message.result != null && message.result.records.size() > 0) {
-//                            //有消息
-////                            PAGE_NO++;
-//                            madapter.mData.clear();
-//                            madapter.mData.addAll(message.result.records);
-//
-////                            if(message.result.size()<10){
-////                                lv_articles.setHasLoadMore(false);
-////                                lv_articles.setLoadAllViewText("暂时只有这么多文章");
-////                                lv_articles.setLoadAllFooterVisible(false);
-////                            }else{
-////                                lv_articles.setHasLoadMore(true);
-////                            }
-//                            madapter.notifyDataSetChanged();
-//                        } else {
-////                            //没有消息
-////                            lv_articles.setHasLoadMore(false);
-////                            lv_articles.setLoadAllViewText("暂时只有这么多文章");
-////                            lv_articles.setLoadAllFooterVisible(false);
-//                        }
-//                        break;
-//                }
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (TextUtils.isEmpty(message.result.watchNameSos1)) {
+                            ll_first.setVisibility(View.GONE);
+                        } else {
+                            ll_first.setVisibility(View.VISIBLE);
+                            tv_first_name.setText(message.result.watchNameSos1);
+                            tv_first_phone.setText(message.result.watchSos1);
+                        }
+
+                        if (TextUtils.isEmpty(message.result.watchNameSos2)) {
+                            ll_second.setVisibility(View.GONE);
+                            view2.setVisibility(View.GONE);
+                        } else {
+                            ll_second.setVisibility(View.VISIBLE);
+                            tv_second_name.setText(message.result.watchNameSos2);
+                            tv_second_phone.setText(message.result.watchSos2);
+                        }
+                        if (TextUtils.isEmpty(message.result.watchNameSos3)) {
+                            view3.setVisibility(View.GONE);
+                            ll_third.setVisibility(View.GONE);
+                        } else {
+                            ll_third.setVisibility(View.VISIBLE);
+                            tv_third_name.setText(message.result.watchNameSos3);
+                            tv_third_phone.setText(message.result.watchSos3);
+                        }
+                        break;
+                }
             }
 
             @Override
@@ -137,69 +167,5 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
         });
     }
 
-    class ArticleAdapter extends BaseAdapter {
 
-        public Context mcontext;
-
-        ArrayList<SosLIstBean> mData = new ArrayList<SosLIstBean>();
-
-        public ArticleAdapter(Context context) {
-            this.mcontext = context;
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            // 声明内部类
-            ArticleAdapter.Util util = null;
-            // 中间变量
-            final int flag = position;
-            if (convertView == null) {
-                util = new ArticleAdapter.Util();
-                LayoutInflater inflater = LayoutInflater.from(mcontext);
-                convertView = inflater.inflate(R.layout.item_sos, null);
-                util.ll_all = convertView.findViewById(R.id.ll_all);
-                util.tv_name = convertView.findViewById(R.id.tv_name);
-                util.tv_phone = convertView.findViewById(R.id.tv_phone);
-                convertView.setTag(util);
-            } else {
-                util = (ArticleAdapter.Util) convertView.getTag();
-            }
-            SosLIstBean bean = mData.get(position);
-            ArticleAdapter.Util finalUtil = util;
-            util.ll_all.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                }
-            });
-            util.tv_name.setText(bean.name);
-            util.tv_phone.setText(bean.phone + "");
-            return convertView;
-        }
-
-
-        class Util {
-            View ll_all;
-            TextView tv_name;
-            TextView tv_phone;
-
-
-        }
-    }
 }

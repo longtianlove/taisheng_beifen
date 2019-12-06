@@ -42,7 +42,8 @@
             android:layout_height="15dp"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
-            android:src="@drawable/icon_bianji"></ImageView>
+            android:src="@drawable/icon_bianji"
+            android:visibility="gone"></ImageView>
 
     </RelativeLayout>
 
@@ -51,40 +52,119 @@
         android:layout_height="1dp"
 
         android:background="#f8f8f8" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff">
-        <com.taisheng.now.view.WithListViewScrollView
-            android:id="@+id/scl_bag"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff">
-
+            android:padding="10dp"
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_first"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:weightSum="1">
 
-                <com.taisheng.now.view.WithScrolleViewListView
-                    android:id="@+id/lv_naozhongs"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="15dp"
-                    android:background="#fff"
-                    android:divider="#EEEEEE"
-                    android:dividerHeight="1dp"
-                    android:footerDividersEnabled="false"
-                    android:headerDividersEnabled="false"
-                    android:listSelector="@android:color/transparent"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp" />
+                <TextView
+                    android:id="@+id/tv_first_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#ff333333"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"></View>
+
+                <TextView
+                    android:id="@+id/tv_first_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#ff666666"
+                    android:textSize="14sp" />
             </LinearLayout>
-        </com.taisheng.now.view.WithListViewScrollView>
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#EEEEEE"
+                ></View>
+
+            <LinearLayout
+                android:id="@+id/ll_second"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/tv_second_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#ff333333"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"></View>
+
+                <TextView
+                    android:id="@+id/tv_second_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#ff666666"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#EEEEEE"
+                ></View>
+            <LinearLayout
+                android:id="@+id/ll_third"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/tv_third_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#ff333333"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"></View>
+
+                <TextView
+                    android:id="@+id/tv_third_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#ff666666"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_addjinjilianxiren"
