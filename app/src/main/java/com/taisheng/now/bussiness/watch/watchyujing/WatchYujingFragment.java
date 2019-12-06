@@ -263,6 +263,8 @@ public class WatchYujingFragment extends BaseFragment {
                                     intent.putExtra("message", bean.warningContent);
                                     intent.putExtra("createTime", bean.createTime);
                                     startActivity(intent);
+                                    PAGE_NO = 1;
+                                    initData();
                                     break;
                             }
                         }

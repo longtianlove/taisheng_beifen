@@ -113,6 +113,9 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                                 ToastUtil.showAtCenter("设置成功");
                                 finish();
                                 break;
+                            case 404000:
+                                ToastUtil.showAtCenter("请设置重复频率");
+                                break;
                         }
                     }
 
@@ -134,8 +137,9 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
         });
 
         date_tv = (TextView) findViewById(R.id.date_tv);
-        if (!TextUtils.isEmpty(WatchInstance.getInstance().chiyaobean.startTime)) {
-            date_tv.setText(WatchInstance.getInstance().chiyaobean.startTime);
+        String startTime=getIntent().getStringExtra("startTime");
+        if (!TextUtils.isEmpty(startTime)) {
+            date_tv.setText(startTime);
         }
 
         repeat_rl = (RelativeLayout) findViewById(R.id.repeat_rl);
