@@ -185,6 +185,14 @@ public class Constants {
             public static final String watchWarningupdateBykey = "jeecg-boot/app/watchWarning/updateBykey";
 
 
+            //            语音版吃药提醒-批量获取
+            public static final String getWatchTakepillsList = "jeecg-boot/app/watchTakepills/getWatchTakepillsList";
+
+
+            //            语音版吃药提醒-设置
+            public static final String setWatchTakepills = "jeecg-boot/app/watchTakepills/setWatchTakepills";
+
+
             //重启接口
             public static final String reboot = "jeecg-boot/app/watch/setting/reboot";
 

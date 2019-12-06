@@ -92,11 +92,13 @@ import com.taisheng.now.bussiness.watch.bean.post.AllSettingPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.AnquanweiilanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.BindDevicePostBean;
+import com.taisheng.now.bussiness.watch.bean.post.ChiyaolistPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.KaiGuanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.MiandaraoShijianduanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.post.SosListpostBean;
@@ -107,6 +109,7 @@ import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.YujingxinxiSetYiduPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.ChiyaoLIstResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResultBean;
@@ -201,6 +204,14 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.watchWarningupdateBykey)
     Call<BaseBean> watchWarningupdateBykey(@Body YujingxinxiSetYiduPostBean bean);
+
+
+    @POST(Constants.Url.Watch.getWatchTakepillsList)
+    Call<BaseBean<ChiyaoLIstResultBean>> getWatchTakepillsList(@Body ChiyaolistPostBean bean);
+
+
+    @POST(Constants.Url.Watch.setWatchTakepills)
+    Call<BaseBean> setWatchTakepills(@Body SetChiyaoPostBean bean);
 
 
     @POST(Constants.Url.Watch.setWatchREMIND)

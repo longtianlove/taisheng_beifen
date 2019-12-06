@@ -118,13 +118,37 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/line_and_outline_grey" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                >
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提醒内容"
+                    android:textColor="#ff333333"
+                    android:textSize="14sp"
+                    />
+                <EditText
+                    android:id="@+id/et_shuru"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="输入提醒内容"
+                    android:maxLength="11"
+                    android:textColor="#ff999999"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/line_and_outline_grey" />
+                android:background="@color/line_and_outline_grey"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:id="@+id/ring_rl"

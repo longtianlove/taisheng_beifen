@@ -5,6 +5,7 @@ import android.app.job.JobScheduler;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -15,7 +16,9 @@ import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
+import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
+import com.taisheng.now.bussiness.watch.bean.result.ChiyaoBeann;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
@@ -42,12 +45,15 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
     public View tv_save;
     public View tv_cancel;
 
+    EditText et_shuru;
 
     private String time;
     private int cycle;
     private int ring;
     private JobScheduler mJobScheduler;
 
+
+    public String takepillsNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,7 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 finish();
             }
         });
-
+        et_shuru = findViewById(R.id.et_shuru);
 
         allLayout = (RelativeLayout) findViewById(R.id.all_layout);
         tv_save = findViewById(R.id.tv_save);
@@ -71,23 +77,40 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                     ToastUtil.showAtCenter("请选择时间");
                     return;
                 }
+                if ("".equals(et_shuru.getText().toString())) {
+                    ToastUtil.showAtCenter("请输入提醒内容");
+                    return;
+                }
                 //TODO 设置时间
-                SetNaozhongPostBean setNaozhongPostBean = new SetNaozhongPostBean();
+                SetChiyaoPostBean setNaozhongPostBean = new SetChiyaoPostBean();
                 setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
                 setNaozhongPostBean.token = UserInstance.getInstance().getToken();
                 setNaozhongPostBean.clientId = WatchInstance.getInstance().deviceId;
-                WatchInstance.getInstance().naozhongLIstBean.isOpen = "1";
-                WatchInstance.getInstance().naozhongLIstBean.startTime=date_tv.getText().toString();
-                WatchInstance.getInstance().mDataNaoZhong.add(WatchInstance.getInstance().naozhongLIstBean);
+                setNaozhongPostBean.takepillsNum = takepillsNum;
+                setNaozhongPostBean.frequency = WatchInstance.getInstance().chiyaobean.frequency;
+                setNaozhongPostBean.isOpen = "1";
+                setNaozhongPostBean.isOpenWeek1 = WatchInstance.getInstance().chiyaobean.isOpenWeek1;
+                setNaozhongPostBean.isOpenWeek2 = WatchInstance.getInstance().chiyaobean.isOpenWeek2;
+                setNaozhongPostBean.isOpenWeek3 = WatchInstance.getInstance().chiyaobean.isOpenWeek3;
+                setNaozhongPostBean.isOpenWeek4 = WatchInstance.getInstance().chiyaobean.isOpenWeek4;
+                setNaozhongPostBean.isOpenWeek5 = WatchInstance.getInstance().chiyaobean.isOpenWeek5;
+                setNaozhongPostBean.isOpenWeek6 = WatchInstance.getInstance().chiyaobean.isOpenWeek6;
+                setNaozhongPostBean.isOpenWeek7 = WatchInstance.getInstance().chiyaobean.isOpenWeek7;
+                setNaozhongPostBean.startTime = date_tv.getText().toString();
+                setNaozhongPostBean.takepillsText = et_shuru.getText().toString();
 
-                setNaozhongPostBean.watchRemindList = WatchInstance.getInstance().mDataNaoZhong;
-                ApiUtils.getApiService().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+//                WatchInstance.getInstance().chiyaobean.isOpen = "1";
+//                WatchInstance.getInstance().chiyaobean.startTime = date_tv.getText().toString();
+//                WatchInstance.getInstance().mDataNaoZhong.add(WatchInstance.getInstance().chiyaobean);
+
+//                setNaozhongPostBean.watchRemindList = WatchInstance.getInstance().mDataNaoZhong;
+                ApiUtils.getApiService().setWatchTakepills(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
 
-                                ToastUtil.showAtCenter("闹钟设置成功");
+                                ToastUtil.showAtCenter("设置成功");
                                 finish();
                                 break;
                         }
@@ -100,7 +123,8 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 });
             }
         });
-        WatchInstance.getInstance().naozhongLIstBean = new NaozhongLIstBean();
+        takepillsNum=getIntent().getStringExtra("takepillsNum");
+        WatchInstance.getInstance().chiyaobean = new SetChiyaoPostBean();
         tv_cancel = findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +134,10 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
         });
 
         date_tv = (TextView) findViewById(R.id.date_tv);
+        if (!TextUtils.isEmpty(WatchInstance.getInstance().chiyaobean.startTime)) {
+            date_tv.setText(WatchInstance.getInstance().chiyaobean.startTime);
+        }
+
         repeat_rl = (RelativeLayout) findViewById(R.id.repeat_rl);
         repeat_rl.setOnClickListener(this);
         ring_rl = (RelativeLayout) findViewById(R.id.ring_rl);
@@ -287,13 +315,13 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                         break;
                     case 8:
                         tv_repeat_value.setText("每天");
-                        WatchInstance.getInstance().naozhongLIstBean.frequency = "2";
+                        WatchInstance.getInstance().chiyaobean.frequency = "2";
                         cycle = 0;
                         fp.dismiss();
                         break;
                     case 9:
                         tv_repeat_value.setText("一次");
-                        WatchInstance.getInstance().naozhongLIstBean.frequency = "1";
+                        WatchInstance.getInstance().chiyaobean.frequency = "1";
                         cycle = -1;
                         fp.dismiss();
                         break;
@@ -346,22 +374,22 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
         if (repeat == 0) {
 //            repeat = 127;
             cycle = "每天";
-            WatchInstance.getInstance().naozhongLIstBean.frequency = "2";
+            WatchInstance.getInstance().chiyaobean.frequency = "2";
             return cycle;
         }
-        WatchInstance.getInstance().naozhongLIstBean.frequency = "3";
+        WatchInstance.getInstance().chiyaobean.frequency = "3";
         if (repeat % 2 == 1) {
             cycle = "星期一";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek1 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek1 = "1";
             weeks = "1";
-        }else{
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek1 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek2 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek3 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek4 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
+        } else {
+            WatchInstance.getInstance().chiyaobean.isOpenWeek1 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
 
         }
         if (repeat % 4 >= 2) {
@@ -372,15 +400,15 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 cycle = cycle + "," + "星期二";
                 weeks = weeks + "," + "2";
             }
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek2 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "1";
 
-        }else{
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek2 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek3 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek4 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
+        } else {
+            WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat % 8 >= 4) {
             if ("".equals(cycle)) {
@@ -390,15 +418,15 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 cycle = cycle + "," + "星期三";
                 weeks = weeks + "," + "3";
             }
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek3 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "1";
 
-        }else{
+        } else {
 
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek3 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek4 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat % 16 >= 8) {
             if ("".equals(cycle)) {
@@ -408,13 +436,13 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 cycle = cycle + "," + "星期四";
                 weeks = weeks + "," + "4";
             }
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek4 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "1";
 
-        }else{
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek4 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
+        } else {
+            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat % 32 >= 16) {
             if ("".equals(cycle)) {
@@ -424,12 +452,12 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 cycle = cycle + "," + "星期五";
                 weeks = weeks + "," + "5";
             }
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek5 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "1";
 
-        }else{
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
+        } else {
+            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat % 64 >= 32) {
             if ("".equals(cycle)) {
@@ -439,11 +467,11 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 cycle = cycle + "," + "星期六";
                 weeks = weeks + "," + "6";
             }
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "1";
 
-        }else{
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
+        } else {
+            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat / 64 == 1) {
             if ("".equals(cycle)) {
@@ -453,10 +481,10 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 cycle = cycle + "," + "星期日";
                 weeks = weeks + "," + "7";
             }
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "1";
 
-        }else{
-            WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
+        } else {
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
 
         return flag == 0 ? cycle : weeks;

@@ -74,9 +74,7 @@
                     android:dividerHeight="1dp"
                     android:footerDividersEnabled="false"
                     android:headerDividersEnabled="false"
-                    android:listSelector="@android:color/transparent"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp" />
+                    android:listSelector="@android:color/transparent" />
             </LinearLayout>
         </com.taisheng.now.view.WithListViewScrollView>
 
