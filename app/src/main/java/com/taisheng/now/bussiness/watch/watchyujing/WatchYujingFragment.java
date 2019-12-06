@@ -34,6 +34,7 @@ import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;
 import com.taisheng.now.bussiness.watch.watchfirst.JibuFragment;
 import com.taisheng.now.bussiness.watch.watchfirst.XinlvFragment;
 import com.taisheng.now.bussiness.watch.watchfirst.XueyaFragment;
+import com.taisheng.now.bussiness.watch.watchme.WatchMeYujingxinxiXiangqingActivity;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
@@ -54,12 +55,7 @@ import retrofit2.Response;
 public class WatchYujingFragment extends BaseFragment {
 
 
-
-
-
-
     View iv_back;
-
 
 
     MaterialDesignPtrFrameLayout ptr_refresh;
@@ -95,14 +91,13 @@ public class WatchYujingFragment extends BaseFragment {
 //    }
 
     void initView(View rootView) {
-        iv_back=rootView.findViewById(R.id.iv_back);
+        iv_back = rootView.findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
-
 
 
         ptr_refresh = (MaterialDesignPtrFrameLayout) rootView.findViewById(R.id.ptr_refresh);
@@ -134,12 +129,12 @@ public class WatchYujingFragment extends BaseFragment {
     int PAGE_SIZE = 10;
 
     void initData() {
-        YuJingListPostBean bean=new YuJingListPostBean();
+        YuJingListPostBean bean = new YuJingListPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.pageNo = PAGE_NO;
         bean.pageSize = PAGE_SIZE;
-        bean.clientId= WatchInstance.getInstance().deviceId;
+        bean.clientId = WatchInstance.getInstance().deviceId;
         ApiUtils.getApiService().getWatchWarningAll(bean).enqueue(new TaiShengCallback<BaseBean<YujingResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<YujingResultBean>> response, BaseBean<YujingResultBean> message) {
@@ -157,7 +152,7 @@ public class WatchYujingFragment extends BaseFragment {
                             madapter.mData.addAll(message.result.records);
                             if (message.result.records.size() < 10) {
                                 lv_doctors.setHasLoadMore(false);
-                                lv_doctors.setLoadAllViewText("暂时只有这么多医生");
+                                lv_doctors.setLoadAllViewText("暂时只有这么多消息");
                                 lv_doctors.setLoadAllFooterVisible(true);
                             } else {
                                 lv_doctors.setHasLoadMore(true);
@@ -166,7 +161,7 @@ public class WatchYujingFragment extends BaseFragment {
                         } else {
                             //没有消息
                             lv_doctors.setHasLoadMore(false);
-                            lv_doctors.setLoadAllViewText("暂时只有这么多医生");
+                            lv_doctors.setLoadAllViewText("暂时只有这么多消息");
                             lv_doctors.setLoadAllFooterVisible(true);
                         }
                         break;
@@ -219,9 +214,12 @@ public class WatchYujingFragment extends BaseFragment {
             if (convertView == null) {
                 util = new DoctorAdapter.Util();
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
-                convertView = inflater.inflate(R.layout.item_doctors, null);
+                convertView = inflater.inflate(R.layout.item_yujingxiaoxi, null);
                 util.ll_all = convertView.findViewById(R.id.ll_all);
-                    convertView.setTag(util);
+                util.tv_jiancetongzhi = convertView.findViewById(R.id.tv_jiancetongzhi);
+                util.tv_time = convertView.findViewById(R.id.tv_time);
+                util.tv_message = convertView.findViewById(R.id.tv_message);
+                convertView.setTag(util);
             } else {
                 util = (DoctorAdapter.Util) convertView.getTag();
             }
@@ -229,26 +227,45 @@ public class WatchYujingFragment extends BaseFragment {
             util.ll_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent = new Intent(mActivity, DoctorDetailActivity.class);
-//                    intent.putExtra("id", bean.id);
-//                    intent.putExtra("nickName", bean.nickName);
-//                    intent.putExtra("title", bean.title);
-//                    intent.putExtra("fromMedicineTime", bean.fromMedicineTime);
-//                    intent.putExtra("jobIntroduction", bean.jobIntroduction);
-//                    intent.putExtra("score", bean.score);
-//                    intent.putExtra("goodDiseases", bean.goodDiseases);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getActivity(), WatchMeYujingxinxiXiangqingActivity.class);
+                    intent.putExtra("warningType", bean.warningContent);
+                    intent.putExtra("message", bean.warningContent);
+                    intent.putExtra("createTime", bean.createTime);
+
+                    startActivity(intent);
+
                 }
             });
-
-
-
+            util.tv_time.setText(bean.createTime);
+            util.tv_message.setText(bean.warningContent);
+            String temp;
+            switch (bean.warningType) {
+                case "heart":
+                    temp = "心率信息通知";
+                    break;
+                case "bpxy":
+                    temp = "血压信息通知";
+                    break;
+                case "bphrt":
+                    temp = "心率信息通知";
+                    break;
+                case "LK":
+                    temp = "低电量通知";
+                    break;
+                default:
+                    temp = "监测信息通知";
+                    break;
+            }
+            util.tv_jiancetongzhi.setText(temp);
             return convertView;
         }
 
 
         class Util {
             View ll_all;
+            TextView tv_jiancetongzhi;
+            TextView tv_time;
+            TextView tv_message;
 
         }
     }
