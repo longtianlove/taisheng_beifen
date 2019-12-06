@@ -184,6 +184,10 @@ public class Constants {
             //            手表预警记录-修改阅读状态
             public static final String watchWarningupdateBykey = "jeecg-boot/app/watchWarning/updateBykey";
 
+
+            //重启接口
+            public static final String reboot = "jeecg-boot/app/watch/setting/reboot";
+
         }
 
 

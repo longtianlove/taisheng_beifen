@@ -65,7 +65,7 @@ public class WatchChiYaoListActivity extends BaseActivity implements ActivityCom
         iv_addnaozhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WatchChiYaoListActivity.this, WatchNaoZhongXinzengActivity.class);
+                Intent intent = new Intent(WatchChiYaoListActivity.this, WatchChiyaoXinzengActivity.class);
                 startActivity(intent);
             }
         });

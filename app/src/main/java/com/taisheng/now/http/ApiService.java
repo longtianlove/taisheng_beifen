@@ -96,6 +96,7 @@ import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.KaiGuanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.MiandaraoShijianduanPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.post.SosListpostBean;
@@ -133,6 +134,15 @@ import retrofit2.http.Part;
  * Created by long
  */
 public interface ApiService {
+
+
+
+
+    //重启
+    public static final String reboot = "jeecg-boot/app/watch/setting/reboot";
+    @POST(Constants.Url.Watch.reboot)
+    Call<BaseBean> reboot(@Body RebootPostBean bean);
+
     /**
      * 手表接口
      */

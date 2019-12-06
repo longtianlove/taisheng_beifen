@@ -13,10 +13,17 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
+import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.WatchsListActivity;
+import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
+import com.taisheng.now.http.ApiUtils;
+import com.taisheng.now.http.TaiShengCallback;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 /**
@@ -39,6 +46,9 @@ public class WatchMeFragment extends BaseFragment {
     View ll_xinlv;
     View ll_xueya;
     View ll_kaiguan;
+
+
+    View ll_chongqi;
 
 
     @Override
@@ -132,6 +142,25 @@ public class WatchMeFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WatchMeKaiGuanActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        ll_chongqi=rootView.findViewById(R.id.ll_chongqi);
+        ll_chongqi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                RebootPostBean bean=new RebootPostBean();
+//                ApiUtils.getApiService().reboot(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
 
