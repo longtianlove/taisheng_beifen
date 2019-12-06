@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.taisheng.now.Constants;
+import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragmentActivity;
@@ -28,7 +29,10 @@ import com.taisheng.now.bussiness.me.MeFragment;
 import com.taisheng.now.bussiness.message.MessageFragment;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
+import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;
 import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstFragment;
 import com.taisheng.now.bussiness.watch.watchme.WatchMeFragment;
 import com.taisheng.now.bussiness.watch.watchyujing.ThreadUtil;
@@ -38,6 +42,10 @@ import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.SPUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -64,6 +72,9 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
 
 
     View toolBar;
+
+
+    View iv_weidu;
 
 
     @Override
@@ -109,7 +120,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
         iv_tab_first.setSelected(true);
         toolBar.setVisibility(View.GONE);
 
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
         ThreadUtil.open_gps_donot_check_Thread(300000);
 
     }
@@ -125,6 +136,51 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
         tv_tab_doctor = (TextView) findViewById(R.id.tv_tab_doctor);
         tv_tab_message = findViewById(R.id.tv_tab_message);
 
+        iv_weidu=findViewById(R.id.iv_weidu);
+
+
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 0, sticky = true)
+    public void getYujingxinxi(EventManage.getYujingxinxi event) {
+
+        initData();
+
+    }
+
+
+    void initData() {
+        YuJingListPostBean bean = new YuJingListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = 1;
+        bean.pageSize = 10;
+        bean.clientId = WatchInstance.getInstance().deviceId;
+        ApiUtils.getApiService().getWatchWarningAll(bean).enqueue(new TaiShengCallback<BaseBean<YujingResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<YujingResultBean>> response, BaseBean<YujingResultBean> message) {
+
+
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            Yujingbean bean=message.result.records.get(0);
+                            if ("0".equals(bean.status)) {
+                                iv_weidu.setVisibility(View.INVISIBLE);
+                            } else {
+                                iv_weidu.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<YujingResultBean>> call, Throwable t) {
+
+            }
+        });
 
     }
 
@@ -277,7 +333,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
 
