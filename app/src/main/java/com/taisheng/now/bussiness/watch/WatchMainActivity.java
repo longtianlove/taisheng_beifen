@@ -136,7 +136,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
         tv_tab_doctor = (TextView) findViewById(R.id.tv_tab_doctor);
         tv_tab_message = findViewById(R.id.tv_tab_message);
 
-        iv_weidu=findViewById(R.id.iv_weidu);
+        iv_weidu = findViewById(R.id.iv_weidu);
 
 
     }
@@ -146,6 +146,17 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
     public void getYujingxinxi(EventManage.getYujingxinxi event) {
 
         initData();
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 0, sticky = true)
+    public void getYujingxinxi(EventManage.tongzhiWeidu event) {
+        if ("0".equals(event.weidu)) {
+            iv_weidu.setVisibility(View.INVISIBLE);
+        } else {
+            iv_weidu.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
@@ -165,7 +176,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         if (message.result.records != null && message.result.records.size() > 0) {
-                            Yujingbean bean=message.result.records.get(0);
+                            Yujingbean bean = message.result.records.get(0);
                             if ("0".equals(bean.status)) {
                                 iv_weidu.setVisibility(View.INVISIBLE);
                             } else {
@@ -283,7 +294,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 //        if ("HealthCheckResultActivity".equals(intent.getStringExtra("fromwhere"))) {
-            showFragment(0);
+        showFragment(0);
 //        }
     }
 

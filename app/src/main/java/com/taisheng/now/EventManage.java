@@ -83,5 +83,8 @@ public class EventManage {
     public static class getYujingxinxi{
 
     }
+    public static class tongzhiWeidu{
+        public String weidu="0";
+    }
 
 }

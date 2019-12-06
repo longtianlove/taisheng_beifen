@@ -160,6 +160,10 @@ public class WatchYujingFragment extends BaseFragment {
                             lv_doctors.setLoading(false);
                             if (PAGE_NO == 1) {
                                 madapter.mData.clear();
+                                Yujingbean bean1=message.result.records.get(0);
+                                EventManage.tongzhiWeidu event=new EventManage.tongzhiWeidu();
+                                event.weidu=bean1.status;
+                               EventBus.getDefault().post(event);
                             }
                             //有消息
                             PAGE_NO++;

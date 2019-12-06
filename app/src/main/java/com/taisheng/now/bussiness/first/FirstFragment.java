@@ -49,6 +49,8 @@ import com.taisheng.now.bussiness.healthfiles.HealthCheckActivity;
 import com.taisheng.now.bussiness.article.ArticleContentActivity;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.BindWatchsActivity;
+import com.taisheng.now.bussiness.watch.WatchInstance;
+import com.taisheng.now.bussiness.watch.WatchMainActivity;
 import com.taisheng.now.bussiness.watch.WatchsListActivity;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
@@ -273,6 +275,17 @@ public class FirstFragment extends BaseFragment {
                                 if (message == null || message.result.records == null || message.result.records.size() == 0) {
                                     //跳转到绑定手表页
                                     Intent intent = new Intent(getActivity(), BindWatchsActivity.class);
+                                    startActivity(intent);
+                                } else if ( message.result.records.size() == 1){
+                                    WatchListBean bean1=message.result.records.get(0);
+                                    WatchInstance.getInstance().deviceId = bean1.clientId;
+                                    WatchInstance.getInstance().deviceNickName = bean1.nickName;
+                                    WatchInstance.getInstance().relationShip = bean1.terminalRelationship;
+                                    //todo 数据给全
+//                    WatchInstance.getInstance().realName = bean.realName;
+//                    WatchInstance.getInstance().idcard = bean.idcard;
+//                    WatchInstance.getInstance().phoneNumber = bean.phoneNumber;
+                                    Intent intent = new Intent(getActivity(), WatchMainActivity.class);
                                     startActivity(intent);
                                 } else {
                                     Intent intent = new Intent(getActivity(), WatchsListActivity.class);
