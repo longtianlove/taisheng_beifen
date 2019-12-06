@@ -142,9 +142,12 @@ public interface ApiService {
 
 
     //重启
-    public static final String reboot = "jeecg-boot/app/watch/setting/reboot";
     @POST(Constants.Url.Watch.reboot)
     Call<BaseBean> reboot(@Body RebootPostBean bean);
+
+    @POST(Constants.Url.Watch.restoreFactorySettings)
+    Call<BaseBean> restoreFactorySettings(@Body RebootPostBean bean);
+
 
     /**
      * 手表接口

@@ -49,6 +49,7 @@ public class WatchMeFragment extends BaseFragment {
 
 
     View ll_chongqi;
+    View ll_huifuchuchang;
 
 
     @Override
@@ -83,7 +84,7 @@ public class WatchMeFragment extends BaseFragment {
                 getActivity().finish();
             }
         });
-        tv_change_device=rootView.findViewById(R.id.tv_change_device);
+        tv_change_device = rootView.findViewById(R.id.tv_change_device);
         tv_change_device.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +111,7 @@ public class WatchMeFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        ll_chiyao=rootView.findViewById(R.id.ll_chiyao);
+        ll_chiyao = rootView.findViewById(R.id.ll_chiyao);
         ll_chiyao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +119,7 @@ public class WatchMeFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        ll_xinlv=rootView.findViewById(R.id.ll_xinlv);
+        ll_xinlv = rootView.findViewById(R.id.ll_xinlv);
         ll_xinlv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +128,7 @@ public class WatchMeFragment extends BaseFragment {
             }
         });
 
-        ll_xueya=rootView.findViewById(R.id.ll_xueya);
+        ll_xueya = rootView.findViewById(R.id.ll_xueya);
         ll_xueya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,12 +146,31 @@ public class WatchMeFragment extends BaseFragment {
             }
         });
 
-        ll_chongqi=rootView.findViewById(R.id.ll_chongqi);
+        ll_chongqi = rootView.findViewById(R.id.ll_chongqi);
         ll_chongqi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                RebootPostBean bean=new RebootPostBean();
 //                ApiUtils.getApiService().reboot(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                    }
+//                });
+            }
+        });
+        ll_huifuchuchang = rootView.findViewById(R.id.ll_huifuchuchang);
+        ll_huifuchuchang.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //                RebootPostBean bean=new RebootPostBean();
+//                ApiUtils.getApiService().restoreFactorySettings(bean).enqueue(new TaiShengCallback<BaseBean>() {
 //                    @Override
 //                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
 //

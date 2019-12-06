@@ -196,6 +196,10 @@ public class Constants {
             //重启接口
             public static final String reboot = "jeecg-boot/app/watch/setting/reboot";
 
+            //            恢复出厂设置
+            public static final String restoreFactorySettings = "jeecg-boot/app/watch/setting/restoreFactorySettings";
+
+
         }
 
 
