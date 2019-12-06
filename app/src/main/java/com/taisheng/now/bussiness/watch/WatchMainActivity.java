@@ -31,6 +31,7 @@ import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstFragment;
 import com.taisheng.now.bussiness.watch.watchme.WatchMeFragment;
+import com.taisheng.now.bussiness.watch.watchyujing.ThreadUtil;
 import com.taisheng.now.bussiness.watch.watchyujing.WatchYujingFragment;
 import com.taisheng.now.chat.ChatManagerInstance;
 import com.taisheng.now.http.ApiUtils;
@@ -109,7 +110,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
         toolBar.setVisibility(View.GONE);
 
 //        EventBus.getDefault().register(this);
-
+        ThreadUtil.open_gps_donot_check_Thread(300000);
 
     }
 

@@ -79,4 +79,9 @@ public class EventManage {
         public double longitude;
     }
 
+
+    public static class getYujingxinxi{
+
+    }
+
 }

@@ -20,6 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.tabs.TabLayout;
 import com.taisheng.now.Constants;
+import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
@@ -43,6 +44,10 @@ import com.taisheng.now.view.DoctorLabelWrapLayout;
 import com.taisheng.now.view.ScoreStar;
 import com.taisheng.now.view.TaishengListView;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -123,6 +128,14 @@ public class WatchYujingFragment extends BaseFragment {
             }
         });
 
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 0, sticky = true)
+    public void getYujingxinxi(EventManage.getYujingxinxi event) {
+        PAGE_NO = 1;
+        initData();
 
     }
 
@@ -231,10 +244,10 @@ public class WatchYujingFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
 
-                    YujingxinxiSetYiduPostBean bean1=new YujingxinxiSetYiduPostBean();
-                    bean1.userId=UserInstance.getInstance().getUid();
-                    bean1.token=UserInstance.getInstance().getToken();
-                    bean1.id=bean.id;
+                    YujingxinxiSetYiduPostBean bean1 = new YujingxinxiSetYiduPostBean();
+                    bean1.userId = UserInstance.getInstance().getUid();
+                    bean1.token = UserInstance.getInstance().getToken();
+                    bean1.id = bean.id;
                     ApiUtils.getApiService().watchWarningupdateBykey(bean1).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -255,7 +268,6 @@ public class WatchYujingFragment extends BaseFragment {
 
                         }
                     });
-
 
 
                 }
@@ -301,9 +313,10 @@ public class WatchYujingFragment extends BaseFragment {
         }
     }
 
+
     public void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
 
     }
 }
