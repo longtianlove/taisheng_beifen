@@ -103,6 +103,7 @@ import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.XinlvXueyaYujingPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.YujingxinxiSetYiduPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
@@ -188,6 +189,9 @@ public interface ApiService {
     Call<BaseBean> insertSosContactSetting(@Body InsertSosJinjilianxirenPostBean bean);
 
 
+    @POST(Constants.Url.Watch.watchWarningupdateBykey)
+    Call<BaseBean> watchWarningupdateBykey(@Body YujingxinxiSetYiduPostBean bean);
+
 
     @POST(Constants.Url.Watch.setWatchREMIND)
     Call<BaseBean> setWatchREMIND(@Body SetNaozhongPostBean bean);
@@ -220,8 +224,6 @@ public interface ApiService {
     //免打扰开关
     @POST(Constants.Url.Watch.notDisturbSwitchSetting)
     Call<BaseBean> notDisturbSwitchSetting(@Body KaiGuanPostBean bean);
-
-
 
 
     @POST(Constants.Url.Watch.getWatchWarning)

@@ -29,6 +29,7 @@ import com.taisheng.now.bussiness.doctor.DoctorFragment;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.YujingxinxiSetYiduPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;
 import com.taisheng.now.bussiness.watch.watchfirst.JibuFragment;
@@ -219,20 +220,43 @@ public class WatchYujingFragment extends BaseFragment {
                 util.tv_jiancetongzhi = convertView.findViewById(R.id.tv_jiancetongzhi);
                 util.tv_time = convertView.findViewById(R.id.tv_time);
                 util.tv_message = convertView.findViewById(R.id.tv_message);
+                util.iv_weidu = convertView.findViewById(R.id.iv_weidu);
                 convertView.setTag(util);
             } else {
                 util = (DoctorAdapter.Util) convertView.getTag();
             }
             Yujingbean bean = mData.get(position);
+            Util finalUtil = util;
             util.ll_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), WatchMeYujingxinxiXiangqingActivity.class);
-                    intent.putExtra("warningType", bean.warningContent);
-                    intent.putExtra("message", bean.warningContent);
-                    intent.putExtra("createTime", bean.createTime);
 
-                    startActivity(intent);
+                    YujingxinxiSetYiduPostBean bean1=new YujingxinxiSetYiduPostBean();
+                    bean1.userId=UserInstance.getInstance().getUid();
+                    bean1.token=UserInstance.getInstance().getToken();
+                    bean1.id=bean.id;
+                    ApiUtils.getApiService().watchWarningupdateBykey(bean1).enqueue(new TaiShengCallback<BaseBean>() {
+                        @Override
+                        public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                            switch (message.code) {
+                                case Constants.HTTP_SUCCESS:
+                                    finalUtil.iv_weidu.setVisibility(View.INVISIBLE);
+                                    Intent intent = new Intent(getActivity(), WatchMeYujingxinxiXiangqingActivity.class);
+                                    intent.putExtra("warningType", bean.warningContent);
+                                    intent.putExtra("message", bean.warningContent);
+                                    intent.putExtra("createTime", bean.createTime);
+                                    startActivity(intent);
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onFail(Call<BaseBean> call, Throwable t) {
+
+                        }
+                    });
+
+
 
                 }
             });
@@ -257,6 +281,12 @@ public class WatchYujingFragment extends BaseFragment {
                     break;
             }
             util.tv_jiancetongzhi.setText(temp);
+
+            if ("0".equals(bean.status)) {
+                util.iv_weidu.setVisibility(View.INVISIBLE);
+            } else {
+                util.iv_weidu.setVisibility(View.VISIBLE);
+            }
             return convertView;
         }
 
@@ -266,6 +296,7 @@ public class WatchYujingFragment extends BaseFragment {
             TextView tv_jiancetongzhi;
             TextView tv_time;
             TextView tv_message;
+            View iv_weidu;
 
         }
     }

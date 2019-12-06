@@ -179,6 +179,11 @@ public class Constants {
 
             //            APP-【SOS增加】联系人
             public static final String insertSosContactSetting = "jeecg-boot/app/watch/setting/insertSosContactSetting";
+
+
+            //            手表预警记录-修改阅读状态
+            public static final String watchWarningupdateBykey = "jeecg-boot/app/watchWarning/updateBykey";
+
         }
 
 
