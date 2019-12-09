@@ -124,7 +124,8 @@ public class JibuFragment extends BaseFragment {
                             for (int i = 0; i < message.result.records.size(); i++) {
                                 list.add(new Entry(i, Integer.parseInt(message.result.records.get(i).stepNum)));
                                 String[] temp = message.result.records.get(i).createTime.split(" ");
-                                days.add(temp[0]);
+                                String[] temp1=temp[0].split("-");
+                                days.add(temp1[1]+"-"+temp1[2]);
 
                             }
                             //自定义x轴显示
@@ -178,7 +179,8 @@ public class JibuFragment extends BaseFragment {
                             for (int i = 0; i < message.result.records.size(); i++) {
                                 list_month.add(new Entry(i, Integer.parseInt(message.result.records.get(i).stepNum)));
                                 String[] temp = message.result.records.get(i).createTime.split(" ");
-                                days.add(temp[0]);
+                                String[] temp1=temp[0].split("-");
+                                days.add(temp1[1]+"-"+temp1[2]);
 
                             }
 

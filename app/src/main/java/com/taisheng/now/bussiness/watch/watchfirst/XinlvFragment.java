@@ -96,7 +96,7 @@ public class XinlvFragment extends BaseFragment {
                             list.clear();
                             ArrayList<String> days = new ArrayList<>();
                             for (int i = 0; i < message.result.records.size(); i++) {
-                                list.add(new Entry(i, message.result.records.get(i).heartNum));
+                                list.add(new Entry(i, (int)message.result.records.get(i).heartNum));
                                 String[] temp=message.result.records.get(i).createTime.split(" ");
                                 days.add(temp[1]);
 
