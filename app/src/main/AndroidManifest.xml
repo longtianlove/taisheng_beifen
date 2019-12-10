@@ -78,6 +78,12 @@
     <!-- 这个权限用于访问GPS定位-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 
+
+    <!-- Android O之后开启前台服务需要申请该权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- Android Q之后，后台定位需要申请该权限 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
     <application
         android:name="com.taisheng.now.SampleApplication"
         android:allowBackup="true"
@@ -94,6 +100,13 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Zk2Bjz21kg9zykDGWl4BY69Lp03KZvuZ"></meta-data>
+
+
+        <service
+            android:name="com.baidu.trace.LBSTraceService"
+            android:enabled="true"
+            android:process=":remote">
+        </service>
 
         <service
             android:name="com.baidu.location.f"
@@ -402,6 +415,17 @@
 
 
         </activity>
+
+        <activity
+            android:name="com.taisheng.now.bussiness.watch.watchfirst.HistoryGuijiActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+
+
+        </activity>
+
         <activity
             android:name="com.taisheng.now.bussiness.watch.watchfirst.WatchFirstAnQuanWeiLanActivity"
             android:configChanges="keyboardHidden|orientation"
