@@ -63,7 +63,7 @@ public class JibuFragment extends BaseFragment {
         ll_guijiditu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WatchFirstGuijiActivity.class);
+                Intent intent = new Intent(getActivity(), HistoryGuijiActivity.class);
                 startActivity(intent);
             }
         });

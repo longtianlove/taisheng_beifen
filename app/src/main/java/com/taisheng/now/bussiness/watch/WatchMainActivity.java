@@ -40,6 +40,7 @@ import com.taisheng.now.bussiness.watch.watchyujing.WatchYujingFragment;
 import com.taisheng.now.chat.ChatManagerInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.map.TrackInstance;
 import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.SPUtil;
 
@@ -122,7 +123,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
 
         EventBus.getDefault().register(this);
         ThreadUtil.open_gps_donot_check_Thread(300000);
-
+        TrackInstance.getInstance().init(this);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

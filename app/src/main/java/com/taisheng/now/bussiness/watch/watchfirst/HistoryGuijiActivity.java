@@ -68,7 +68,7 @@ public class HistoryGuijiActivity extends BaseActivity implements ActivityCompat
         //获取地图控件引用
         mMapView = (MapView) findViewById(R.id.bmapView);
 //        NewMapInstance.getInstance().init(mMapView);
-        TrackInstance.getInstance().init(this,mMapView.getMap());
+        TrackInstance.getInstance().queryHistoryTrack(this,mMapView.getMap());
         iv_dingwei = findViewById(R.id.iv_dingwei);
         iv_dingwei.setOnClickListener(new View.OnClickListener() {
 

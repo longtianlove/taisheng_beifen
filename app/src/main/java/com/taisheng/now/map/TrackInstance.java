@@ -28,8 +28,9 @@ public class TrackInstance {
         return instance;
     }
 
-
-    public void init(Context context, BaiduMap mBaiduMap) {
+    LBSTraceClient mTraceClient;
+    HistoryTrackRequest historyTrackRequest;
+    public void init(Context context) {
         // 请求标识
         int tag = 1;
         // 轨迹服务ID
@@ -39,11 +40,11 @@ public class TrackInstance {
         // 初始化轨迹服务
         Trace mTrace = new Trace(serviceId, entityName, false);
 // 初始化轨迹服务客户端
-        LBSTraceClient mTraceClient = new LBSTraceClient(context);
+        mTraceClient = new LBSTraceClient(context);
 
 
         // 创建历史轨迹请求实例
-        HistoryTrackRequest historyTrackRequest = new HistoryTrackRequest(tag, serviceId, entityName);
+        historyTrackRequest = new HistoryTrackRequest(tag, serviceId, entityName);
 
         //设置轨迹查询起止时间
 // 开始时间(单位：秒)
@@ -79,40 +80,48 @@ public class TrackInstance {
         historyTrackRequest.setSupplementMode(SupplementMode.driving);
 
 
-        // 初始化轨迹监听器
-        OnTrackListener mTrackListener = new OnTrackListener() {
-            // 历史轨迹回调
-            @Override
-            public void onHistoryTrackCallback(HistoryTrackResponse response) {
-                ArrayList trackPoints=new ArrayList();
-
-                int total = response.getTotal();
-                if (StatusCodes.SUCCESS != response.getStatus()) {
-                    Toast.makeText(context, "结果为：" + response.getMessage(), Toast.LENGTH_SHORT).show();
-                } else if (0 == total) {
-                    Toast.makeText(context, "未查询到历史轨迹", Toast.LENGTH_SHORT).show();
-                } else {
-                    List<TrackPoint> points = response.getTrackPoints();
-                    if (null != points) {
-                        for (TrackPoint trackPoint : points) {
-                            if (!TraceUtil.isZeroPoint(trackPoint.getLocation().getLatitude(),
-                                    trackPoint.getLocation().getLongitude())) {
-                                trackPoints.add(TraceUtil.convertTrace2Map(trackPoint.getLocation()));
-                            }
-                        }
-                    }
-                }
-                TraceUtil traceUtil = new TraceUtil();
-                traceUtil.drawHistoryTrack(mBaiduMap, trackPoints, SortType.asc);
 
 
-            }
-        };
+
+    }
+
+
+   public void queryHistoryTrack(Context context, BaiduMap mBaiduMap){
+       // 初始化轨迹监听器
+       OnTrackListener mTrackListener = new OnTrackListener() {
+           // 历史轨迹回调
+           @Override
+           public void onHistoryTrackCallback(HistoryTrackResponse response) {
+               ArrayList trackPoints=new ArrayList();
+
+               int total = response.getTotal();
+               if (StatusCodes.SUCCESS != response.getStatus()) {
+                   Toast.makeText(context, "结果为：" + response.getMessage(), Toast.LENGTH_SHORT).show();
+               } else if (0 == total) {
+                   Toast.makeText(context, "未查询到历史轨迹", Toast.LENGTH_SHORT).show();
+               } else {
+                   List<TrackPoint> points = response.getTrackPoints();
+                   if (null != points) {
+                       for (TrackPoint trackPoint : points) {
+                           if (!TraceUtil.isZeroPoint(trackPoint.getLocation().getLatitude(),
+                                   trackPoint.getLocation().getLongitude())) {
+                               trackPoints.add(TraceUtil.convertTrace2Map(trackPoint.getLocation()));
+                           }
+                       }
+                   }
+               }
+               TraceUtil traceUtil = new TraceUtil();
+               traceUtil.drawHistoryTrack(mBaiduMap, trackPoints, SortType.asc);
+
+
+           }
+       };
 
 
 // 查询历史轨迹
-        mTraceClient.queryHistoryTrack(historyTrackRequest, mTrackListener);
-    }
+       mTraceClient.queryHistoryTrack(historyTrackRequest, mTrackListener);
+
+   }
 
 
 }
