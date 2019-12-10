@@ -120,4 +120,9 @@ public class WatchInstance {
     public int temp_heartNumMax;
     public int temp_heartNumMin;
 
+
+
+
+    public ArrayList<String> miandaraoList=new ArrayList<>();
+
 }

@@ -1,6 +1,7 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.taisheng.now.bussiness.watch.bean.post.MiandaraoShijianduanPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -44,6 +47,8 @@ public class WatchMianDaraoSettingliActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_watch_miandarao);
+
+
         iv_back = findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,11 +150,77 @@ public class WatchMianDaraoSettingliActivity extends BaseActivity {
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.timeSlot1 = date_tv_start.getText() + "-" + date_tv_end.getText();
-                //todo 埋下
-                bean.timeSlot2 = "";
-                bean.timeSlot3 = "";
-                bean.timeSlot4 = "";
+                String nowTime = date_tv_start.getText() + "-" + date_tv_end.getText();
+
+
+
+                if(!TextUtils.isEmpty(oldtime)){
+                        WatchInstance.getInstance().miandaraoList.remove(position);
+                        WatchInstance.getInstance().miandaraoList.add(position,nowTime);
+                    switch (WatchInstance.getInstance().miandaraoList.size()){
+//                        case 0:
+//                            bean.timeSlot1= WatchInstance.getInstance().miandaraoList.get(0);
+//                            bean.timeSlot2 = "";
+//                            bean.timeSlot3 = "";
+//                            bean.timeSlot4 = "";
+//                            break;
+                        case 1:
+                            bean.timeSlot1=WatchInstance.getInstance().miandaraoList.get(0);
+                            bean.timeSlot2="";
+                            bean.timeSlot3 = "";
+                            bean.timeSlot4 = "";
+                            break;
+                        case 2:
+                            bean.timeSlot1=WatchInstance.getInstance().miandaraoList.get(0);
+                            bean.timeSlot2=WatchInstance.getInstance().miandaraoList.get(1);
+                            bean.timeSlot3 = "";
+                            bean.timeSlot4 = "";
+                            break;
+                        case 3:
+                            bean.timeSlot1=WatchInstance.getInstance().miandaraoList.get(0);
+                            bean.timeSlot2=WatchInstance.getInstance().miandaraoList.get(1);
+                            bean.timeSlot3 = WatchInstance.getInstance().miandaraoList.get(2);
+                            bean.timeSlot4 =  "";
+                            break;
+                        case 4:
+                            bean.timeSlot1=WatchInstance.getInstance().miandaraoList.get(0);
+                            bean.timeSlot2=WatchInstance.getInstance().miandaraoList.get(1);
+                            bean.timeSlot3 = WatchInstance.getInstance().miandaraoList.get(2);
+                            bean.timeSlot4 =  WatchInstance.getInstance().miandaraoList.get(3);
+                            break;
+
+                    }
+                }else{
+                    switch (WatchInstance.getInstance().miandaraoList.size()){
+                        case 0:
+                            bean.timeSlot1= nowTime;
+                            bean.timeSlot2 = "";
+                            bean.timeSlot3 = "";
+                            bean.timeSlot4 = "";
+                            break;
+                        case 1:
+                            bean.timeSlot1=nowTime;
+                            bean.timeSlot2=WatchInstance.getInstance().miandaraoList.get(0);
+                            bean.timeSlot3 = "";
+                            bean.timeSlot4 = "";
+                            break;
+                        case 2:
+                            bean.timeSlot1=nowTime;
+                            bean.timeSlot2=WatchInstance.getInstance().miandaraoList.get(0);
+                            bean.timeSlot3 = WatchInstance.getInstance().miandaraoList.get(1);
+                            bean.timeSlot4 = "";
+                            break;
+                        case 3:
+                            bean.timeSlot1=nowTime;
+                            bean.timeSlot2=WatchInstance.getInstance().miandaraoList.get(0);
+                            bean.timeSlot3 = WatchInstance.getInstance().miandaraoList.get(1);
+                            bean.timeSlot4 =  WatchInstance.getInstance().miandaraoList.get(2);
+                            break;
+                    }
+                }
+
+
+
                 ApiUtils.getApiService().notDisturbSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -177,7 +248,22 @@ public class WatchMianDaraoSettingliActivity extends BaseActivity {
             }
         });
 
+        initData();
+    }
 
+    int position;
+    String oldtime;
+    void initData(){
+        Intent intent=getIntent();
+        oldtime=intent.getStringExtra("time");
+        if(!TextUtils.isEmpty(oldtime)){
+            String temp[]=oldtime.split("-");
+            date_tv_start.setText(temp[0]);
+            date_tv_end.setText(temp[1]);
+        }
+
+
+        position=intent.getIntExtra("position",0);
     }
 
 //    public static String getTime(Date date) {

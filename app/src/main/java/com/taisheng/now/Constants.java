@@ -127,6 +127,9 @@ public class Constants {
             //            闹钟设置-闹钟参数设置
             public static final String setWatchREMIND = "jeecg-boot/app/watchRemind/setWatchREMIND";
 
+
+
+
             //所有的开关状态
             public static final String allSetting = "jeecg-boot/app/watch/setting/allSetting";
 
@@ -153,6 +156,8 @@ public class Constants {
             //免打扰开关
             public static final String notDisturbSwitchSetting = "jeecg-boot/app/watch/setting/notDisturbSwitchSetting";
 
+            //免打扰时间段列表
+            public static final String notDisturbSettingList = "jeecg-boot/app/watch/setting/notDisturbSettingList";
 
             //            心率血压预警设置-查询
             public static final String getWatchWarning = "jeecg-boot/app/watchWarning/getWatchWarning";

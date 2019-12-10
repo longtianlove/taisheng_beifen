@@ -455,6 +455,18 @@
 
         </activity>
 
+        <activity
+            android:name="com.taisheng.now.bussiness.watch.watchme.WatchMiandaoraoListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+
+
+        </activity>
+
+
+
 
         <activity
             android:name="com.taisheng.now.bussiness.watch.watchme.WatchChiyaoXinzengActivity"

@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center|left"
-                    android:text="设定时间"
+                    android:text="免打扰时间"
                     android:textColor="#ff333333"
                     android:textSize="15sp" />
 
