@@ -33,6 +33,7 @@ import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;
+import com.taisheng.now.bussiness.watch.location.WatchLocationFragment;
 import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstFragment;
 import com.taisheng.now.bussiness.watch.watchme.WatchMeFragment;
 import com.taisheng.now.bussiness.watch.watchyujing.ThreadUtil;
@@ -58,16 +59,18 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
 
     private static int mTabID[] = {
             R.id.tab_first,
+            R.id.tab_loaction,
             R.id.tab_doctor,
             R.id.tab_message
     };
 
-    private ImageView iv_tab_first, iv_tab_doctor, iv_tab_message;
-    private TextView tv_tab_first, tv_tab_doctor, tv_tab_message;
+    private ImageView iv_tab_first,iv_tab_location, iv_tab_doctor, iv_tab_message;
+    private TextView tv_tab_first,tv_tab_location, tv_tab_doctor, tv_tab_message;
 
-    private View mTabs[] = {null, null, null};
+    private View mTabs[] = {null, null, null,null};
 
     private WatchFirstFragment firstFragment;
+    private WatchLocationFragment watchLocationFragment;
     private WatchYujingFragment watchYujingFragment;
     private WatchMeFragment messageFragment;
 
@@ -87,12 +90,16 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
         SPUtil.putHome(true);
         initView();
         if (savedInstanceState != null) {
-            firstFragment = (WatchFirstFragment) getSupportFragmentManager().findFragmentByTag(FirstFragment.class.getName());
-            watchYujingFragment = (WatchYujingFragment) getSupportFragmentManager().findFragmentByTag(DoctorFragment.class.getName());
+            firstFragment = (WatchFirstFragment) getSupportFragmentManager().findFragmentByTag(WatchFirstFragment.class.getName());
+            watchLocationFragment= (WatchLocationFragment) getSupportFragmentManager().findFragmentByTag(WatchLocationFragment.class.getName());
+            watchYujingFragment = (WatchYujingFragment) getSupportFragmentManager().findFragmentByTag(WatchYujingFragment.class.getName());
             messageFragment = (WatchMeFragment) getSupportFragmentManager().findFragmentByTag(WatchMeFragment.class.getName());
 
             if (firstFragment == null) {
                 firstFragment = new WatchFirstFragment();
+            }
+            if(watchLocationFragment==null){
+                watchLocationFragment=new WatchLocationFragment();
             }
             if (watchYujingFragment == null) {
                 watchYujingFragment = new WatchYujingFragment();
@@ -103,17 +110,18 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
 
             getSupportFragmentManager().beginTransaction()
                     .show(firstFragment)
+                    .hide(watchLocationFragment)
                     .hide(watchYujingFragment)
                     .hide(messageFragment).commit();
         } else {
             firstFragment = new WatchFirstFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment, FirstFragment.class.getName())
+                    .add(R.id.fragment_container, firstFragment, WatchFirstFragment.class.getName())
                     .show(firstFragment).commit();
         }
 
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             mTabs[i] = findViewById(mTabID[i]);
             mTabs[i].setOnClickListener(this);
         }
@@ -130,10 +138,12 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
     private void initView() {
         toolBar = findViewById(R.id.toolBar);
         iv_tab_first = (ImageView) findViewById(R.id.iv_tab_first);
+        iv_tab_location=findViewById(R.id.iv_tab_location);
         iv_tab_doctor = (ImageView) findViewById(R.id.iv_tab_doctor);
         iv_tab_message = findViewById(R.id.iv_tab_message);
 
         tv_tab_first = (TextView) findViewById(R.id.tv_tab_first);
+        tv_tab_location=findViewById(R.id.tv_tab_location);
         tv_tab_doctor = (TextView) findViewById(R.id.tv_tab_doctor);
         tv_tab_message = findViewById(R.id.tv_tab_message);
 
@@ -200,6 +210,9 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
         if (null != firstFragment) {
             transaction.hide(firstFragment);
         }
+        if(null!=watchLocationFragment){
+            transaction.hide(watchLocationFragment);
+        }
         if (null != watchYujingFragment) {
             transaction.hide(watchYujingFragment);
         }
@@ -209,6 +222,10 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
 
         iv_tab_first.setSelected(false);
         tv_tab_first.setTextColor(getResources().getColor(R.color.tv_tab_color_normal));
+
+        iv_tab_location.setSelected(false);
+        tv_tab_location.setTextColor(getResources().getColor(R.color.tv_tab_color_normal));
+
         iv_tab_doctor.setSelected(false);
         tv_tab_doctor.setTextColor(getResources().getColor(R.color.tv_tab_color_normal));
 
@@ -231,7 +248,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
 
                 if (firstFragment == null) {
                     firstFragment = new WatchFirstFragment();
-                    transaction.add(R.id.fragment_container, firstFragment, FirstFragment.class.getName());
+                    transaction.add(R.id.fragment_container, firstFragment, WatchFirstFragment.class.getName());
                 }
                 transaction.show(firstFragment).commit();
                 toolBar.setVisibility(View.GONE);
@@ -244,7 +261,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
             case 1:
                 if (watchYujingFragment == null) {
                     watchYujingFragment = new WatchYujingFragment();
-                    transaction.add(R.id.fragment_container, watchYujingFragment, DoctorFragment.class.getName());
+                    transaction.add(R.id.fragment_container, watchYujingFragment, WatchYujingFragment.class.getName());
                 }
                 select_index = 1;
 
@@ -255,11 +272,26 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
                 iv_tab_doctor.setSelected(true);
                 tv_tab_doctor.setTextColor(getResources().getColor(R.color.tv_tab_color_select));
                 break;
+            case 2:
+                if (watchLocationFragment == null) {
+                    watchLocationFragment = new WatchLocationFragment();
+                    transaction.add(R.id.fragment_container, watchLocationFragment, WatchLocationFragment.class.getName());
+                }
+                select_index = 2;
+
+
+                transaction
+                        .show(watchLocationFragment).commit();
+                toolBar.setVisibility(View.GONE);
+                iv_tab_location.setSelected(true);
+                tv_tab_location.setTextColor(getResources().getColor(R.color.tv_tab_color_select));
+
+                break;
 
             case 4:
                 if (messageFragment == null) {
                     messageFragment = new WatchMeFragment();
-                    transaction.add(R.id.fragment_container, messageFragment, MessageFragment.class.getName());
+                    transaction.add(R.id.fragment_container, messageFragment, WatchMeFragment.class.getName());
                 }
 //                getLocationWithOneMinute = false;
                 select_index = 4;
@@ -283,7 +315,9 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
             case R.id.tab_doctor:
                 showFragment(1);
                 break;
-
+            case R.id.tab_loaction:
+                showFragment(2);
+                break;
             case R.id.tab_message:
                 showFragment(4);
                 break;
