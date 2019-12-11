@@ -78,7 +78,7 @@ public class TraceUtil {
         polylineOverlay = mBaiduMap.addOverlay(polylineOptions);
 
         OverlayOptions markerOptions =
-                new MarkerOptions().flat(true).anchor(0.5f, 0.5f).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_emotion))
+                new MarkerOptions().flat(true).anchor(0.5f, 0.5f).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_point))
                         .position(points.get(points.size() - 1))
                         .rotate((float) getAngle(points.get(0), points.get(1)));
         mBaiduMap.addOverlay(markerOptions);

@@ -40,9 +40,9 @@ public class TrackInstance {
         long serviceId = 217993;
 
         String deviceId = WatchInstance.getInstance().deviceId;
-        String deviceNumber = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
+//        String deviceNumber = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
         // 设备标识
-        String entityName = deviceNumber;
+        String entityName = deviceId;
 //        String entityName="9613050381";
         // 初始化轨迹服务
         Trace mTrace = new Trace(serviceId, entityName, false);
