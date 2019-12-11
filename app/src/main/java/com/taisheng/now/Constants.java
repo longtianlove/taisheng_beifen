@@ -128,6 +128,8 @@ public class Constants {
             public static final String setWatchREMIND = "jeecg-boot/app/watchRemind/setWatchREMIND";
 
 
+            //            获取最新定位信息
+            public static final String getNewPosition = "jeecg-boot/app/watchUd/getNewPosition";
 
 
             //所有的开关状态

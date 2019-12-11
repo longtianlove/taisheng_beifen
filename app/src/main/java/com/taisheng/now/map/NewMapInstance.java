@@ -114,8 +114,11 @@ public class NewMapInstance extends BDAbstractLocationListener {
 
     }
 
+    public static LatLng shebeiLatLng;
+
+    //设备位置
     public void initStartMarker(LatLng latLng) {
-        startbitmapDescriptor = BitmapDescriptorFactory.fromView(new StartLineAvaterView(SampleAppLike.mcontext));
+        startbitmapDescriptor = BitmapDescriptorFactory.fromView(new ShebeiAvaterView(SampleAppLike.mcontext));
         OverlayOptions options = new MarkerOptions()
                 .anchor(0.5f, 1f)
                 .icon(startbitmapDescriptor)
@@ -155,20 +158,20 @@ public class NewMapInstance extends BDAbstractLocationListener {
         }
     }
 
+    public void setWatchCenter(){
+        float f = mBaiduMap.getMaxZoomLevel();//19.0
+        MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(shebeiLatLng, f - 2);
+        mBaiduMap.animateMapStatus(u);
+    }
+
 
     /**
      * 刷新地图
      */
     public void refreshMap() {
         mBaiduMap.clear();
-
-
-        addRouteLine(routeList);
-        initStartMarker(routeList.get(0));
-        initendMarker(routeList.get(routeList.size() - 1));
+        initStartMarker(shebeiLatLng);
         initPhoneMarker();
-
-
     }
 
 

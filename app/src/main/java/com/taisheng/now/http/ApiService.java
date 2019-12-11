@@ -113,6 +113,7 @@ import com.taisheng.now.bussiness.watch.bean.result.ChiyaoLIstResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.MiandaraoListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.NewLocationBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.SosListResultBean;
@@ -220,6 +221,10 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.setWatchREMIND)
     Call<BaseBean> setWatchREMIND(@Body SetNaozhongPostBean bean);
+
+
+    @POST(Constants.Url.Watch.getNewPosition)
+    Call<BaseBean<NewLocationBean>> getNewPosition(@Body BaseWatchBean bean);
 
     @POST(Constants.Url.Watch.allSetting)
     Call<BaseBean<AllSettingResultBean>> allSetting(@Body AllSettingPostBean bean);

@@ -19,11 +19,13 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
+import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.YujingxinxiSetYiduPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.NewLocationBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;
 import com.taisheng.now.bussiness.watch.watchfirst.HistoryGuijiActivity;
@@ -56,6 +58,7 @@ public class WatchLocationFragment extends BaseFragment {
 
     View iv_dianziweilan;
     View iv_dingwei;
+    View iv_shebei_location;
 
     private MapView mMapView = null;
 
@@ -70,7 +73,6 @@ public class WatchLocationFragment extends BaseFragment {
 
         return rootView;
     }
-
 
 
     void initView(View rootView) {
@@ -89,26 +91,26 @@ public class WatchLocationFragment extends BaseFragment {
 //                startActivity(intent);
 //            }
 //        });
-        iv_dianziweilan=rootView.findViewById(R.id.iv_dianziweilan);
-        iv_dianziweilan.setOnClickListener(new View.OnClickListener(){
+        iv_dianziweilan = rootView.findViewById(R.id.iv_dianziweilan);
+        iv_dianziweilan.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), WatchFirstAnQuanWeiLanActivity.class);
+                Intent intent = new Intent(getActivity(), WatchFirstAnQuanWeiLanActivity.class);
                 startActivity(intent);
             }
         });
 
-        iv_guiji=rootView.findViewById(R.id.iv_guiji);
+        iv_guiji = rootView.findViewById(R.id.iv_guiji);
         iv_guiji.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), HistoryGuijiActivity.class);
+                Intent intent = new Intent(getActivity(), HistoryGuijiActivity.class);
                 startActivity(intent);
             }
         });
         //获取地图控件引用
-        mMapView = (MapView)rootView.findViewById(R.id.bmapView);
+        mMapView = (MapView) rootView.findViewById(R.id.bmapView);
         NewMapInstance.getInstance().init(mMapView);
 
         iv_dingwei = rootView.findViewById(R.id.iv_dingwei);
@@ -120,9 +122,60 @@ public class WatchLocationFragment extends BaseFragment {
             }
         });
 
+        iv_shebei_location = rootView.findViewById(R.id.iv_shebei_location);
+        iv_shebei_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseWatchBean bean = new BaseWatchBean();
+                bean.userId = UserInstance.getInstance().getUid();
+                bean.token = UserInstance.getInstance().getToken();
+                bean.clientId = WatchInstance.getInstance().deviceId;
+                ApiUtils.getApiService().getNewPosition(bean).enqueue(new TaiShengCallback<BaseBean<NewLocationBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseBean<NewLocationBean>> response, BaseBean<NewLocationBean> message) {
+                        switch (message.code) {
+                            case Constants.HTTP_SUCCESS:
+                                NewLocationBean newLocationBean = message.result;
+                                LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
+                                NewMapInstance.shebeiLatLng=NewMapInstance.converterLatLng(latLng);
+                                NewMapInstance.getInstance().refreshMap();
+                                NewMapInstance.getInstance().setWatchCenter();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Call<BaseBean<NewLocationBean>> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        BaseWatchBean bean = new BaseWatchBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.clientId = WatchInstance.getInstance().deviceId;
+        ApiUtils.getApiService().getNewPosition(bean).enqueue(new TaiShengCallback<BaseBean<NewLocationBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<NewLocationBean>> response, BaseBean<NewLocationBean> message) {
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        NewLocationBean newLocationBean = message.result;
+                        LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
+                        NewMapInstance.shebeiLatLng=NewMapInstance.converterLatLng(latLng);
+                        NewMapInstance.getInstance().refreshMap();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<NewLocationBean>> call, Throwable t) {
+
+            }
+        });
         NewMapInstance.getInstance().startLoc();
     }
-
 
 
     @Override
@@ -130,7 +183,6 @@ public class WatchLocationFragment extends BaseFragment {
         super.onResume();
         //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mMapView.onResume();
-
 
 
     }

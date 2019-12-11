@@ -66,6 +66,14 @@
                 android:layout_height="match_parent"
                 android:clickable="true" />
 
+            <ImageView
+                android:id="@+id/iv_shebei_location"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="60dp"
+                android:src="@drawable/icon_shebeilocation"></ImageView>
 
             <ImageView
                 android:id="@+id/iv_dianziweilan"

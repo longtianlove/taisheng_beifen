@@ -35,10 +35,16 @@
 
         </LinearLayout>
 
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee"
+            ></View>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:background="#e6fafafa"
+            android:background="#fff"
             android:orientation="horizontal">
 
             <LinearLayout
