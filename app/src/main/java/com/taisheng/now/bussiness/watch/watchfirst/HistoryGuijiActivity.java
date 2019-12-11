@@ -20,6 +20,7 @@ import com.taisheng.now.bussiness.watch.bean.result.GuijiBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.map.HistoryGuijiMapInstance;
 import com.taisheng.now.map.NewMapInstance;
 import com.taisheng.now.map.TrackInstance;
 
@@ -67,14 +68,14 @@ public class HistoryGuijiActivity extends BaseActivity implements ActivityCompat
 
         //获取地图控件引用
         mMapView = (MapView) findViewById(R.id.bmapView);
-//        NewMapInstance.getInstance().init(mMapView);
+        HistoryGuijiMapInstance.getInstance().init(mMapView);
         TrackInstance.getInstance().queryHistoryTrack(this,mMapView.getMap());
         iv_dingwei = findViewById(R.id.iv_dingwei);
         iv_dingwei.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                NewMapInstance.getInstance().startLoc();
+                HistoryGuijiMapInstance.getInstance().startLoc();
             }
         });
 
