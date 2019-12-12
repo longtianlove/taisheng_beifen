@@ -140,6 +140,46 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_tongxunlu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_tongxunlu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginLeft="9dp"
+                android:gravity="center"
+                android:text="通讯录设置"
+                android:textColor="#ff666666"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/jiantou_hui" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="11dp"
+            android:background="#EEEEEE" />
 
         <LinearLayout
             android:id="@+id/ll_naozhong"

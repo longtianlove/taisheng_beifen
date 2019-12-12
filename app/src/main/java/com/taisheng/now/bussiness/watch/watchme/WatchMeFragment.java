@@ -40,6 +40,8 @@ public class WatchMeFragment extends BaseFragment {
     TextView tv_zhanghao;
     View tv_qiandao;
 
+
+    View ll_tongxunlu;
     View ll_naozhong;
     View ll_chiyao;
 
@@ -101,6 +103,15 @@ public class WatchMeFragment extends BaseFragment {
         tv_nickname.setOnClickListener(toMeMessageActivityListener);
         tv_qiandao = rootView.findViewById(R.id.tv_qiandao);
         tv_qiandao.setOnClickListener(toMeMessageActivityListener);
+
+        ll_tongxunlu=rootView.findViewById(R.id.ll_tongxunlu);
+        ll_tongxunlu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WatchMeTongxunluActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         ll_naozhong = rootView.findViewById(R.id.ll_naozhong);

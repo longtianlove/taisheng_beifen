@@ -397,6 +397,18 @@
         </activity>
 
         <activity
+            android:name="com.taisheng.now.bussiness.watch.watchme.WatchMeTongxunluActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+
+
+        </activity>
+
+
+
+        <activity
             android:name="com.taisheng.now.bussiness.watch.BindMessageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
@@ -494,6 +506,15 @@
 
         <activity
             android:name="com.taisheng.now.bussiness.watch.watchme.WatchChiyaoXinzengActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+
+
+        </activity>
+        <activity
+            android:name="com.taisheng.now.bussiness.watch.watchme.WatchMeTongxunluxinzengActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"

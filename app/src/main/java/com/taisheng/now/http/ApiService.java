@@ -93,6 +93,7 @@ import com.taisheng.now.bussiness.watch.bean.post.AnquanweiilanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.BindDevicePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ChiyaolistPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
 import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.KaiGuanPostBean;
@@ -100,6 +101,7 @@ import com.taisheng.now.bussiness.watch.bean.post.MiandaraoShijianduanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.SetTongxunluPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.post.SosListpostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
@@ -117,6 +119,7 @@ import com.taisheng.now.bussiness.watch.bean.result.NewLocationBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.SosListResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
@@ -139,8 +142,6 @@ import retrofit2.http.Part;
  * Created by long
  */
 public interface ApiService {
-
-
 
 
     //重启
@@ -195,6 +196,10 @@ public interface ApiService {
     @POST(Constants.Url.Watch.addwatchElectronicFence)
     Call<BaseBean> addwatchElectronicFence(@Body AnquanweiilanPostBean bean);
 
+    @POST(Constants.Url.Watch.getWatchPhbxList)
+    Call<BaseBean<TongxunluResultBean>> getWatchPhbxList(@Body DianhuabenPostbean bean);
+
+
     @POST(Constants.Url.Watch.getWatchREMINDList)
     Call<BaseBean<NaozhongListResultBean>> getWatchREMINDList(@Body BaseWatchBean bean);
 
@@ -217,6 +222,11 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.setWatchTakepills)
     Call<BaseBean> setWatchTakepills(@Body SetChiyaoPostBean bean);
+
+    public static final String setWatchPhbx = "jeecg-boot/app/watchPhbx/setWatchPhbx";
+
+    @POST(Constants.Url.Watch.setWatchPhbx)
+    Call<BaseBean> setWatchPhbx(@Body SetTongxunluPostBean bean);
 
 
     @POST(Constants.Url.Watch.setWatchREMIND)
@@ -256,7 +266,7 @@ public interface ApiService {
     Call<BaseBean> notDisturbSwitchSetting(@Body KaiGuanPostBean bean);
 
     @POST(Constants.Url.Watch.notDisturbSettingList)
-     Call<BaseBean<MiandaraoListResultBean>> notDisturbSwitchSetting(@Body BaseWatchBean bean);
+    Call<BaseBean<MiandaraoListResultBean>> notDisturbSwitchSetting(@Body BaseWatchBean bean);
 
 
     @POST(Constants.Url.Watch.getWatchWarning)

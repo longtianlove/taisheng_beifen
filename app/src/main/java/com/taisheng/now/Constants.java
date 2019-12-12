@@ -122,6 +122,10 @@ public class Constants {
             public static final String addwatchElectronicFence = "jeecg-boot/app/watchUd/WatchUdSetting";
 
 
+            //            获取手表老人电话本-批量获取
+            public static final String getWatchPhbxList = "jeecg-boot/app/watchPhbx/getWatchPhbxList";
+
+
             //            闹钟设置-批量获取
             public static final String getWatchREMINDList = "jeecg-boot/app/watchRemind/getWatchREMINDList";
             //            闹钟设置-闹钟参数设置
@@ -198,6 +202,22 @@ public class Constants {
 
             //            语音版吃药提醒-设置
             public static final String setWatchTakepills = "jeecg-boot/app/watchTakepills/setWatchTakepills";
+
+
+
+//            设置老人版电话本
+            public static final String setWatchPhbx = "jeecg-boot/app/watchPhbx/setWatchPhbx";
+
+
+
+
+
+
+
+
+
+
+
 
 
             //重启接口
