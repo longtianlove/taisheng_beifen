@@ -104,6 +104,7 @@ import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetTongxunluPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.post.SosListpostBean;
+import com.taisheng.now.bussiness.watch.bean.post.TongxunluDeletePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.XinlvXueyaYujingPostBean;
@@ -198,6 +199,10 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.getWatchPhbxList)
     Call<BaseBean<TongxunluResultBean>> getWatchPhbxList(@Body DianhuabenPostbean bean);
+
+
+    @POST(Constants.Url.Watch.setWatchDphbx)
+    Call<BaseBean> setWatchDphbx(@Body TongxunluDeletePostBean bean);
 
 
     @POST(Constants.Url.Watch.getWatchREMINDList)

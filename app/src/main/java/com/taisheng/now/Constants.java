@@ -125,6 +125,10 @@ public class Constants {
             //            获取手表老人电话本-批量获取
             public static final String getWatchPhbxList = "jeecg-boot/app/watchPhbx/getWatchPhbxList";
 
+//            老人版电话本删除
+
+            public static final String setWatchDphbx = "jeecg-boot/app/watchPhbx/setWatchDphbx";
+
 
             //            闹钟设置-批量获取
             public static final String getWatchREMINDList = "jeecg-boot/app/watchRemind/getWatchREMINDList";

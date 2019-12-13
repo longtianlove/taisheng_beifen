@@ -21,12 +21,14 @@ import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.TongxunluDeletePostBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluliistBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.WithScrolleViewListView;
 
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ import retrofit2.Response;
 
 public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     ImageView iv_back;
+
+    TextView tv_bianji;
 
     View iv_addnaozhong;
 
@@ -55,6 +59,8 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
 
     }
 
+    boolean bianji = false;
+
     void initView() {
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
@@ -64,12 +70,29 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
             }
         });
 
+        tv_bianji = findViewById(R.id.tv_bianji);
+        tv_bianji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                bianji = !bianji;
+                if (bianji) {
+                    tv_bianji.setText("完成");
+                } else {
+                    tv_bianji.setText("编辑");
+
+                }
+                madapter.notifyDataSetChanged();
+
+
+            }
+        });
         iv_addnaozhong = findViewById(R.id.iv_addnaozhong);
         iv_addnaozhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
-                intent.putExtra("nowphxNum",nowphxName+1);
+                intent.putExtra("nowphxNum", nowphxName + 1);
                 startActivity(intent);
             }
         });
@@ -87,7 +110,7 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
         initData();
     }
 
-    public int nowphxName =0;
+    public int nowphxName = 0;
 
     void initData() {
         DianhuabenPostbean bean = new DianhuabenPostbean();
@@ -101,11 +124,11 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
             public void onSuccess(Response<BaseBean<TongxunluResultBean>> response, BaseBean<TongxunluResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result != null && message.result.records.size() > 0) {
+                        if (message.result != null && message.result.records.size() >=0) {
                             if (message.result.records.size() >= 10) {
                                 iv_addnaozhong.setVisibility(View.GONE);
                             } else {
-                                nowphxName=(message.result.records.size());
+                                nowphxName = (message.result.records.size());
                                 iv_addnaozhong.setVisibility(View.VISIBLE);
                             }
                             //有消息
@@ -175,6 +198,7 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_tongxunlu, null);
                 util.ll_all = convertView.findViewById(R.id.ll_all);
+                util.iv_delete = convertView.findViewById(R.id.iv_delete);
                 util.tv_name = convertView.findViewById(R.id.tv_name);
                 util.tv_phone = convertView.findViewById(R.id.tv_phone);
                 convertView.setTag(util);
@@ -189,11 +213,43 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
 
                     Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
 
-                    intent.putExtra("nowphxNum",position+1);
-                    intent.putExtra("phbxName",bean.phbxName);
-                    intent.putExtra("phbxTelephone",bean.phbxTelephone);
+                    intent.putExtra("nowphxNum", position + 1);
+                    intent.putExtra("phbxName", bean.phbxName);
+                    intent.putExtra("phbxTelephone", bean.phbxTelephone);
 
                     startActivity(intent);
+                }
+            });
+            if (bianji) {
+                util.iv_delete.setVisibility(View.VISIBLE);
+            } else {
+                util.iv_delete.setVisibility(View.GONE);
+            }
+
+            util.iv_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TongxunluDeletePostBean tongxunluDeletePostBean = new TongxunluDeletePostBean();
+                    tongxunluDeletePostBean.userId = UserInstance.getInstance().getUid();
+                    tongxunluDeletePostBean.token = UserInstance.getInstance().getToken();
+                    tongxunluDeletePostBean.clientId = WatchInstance.getInstance().deviceId;
+                    tongxunluDeletePostBean.phbxNum = bean.phbxNum;
+                    ApiUtils.getApiService().setWatchDphbx(tongxunluDeletePostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                        @Override
+                        public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                            switch (message.code) {
+                                case Constants.HTTP_SUCCESS:
+                                    ToastUtil.showAtCenter("删除成功");
+                                    initData();
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onFail(Call<BaseBean> call, Throwable t) {
+
+                        }
+                    });
                 }
             });
 
@@ -206,6 +262,7 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
 
         class Util {
             View ll_all;
+            View iv_delete;
             TextView tv_name;
             TextView tv_phone;
 
