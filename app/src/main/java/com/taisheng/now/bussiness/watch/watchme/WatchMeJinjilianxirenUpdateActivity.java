@@ -215,7 +215,7 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseActivity {
             Spannable spanText = (Spannable) text;
             Selection.setSelection(spanText, text.length());
         }
-        
+
         et_phone.setText(phone);
     }
 }

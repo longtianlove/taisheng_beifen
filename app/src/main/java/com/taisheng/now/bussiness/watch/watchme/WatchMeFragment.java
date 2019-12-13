@@ -212,8 +212,8 @@ public class WatchMeFragment extends BaseFragment {
         if (!TextUtils.isEmpty(WatchInstance.getInstance().deviceNickName)) {
             tv_nickname.setText(WatchInstance.getInstance().deviceNickName);
         }
-        if (!TextUtils.isEmpty(WatchInstance.getInstance().realName)) {
-            tv_zhanghao.setText(WatchInstance.getInstance().realName);
+        if (!TextUtils.isEmpty(WatchInstance.getInstance().deviceId)) {
+            tv_zhanghao.setText(WatchInstance.getInstance().deviceId);
         }
     }
 

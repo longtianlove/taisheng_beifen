@@ -42,7 +42,7 @@ public class XinlvFragment extends BaseFragment {
         initView(rootView);
 
 
-        initData();
+
 
         return rootView;
     }
@@ -59,6 +59,11 @@ public class XinlvFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initData();
+    }
 
     void initData() {
         ShishiCollectionBean bean = new ShishiCollectionBean();

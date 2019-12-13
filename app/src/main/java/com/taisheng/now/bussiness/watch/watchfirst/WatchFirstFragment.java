@@ -27,10 +27,6 @@ import java.util.List;
 public class WatchFirstFragment extends BaseFragment {
 
 
-
-
-
-
     View iv_back;
     public static TabLayout tl_tab;
     ViewPager vp_content;
@@ -39,7 +35,6 @@ public class WatchFirstFragment extends BaseFragment {
     private ContentPagerAdapter contentAdapter;
 
     public static int selectTab = 0;
-
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,10 +52,8 @@ public class WatchFirstFragment extends BaseFragment {
     }
 
 
-
-
     void initView(View rootView) {
-        iv_back=rootView.findViewById(R.id.iv_back);
+        iv_back = rootView.findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +85,32 @@ public class WatchFirstFragment extends BaseFragment {
         changeTabIndicatorWidth(tl_tab, 80);
 
         tl_tab.getTabAt(selectTab).select();
+        tl_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        xueyaFragment.initData();
+                        break;
+                    case 1:
+                        xinlvFragment.initData();
+                        break;
+                    case 2:
+                        jibuFragment.initData();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
@@ -176,7 +195,6 @@ public class WatchFirstFragment extends BaseFragment {
         tabFragments.add(xueyaFragment);
         tabFragments.add(xinlvFragment);
         tabFragments.add(jibuFragment);
-
 
 
         contentAdapter = new ContentPagerAdapter(getActivity().getSupportFragmentManager());

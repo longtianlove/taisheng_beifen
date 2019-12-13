@@ -80,6 +80,13 @@ public class JibuFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initData();
+    }
+
+
     void initData() {
         ShishiCollectionBean bean = new ShishiCollectionBean();
         bean.userId = UserInstance.getInstance().getUid();

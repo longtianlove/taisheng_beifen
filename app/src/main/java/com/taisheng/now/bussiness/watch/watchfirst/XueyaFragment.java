@@ -69,6 +69,12 @@ public class XueyaFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initData();
+    }
+
 
     void initData() {
 
