@@ -29,6 +29,7 @@ import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.WithScrolleViewListView;
 
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ import retrofit2.Response;
 
 public class WatchMeNaozhongListActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     ImageView iv_back;
+    TextView tv_bianji;
+    boolean bianji = false;
+
 
     View iv_addnaozhong;
 
@@ -64,6 +68,25 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+
+        tv_bianji = findViewById(R.id.tv_bianji);
+        tv_bianji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                bianji = !bianji;
+                if (bianji) {
+                    tv_bianji.setText("完成");
+                } else {
+                    tv_bianji.setText("编辑");
+
+                }
+                madapter.notifyDataSetChanged();
+
+
             }
         });
 
@@ -99,7 +122,14 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
             public void onSuccess(Response<BaseBean<NaozhongListResultBean>> response, BaseBean<NaozhongListResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result != null && message.result.watchRemindList.size() > 0) {
+                        if (message.result != null && message.result.watchRemindList.size() >= 0) {
+
+
+                            if (message.result.watchRemindList.size() >= 10) {
+                                iv_addnaozhong.setVisibility(View.GONE);
+                            } else {
+                                iv_addnaozhong.setVisibility(View.VISIBLE);
+                            }
                             //有消息
 //                            PAGE_NO++;
                             madapter.mData.clear();
@@ -168,6 +198,7 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_naozhong, null);
                 util.ll_all = convertView.findViewById(R.id.ll_all);
+                util.iv_delete = convertView.findViewById(R.id.iv_delete);
                 util.tv_time = convertView.findViewById(R.id.tv_time);
                 util.tv_pinlv = convertView.findViewById(R.id.tv_pinlv);
                 util.iv_kaiguan_naozhong = convertView.findViewById(R.id.iv_kaiguan_naozhong);
@@ -181,16 +212,16 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
             util.ll_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if("1".equals(bean.isOpen)){
-                        bean.isOpen="0";
-                    }else{
-                        bean.isOpen="1";
+                    if ("1".equals(bean.isOpen)) {
+                        bean.isOpen = "0";
+                    } else {
+                        bean.isOpen = "1";
                     }
-                    SetNaozhongPostBean setNaozhongPostBean=new SetNaozhongPostBean();
-                    setNaozhongPostBean.userId=UserInstance.getInstance().getUid();
-                    setNaozhongPostBean.token=UserInstance.getInstance().getToken();
-                    setNaozhongPostBean.clientId=WatchInstance.getInstance().deviceId;
-                    setNaozhongPostBean.watchRemindList=mData;
+                    SetNaozhongPostBean setNaozhongPostBean = new SetNaozhongPostBean();
+                    setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
+                    setNaozhongPostBean.token = UserInstance.getInstance().getToken();
+                    setNaozhongPostBean.clientId = WatchInstance.getInstance().deviceId;
+                    setNaozhongPostBean.watchRemindList = mData;
                     ApiUtils.getApiService().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -215,6 +246,40 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
 
                 }
             });
+            if (bianji) {
+                util.iv_delete.setVisibility(View.VISIBLE);
+            } else {
+                util.iv_delete.setVisibility(View.GONE);
+            }
+            util.iv_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SetNaozhongPostBean setNaozhongPostBean = new SetNaozhongPostBean();
+                    setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
+                    setNaozhongPostBean.token = UserInstance.getInstance().getToken();
+                    setNaozhongPostBean.clientId = WatchInstance.getInstance().deviceId;
+                    WatchInstance.getInstance().mDataNaoZhong.remove(position);
+                    setNaozhongPostBean.watchRemindList = WatchInstance.getInstance().mDataNaoZhong;
+                    ApiUtils.getApiService().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                        @Override
+                        public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                            switch (message.code) {
+                                case Constants.HTTP_SUCCESS:
+                                    ToastUtil.showAtCenter("删除成功");
+                                    initData();
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onFail(Call<BaseBean> call, Throwable t) {
+
+                        }
+                    });
+                }
+            });
+
+
             util.tv_time.setText(bean.startTime);
             if ("1".equals(bean.frequency)) {
                 util.tv_pinlv.setText("一次");
@@ -222,61 +287,61 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
             } else if ("2".equals(bean.frequency)) {
                 util.tv_pinlv.setText("每天");
 
-            }else{
-                String temp=new String();
-                if("1".equals(bean.isOpenWeek1)){
-                    temp+="一";
+            } else {
+                String temp = new String();
+                if ("1".equals(bean.isOpenWeek1)) {
+                    temp += "一";
                 }
-                if("1".equals(bean.isOpenWeek2)){
-                    if("".equals(temp)){
-                        temp+="二";
-                    }else{
-                        temp+=",二";
+                if ("1".equals(bean.isOpenWeek2)) {
+                    if ("".equals(temp)) {
+                        temp += "二";
+                    } else {
+                        temp += ",二";
                     }
                 }
-                if("1".equals(bean.isOpenWeek3)){
-                    if("".equals(temp)){
-                        temp+="三";
-                    }else{
-                        temp+=",三";
+                if ("1".equals(bean.isOpenWeek3)) {
+                    if ("".equals(temp)) {
+                        temp += "三";
+                    } else {
+                        temp += ",三";
                     }
                 }
-                if("1".equals(bean.isOpenWeek4)){
-                    if("".equals(temp)){
-                        temp+="四";
-                    }else{
-                        temp+=",四";
+                if ("1".equals(bean.isOpenWeek4)) {
+                    if ("".equals(temp)) {
+                        temp += "四";
+                    } else {
+                        temp += ",四";
                     }
                 }
-                if("1".equals(bean.isOpenWeek5)){
-                    if("".equals(temp)){
-                        temp+="五";
-                    }else{
-                        temp+=",五";
+                if ("1".equals(bean.isOpenWeek5)) {
+                    if ("".equals(temp)) {
+                        temp += "五";
+                    } else {
+                        temp += ",五";
                     }
                 }
-                if("1".equals(bean.isOpenWeek6)){
-                    if("".equals(temp)){
-                        temp+="六";
-                    }else{
-                        temp+=",六";
+                if ("1".equals(bean.isOpenWeek6)) {
+                    if ("".equals(temp)) {
+                        temp += "六";
+                    } else {
+                        temp += ",六";
                     }
                 }
-                if("1".equals(bean.isOpenWeek7)){
-                    if("".equals(temp)){
-                        temp+="日";
-                    }else{
-                        temp+=",日";
+                if ("1".equals(bean.isOpenWeek7)) {
+                    if ("".equals(temp)) {
+                        temp += "日";
+                    } else {
+                        temp += ",日";
                     }
                 }
-                util.tv_pinlv.setText("星期"+temp);
+                util.tv_pinlv.setText("星期" + temp);
 
             }
 
 
-            if("1".equals(bean.isOpen)){
+            if ("1".equals(bean.isOpen)) {
                 util.iv_kaiguan_naozhong.setSelected(true);
-            }else{
+            } else {
                 util.iv_kaiguan_naozhong.setSelected(false);
             }
 
@@ -287,6 +352,7 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
         class Util {
             View ll_all;
             TextView tv_time;
+            View iv_delete;
             TextView tv_pinlv;
             ImageView iv_kaiguan_naozhong;
 

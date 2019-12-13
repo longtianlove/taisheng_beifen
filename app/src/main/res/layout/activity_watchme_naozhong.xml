@@ -36,6 +36,17 @@
             android:textColor="#ffffffff"
             android:textSize="18sp" />
 
+
+        <TextView
+            android:id="@+id/tv_bianji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:text="编辑"
+            android:textColor="#ffffffff"
+            android:textSize="18sp"/>
+
     </RelativeLayout>
 
     <View
