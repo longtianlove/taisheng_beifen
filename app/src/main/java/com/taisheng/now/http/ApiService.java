@@ -1,7 +1,6 @@
 package com.taisheng.now.http;
 
 
-import com.google.gson.JsonObject;
 import com.taisheng.now.Constants;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.bean.post.AddDizhiPostBean;
@@ -106,6 +105,7 @@ import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.post.SosListpostBean;
 import com.taisheng.now.bussiness.watch.bean.post.TongxunluDeletePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.UpdateSosContactSettingPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.XinlvXueyaYujingPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
@@ -119,9 +119,7 @@ import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewLocationBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
-import com.taisheng.now.bussiness.watch.bean.result.SosListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
-import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
@@ -129,8 +127,6 @@ import com.taisheng.now.bussiness.watch.bean.result.XueYaDayResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.test.WechatResultBean;
 
-
-import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -215,6 +211,10 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.insertSosContactSetting)
     Call<BaseBean> insertSosContactSetting(@Body InsertSosJinjilianxirenPostBean bean);
+
+    @POST(Constants.Url.Watch.updateSosContactSetting)
+    Call<BaseBean> updateSosContactSetting(@Body UpdateSosContactSettingPostBean bean);
+
 
 
     @POST(Constants.Url.Watch.watchWarningupdateBykey)

@@ -196,6 +196,9 @@ public class Constants {
             public static final String insertSosContactSetting = "jeecg-boot/app/watch/setting/insertSosContactSetting";
 
 
+            //            APP-【SOS更新】联系人
+            public static final String updateSosContactSetting = "jeecg-boot/app/watch/setting/updateSosContactSetting";
+
             //            手表预警记录-修改阅读状态
             public static final String watchWarningupdateBykey = "jeecg-boot/app/watchWarning/updateBykey";
 
@@ -208,20 +211,8 @@ public class Constants {
             public static final String setWatchTakepills = "jeecg-boot/app/watchTakepills/setWatchTakepills";
 
 
-
-//            设置老人版电话本
+            //            设置老人版电话本
             public static final String setWatchPhbx = "jeecg-boot/app/watchPhbx/setWatchPhbx";
-
-
-
-
-
-
-
-
-
-
-
 
 
             //重启接口

@@ -91,18 +91,50 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
         ll_first = findViewById(R.id.ll_first);
         tv_first_name = findViewById(R.id.tv_first_name);
         tv_first_phone = findViewById(R.id.tv_first_phone);
+        ll_first.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenUpdateActivity.class);
+                intent.putExtra("type", "SOS1");
+                intent.putExtra("name",watchNameSos1);
+                intent.putExtra("phone",watchSos1);
+                startActivity(intent);
+            }
+        });
 
 
         view2 = findViewById(R.id.view2);
         ll_second = findViewById(R.id.ll_second);
         tv_second_name = findViewById(R.id.tv_second_name);
         tv_second_phone = findViewById(R.id.tv_second_phone);
+        ll_second.setOnClickListener(new View.OnClickListener() {
 
-        view3=findViewById(R.id.view3);
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenUpdateActivity.class);
+                intent.putExtra("type", "SOS2");
+                intent.putExtra("name",watchNameSos2);
+                intent.putExtra("phone",watchSos2);
+                startActivity(intent);
+            }
+        });
+
+        view3 = findViewById(R.id.view3);
         ll_third = findViewById(R.id.ll_third);
         tv_third_name = findViewById(R.id.tv_third_name);
         tv_third_phone = findViewById(R.id.tv_third_phone);
+        ll_third.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenUpdateActivity.class);
+                intent.putExtra("type", "SOS3");
+                intent.putExtra("name",watchNameSos3);
+                intent.putExtra("phone",watchSos3);
+                startActivity(intent);
+            }
+        });
 
         iv_addjinjilianxiren = findViewById(R.id.iv_addjinjilianxiren);
         iv_addjinjilianxiren.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +154,14 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
         initData();
     }
 
+    public String watchNameSos1;
+    public String watchSos1;
+
+    public String watchNameSos2;
+    public String watchSos2;
+
+    public String watchNameSos3;
+    public String watchSos3;
     void initData() {
         SosListpostBean bean = new SosListpostBean();
         bean.userId = UserInstance.getInstance().getUid();
@@ -136,6 +176,8 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
                             ll_first.setVisibility(View.GONE);
                         } else {
                             ll_first.setVisibility(View.VISIBLE);
+                            watchNameSos1=message.result.watchNameSos1;
+                            watchSos1=message.result.watchSos1;
                             tv_first_name.setText(message.result.watchNameSos1);
                             tv_first_phone.setText(message.result.watchSos1);
                         }
@@ -145,6 +187,8 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
                             view2.setVisibility(View.GONE);
                         } else {
                             ll_second.setVisibility(View.VISIBLE);
+                            watchNameSos2=message.result.watchNameSos2;
+                            watchSos2=message.result.watchSos2;
                             tv_second_name.setText(message.result.watchNameSos2);
                             tv_second_phone.setText(message.result.watchSos2);
                         }
@@ -153,8 +197,18 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
                             ll_third.setVisibility(View.GONE);
                         } else {
                             ll_third.setVisibility(View.VISIBLE);
+                            watchNameSos3=message.result.watchNameSos3;
+                            watchSos3=message.result.watchSos3;
                             tv_third_name.setText(message.result.watchNameSos3);
                             tv_third_phone.setText(message.result.watchSos3);
+                        }
+
+                        if (TextUtils.isEmpty(message.result.watchNameSos1)
+                                || TextUtils.isEmpty(message.result.watchNameSos2)
+                                || TextUtils.isEmpty(message.result.watchNameSos3)) {
+                            iv_addjinjilianxiren.setVisibility(View.VISIBLE);
+                        } else {
+                            iv_addjinjilianxiren.setVisibility(View.GONE);
                         }
                         break;
                 }
