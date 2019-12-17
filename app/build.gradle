@@ -132,4 +132,7 @@ dependencies {
     implementation files('libs/MiPush_SDK_Client_3_6_18.jar')
     implementation files('libs/BaiduTraceSDK_v3_1_4.jar')
     implementation files('libs/bos-android-sdk-1.0.3.jar')
+    implementation project(':IMKit')
+    implementation project(':IMLib')
+    implementation files('libs/RongRTCLib_3.1.6.jar')
 }

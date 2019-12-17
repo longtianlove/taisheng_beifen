@@ -225,6 +225,10 @@ public class Constants {
         }
 
 
+        public static class Shipin{
+            public static final String acquireToken = "jeecg-boot/app/rongyun/acquireToken";
+        }
+
         //用户相关
         public static class User {
 

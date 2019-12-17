@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+
 import androidx.multidex.MultiDex;
 
 import com.baidu.mapapi.CoordType;
@@ -20,15 +21,18 @@ import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+
 
 public class SampleAppLike extends DefaultApplicationLike {
     public static String TAG = "com.taisheng.now";
+
     public SampleAppLike(Application application, int tinkerFlags,
                          boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime,
                          long applicationStartMillisTime, Intent tinkerResultIntent) {
         super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
     }
-
 
 
     public static Application mcontext;
@@ -39,9 +43,9 @@ public class SampleAppLike extends DefaultApplicationLike {
     public void onCreate() {
         super.onCreate();
 
-        mcontext=getApplication();
+        mcontext = getApplication();
 
-        environment=Environment.Release;
+        environment = Environment.Release;
 //        WeChatManagerInstance.getInstance().registToWx(mcontext);
 
         if (isMainProcess(getApplication())) {
@@ -107,7 +111,6 @@ public class SampleAppLike extends DefaultApplicationLike {
             Beta.canShowUpgradeActs.add(MainActivity.class);
 
 
-
             // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId
             // 调试时，将第三个参数改为true
             // 调试时，将第三个参数改为true
@@ -121,9 +124,26 @@ public class SampleAppLike extends DefaultApplicationLike {
             //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
             //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
             SDKInitializer.setCoordType(CoordType.BD09LL);
+
+            RongIM.init(mcontext);
+            String token="ssssssssssssss";
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {
+
+                }
+
+                @Override
+                public void onSuccess(String s) {
+
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
         }
-
-
 
 
     }
@@ -148,8 +168,6 @@ public class SampleAppLike extends DefaultApplicationLike {
     public void registerActivityLifecycleCallback(Application.ActivityLifecycleCallbacks callbacks) {
         getApplication().registerActivityLifecycleCallbacks(callbacks);
     }
-
-
 
 
 //     public void aboutBugly(){
