@@ -67,17 +67,17 @@ public class Constants {
 //        public static String Host = "http://192.168.1.12:8080/";
 //        public static String File_Host = "http://192.168.1.12:8888/";
 //        public static String WEB_SOCKET_URL = "ws://192.168.1.12:8879";
-        public static String Host = "http://49.234.71.11:8080/";
-        public static String File_Host = "http://49.234.71.11:8888/";
-        public static String WEB_SOCKET_URL = "ws://49.234.71.11:8879";
+//        public static String Host = "http://49.234.71.11:8080/";
+//        public static String File_Host = "http://49.234.71.11:8888/";
+//        public static String WEB_SOCKET_URL = "ws://49.234.71.11:8879";
 
 
         //        public static String Host = "http://192.168.1.18:8080/";
 //        public static String File_Host = "http://192.168.1.18:8888/";
 //        public static String WEB_SOCKET_URL = "ws://192.168.1.18:8879";
-//        public static String Host = "http://192.168.1.19:8080/";
-//        public static String File_Host = "http://192.168.1.19:8888/";
-//        public static String WEB_SOCKET_URL = "ws://192.168.1.19:8879";
+        public static String Host = "http://192.168.1.19:8080/";
+        public static String File_Host = "http://192.168.1.19:8888/";
+        public static String WEB_SOCKET_URL = "ws://192.168.1.19:8879";
 
 //        public static String Host = "http://192.168.1.15:8080/";
 //        public static String File_Host = "http://192.168.1.15:8888/";
@@ -221,12 +221,14 @@ public class Constants {
             //            恢复出厂设置
             public static final String restoreFactorySettings = "jeecg-boot/app/watch/setting/restoreFactorySettings";
 
+            //获取token
+            public static final String acquireToken = "jeecg-boot/app/rongyun/acquireToken";
+
 
         }
 
 
         public static class Shipin{
-            public static final String acquireToken = "jeecg-boot/app/rongyun/acquireToken";
         }
 
         //用户相关

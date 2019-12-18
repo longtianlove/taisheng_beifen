@@ -85,9 +85,6 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.watch_main);
-        ChatManagerInstance.getInstance().init();
-        //进入主页
-        SPUtil.putHome(true);
         initView();
         if (savedInstanceState != null) {
             firstFragment = (WatchFirstFragment) getSupportFragmentManager().findFragmentByTag(WatchFirstFragment.class.getName());

@@ -126,23 +126,7 @@ public class SampleAppLike extends DefaultApplicationLike {
             SDKInitializer.setCoordType(CoordType.BD09LL);
 
             RongIM.init(mcontext);
-            String token="ssssssssssssss";
-            RongIM.connect(token, new RongIMClient.ConnectCallback() {
-                @Override
-                public void onTokenIncorrect() {
 
-                }
-
-                @Override
-                public void onSuccess(String s) {
-
-                }
-
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-
-                }
-            });
         }
 
 

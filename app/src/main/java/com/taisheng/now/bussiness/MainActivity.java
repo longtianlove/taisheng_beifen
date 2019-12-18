@@ -18,17 +18,29 @@ import android.widget.TextView;
 
 import androidx.fragment.app.FragmentTransaction;
 
+import com.taisheng.now.Constants;
 import com.taisheng.now.R;
+import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragmentActivity;
+import com.taisheng.now.bussiness.bean.post.BasePostBean;
 import com.taisheng.now.bussiness.doctor.DoctorFragment;
 import com.taisheng.now.bussiness.first.FirstFragment;
 import com.taisheng.now.bussiness.market.MarketFragment;
 import com.taisheng.now.bussiness.me.MeFragment;
 import com.taisheng.now.bussiness.article.SecretFragment;
 import com.taisheng.now.bussiness.message.MessageFragment;
+import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.watch.bean.result.ShipinGetTokenResultBean;
 import com.taisheng.now.chat.ChatManagerInstance;
+import com.taisheng.now.http.ApiUtils;
+import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.SPUtil;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import retrofit2.Call;
+import retrofit2.Response;
 
 @SuppressLint("WrongConstant")
 public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
@@ -40,10 +52,10 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
             R.id.tab_secret,
             R.id.tab_me};
 
-    private ImageView iv_tab_first, iv_tab_doctor,iv_tab_message, iv_tab_secret,iv_tab_me;
-private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_me;
+    private ImageView iv_tab_first, iv_tab_doctor, iv_tab_message, iv_tab_secret, iv_tab_me;
+    private TextView tv_tab_first, tv_tab_doctor, tv_tab_message, tv_tab_secret, tv_tab_me;
 
-    private View mTabs[] = {null, null,null,null, null};
+    private View mTabs[] = {null, null, null, null, null};
 
     private FirstFragment firstFragment;
     private DoctorFragment doctorFragment;
@@ -52,8 +64,6 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
     private MeFragment meFragment;
 
     View toolBar;
-
-
 
 
     @Override
@@ -68,7 +78,7 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
         if (savedInstanceState != null) {
             firstFragment = (FirstFragment) getSupportFragmentManager().findFragmentByTag(FirstFragment.class.getName());
             doctorFragment = (DoctorFragment) getSupportFragmentManager().findFragmentByTag(DoctorFragment.class.getName());
-            messageFragment= (MessageFragment) getSupportFragmentManager().findFragmentByTag(MessageFragment.class.getName());
+            messageFragment = (MessageFragment) getSupportFragmentManager().findFragmentByTag(MessageFragment.class.getName());
             marketFragment = (MarketFragment) getSupportFragmentManager().findFragmentByTag(SecretFragment.class.getName());
             meFragment = (MeFragment) getSupportFragmentManager().findFragmentByTag(MeFragment.class.getName());
             if (firstFragment == null) {
@@ -77,11 +87,11 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
             if (doctorFragment == null) {
                 doctorFragment = new DoctorFragment();
             }
-            if(messageFragment==null){
-                messageFragment=new MessageFragment();
+            if (messageFragment == null) {
+                messageFragment = new MessageFragment();
             }
-            if(marketFragment ==null){
-                marketFragment =new MarketFragment();
+            if (marketFragment == null) {
+                marketFragment = new MarketFragment();
             }
             if (meFragment == null) {
                 meFragment = new MeFragment();
@@ -111,23 +121,63 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
 //        EventBus.getDefault().register(this);
 
 
+        initShipin();
+
+    }
+
+    void initShipin() {
+        BasePostBean bean = new BasePostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        ApiUtils.getApiService().acquireToken(bean).enqueue(new TaiShengCallback<BaseBean<ShipinGetTokenResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<ShipinGetTokenResultBean>> response, BaseBean<ShipinGetTokenResultBean> message) {
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+
+                        String token = message.result.token;
+                        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                            @Override
+                            public void onTokenIncorrect() {
+
+                            }
+
+                            @Override
+                            public void onSuccess(String s) {
+
+                            }
+
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+
+                            }
+                        });
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<ShipinGetTokenResultBean>> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
-        toolBar=findViewById(R.id.toolBar);
-        iv_tab_first= (ImageView) findViewById(R.id.iv_tab_first);
-        iv_tab_doctor= (ImageView) findViewById(R.id.iv_tab_doctor);
-        iv_tab_message=findViewById(R.id.iv_tab_message);
-        iv_tab_secret= (ImageView) findViewById(R.id.iv_tab_secret);
-        iv_tab_me= (ImageView) findViewById(R.id.iv_tab_me);
-        tv_tab_first= (TextView) findViewById(R.id.tv_tab_first);
-        tv_tab_doctor= (TextView) findViewById(R.id.tv_tab_doctor);
-        tv_tab_message=findViewById(R.id.tv_tab_message);
-        tv_tab_secret= (TextView) findViewById(R.id.tv_tab_secret);
-        tv_tab_me= (TextView) findViewById(R.id.tv_tab_me);
-
-
+        toolBar = findViewById(R.id.toolBar);
+        iv_tab_first = (ImageView) findViewById(R.id.iv_tab_first);
+        iv_tab_doctor = (ImageView) findViewById(R.id.iv_tab_doctor);
+        iv_tab_message = findViewById(R.id.iv_tab_message);
+        iv_tab_secret = (ImageView) findViewById(R.id.iv_tab_secret);
+        iv_tab_me = (ImageView) findViewById(R.id.iv_tab_me);
+        tv_tab_first = (TextView) findViewById(R.id.tv_tab_first);
+        tv_tab_doctor = (TextView) findViewById(R.id.tv_tab_doctor);
+        tv_tab_message = findViewById(R.id.tv_tab_message);
+        tv_tab_secret = (TextView) findViewById(R.id.tv_tab_secret);
+        tv_tab_me = (TextView) findViewById(R.id.tv_tab_me);
 
 
     }
@@ -139,10 +189,10 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
         if (null != doctorFragment) {
             transaction.hide(doctorFragment);
         }
-        if(null!=messageFragment){
+        if (null != messageFragment) {
             transaction.hide(messageFragment);
         }
-        if(null!= marketFragment){
+        if (null != marketFragment) {
             transaction.hide(marketFragment);
         }
         if (null != meFragment) {
@@ -188,8 +238,6 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
 //                firstFragment.videoPlayer.onVideoPause();
 
 
-
-
 //                getLocationWithOneMinute = false;
                 select_index = 0;
                 break;
@@ -209,11 +257,11 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
                 firstFragment.videoPlayer.onVideoPause();
                 break;
             case 2:
-                if(marketFragment ==null){
-                    marketFragment =new MarketFragment();
-                    transaction.add(R.id.fragment_container, marketFragment,SecretFragment.class.getName());
+                if (marketFragment == null) {
+                    marketFragment = new MarketFragment();
+                    transaction.add(R.id.fragment_container, marketFragment, SecretFragment.class.getName());
                 }
-                select_index=2;
+                select_index = 2;
                 transaction.show(marketFragment).commit();
                 iv_tab_secret.setSelected(true);
                 tv_tab_secret.setTextColor(getResources().getColor(R.color.tv_tab_color_select));
@@ -276,19 +324,10 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
     }
 
 
-
-
-
-
-
-
-
-
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if("HealthCheckResultActivity".equals(intent.getStringExtra("fromwhere"))){
+        if ("HealthCheckResultActivity".equals(intent.getStringExtra("fromwhere"))) {
             showFragment(1);
         }
     }
@@ -296,7 +335,6 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
     @Override
     protected void onResume() {
         super.onResume();
-
 
 
     }
@@ -317,7 +355,7 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
 
     @Override
     public void onBackPressed() {
-        DialogUtil.showTwoButtonDialog(this, "确定要退出泰晟健康吗？", "取消","退出", new View.OnClickListener() {
+        DialogUtil.showTwoButtonDialog(this, "确定要退出泰晟健康吗？", "取消", "退出", new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
@@ -333,7 +371,6 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
                 }
         );
     }
-
 
 
     public boolean dispatchTouchEvent(MotionEvent ev) {

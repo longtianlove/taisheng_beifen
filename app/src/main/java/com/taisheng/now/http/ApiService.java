@@ -119,6 +119,7 @@ import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewLocationBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.ShipinGetTokenResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
@@ -139,6 +140,11 @@ import retrofit2.http.Part;
  * Created by long
  */
 public interface ApiService {
+
+    @POST(Constants.Url.Watch.acquireToken)
+    Call<BaseBean<ShipinGetTokenResultBean>> acquireToken(@Body BasePostBean bean);
+
+
 
 
     //重启
