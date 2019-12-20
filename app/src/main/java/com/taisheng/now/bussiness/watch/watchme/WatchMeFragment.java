@@ -161,18 +161,21 @@ public class WatchMeFragment extends BaseFragment {
         ll_chongqi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                RebootPostBean bean=new RebootPostBean();
-//                ApiUtils.getApiService().reboot(bean).enqueue(new TaiShengCallback<BaseBean>() {
-//                    @Override
-//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFail(Call<BaseBean> call, Throwable t) {
-//
-//                    }
-//                });
+                RebootPostBean bean=new RebootPostBean();
+                bean.userId=UserInstance.getInstance().getUid();
+                bean.token=UserInstance.getInstance().getToken();
+                bean.clientId=WatchInstance.getInstance().deviceId;
+                ApiUtils.getApiService().reboot(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+
+                    }
+
+                    @Override
+                    public void onFail(Call<BaseBean> call, Throwable t) {
+
+                    }
+                });
             }
         });
         ll_huifuchuchang = rootView.findViewById(R.id.ll_huifuchuchang);
@@ -180,18 +183,21 @@ public class WatchMeFragment extends BaseFragment {
 
             @Override
             public void onClick(View v) {
-                //                RebootPostBean bean=new RebootPostBean();
-//                ApiUtils.getApiService().restoreFactorySettings(bean).enqueue(new TaiShengCallback<BaseBean>() {
-//                    @Override
-//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFail(Call<BaseBean> call, Throwable t) {
-//
-//                    }
-//                });
+                RebootPostBean bean=new RebootPostBean();
+                bean.userId=UserInstance.getInstance().getUid();
+                bean.token=UserInstance.getInstance().getToken();
+                bean.clientId=WatchInstance.getInstance().deviceId;
+                ApiUtils.getApiService().restoreFactorySettings(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+
+                    }
+
+                    @Override
+                    public void onFail(Call<BaseBean> call, Throwable t) {
+
+                    }
+                });
             }
         });
 
