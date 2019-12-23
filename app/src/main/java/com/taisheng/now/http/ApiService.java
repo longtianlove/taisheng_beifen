@@ -228,8 +228,6 @@ public interface ApiService {
     @POST(Constants.Url.Watch.setWatchTakepills)
     Call<BaseBean> setWatchTakepills(@Body SetChiyaoPostBean bean);
 
-    public static final String setWatchPhbx = "jeecg-boot/app/watchPhbx/setWatchPhbx";
-
     @POST(Constants.Url.Watch.setWatchPhbx)
     Call<BaseBean> setWatchPhbx(@Body SetTongxunluPostBean bean);
 
