@@ -21,6 +21,7 @@ import com.taisheng.now.bussiness.watch.WatchsListActivity;
 import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.ToastUtil;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -169,6 +170,12 @@ public class WatchMeFragment extends BaseFragment {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
 
+                        switch (message.code) {
+                            case Constants.HTTP_SUCCESS:
+                                ToastUtil.showAtCenter("正在重启！");
+                                break;
+                        }
+
                     }
 
                     @Override
@@ -191,6 +198,11 @@ public class WatchMeFragment extends BaseFragment {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
 
+                        switch (message.code) {
+                            case Constants.HTTP_SUCCESS:
+                                ToastUtil.showAtCenter("正在恢复出厂设置！");
+                                break;
+                        }
                     }
 
                     @Override

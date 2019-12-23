@@ -80,7 +80,9 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
                     ToastUtil.showAtCenter("请选择时间");
                     return;
                 }
-                //TODO 设置时间
+                if("".equals(tv_repeat_value.getText().toString())){
+                    WatchInstance.getInstance().naozhongLIstBean.frequency = "2";//设置成每天
+                }
                 SetNaozhongPostBean setNaozhongPostBean = new SetNaozhongPostBean();
                 setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
                 setNaozhongPostBean.token = UserInstance.getInstance().getToken();
