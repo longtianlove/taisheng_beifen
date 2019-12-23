@@ -40,6 +40,7 @@ import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.push.XMPushManagerInstance;
 import com.taisheng.now.util.IDCardUtil;
+import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.AppDialog;
 import com.taisheng.now.view.crop.Crop;
 
@@ -255,7 +256,6 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-//                                todo deviceid到底是哪个
                                 String deviceId = bean.deviceId;
                                 WatchInstance.getInstance().deviceId = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
                                 ;
@@ -294,10 +294,12 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
             return false;
         }
         if (TextUtils.isEmpty(et_idcard.getText())) {
+            ToastUtil.showAtCenter("请输入正确的身份证号");
             return false;
         }
 
         if (!IDCardUtil.isValidatedAllIdcard(et_idcard.getText().toString())) {
+            ToastUtil.showAtCenter("请输入正确的身份证号");
             return false;
         }
         if (TextUtils.isEmpty(et_phonenumber.getText())) {

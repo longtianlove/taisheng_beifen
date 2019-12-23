@@ -206,17 +206,16 @@
                 android:textColor="#ff333333"
                 android:textSize="14sp" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+
 
             <EditText
                 android:id="@+id/et_nickname"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@null"
-                android:gravity="center"
+                android:gravity="right"
+
                 android:text=""
                 android:textColor="#ff333333"
                 android:textSize="14sp" />
@@ -248,17 +247,13 @@
                 android:textColor="#ff333333"
                 android:textSize="14sp" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
             <EditText
                 android:id="@+id/et_realname"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@null"
-                android:gravity="center"
+                android:gravity="right"
                 android:text=""
                 android:textColor="#ff333333"
                 android:textSize="14sp" />
@@ -290,18 +285,16 @@
                 android:textColor="#ff333333"
                 android:textSize="14sp" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/et_idcard"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@null"
-                android:gravity="center"
+                android:gravity="right"
                 android:text=""
+
                 android:textColor="#ff333333"
                 android:textSize="14sp" />
 
@@ -340,10 +333,11 @@
 
             <EditText
                 android:id="@+id/et_phonenumber"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@null"
-                android:gravity="center"
+                android:gravity="right"
                 android:inputType="phone"
                 android:text=""
                 android:textColor="#ff333333"

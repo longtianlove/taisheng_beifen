@@ -269,10 +269,8 @@ public class WatchChiYaoListActivity extends BaseActivity implements ActivityCom
                     }
                 }
                 util.tv_pinlv.setText("星期" + temp);
-
-                util.tv_takepillsText.setText(bean.takepillsText);
-
             }
+            util.tv_takepillsText.setText(bean.takepillsText);
             Util finalUtil1 = util;
             util.iv_kaiguan_naozhong.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -262,9 +262,9 @@ public class WatchsListActivity extends BaseActivity {
                     WatchInstance.getInstance().deviceNickName = bean.nickName;
                     WatchInstance.getInstance().relationShip = bean.terminalRelationship;
                     //todo 数据给全
-//                    WatchInstance.getInstance().realName = bean.realName;
-//                    WatchInstance.getInstance().idcard = bean.idcard;
-//                    WatchInstance.getInstance().phoneNumber = bean.phoneNumber;
+                    WatchInstance.getInstance().realName = bean.realName;
+                    WatchInstance.getInstance().idcard = bean.idcard;
+                    WatchInstance.getInstance().phoneNumber = bean.phoneNumber;
                     Intent intent = new Intent(WatchsListActivity.this, WatchMainActivity.class);
                     startActivity(intent);
                     finish();

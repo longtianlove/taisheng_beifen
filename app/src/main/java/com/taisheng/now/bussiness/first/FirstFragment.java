@@ -282,9 +282,9 @@ public class FirstFragment extends BaseFragment {
                                     WatchInstance.getInstance().deviceNickName = bean1.nickName;
                                     WatchInstance.getInstance().relationShip = bean1.terminalRelationship;
                                     //todo 数据给全
-//                    WatchInstance.getInstance().realName = bean.realName;
-//                    WatchInstance.getInstance().idcard = bean.idcard;
-//                    WatchInstance.getInstance().phoneNumber = bean.phoneNumber;
+                    WatchInstance.getInstance().realName = bean1.realName;
+                    WatchInstance.getInstance().idcard = bean1.idcard;
+                    WatchInstance.getInstance().phoneNumber = bean1.phoneNumber;
                                     Intent intent = new Intent(getActivity(), WatchMainActivity.class);
                                     startActivity(intent);
                                 } else {

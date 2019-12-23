@@ -11,4 +11,9 @@ public class WatchListBean {
     public String terminalRelationship;
     public String remarks;
     public String nickName;
+
+
+    public String realName;
+    public String idcard;
+    public String phoneNumber;
 }
