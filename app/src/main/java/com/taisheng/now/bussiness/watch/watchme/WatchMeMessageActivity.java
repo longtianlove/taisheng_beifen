@@ -123,14 +123,14 @@ public class WatchMeMessageActivity extends BaseActivity implements ActivityComp
         tv_nickname = findViewById(R.id.tv_nickname);
 
         tv_realname = findViewById(R.id.tv_realname);
-        tv_realname.setText(WatchInstance.getInstance().realName);
+
 
         tv_idcard = findViewById(R.id.tv_idcard);
-        tv_idcard.setText(WatchInstance.getInstance().idcard);
+
         btn_post = (TextView) findViewById(R.id.btn_post);
 
         tv_phonenumber = findViewById(R.id.tv_phonenumber);
-        tv_phonenumber.setText(WatchInstance.getInstance().phoneNumber);
+
 
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,7 +282,9 @@ public class WatchMeMessageActivity extends BaseActivity implements ActivityComp
         tv_relative.setText(WatchInstance.getInstance().relationShip);
         tv_nickname.setText(WatchInstance.getInstance().deviceNickName);
 
-
+        tv_realname.setText(WatchInstance.getInstance().realName);
+        tv_idcard.setText(WatchInstance.getInstance().idcard);
+        tv_phonenumber.setText(WatchInstance.getInstance().phoneNumber);
     }
 
     private void beginCrop(Uri source, Bundle bundle) {
