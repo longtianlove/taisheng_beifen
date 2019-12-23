@@ -167,7 +167,7 @@ public class Constants {
             public static final String notDisturbSwitchSetting = "jeecg-boot/app/watch/setting/notDisturbSwitchSetting";
 
             //免打扰时间段列表
-            public static final String notDisturbSettingList = "jeecg-boot/app/watch/setting/notDisturbSettingList";
+            public static final String notDisturbSettingList = "jeecg-boot/app/watchperiod/setting/silencetimeList";
 
             //            心率血压预警设置-查询
             public static final String getWatchWarning = "jeecg-boot/app/watchWarning/getWatchWarning";

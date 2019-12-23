@@ -21,8 +21,10 @@ import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.MiandaraoListResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.Miandaraobean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.NewMiandaraoListResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.view.WithScrolleViewListView;
@@ -89,18 +91,20 @@ public class WatchMiandaoraoListActivity extends BaseActivity implements Activit
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.clientId = WatchInstance.getInstance().deviceId;
-        ApiUtils.getApiService().notDisturbSwitchSetting(bean).enqueue(new TaiShengCallback<BaseBean<MiandaraoListResultBean>>() {
+        ApiUtils.getApiService().notDisturbSwitchSetting(bean).enqueue(new TaiShengCallback<BaseBean<NewMiandaraoListResultBean>>() {
             @Override
-            public void onSuccess(Response<BaseBean<MiandaraoListResultBean>> response, BaseBean<MiandaraoListResultBean> message) {
+            public void onSuccess(Response<BaseBean<NewMiandaraoListResultBean>> response, BaseBean<NewMiandaraoListResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result != null && message.result.watchSilencetime != null) {
-                            String[] miandaraolist = message.result.watchSilencetime.split(",");
+                        if (message.result != null && message.result.records != null) {
+//                            String[] miandaraolist = message.result.watchSilencetime.split(",");
 //                            ArrayList<String> times = new ArrayList();
                             WatchInstance.getInstance().miandaraoList.clear();
-                            for (int i = 0; i < miandaraolist.length; i++) {
-                                if (!"00:00-00:00".equals(miandaraolist[i])) {
-                                    WatchInstance.getInstance().miandaraoList.add(miandaraolist[i]);
+                            for (int i = 0; i <message.result.records.size(); i++) {
+                                Miandaraobean bean=message.result.records.get(i);
+                                String temp=bean.startTime+"-"+bean.endTime;
+                                if (!"00:00-00:00".equals(temp)) {
+                                    WatchInstance.getInstance().miandaraoList.add(temp);
                                 }
                             }
                             if (WatchInstance.getInstance().miandaraoList.size() <= 4) {
@@ -140,7 +144,7 @@ public class WatchMiandaoraoListActivity extends BaseActivity implements Activit
             }
 
             @Override
-            public void onFail(Call<BaseBean<MiandaraoListResultBean>> call, Throwable t) {
+            public void onFail(Call<BaseBean<NewMiandaraoListResultBean>> call, Throwable t) {
 
             }
         });

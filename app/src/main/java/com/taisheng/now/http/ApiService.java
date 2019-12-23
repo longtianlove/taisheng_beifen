@@ -117,6 +117,7 @@ import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.MiandaraoListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewLocationBean;
+import com.taisheng.now.bussiness.watch.bean.result.NewMiandaraoListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
@@ -269,7 +270,7 @@ public interface ApiService {
     Call<BaseBean> notDisturbSwitchSetting(@Body KaiGuanPostBean bean);
 
     @POST(Constants.Url.Watch.notDisturbSettingList)
-    Call<BaseBean<MiandaraoListResultBean>> notDisturbSwitchSetting(@Body BaseWatchBean bean);
+    Call<BaseBean<NewMiandaraoListResultBean>> notDisturbSwitchSetting(@Body BaseWatchBean bean);
 
 
     @POST(Constants.Url.Watch.getWatchWarning)
