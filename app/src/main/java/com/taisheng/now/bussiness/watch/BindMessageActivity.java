@@ -294,12 +294,10 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
             return false;
         }
         if (TextUtils.isEmpty(et_idcard.getText())) {
-            ToastUtil.showAtCenter("请输入正确的身份证号");
             return false;
         }
 
         if (!IDCardUtil.isValidatedAllIdcard(et_idcard.getText().toString())) {
-            ToastUtil.showAtCenter("请输入正确的身份证号");
             return false;
         }
         if (TextUtils.isEmpty(et_phonenumber.getText())) {
