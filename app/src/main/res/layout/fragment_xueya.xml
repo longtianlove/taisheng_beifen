@@ -102,13 +102,12 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="#ff44bf4c"
-                            android:textSize="23sp" />
+                            android:textSize="40sp" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
                             android:text="高压(mmhg)"
                             android:textColor="#ff666666"
                             android:textSize="13sp" />
@@ -129,13 +128,12 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="#ffff9d3c"
-                            android:textSize="23sp" />
+                            android:textSize="40sp" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
                             android:text="低压(mmhg)"
 
                             android:textColor="#ff666666"

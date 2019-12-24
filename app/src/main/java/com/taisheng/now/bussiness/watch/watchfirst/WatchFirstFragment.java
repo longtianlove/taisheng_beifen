@@ -76,7 +76,7 @@ public class WatchFirstFragment extends BaseFragment {
         tl_tab.setTabMode(TabLayout.MODE_SCROLLABLE);
 //        tl_tab.setSelectedTabIndicatorColor(ContextCompat.getColor(DoctorsFenleiActivity.this, R.color.SelectedTabIndicatorColor));
 //        tl_tab.setSelectedTabIndicatorHeight(DensityUtil.dip2px(DoctorsFenleiActivity.this, 2));
-//        tl_tab.setTabTextColors(ContextCompat.getColor(DoctorsFenleiActivity.this, R.color.UnSelectedTextColor), ContextCompat.getColor(DoctorsFenleiActivity.this, R.color.SelectedTextColor));
+        tl_tab.setTabTextColors(ContextCompat.getColor(getContext(), R.color.self_grey), ContextCompat.getColor(getContext(), R.color.white));
 //        tl_tab.setBackgroundColor(ContextCompat.getColor(DoctorsFenleiActivity.this, R.color.white));
 //        tl_tab.setTabTextColors(ContextCompat.getColor(this, R.color.gray), ContextCompat.getColor(this, R.color.white));
 //        tl_tab.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));

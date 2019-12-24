@@ -209,6 +209,8 @@
     </style>
 
 
-
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">20dp</item>
+    </style>
 
 </resources>
