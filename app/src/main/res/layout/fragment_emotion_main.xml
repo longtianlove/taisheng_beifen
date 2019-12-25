@@ -91,7 +91,7 @@
             android:layout_height="32dp"
             android:background="@drawable/shape_bg_button_reply"
             android:text="发送"
-            android:textColor="#020202"
+            android:textColor="#fff"
             android:visibility="gone" />
     </LinearLayout>
 
