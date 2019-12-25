@@ -97,6 +97,7 @@ public class DoctorsFenleiFragment extends BaseFragment {
     }
 
     void initData() {
+        PAGE_NO = 1;
         getDoctors();
     }
 

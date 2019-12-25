@@ -93,6 +93,32 @@ public class DoctorsFenleiActivity extends BaseFragmentActivity {
         changeTabIndicatorWidth(tl_tab, 15);
 
         tl_tab.getTabAt(selectTab).select();
+        tl_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        zhongyitizhiFragment1.initData();
+                        break;
+                    case 1:
+                        jichudaixieFragment.initData();
+                        break;
+                    case 2:
+                        fukejiankangFragment.initData();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
