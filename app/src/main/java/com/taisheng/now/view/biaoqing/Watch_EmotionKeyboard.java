@@ -105,6 +105,8 @@ public class Watch_EmotionKeyboard {
         emotionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                yuyin_text.setVisibility(View.GONE);
+                bar_edit_text.setVisibility(View.VISIBLE);
                 if (mEmotionLayout.isShown()) {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     hideEmotionLayout(true);//隐藏表情布局，显示软件盘
@@ -120,6 +122,48 @@ public class Watch_EmotionKeyboard {
                 }
             }
         });
+        return this;
+    }
+
+    static boolean yuyinButtonisCheck = false;
+    View yuyin_text;
+    View bar_edit_text;
+
+    /**
+     * 绑定语音按钮
+     *
+     * @param yuyinButton
+     * @return
+     */
+    public Watch_EmotionKeyboard bindToYuyinButton(View yuyinButton,View yuyin_text,View bar_edit_text) {
+        yuyinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!yuyinButtonisCheck) {
+                    yuyin_text.setVisibility(View.VISIBLE);
+                    bar_edit_text.setVisibility(View.GONE);
+                }else{
+                    yuyin_text.setVisibility(View.GONE);
+                    bar_edit_text.setVisibility(View.VISIBLE);
+                    if (mEmotionLayout.isShown()) {
+                        lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
+                        hideEmotionLayout(true);//隐藏表情布局，显示软件盘
+                        unlockContentHeightDelayed();//软件盘显示后，释放内容高度
+                    } else {
+                        if (isSoftInputShown()) {//同上
+                            lockContentHeight();
+                            hideEmotionLayout(true);//隐藏表情布局，显示软件盘
+                            unlockContentHeightDelayed();
+                        } else {
+                            hideEmotionLayout(true);//隐藏表情布局，显示软件盘
+                        }
+                    }
+                }
+                yuyinButtonisCheck=!yuyinButtonisCheck;
+            }
+        });
+        this.yuyin_text=yuyin_text;
+        this.bar_edit_text=bar_edit_text;
         return this;
     }
 

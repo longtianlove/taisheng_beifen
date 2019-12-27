@@ -125,6 +125,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                 .bindToContent(contentView)//绑定内容view
                 .bindToEditText(((EditText) layout.findViewById(R.id.bar_edit_text)))//判断绑定那种EditView
                 .bindToEmotionButton(layout.findViewById(R.id.emotion_button))//绑定表情按钮
+                .bindToYuyinButton(layout.findViewById(R.id.yuyin_button),layout.findViewById(R.id.yuyin_text),layout.findViewById(R.id.bar_edit_text))
                 .build();
         initData();
 //        点击表情的全局监听管理类
