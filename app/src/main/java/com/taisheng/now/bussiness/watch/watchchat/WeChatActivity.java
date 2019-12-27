@@ -28,6 +28,7 @@ import com.taisheng.now.util.DoubleClickUtil;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.AppDialog;
 import com.taisheng.now.view.biaoqing.EmotionMainFragment;
+import com.taisheng.now.view.biaoqing.Watch_EmotionMainFragment;
 import com.taisheng.now.view.chenjinshi.StatusBarUtil;
 import com.tencent.trtc.TRTCCloudDef;
 
@@ -37,7 +38,7 @@ import retrofit2.Response;
 public class WeChatActivity extends FragmentActivity implements  ActivityCompat.OnRequestPermissionsResultCallback {
 
     private TextView mTvContent;
-    EmotionMainFragment emotionMainFragment;
+    Watch_EmotionMainFragment emotionMainFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,7 @@ public class WeChatActivity extends FragmentActivity implements  ActivityCompat.
     }
 
     void initBiaoqinng(){
-        emotionMainFragment = EmotionMainFragment.newInstance(EmotionMainFragment.class, null);
+        emotionMainFragment = Watch_EmotionMainFragment.newInstance(Watch_EmotionMainFragment.class, null);
         emotionMainFragment.bindToContentView(mTvContent);//绑定当前页面控件
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fl_emotion_view_main, emotionMainFragment);
