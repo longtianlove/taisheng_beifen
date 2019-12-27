@@ -34,10 +34,12 @@ import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;
 import com.taisheng.now.bussiness.watch.location.WatchLocationFragment;
+import com.taisheng.now.bussiness.watch.watchchat.WeChatActivity;
 import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstFragment;
 import com.taisheng.now.bussiness.watch.watchme.WatchMeFragment;
 import com.taisheng.now.bussiness.watch.watchyujing.ThreadUtil;
 import com.taisheng.now.bussiness.watch.watchyujing.WatchYujingFragment;
+import com.taisheng.now.chat.C2CActivity;
 import com.taisheng.now.chat.ChatManagerInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
@@ -79,6 +81,8 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
 
 
     View iv_weidu;
+
+    View tab_wechat;
 
 
     @Override
@@ -148,6 +152,14 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
         tv_tab_message = findViewById(R.id.tv_tab_message);
 
         iv_weidu = findViewById(R.id.iv_weidu);
+        tab_wechat=findViewById(R.id.tab_wechat);
+        tab_wechat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(WatchMainActivity.this, WeChatActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }

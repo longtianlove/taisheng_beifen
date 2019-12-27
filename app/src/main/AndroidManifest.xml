@@ -856,7 +856,14 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleBottom" />
+
+
         <activity
+            android:name=".bussiness.watch.watchchat.WeChatActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+
             android:name=".chat.ImageLookActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
