@@ -150,6 +150,7 @@ public class Watch_EmotionKeyboard {
             public void onClick(View v) {
                 if (!yuyinButtonisCheck) {
                     yuyin_text.setVisibility(View.VISIBLE);
+                    hideEmotionLayout(false);
                     bar_edit_text.setVisibility(View.GONE);
                 } else {
                     yuyin_text.setVisibility(View.GONE);
