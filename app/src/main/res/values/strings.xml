@@ -6,7 +6,6 @@
     <string name="crop__cancel" tools:ignore="ButtonCase">CANCEL·LAR</string>
 
 
-
     <!--截图-->
     <string name="crop__wait">Si us plau esperi…</string>
     <string name="crop__pick_error">No hi ha imatges disponibles</string>
@@ -123,7 +122,6 @@
 </string>
 
 
-
     <string-array name="head_images">
         <item>@drawable/head_icon_1</item>
         <item>@drawable/head_icon_2</item>
@@ -203,8 +201,6 @@
     <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
 
 
-
-
     <string name="mon">Monday</string>
     <string name="tue">Tuesday</string>
     <string name="wed">Wednesday</string>
@@ -217,8 +213,7 @@
     <string name="ring">铃声</string>
 
 
-
-    <string name="long_click_record">长按 录音</string>
+    <string name="long_click_record">按住 说话</string>
     <string name="hang_up_finsh">松开 结束</string>
     <string name="release_cancel">松开 取消</string>
 </resources>

@@ -30,6 +30,7 @@ import com.taisheng.now.view.AppDialog;
 import com.taisheng.now.view.biaoqing.EmotionMainFragment;
 import com.taisheng.now.view.biaoqing.Watch_EmotionMainFragment;
 import com.taisheng.now.view.chenjinshi.StatusBarUtil;
+import com.taisheng.now.yuyin.manager.MediaManager;
 import com.tencent.trtc.TRTCCloudDef;
 
 import retrofit2.Call;
@@ -90,6 +91,13 @@ public class WeChatActivity extends FragmentActivity implements  ActivityCompat.
     @Override
     public void onRestart() {
         super.onRestart();
+    }
+
+
+    @Override
+    protected void onPause() {
+        MediaManager.release();//保证在退出该页面时，终止语音播放
+        super.onPause();
     }
 
     @Override

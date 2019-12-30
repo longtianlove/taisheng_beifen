@@ -59,6 +59,7 @@ import com.taisheng.now.chat.RemoteChatMessage;
 import com.taisheng.now.chat.websocket.WebSocketManager;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.yuyin.example.Record;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -113,21 +114,31 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
     private View ll_emotion_layout;
     private List<MessageBean> mDatas;
 
+    private com.taisheng.now.yuyin.manager.AudioRecordButton yuyin_text;
+    private View bar_edit_text;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_watch_emotion_main, container, false);
         initView(layout);
         ll_emotion_layout = layout.findViewById(R.id.ll_emotion_layout);
+        yuyin_text=layout.findViewById(R.id.yuyin_text);
+        bar_edit_text=layout.findViewById(R.id.bar_edit_text);
         //初始化EmotionKeyboard
         mEmotionKeyboard = Watch_EmotionKeyboard.with(getActivity())
                 .setEmotionView(layout.findViewById(R.id.ll_emotion_layout))//绑定表情面板
                 .bindToContent(contentView)//绑定内容view
                 .bindToEditText(((EditText) layout.findViewById(R.id.bar_edit_text)))//判断绑定那种EditView
                 .bindToEmotionButton(layout.findViewById(R.id.emotion_button))//绑定表情按钮
-                .bindToYuyinButton(layout.findViewById(R.id.yuyin_button),layout.findViewById(R.id.yuyin_text),layout.findViewById(R.id.bar_edit_text))
+                .bindToYuyinButton(layout.findViewById(R.id.yuyin_button),yuyin_text,bar_edit_text)
                 .build();
+        Watch_EmotionKeyboard.yuyinButtonisCheck=false;
+        yuyin_text.setVisibility(View.GONE);
+        bar_edit_text.setVisibility(View.VISIBLE);
         initData();
+        initListener();
+
 //        点击表情的全局监听管理类
         globalOnItemClickManager = GlobalOnItemClickManagerUtils.getInstance();
         //绑定EditText
@@ -135,6 +146,23 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         EventBus.getDefault().register(this);
         return layout;
     }
+
+    private void initListener() {
+        yuyin_text.setHasRecordPromission(true);
+        yuyin_text.setAudioFinishRecorderListener((seconds, filePath) -> {
+            Record recordModel = new Record();
+            recordModel.setSecond((int) seconds <= 0 ? 1 : (int) seconds);
+            recordModel.setPath(filePath);
+            recordModel.setPlayed(false);
+//            mRecords.add(recordModel);
+//            mExampleAdapter.notifyDataSetChanged();
+//            mEmLvRecodeList.setSelection(mRecords.size() - 1);
+//
+//            //添加到数据库
+//            mgr.add(recordModel);
+        });
+    }
+
 
     public void yicangbiaoqingban() {
         ll_emotion_layout.setVisibility(View.VISIBLE);

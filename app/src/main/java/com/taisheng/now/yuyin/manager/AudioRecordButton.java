@@ -293,6 +293,8 @@ public class AudioRecordButton extends AppCompatButton
             switch (mCurrentState) {
                 case STATE_NORMAL:
                     setText(mContext.getString(R.string.long_click_record));//长按录音
+                    setBackgroundColor(Color.WHITE);
+                    setTextColor(Color.BLACK);
                     break;
                 case STATE_RECORDING:
                     setBackgroundColor(Color.rgb(0xcd, 0xcd, 0xcd));

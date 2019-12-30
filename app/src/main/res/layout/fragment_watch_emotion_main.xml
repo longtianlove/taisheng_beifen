@@ -55,26 +55,41 @@
             <EditText
                 android:id="@+id/bar_edit_text"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:background="#0000"
                 android:maxLines="3"
                 android:minHeight="36dp"
                 android:textSize="16sp" />
 
-            <TextView
+<!--            <TextView-->
+<!--                android:id="@+id/yuyin_text"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="#0000"-->
+<!--                android:visibility="gone"-->
+<!--                android:maxLines="3"-->
+<!--                android:text="按住说话"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:gravity="center"-->
+<!--                android:minHeight="36dp"-->
+<!--                android:textSize="16sp" />-->
+
+
+
+
+            <com.taisheng.now.yuyin.manager.AudioRecordButton
                 android:id="@+id/yuyin_text"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#0000"
-                android:visibility="gone"
-                android:maxLines="3"
-                android:text="按住说话"
-                android:layout_gravity="center"
+                android:layout_height="30dp"
+                android:background="#fff"
                 android:gravity="center"
-                android:minHeight="36dp"
-                android:textSize="16sp" />
+                android:layout_gravity="center"
+                android:text="按住 说话"
+                android:textColor="#000"
+                android:textSize="16dp"/>
 
             <!--<ImageView-->
             <!--android:id="@+id/emotion_button"-->
