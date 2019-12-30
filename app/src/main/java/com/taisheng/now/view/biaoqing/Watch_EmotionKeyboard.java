@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -80,7 +81,8 @@ public class Watch_EmotionKeyboard {
                 if (event.getAction() == MotionEvent.ACTION_UP && mEmotionLayout.isShown()) {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     hideEmotionLayout(true);//隐藏表情布局，显示软件盘
-
+                    yuyinButton.setChecked(false);
+                    yuyinButtonisCheck=false;
                     //软件盘显示后，释放内容高度
                     mEditText.postDelayed(new Runnable() {
                         @Override
@@ -101,16 +103,20 @@ public class Watch_EmotionKeyboard {
      * @param emotionButton
      * @return
      */
-    public Watch_EmotionKeyboard bindToEmotionButton(View emotionButton) {
+    public Watch_EmotionKeyboard bindToEmotionButton(CheckBox emotionButton) {
         emotionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                yuyinButton.setChecked(false);
+                yuyinButtonisCheck=false;
+
                 yuyin_text.setVisibility(View.GONE);
                 bar_edit_text.setVisibility(View.VISIBLE);
                 if (mEmotionLayout.isShown()) {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     hideEmotionLayout(true);//隐藏表情布局，显示软件盘
                     unlockContentHeightDelayed();//软件盘显示后，释放内容高度
+
                 } else {
                     if (isSoftInputShown()) {//同上
                         lockContentHeight();
@@ -119,6 +125,7 @@ public class Watch_EmotionKeyboard {
                     } else {
                         showEmotionLayout();//两者都没显示，直接显示表情布局
                     }
+
                 }
             }
         });
@@ -128,6 +135,7 @@ public class Watch_EmotionKeyboard {
     static boolean yuyinButtonisCheck = false;
     View yuyin_text;
     View bar_edit_text;
+    CheckBox yuyinButton;
 
     /**
      * 绑定语音按钮
@@ -135,14 +143,15 @@ public class Watch_EmotionKeyboard {
      * @param yuyinButton
      * @return
      */
-    public Watch_EmotionKeyboard bindToYuyinButton(View yuyinButton,View yuyin_text,View bar_edit_text) {
-        yuyinButton.setOnClickListener(new View.OnClickListener() {
+    public Watch_EmotionKeyboard bindToYuyinButton(CheckBox yuyinButton, View yuyin_text, View bar_edit_text) {
+        this.yuyinButton = yuyinButton;
+        this.yuyinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!yuyinButtonisCheck) {
                     yuyin_text.setVisibility(View.VISIBLE);
                     bar_edit_text.setVisibility(View.GONE);
-                }else{
+                } else {
                     yuyin_text.setVisibility(View.GONE);
                     bar_edit_text.setVisibility(View.VISIBLE);
                     if (mEmotionLayout.isShown()) {
@@ -159,11 +168,11 @@ public class Watch_EmotionKeyboard {
                         }
                     }
                 }
-                yuyinButtonisCheck=!yuyinButtonisCheck;
+                yuyinButtonisCheck = !yuyinButtonisCheck;
             }
         });
-        this.yuyin_text=yuyin_text;
-        this.bar_edit_text=bar_edit_text;
+        this.yuyin_text = yuyin_text;
+        this.bar_edit_text = bar_edit_text;
         return this;
     }
 

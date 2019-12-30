@@ -27,7 +27,7 @@
             android:id="@+id/yuyin_button"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@drawable/checkbox_emotion_keyboard"
+            android:background="@drawable/checkbox_watch_emotion_keyboard"
             android:button="@null"
             android:clickable="true"
             android:visibility="visible" />
