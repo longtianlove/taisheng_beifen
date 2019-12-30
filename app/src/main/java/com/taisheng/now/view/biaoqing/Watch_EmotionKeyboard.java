@@ -150,22 +150,26 @@ public class Watch_EmotionKeyboard {
             public void onClick(View v) {
                 if (!yuyinButtonisCheck) {
                     yuyin_text.setVisibility(View.VISIBLE);
-                    hideEmotionLayout(false);
                     bar_edit_text.setVisibility(View.GONE);
+                    if (mEmotionLayout.isShown()) {
+                        mEmotionLayout.setVisibility(View.GONE);
+                    }
+                    hideSoftInput();
+
                 } else {
                     yuyin_text.setVisibility(View.GONE);
                     bar_edit_text.setVisibility(View.VISIBLE);
                     if (mEmotionLayout.isShown()) {
                         lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
-                        hideEmotionLayout(true);//隐藏表情布局，显示软件盘
+                        selfhideEmotionLayout();//隐藏表情布局，显示软件盘
                         unlockContentHeightDelayed();//软件盘显示后，释放内容高度
                     } else {
                         if (isSoftInputShown()) {//同上
                             lockContentHeight();
-                            hideEmotionLayout(true);//隐藏表情布局，显示软件盘
+                            selfhideEmotionLayout();//隐藏表情布局，显示软件盘
                             unlockContentHeightDelayed();
                         } else {
-                            hideEmotionLayout(true);//隐藏表情布局，显示软件盘
+                            selfhideEmotionLayout();//隐藏表情布局，显示软件盘
                         }
                     }
                 }
@@ -233,6 +237,18 @@ public class Watch_EmotionKeyboard {
                 showSoftInput();
             }
         }
+    }
+    /**
+     * 自定义隐藏表情布局
+     */
+    private void selfhideEmotionLayout() {
+        if (mEmotionLayout.isShown()) {
+            mEmotionLayout.setVisibility(View.GONE);
+
+        }
+
+            showSoftInput();
+
     }
 
     /**
