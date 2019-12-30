@@ -161,10 +161,10 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
     private void initListener() {
         yuyin_text.setHasRecordPromission(true);
         yuyin_text.setAudioFinishRecorderListener((seconds, filePath) -> {
-            Record recordModel = new Record();
-            recordModel.setSecond((int) seconds <= 0 ? 1 : (int) seconds);
-            recordModel.setPath(filePath);
-            recordModel.setPlayed(false);
+//            Record recordModel = new Record();
+//            recordModel.setSecond((int) seconds <= 0 ? 1 : (int) seconds);
+//            recordModel.setPath(filePath);
+//            recordModel.setPlayed(false);
             String rawAudiomessage="audio[";
             rawAudiomessage+=((seconds <= 0 ? 1 : (int) seconds)+","+filePath+","+"1]");
             sendYuyinMsg(rawAudiomessage);
