@@ -49,6 +49,7 @@ import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.bean.result.PictureBean;
 import com.taisheng.now.bussiness.me.SelectAvatarSourceDialog;
 import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.chat.ColorUtils;
 import com.taisheng.now.chat.CoreDB;
 import com.taisheng.now.chat.HistoryBean;
@@ -77,9 +78,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
-import static com.taisheng.now.chat.C2CActivity.doctorAvator;
-import static com.taisheng.now.chat.C2CActivity.doctorName;
-import static com.taisheng.now.chat.C2CActivity.mTargetId;
+
 
 /**
  * Created by SiberiaDante
@@ -90,6 +89,11 @@ import static com.taisheng.now.chat.C2CActivity.mTargetId;
  * 博客园： http://www.cnblogs.com/shen-hua/
  */
 public class Watch_EmotionMainFragment extends BaseFragment implements AdapterView.OnItemLongClickListener {
+    public static String mTargetId="-1";
+    public static String doctorName;
+    public static String doctorAvator;
+
+
     private static final String TAG = Watch_EmotionMainFragment.class.getSimpleName();
     private CheckBox mCBEmotionBtn;
     private EditText vEditText;
@@ -474,6 +478,9 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
 
     private void initData() {
+        doctorName= WatchInstance.getInstance().realName;
+        doctorAvator=WatchInstance.getInstance().headUrl;
+
         replaceFragment();
         List<ImageModel> list = new ArrayList<>();
         for (int i = 0; i < fragments.size(); i++) {
