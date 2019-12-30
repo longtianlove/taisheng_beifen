@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,7 +28,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +66,8 @@ import com.taisheng.now.chat.websocket.WebSocketManager;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.yuyin.example.Record;
+import com.taisheng.now.yuyin.manager.MediaManager;
+import com.taisheng.now.yuyin.util.CommonsUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -89,7 +96,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * 博客园： http://www.cnblogs.com/shen-hua/
  */
 public class Watch_EmotionMainFragment extends BaseFragment implements AdapterView.OnItemLongClickListener {
-    public static String mTargetId="-1";
+    public static String mTargetId = "-1";
     public static String doctorName;
     public static String doctorAvator;
 
@@ -127,17 +134,17 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         View layout = inflater.inflate(R.layout.fragment_watch_emotion_main, container, false);
         initView(layout);
         ll_emotion_layout = layout.findViewById(R.id.ll_emotion_layout);
-        yuyin_text=layout.findViewById(R.id.yuyin_text);
-        bar_edit_text=layout.findViewById(R.id.bar_edit_text);
+        yuyin_text = layout.findViewById(R.id.yuyin_text);
+        bar_edit_text = layout.findViewById(R.id.bar_edit_text);
         //初始化EmotionKeyboard
         mEmotionKeyboard = Watch_EmotionKeyboard.with(getActivity())
                 .setEmotionView(layout.findViewById(R.id.ll_emotion_layout))//绑定表情面板
                 .bindToContent(contentView)//绑定内容view
                 .bindToEditText(((EditText) layout.findViewById(R.id.bar_edit_text)))//判断绑定那种EditView
                 .bindToEmotionButton(layout.findViewById(R.id.emotion_button))//绑定表情按钮
-                .bindToYuyinButton(layout.findViewById(R.id.yuyin_button),yuyin_text,bar_edit_text)
+                .bindToYuyinButton(layout.findViewById(R.id.yuyin_button), yuyin_text, bar_edit_text)
                 .build();
-        Watch_EmotionKeyboard.yuyinButtonisCheck=false;
+        Watch_EmotionKeyboard.yuyinButtonisCheck = false;
         yuyin_text.setVisibility(View.GONE);
         bar_edit_text.setVisibility(View.VISIBLE);
         initData();
@@ -158,9 +165,9 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
             recordModel.setSecond((int) seconds <= 0 ? 1 : (int) seconds);
             recordModel.setPath(filePath);
             recordModel.setPlayed(false);
-//            mRecords.add(recordModel);
-//            mExampleAdapter.notifyDataSetChanged();
-//            mEmLvRecodeList.setSelection(mRecords.size() - 1);
+            String rawAudiomessage="audio[";
+            rawAudiomessage+=((seconds <= 0 ? 1 : (int) seconds)+","+filePath+","+"1]");
+            sendYuyinMsg(rawAudiomessage);
 //
 //            //添加到数据库
 //            mgr.add(recordModel);
@@ -266,14 +273,13 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         vMsgList.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
 
-
-        vMsgList.setOnTouchListener(new View.OnTouchListener(){
+        vMsgList.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
 
-                if( (event.getAction() ==  MotionEvent.ACTION_DOWN)
-                        && (view.getId() == R.id.msg_list) ) {
+                if ((event.getAction() == MotionEvent.ACTION_DOWN)
+                        && (view.getId() == R.id.msg_list)) {
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
                 return false;
@@ -478,8 +484,8 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
 
     private void initData() {
-        doctorName= WatchInstance.getInstance().realName;
-        doctorAvator=WatchInstance.getInstance().headUrl;
+        doctorName = WatchInstance.getInstance().realName;
+        doctorAvator = WatchInstance.getInstance().headUrl;
 
         replaceFragment();
         List<ImageModel> list = new ArrayList<>();
@@ -582,39 +588,39 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
     }
 
 
-    private void sendWenziMsg(String msg) {
-        String rawMessage = ",fhadmin-msg," + UserInstance.getInstance().getUid() + ",fh," + mTargetId + ",fh,"
-                + UserInstance.getInstance().getNickname() + ",fh,普通用户,fh," + UserInstance.getInstance().getRealname()
-                + ",fh,friend,fh," + UserInstance.getInstance().userInfo.avatar + ",fh," + msg;
-
-        WebSocketManager.getInstance().sendMessage(rawMessage);
-
-        RemoteChatMessage message = new RemoteChatMessage();
-        message.contentData = msg;
-        message.targetId = mTargetId;
-        message.fromId = UserInstance.getInstance().getUid();
-
-        HistoryBean historyBean = new HistoryBean();
-        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
-        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-        historyBean.setLastMsg(message.contentData);
-        historyBean.setConversationId(message.targetId);
-        historyBean.setNewMsgCount(1);
-        historyBean.doctorAvator = doctorAvator;
-        historyBean.doctorName = doctorName;
-        MLOC.addHistory(historyBean, true);
-
-        MessageBean messageBean = new MessageBean();
-        messageBean.setConversationId(message.targetId);
-        messageBean.setTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-        messageBean.setMsg(message.contentData);
-        messageBean.setFromId(message.fromId);
-        MLOC.saveMessage(messageBean);
-
-        ColorUtils.getColor(getActivity(), message.fromId);
-        mDatas.add(messageBean);
-        mAdapter.notifyDataSetChanged();
-    }
+//    private void sendWenziMsg(String msg) {
+//        String rawMessage = ",fhadmin-msg," + UserInstance.getInstance().getUid() + ",fh," + mTargetId + ",fh,"
+//                + UserInstance.getInstance().getNickname() + ",fh,普通用户,fh," + UserInstance.getInstance().getRealname()
+//                + ",fh,friend,fh," + UserInstance.getInstance().userInfo.avatar + ",fh," + msg;
+//
+//        WebSocketManager.getInstance().sendMessage(rawMessage);
+//
+//        RemoteChatMessage message = new RemoteChatMessage();
+//        message.contentData = msg;
+//        message.targetId = mTargetId;
+//        message.fromId = UserInstance.getInstance().getUid();
+//
+//        HistoryBean historyBean = new HistoryBean();
+//        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
+//        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+//        historyBean.setLastMsg(message.contentData);
+//        historyBean.setConversationId(message.targetId);
+//        historyBean.setNewMsgCount(1);
+//        historyBean.doctorAvator = doctorAvator;
+//        historyBean.doctorName = doctorName;
+//        MLOC.addHistory(historyBean, true);
+//
+//        MessageBean messageBean = new MessageBean();
+//        messageBean.setConversationId(message.targetId);
+//        messageBean.setTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+//        messageBean.setMsg(message.contentData);
+//        messageBean.setFromId(message.fromId);
+//        MLOC.saveMessage(messageBean);
+//
+//        ColorUtils.getColor(getActivity(), message.fromId);
+//        mDatas.add(messageBean);
+//        mAdapter.notifyDataSetChanged();
+//    }
 
     private void sendImgMsg(String path) {
         String pathString = "img[" + path + "]";
@@ -652,6 +658,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
     }
 
 
+    //发送加表情的文字
     private void sendBiaoqingMsg(String biaoqing) {
 
         String pathString = biaoqing.replaceAll("\\[", "face[");
@@ -663,6 +670,43 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
         RemoteChatMessage message = new RemoteChatMessage();
         message.contentData = biaoqing;
+        message.targetId = mTargetId;
+        message.fromId = UserInstance.getInstance().getUid();
+
+        HistoryBean historyBean = new HistoryBean();
+        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
+        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+        historyBean.setLastMsg(message.contentData);
+        historyBean.setConversationId(message.targetId);
+        historyBean.setNewMsgCount(1);
+        historyBean.doctorAvator = doctorAvator;
+        historyBean.doctorName = doctorName;
+        MLOC.addHistory(historyBean, true);
+
+        MessageBean messageBean = new MessageBean();
+        messageBean.setConversationId(message.targetId);
+        messageBean.setTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+        messageBean.setMsg(message.contentData);
+        messageBean.setFromId(message.fromId);
+        MLOC.saveMessage(messageBean);
+
+        ColorUtils.getColor(getActivity(), message.fromId);
+        mDatas.add(messageBean);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    //发送语音
+    private void sendYuyinMsg(String data) {
+
+//        String pathString = biaoqing.replaceAll("\\[", "face[");
+//        String rawMessage = ",fhadmin-msg," + UserInstance.getInstance().getUid() + ",fh," + mTargetId + ",fh,"
+//                + UserInstance.getInstance().getNickname() + ",fh,普通用户,fh," + UserInstance.getInstance().getRealname()
+//                + ",fh,friend,fh," + UserInstance.getInstance().userInfo.avatar + ",fh," + pathString;
+//
+//        WebSocketManager.getInstance().sendMessage(rawMessage);
+
+        RemoteChatMessage message = new RemoteChatMessage();
+        message.contentData = data;
         message.targetId = mTargetId;
         message.fromId = UserInstance.getInstance().getUid();
 
@@ -721,6 +765,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
         public MyChatroomListAdapter() {
             mInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mAnimationDrawables = new ArrayList<>();
         }
 
         @Override
@@ -764,6 +809,11 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                     itemSelfHolder.vUserId = (TextView) convertView.findViewById(R.id.item_user_id);
                     itemSelfHolder.vMsg = (TextView) convertView.findViewById(R.id.item_msg);
                     itemSelfHolder.sdw_pic = convertView.findViewById(R.id.sdw_pic);
+                    itemSelfHolder.ll_yuyin = convertView.findViewById(R.id.ll_yuyin);
+                    itemSelfHolder.ieaIvVoiceLine = (ImageView) convertView.findViewById(R.id.iea_iv_voiceLine);
+                    itemSelfHolder.ieaLlSinger = (LinearLayout) convertView.findViewById(R.id.iea_ll_singer);
+                    itemSelfHolder.ieaTvVoicetime1 = (TextView) convertView.findViewById(R.id.iea_tv_voicetime1);
+                    itemSelfHolder.ieaIvRed = (ImageView) convertView.findViewById(R.id.iea_iv_red);
 //                    itemSelfHolder.vHeadBg = convertView.findViewById(R.id.head_bg);
                     itemSelfHolder.sdv_header = convertView.findViewById(R.id.sdv_header);
 //                    itemSelfHolder.vHeadCover = (CircularCoverView) convertView.findViewById(R.id.head_cover);
@@ -779,7 +829,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                     rawmessage = rawmessage.replace("]", "");
                     itemSelfHolder.sdw_pic.setVisibility(View.VISIBLE);
                     itemSelfHolder.vMsg.setVisibility(View.GONE);
-
+                    itemSelfHolder.ll_yuyin.setVisibility(View.GONE);
 
                     itemSelfHolder.sdw_pic.setImageURI(Uri.parse(Constants.Url.File_Host + rawmessage));
                     String finalRawmessage = rawmessage;
@@ -814,9 +864,80 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                         }
                     });
 
+                } else if (rawmessage.startsWith("audio[") && rawmessage.endsWith("]")) {
+                    itemSelfHolder.sdw_pic.setVisibility(View.GONE);
+                    itemSelfHolder.vMsg.setVisibility(View.GONE);
+                    itemSelfHolder.ll_yuyin.setVisibility(View.VISIBLE);
+
+                    rawmessage = rawmessage.replace("audio[", "");
+                    rawmessage = rawmessage.replace("]", "");
+
+//                    String rawAudiomessage="audio[";
+//                    rawAudiomessage+=((seconds <= 0 ? 1 : (int) seconds)+","+filePath+","+"1]");
+                    String[] temp=rawmessage.split(",");
+
+                    String seconds=temp[0];
+                    int secondstemp=Integer.parseInt(seconds);
+                    String filePath=temp[1];
+                    String isPlayed=temp[2];
+                    //设置显示时长
+                    itemSelfHolder.ieaTvVoicetime1.setText(secondstemp<= 0 ? 1 + "''" : seconds + "''");
+                    if (!"1".equals(isPlayed)) {
+                        itemSelfHolder.ieaIvRed.setVisibility(View.VISIBLE);
+                    } else {
+                        itemSelfHolder.ieaIvRed.setVisibility(View.GONE);
+                    }
+
+                    //更改并显示录音条长度
+                    RelativeLayout.LayoutParams ps = (RelativeLayout.LayoutParams) itemSelfHolder.ieaIvVoiceLine.getLayoutParams();
+                    ps.width = CommonsUtils.getVoiceLineWight(getActivity(), secondstemp);
+                    itemSelfHolder.ieaIvVoiceLine.setLayoutParams(ps); //更改语音长条长度
+                    //开始设置监听
+                    final LinearLayout ieaLlSinger = itemSelfHolder.ieaLlSinger;
+                    itemSelfHolder.ieaIvVoiceLine.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //只要点击就设置为已播放状态（隐藏小红点）
+//                            record.setPlayed(true);
+                            //todo  更新数据库
+                            notifyDataSetChanged();
+                            //这里更新数据库小红点。这里不知道为什么可以强转建议复习复习基础~
+//                            ((ExampleActivity) mContext).getMgr().updateRecord(record);
+
+
+                            final AnimationDrawable animationDrawable = (AnimationDrawable) ieaLlSinger.getBackground();
+                            //重置动画
+                            resetAnim(animationDrawable);
+                            animationDrawable.start();
+
+
+                            //记录当前位置正在播放。
+                            pos = position;
+
+
+                            //播放前重置。
+                            MediaManager.release();
+                            //开始实质播放
+                            MediaManager.playSound(filePath,
+                                    new MediaPlayer.OnCompletionListener() {
+                                        @Override
+                                        public void onCompletion(MediaPlayer mp) {
+                                            animationDrawable.selectDrawable(0);//显示动画第一帧
+                                            animationDrawable.stop();
+
+                                            //播放完毕，当前播放索引置为-1。
+                                            pos = -1;
+                                        }
+                                    });
+                        }
+                    });
+
+
+
                 } else {
                     itemSelfHolder.sdw_pic.setVisibility(View.GONE);
                     itemSelfHolder.vMsg.setVisibility(View.VISIBLE);
+                    itemSelfHolder.ll_yuyin.setVisibility(View.GONE);
                     itemSelfHolder.vMsg.setText(SpanStringUtils.megetEmotionContent(EmotionUtils.EMOTION_CLASSIC_TYPE,
                             getActivity(), (mDatas.get(position).getMsg()).toString()));
                 }
@@ -828,6 +949,8 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 //                itemSelfHolder.vHeadCover.setRadians(cint, cint, cint, cint,0);
 //                itemSelfHolder.vHeadImage.setImageResource(MLOC.getHeadImage(C2CActivity.this,mDatas.get(position).getFromId()));
             } else if (currLayoutType == 1) {//别人的信息
+
+                //todo 语音所有的都没写，
                 final ViewHolder itemOtherHolder;
                 if (convertView == null) {
                     itemOtherHolder = new ViewHolder();
@@ -884,8 +1007,8 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                 } else {
                     itemOtherHolder.sdw_pic.setVisibility(View.GONE);
                     itemOtherHolder.vMsg.setVisibility(View.VISIBLE);
-                    String faceWords=mDatas.get(position).getMsg().toString();
-                    faceWords=faceWords.replace("face[","[");
+                    String faceWords = mDatas.get(position).getMsg().toString();
+                    faceWords = faceWords.replace("face[", "[");
                     itemOtherHolder.vMsg.setText(SpanStringUtils.megetEmotionContent(EmotionUtils.EMOTION_CLASSIC_TYPE,
                             getActivity(), (faceWords)));
                 }
@@ -904,13 +1027,34 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         }
 
 
+        private void resetAnim(AnimationDrawable animationDrawable) {
+            if (!mAnimationDrawables.contains(animationDrawable)) {
+                mAnimationDrawables.add(animationDrawable);
+            }
+            for (AnimationDrawable ad : mAnimationDrawables) {
+                ad.selectDrawable(0);
+                ad.stop();
+            }
+        }
+
+        List<AnimationDrawable> mAnimationDrawables;
+        int pos = -1;//标记当前录音索引，默认没有播放任何一个
+
+
     }
 
     public class ViewHolder {
         public TextView vUserId;
         public TextView vMsg;
         public SimpleDraweeView sdw_pic;
+
         public SimpleDraweeView sdv_header;
+
+        public View ll_yuyin;
+        ImageView ieaIvVoiceLine;
+        LinearLayout ieaLlSinger;
+        TextView ieaTvVoicetime1;
+        ImageView ieaIvRed;
     }
 
     @Override
