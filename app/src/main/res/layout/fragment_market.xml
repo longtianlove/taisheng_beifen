@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
             android:text="商城"
             android:gravity="center"
             android:textColor="#ffffffff"
@@ -68,7 +67,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="130dp"
+                    android:layout_height="150dp"
                     android:background="@drawable/icon_shangcheng_shouye"
                     android:orientation="vertical">
 
@@ -145,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginTop="-70dp"
+                    android:layout_marginTop="-90dp"
                     android:layout_marginRight="12dp"
                     android:background="@drawable/me_kapian_background" />
 
