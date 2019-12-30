@@ -215,4 +215,10 @@
     <string name="cycle_sure">确定</string>
     <string name="vibration">震动</string>
     <string name="ring">铃声</string>
+
+
+
+    <string name="long_click_record">长按 录音</string>
+    <string name="hang_up_finsh">松开 结束</string>
+    <string name="release_cancel">松开 取消</string>
 </resources>
