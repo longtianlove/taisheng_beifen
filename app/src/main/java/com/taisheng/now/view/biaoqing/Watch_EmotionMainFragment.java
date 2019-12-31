@@ -805,7 +805,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                 final ViewHolder itemSelfHolder;
                 if (convertView == null) {
                     itemSelfHolder = new ViewHolder();
-                    convertView = mInflater.inflate(R.layout.item_chat_msg_list_right, null);
+                    convertView = mInflater.inflate(R.layout.item_watch_chat_msg_list_right, null);
                     itemSelfHolder.vUserId = (TextView) convertView.findViewById(R.id.item_user_id);
                     itemSelfHolder.vMsg = (TextView) convertView.findViewById(R.id.item_msg);
                     itemSelfHolder.sdw_pic = convertView.findViewById(R.id.sdw_pic);
@@ -954,7 +954,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                 final ViewHolder itemOtherHolder;
                 if (convertView == null) {
                     itemOtherHolder = new ViewHolder();
-                    convertView = mInflater.inflate(R.layout.item_chat_msg_list_left, null);
+                    convertView = mInflater.inflate(R.layout.item_watch_chat_msg_list_left, null);
                     itemOtherHolder.vUserId = (TextView) convertView.findViewById(R.id.item_user_id);
                     itemOtherHolder.vMsg = (TextView) convertView.findViewById(R.id.item_msg);
                     itemOtherHolder.sdw_pic = convertView.findViewById(R.id.sdw_pic);
