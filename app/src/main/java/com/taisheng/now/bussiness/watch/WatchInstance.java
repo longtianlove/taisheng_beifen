@@ -35,6 +35,7 @@ public class WatchInstance {
     public static WatchInstance getInstance() {
         if (watchInstance == null) {
             watchInstance = new WatchInstance();
+            watchInstance.deviceId=SPUtil.getDeviceId();
         }
         return watchInstance;
     }

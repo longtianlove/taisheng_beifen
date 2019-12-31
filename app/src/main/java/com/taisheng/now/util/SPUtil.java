@@ -26,6 +26,9 @@ import java.util.Set;
 public class SPUtil {
 
 
+    public static final String DEVICE_ID = "deviceid";
+
+
     //是否进入主页
     public static final String HOME_PAGE = "home";
     public static final String APP_VERSION = "app_version";
@@ -42,7 +45,7 @@ public class SPUtil {
     //身高
     public static final String HEIGHT = "height";
     //体重
-    public static final String WEIGHT="weight";
+    public static final String WEIGHT = "weight";
     //nickname
     public static final String NICKNAME = "nickname";
     //手机号
@@ -56,7 +59,7 @@ public class SPUtil {
     public static final String AVATAR = "avatar";
 
     //血型
-    public static final String BLOODTYPE="bloodtype";
+    public static final String BLOODTYPE = "bloodtype";
 
     //是否跳过用户信息
     public static final String SKIP = "skip";
@@ -131,11 +134,13 @@ public class SPUtil {
     public static void putHEIGHT(String value) {
         putString(HEIGHT, value);
     }
-    public static String getWEIGHT(){
+
+    public static String getWEIGHT() {
         return getString(WEIGHT);
     }
-    public static void putWEIGHT(String value){
-        putString(WEIGHT,value);
+
+    public static void putWEIGHT(String value) {
+        putString(WEIGHT, value);
     }
 
     public static String getPhone() {
@@ -171,11 +176,12 @@ public class SPUtil {
         putString(WATCH_AVATAR, value);
     }
 
-    public static String getBLOODTYPE(){
+    public static String getBLOODTYPE() {
         return getString(BLOODTYPE);
     }
-    public static void putBLOODTYPE(String value){
-        putString(BLOODTYPE,value);
+
+    public static void putBLOODTYPE(String value) {
+        putString(BLOODTYPE, value);
     }
 
     public static String getUid() {
@@ -184,6 +190,15 @@ public class SPUtil {
 
     public static void putUid(String value) {
         putString(UID, value);
+    }
+
+
+    public static String getDeviceId() {
+        return getString(DEVICE_ID);
+    }
+
+    public static void putDeviced(String value) {
+        putString(DEVICE_ID, value);
     }
 
 

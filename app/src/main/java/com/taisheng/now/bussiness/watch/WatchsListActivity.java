@@ -28,6 +28,7 @@ import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.SPUtil;
 import com.taisheng.now.view.DoctorLabelWrapLayout;
 import com.taisheng.now.view.ScoreStar;
 import com.taisheng.now.view.StarGrade;
@@ -259,6 +260,7 @@ public class WatchsListActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     WatchInstance.getInstance().deviceId = bean.clientId;
+                    SPUtil.putDeviced( WatchInstance.getInstance().deviceId);
                     WatchInstance.getInstance().deviceNickName = bean.nickName;
                     WatchInstance.getInstance().relationShip = bean.terminalRelationship;
                     //todo 数据给全

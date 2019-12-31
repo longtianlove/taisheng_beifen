@@ -279,6 +279,7 @@ public class FirstFragment extends BaseFragment {
                                 } else if ( message.result.records.size() == 1){
                                     WatchListBean bean1=message.result.records.get(0);
                                     WatchInstance.getInstance().deviceId = bean1.clientId;
+                                    SPUtil.putDeviced(bean1.clientId);
                                     WatchInstance.getInstance().deviceNickName = bean1.nickName;
                                     WatchInstance.getInstance().relationShip = bean1.terminalRelationship;
                                     //todo 数据给全

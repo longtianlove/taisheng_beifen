@@ -643,7 +643,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         historyBean.setNewMsgCount(1);
         historyBean.doctorAvator = doctorAvator;
         historyBean.doctorName = doctorName;
-        MLOC.addHistory(historyBean, true);
+//        MLOC.addHistory(historyBean, true);
 
         MessageBean messageBean = new MessageBean();
         messageBean.setConversationId(message.targetId);
@@ -681,7 +681,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         historyBean.setNewMsgCount(1);
         historyBean.doctorAvator = doctorAvator;
         historyBean.doctorName = doctorName;
-        MLOC.addHistory(historyBean, true);
+//        MLOC.addHistory(historyBean, true);
 
         MessageBean messageBean = new MessageBean();
         messageBean.setConversationId(message.targetId);
@@ -718,7 +718,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         historyBean.setNewMsgCount(1);
         historyBean.doctorAvator = doctorAvator;
         historyBean.doctorName = doctorName;
-        MLOC.addHistory(historyBean, true);
+//        MLOC.addHistory(historyBean, true);
 
         MessageBean messageBean = new MessageBean();
         messageBean.setConversationId(message.targetId);
@@ -746,7 +746,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
             historyBean.setNewMsgCount(1);
             historyBean.doctorName = doctorName;
             historyBean.doctorAvator = doctorAvator;
-            MLOC.addHistory(historyBean, true);
+//            MLOC.addHistory(historyBean, true);
 
             MessageBean messageBean = new MessageBean();
             messageBean.setConversationId(revMsg.fromId);

@@ -40,6 +40,7 @@ import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.push.XMPushManagerInstance;
 import com.taisheng.now.util.IDCardUtil;
+import com.taisheng.now.util.SPUtil;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.AppDialog;
 import com.taisheng.now.view.crop.Crop;
@@ -258,7 +259,7 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
                             case Constants.HTTP_SUCCESS:
                                 String deviceId = bean.deviceId;
                                 WatchInstance.getInstance().deviceId = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
-                                ;
+                                SPUtil.putDeviced( WatchInstance.getInstance().deviceId);
                                 WatchInstance.getInstance().deviceNickName = bean.deviceNickName;
                                 WatchInstance.getInstance().relationShip = bean.relationShip;
                                 WatchInstance.getInstance().realName = bean.realName;
