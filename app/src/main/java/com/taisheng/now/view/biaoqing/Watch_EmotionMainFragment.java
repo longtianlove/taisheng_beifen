@@ -635,14 +635,14 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         message.targetId = mTargetId;
         message.fromId = UserInstance.getInstance().getUid();
 
-        HistoryBean historyBean = new HistoryBean();
-        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
-        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-        historyBean.setLastMsg(message.contentData);
-        historyBean.setConversationId(message.targetId);
-        historyBean.setNewMsgCount(1);
-        historyBean.doctorAvator = doctorAvator;
-        historyBean.doctorName = doctorName;
+//        HistoryBean historyBean = new HistoryBean();
+//        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
+//        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+//        historyBean.setLastMsg(message.contentData);
+//        historyBean.setConversationId(message.targetId);
+//        historyBean.setNewMsgCount(1);
+//        historyBean.doctorAvator = doctorAvator;
+//        historyBean.doctorName = doctorName;
 //        MLOC.addHistory(historyBean, true);
 
         MessageBean messageBean = new MessageBean();
@@ -673,14 +673,14 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         message.targetId = mTargetId;
         message.fromId = UserInstance.getInstance().getUid();
 
-        HistoryBean historyBean = new HistoryBean();
-        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
-        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-        historyBean.setLastMsg(message.contentData);
-        historyBean.setConversationId(message.targetId);
-        historyBean.setNewMsgCount(1);
-        historyBean.doctorAvator = doctorAvator;
-        historyBean.doctorName = doctorName;
+//        HistoryBean historyBean = new HistoryBean();
+//        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
+//        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+//        historyBean.setLastMsg(message.contentData);
+//        historyBean.setConversationId(message.targetId);
+//        historyBean.setNewMsgCount(1);
+//        historyBean.doctorAvator = doctorAvator;
+//        historyBean.doctorName = doctorName;
 //        MLOC.addHistory(historyBean, true);
 
         MessageBean messageBean = new MessageBean();
@@ -710,14 +710,14 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         message.targetId = mTargetId;
         message.fromId = UserInstance.getInstance().getUid();
 
-        HistoryBean historyBean = new HistoryBean();
-        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
-        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-        historyBean.setLastMsg(message.contentData);
-        historyBean.setConversationId(message.targetId);
-        historyBean.setNewMsgCount(1);
-        historyBean.doctorAvator = doctorAvator;
-        historyBean.doctorName = doctorName;
+//        HistoryBean historyBean = new HistoryBean();
+//        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
+//        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+//        historyBean.setLastMsg(message.contentData);
+//        historyBean.setConversationId(message.targetId);
+//        historyBean.setNewMsgCount(1);
+//        historyBean.doctorAvator = doctorAvator;
+//        historyBean.doctorName = doctorName;
 //        MLOC.addHistory(historyBean, true);
 
         MessageBean messageBean = new MessageBean();
@@ -738,14 +738,14 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         final RemoteChatMessage revMsg = (RemoteChatMessage) eventObj.message;
         if (revMsg.fromId.equals(mTargetId)) {
             String contentData = revMsg.contentData.replace("face[", "[");
-            HistoryBean historyBean = new HistoryBean();
-            historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
-            historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-            historyBean.setLastMsg(contentData);
-            historyBean.setConversationId(revMsg.fromId);
-            historyBean.setNewMsgCount(1);
-            historyBean.doctorName = doctorName;
-            historyBean.doctorAvator = doctorAvator;
+//            HistoryBean historyBean = new HistoryBean();
+//            historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
+//            historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+//            historyBean.setLastMsg(contentData);
+//            historyBean.setConversationId(revMsg.fromId);
+//            historyBean.setNewMsgCount(1);
+//            historyBean.doctorName = doctorName;
+//            historyBean.doctorAvator = doctorAvator;
 //            MLOC.addHistory(historyBean, true);
 
             MessageBean messageBean = new MessageBean();
