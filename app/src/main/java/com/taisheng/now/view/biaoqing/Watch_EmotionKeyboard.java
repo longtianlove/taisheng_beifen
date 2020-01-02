@@ -82,7 +82,7 @@ public class Watch_EmotionKeyboard {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     hideEmotionLayout(true);//隐藏表情布局，显示软件盘
                     yuyinButton.setChecked(false);
-                    yuyinButtonisCheck=false;
+                    yuyinButtonisCheck = false;
                     //软件盘显示后，释放内容高度
                     mEditText.postDelayed(new Runnable() {
                         @Override
@@ -104,12 +104,12 @@ public class Watch_EmotionKeyboard {
      * @return
      */
     public Watch_EmotionKeyboard bindToEmotionButton(CheckBox emotionButton) {
-        this.emotionButton=emotionButton;
+        this.emotionButton = emotionButton;
         this.emotionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 yuyinButton.setChecked(false);
-                yuyinButtonisCheck=false;
+                yuyinButtonisCheck = false;
 
                 yuyin_text.setVisibility(View.GONE);
                 bar_edit_text.setVisibility(View.VISIBLE);
@@ -150,6 +150,7 @@ public class Watch_EmotionKeyboard {
         this.yuyinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                emotionButton.setChecked(false);
                 if (!yuyinButtonisCheck) {
                     yuyin_text.setVisibility(View.VISIBLE);
                     bar_edit_text.setVisibility(View.GONE);
@@ -240,6 +241,7 @@ public class Watch_EmotionKeyboard {
             }
         }
     }
+
     /**
      * 自定义隐藏表情布局
      */
@@ -249,7 +251,7 @@ public class Watch_EmotionKeyboard {
 
         }
 
-            showSoftInput();
+        showSoftInput();
 
     }
 
