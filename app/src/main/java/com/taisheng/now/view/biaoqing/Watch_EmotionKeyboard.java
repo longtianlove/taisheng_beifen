@@ -104,7 +104,8 @@ public class Watch_EmotionKeyboard {
      * @return
      */
     public Watch_EmotionKeyboard bindToEmotionButton(CheckBox emotionButton) {
-        emotionButton.setOnClickListener(new View.OnClickListener() {
+        this.emotionButton=emotionButton;
+        this.emotionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 yuyinButton.setChecked(false);
@@ -136,6 +137,7 @@ public class Watch_EmotionKeyboard {
     View yuyin_text;
     View bar_edit_text;
     CheckBox yuyinButton;
+    CheckBox emotionButton;
 
     /**
      * 绑定语音按钮
