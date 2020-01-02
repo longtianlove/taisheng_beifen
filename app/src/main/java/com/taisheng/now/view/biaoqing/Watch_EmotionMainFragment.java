@@ -578,6 +578,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
     public void onResume() {
         super.onResume();
         mDatas.clear();
+        mTargetId=WatchInstance.getInstance().deviceId;
         List<MessageBean> list = MLOC.getMessageList(mTargetId);
         if (list != null && list.size() > 0) {
             mDatas.addAll(list);
