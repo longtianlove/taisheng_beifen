@@ -380,6 +380,7 @@
             android:name="com.taisheng.now.bussiness.market.ShangPinxiangqingActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 
