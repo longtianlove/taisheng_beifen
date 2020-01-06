@@ -117,15 +117,17 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
 
     void createNextMediaPlayer() {
         nextMediaPlayer = MediaPlayer.create(this, R.raw.audio);
-        mMediaPlayer.setNextMediaPlayer(nextMediaPlayer);
-        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-                mMediaPlayer = nextMediaPlayer;
-                createNextMediaPlayer();
-            }
-        });
+        if(mMediaPlayer!=null&&nextMediaPlayer!=null) {
+            mMediaPlayer.setNextMediaPlayer(nextMediaPlayer);
+            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.release();
+                    mMediaPlayer = nextMediaPlayer;
+                    createNextMediaPlayer();
+                }
+            });
+        }
     }
 
     /**
@@ -565,14 +567,17 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
      * 加入视频房间：需要 TRTCNewViewActivity 提供的  TRTCParams 函数
      */
     private void enterRoom() {
-        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mMediaPlayer.start();
-            }
-        });
+        if(mMediaPlayer!=null){
+            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    mMediaPlayer.start();
+                }
+            });
 
-        mMediaPlayer.setVolume(0.5f, 0.5f);
+            mMediaPlayer.setVolume(0.5f, 0.5f);
+        }
+
         createNextMediaPlayer();
 
 
