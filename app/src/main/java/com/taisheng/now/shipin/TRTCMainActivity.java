@@ -1006,6 +1006,7 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
 //            }
 
             Toast.makeText(activity, "onError: " + errMsg + "[" + errCode + "]", Toast.LENGTH_SHORT).show();
+            activity.finish();
         }
 
         /**
