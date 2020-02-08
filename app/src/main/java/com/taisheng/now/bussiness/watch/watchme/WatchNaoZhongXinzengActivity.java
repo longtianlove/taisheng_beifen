@@ -2,18 +2,13 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.app.TimePickerDialog;
 import android.app.job.JobScheduler;
-import android.content.ComponentName;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 
 import com.taisheng.now.Constants;
@@ -32,7 +27,6 @@ import com.taisheng.now.view.naozhong.SelectRemindWayPopup;
 
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -86,7 +80,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
                 SetNaozhongPostBean setNaozhongPostBean = new SetNaozhongPostBean();
                 setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
                 setNaozhongPostBean.token = UserInstance.getInstance().getToken();
-                setNaozhongPostBean.clientId = WatchInstance.getInstance().deviceId;
+                setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
 //                setNaozhongPostBean.startTime=date_tv.getText().toString();
                 WatchInstance.getInstance().naozhongLIstBean.isOpen = "1";
                 WatchInstance.getInstance().naozhongLIstBean.startTime=date_tv.getText().toString();

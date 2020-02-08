@@ -3,7 +3,7 @@ package com.taisheng.now.bussiness.watch.bean.post;
 import com.taisheng.now.bussiness.bean.post.BasePostBean;
 
 public class AnquanweiilanPostBean extends BasePostBean {
-    public String clientId;
+    public String deviceId;
     public int fenceRadius;
     public String latitude;
     public String latitudeSign;

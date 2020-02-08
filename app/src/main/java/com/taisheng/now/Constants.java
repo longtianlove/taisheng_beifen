@@ -71,9 +71,15 @@ public class Constants {
         //        public static String Host = "http://49.234.71.11:8080/";
 //        public static String File_Host = "http://49.234.71.11:8888/";
 //        public static String WEB_SOCKET_URL = "ws://49.234.71.11:8879";
-        public static String Host = "https://taishenghealth.com/";
+//        public static String Host = "https://taishenghealth.com/";
+//        public static String File_Host = "https://taishenghealth.com/image-video/";
+//        public static String WEB_SOCKET_URL = "ws://49.233.76.254:8879";
+
+
+        public static String Host = "http://193.112.19.18:8080/";
         public static String File_Host = "https://taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "ws://49.233.76.254:8879";
+
 
 //                public static String Host = "http://49.233.76.254:8080/";
 //        public static String File_Host = "http://49.233.76.254:8888/";
@@ -153,8 +159,8 @@ public class Constants {
 
 
             //所有的开关状态
-            public static final String allSetting = "jeecg-boot/app/watch/setting/allSetting";
-
+//            public static final String allSetting = "jeecg-boot/app/watch/setting/allSetting";
+            public static final String allSetting = "jeecg-boot/app/switch/obtainAllSwitch";
             //            Watch-翻转检测开关设置
             public static final String flipCheckSetting = "jeecg-boot/app/watch/setting/flipCheckSetting";
 

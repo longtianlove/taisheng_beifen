@@ -2,14 +2,11 @@ package com.taisheng.now.bussiness.watch;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -19,20 +16,12 @@ import com.taisheng.now.ZXing.ZXingActivity;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.bean.post.BaseListPostBean;
-import com.taisheng.now.bussiness.bean.post.BasePostBean;
-import com.taisheng.now.bussiness.bean.result.MyPingjiaBean;
-import com.taisheng.now.bussiness.doctor.DoctorDetailActivity;
-import com.taisheng.now.bussiness.me.MyPingjiaActivity;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
-import com.taisheng.now.view.DoctorLabelWrapLayout;
-import com.taisheng.now.view.ScoreStar;
-import com.taisheng.now.view.StarGrade;
-import com.taisheng.now.view.TaishengListView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.ArrayList;
@@ -259,7 +248,7 @@ public class WatchsListActivity extends BaseActivity {
             util.ll_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    WatchInstance.getInstance().deviceId = bean.clientId;
+                    WatchInstance.getInstance().deviceId = bean.deviceId;
                     SPUtil.putDeviced( WatchInstance.getInstance().deviceId);
                     WatchInstance.getInstance().deviceNickName = bean.nickName;
                     WatchInstance.getInstance().relationShip = bean.terminalRelationship;

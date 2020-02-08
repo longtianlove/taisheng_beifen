@@ -93,7 +93,7 @@ public class HistoryGuijiActivity extends BaseActivity implements ActivityCompat
 //        GuijiPostBean bean = new GuijiPostBean();
 //        bean.userId = UserInstance.getInstance().getUid();
 //        bean.token = UserInstance.getInstance().getToken();
-//        bean.clientId = WatchInstance.getInstance().deviceId;
+//        bean.deviceId = WatchInstance.getInstance().deviceId;
 //        ApiUtils.getApiService().getWatchUdList(bean).enqueue(new TaiShengCallback<BaseBean<GuijiResultBean>>() {
 //            @Override
 //            public void onSuccess(Response<BaseBean<GuijiResultBean>> response, BaseBean<GuijiResultBean> message) {

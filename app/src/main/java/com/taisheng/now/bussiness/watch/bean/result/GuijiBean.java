@@ -3,7 +3,7 @@ package com.taisheng.now.bussiness.watch.bean.result;
 public class GuijiBean {
 
 //    {"id":"057662c72afc8d55c13f696c83d97fa8",
-//    "clientId":"9613050381",
+//    "deviceId":"9613050381",
 //    "udType":"UD_LTE",
 //    "udDate":"031219",
 //    "udTime":"012232",

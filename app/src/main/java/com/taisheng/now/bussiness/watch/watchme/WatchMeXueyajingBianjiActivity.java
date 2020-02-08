@@ -1,6 +1,5 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -81,7 +80,7 @@ public class WatchMeXueyajingBianjiActivity extends BaseActivity implements Acti
                 XinlvXueyaYujingBean bean = new XinlvXueyaYujingBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.clientId = WatchInstance.getInstance().deviceId;
+                bean.deviceId = WatchInstance.getInstance().deviceId;
 
 
                 bean.bpxyHighMax = Integer.parseInt(tv_gaoyazuida.getText().toString());

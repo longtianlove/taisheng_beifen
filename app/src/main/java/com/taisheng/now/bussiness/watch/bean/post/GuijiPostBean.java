@@ -4,6 +4,6 @@ import com.taisheng.now.bussiness.bean.post.BasePostBean;
 
 public class GuijiPostBean extends BasePostBean {
 
-    public String clientId;
+    public String deviceId;
 //    public String date;
 }

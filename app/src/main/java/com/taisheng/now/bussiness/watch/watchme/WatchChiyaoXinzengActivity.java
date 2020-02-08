@@ -17,9 +17,6 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
-import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
-import com.taisheng.now.bussiness.watch.bean.result.ChiyaoBeann;
-import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
@@ -85,7 +82,7 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 SetChiyaoPostBean setNaozhongPostBean = new SetChiyaoPostBean();
                 setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
                 setNaozhongPostBean.token = UserInstance.getInstance().getToken();
-                setNaozhongPostBean.clientId = WatchInstance.getInstance().deviceId;
+                setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
                 setNaozhongPostBean.takepillsNum = takepillsNum;
                 setNaozhongPostBean.frequency = WatchInstance.getInstance().chiyaobean.frequency;
                 setNaozhongPostBean.isOpen = "1";

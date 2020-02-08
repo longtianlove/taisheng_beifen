@@ -165,7 +165,7 @@ public class WatchMeFragment extends BaseFragment {
                 RebootPostBean bean=new RebootPostBean();
                 bean.userId=UserInstance.getInstance().getUid();
                 bean.token=UserInstance.getInstance().getToken();
-                bean.clientId=WatchInstance.getInstance().deviceId;
+                bean.deviceId =WatchInstance.getInstance().deviceId;
                 ApiUtils.getApiService().reboot(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -193,7 +193,7 @@ public class WatchMeFragment extends BaseFragment {
                 RebootPostBean bean=new RebootPostBean();
                 bean.userId=UserInstance.getInstance().getUid();
                 bean.token=UserInstance.getInstance().getToken();
-                bean.clientId=WatchInstance.getInstance().deviceId;
+                bean.deviceId =WatchInstance.getInstance().deviceId;
                 ApiUtils.getApiService().restoreFactorySettings(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {

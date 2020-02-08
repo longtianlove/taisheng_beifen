@@ -3,14 +3,10 @@ package com.taisheng.now.bussiness.watch;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,16 +17,8 @@ import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragmentActivity;
-import com.taisheng.now.bussiness.article.SecretFragment;
-import com.taisheng.now.bussiness.doctor.DoctorFragment;
-import com.taisheng.now.bussiness.first.FirstFragment;
-import com.taisheng.now.bussiness.market.MarketFragment;
-import com.taisheng.now.bussiness.me.MeFragment;
-import com.taisheng.now.bussiness.message.MessageFragment;
 import com.taisheng.now.bussiness.user.UserInstance;
-import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
-import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;
 import com.taisheng.now.bussiness.watch.location.WatchLocationFragment;
@@ -39,12 +27,10 @@ import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstFragment;
 import com.taisheng.now.bussiness.watch.watchme.WatchMeFragment;
 import com.taisheng.now.bussiness.watch.watchyujing.ThreadUtil;
 import com.taisheng.now.bussiness.watch.watchyujing.WatchYujingFragment;
-import com.taisheng.now.chat.C2CActivity;
 import com.taisheng.now.chat.ChatManagerInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.map.TrackInstance;
-import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -190,7 +176,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
         bean.token = UserInstance.getInstance().getToken();
         bean.pageNo = 1;
         bean.pageSize = 10;
-        bean.clientId = WatchInstance.getInstance().deviceId;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
         ApiUtils.getApiService().getWatchWarningAll(bean).enqueue(new TaiShengCallback<BaseBean<YujingResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<YujingResultBean>> response, BaseBean<YujingResultBean> message) {
@@ -352,7 +338,7 @@ public class WatchMainActivity extends BaseFragmentActivity implements View.OnCl
 //        ShishiCollectionBean bean = new ShishiCollectionBean();
 //        bean.userId = UserInstance.getInstance().getUid();
 //        bean.token = UserInstance.getInstance().getToken();
-//        bean.clientId = WatchInstance.getInstance().deviceId;
+//        bean.deviceId = WatchInstance.getInstance().deviceId;
 //        ApiUtils.getApiService().getcollection(bean).enqueue(new TaiShengCallback<BaseBean<ShiShiCollecgtionResultBean>>() {
 //            @Override
 //            public void onSuccess(Response<BaseBean<ShiShiCollecgtionResultBean>> response, BaseBean<ShiShiCollecgtionResultBean> message) {

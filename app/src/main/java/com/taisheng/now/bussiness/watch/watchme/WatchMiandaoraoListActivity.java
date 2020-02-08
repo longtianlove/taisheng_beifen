@@ -19,11 +19,7 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
-import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
-import com.taisheng.now.bussiness.watch.bean.result.MiandaraoListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.Miandaraobean;
-import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
-import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewMiandaraoListResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
@@ -90,7 +86,7 @@ public class WatchMiandaoraoListActivity extends BaseActivity implements Activit
         BaseWatchBean bean = new BaseWatchBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        bean.clientId = WatchInstance.getInstance().deviceId;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
         ApiUtils.getApiService().notDisturbSwitchSetting(bean).enqueue(new TaiShengCallback<BaseBean<NewMiandaraoListResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<NewMiandaraoListResultBean>> response, BaseBean<NewMiandaraoListResultBean> message) {

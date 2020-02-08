@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
@@ -22,14 +21,8 @@ import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.veken.chartview.bean.ChartBean;
-import com.veken.chartview.drawtype.DrawBgType;
-import com.veken.chartview.drawtype.DrawConnectLineType;
-import com.veken.chartview.drawtype.DrawLineType;
-import com.veken.chartview.view.LineChartView;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -91,8 +84,8 @@ public class JibuFragment extends BaseFragment {
         ShishiCollectionBean bean = new ShishiCollectionBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        bean.clientId = WatchInstance.getInstance().deviceId;
-//        bean.clientId = "9613050381";
+        bean.deviceId = WatchInstance.getInstance().deviceId;
+//        bean.deviceId = "9613050381";
 
         ApiUtils.getApiService().getcollection(bean).enqueue(new TaiShengCallback<BaseBean<ShiShiCollecgtionResultBean>>() {
             @Override
@@ -171,7 +164,7 @@ public class JibuFragment extends BaseFragment {
         ShishiCollectionBean bean = new ShishiCollectionBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        bean.clientId = WatchInstance.getInstance().deviceId;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
         ApiUtils.getApiService().querythismonthwalk(bean).enqueue(new TaiShengCallback<BaseBean<BushuResultBean>>() {
 
             @Override
