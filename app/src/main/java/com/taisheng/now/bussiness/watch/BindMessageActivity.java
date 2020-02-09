@@ -31,6 +31,7 @@ import com.taisheng.now.R;
 import com.taisheng.now.SampleAppLike;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.bussiness.bean.result.DeviceBindingResultBean;
 import com.taisheng.now.bussiness.me.SelectAvatarSourceDialog;
 import com.taisheng.now.bussiness.me.UpdateNickActivity;
 import com.taisheng.now.bussiness.user.LoginActivity;
@@ -252,14 +253,15 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
                 bean.realName = et_realname.getText().toString();
                 bean.idcard = et_idcard.getText().toString();
                 bean.phoneNumber = et_phonenumber.getText().toString();
-                ApiUtils.getApiService().deviceBinding(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService().deviceBinding(bean).enqueue(new TaiShengCallback<BaseBean<DeviceBindingResultBean>>() {
                     @Override
-                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                    public void onSuccess(Response<BaseBean<DeviceBindingResultBean>> response, BaseBean<DeviceBindingResultBean> message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                String deviceId = bean.deviceId;
-                                WatchInstance.getInstance().deviceId = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
-                                SPUtil.putDeviced( WatchInstance.getInstance().deviceId);
+//                                String deviceId = bean.deviceId;
+//                                WatchInstance.getInstance().deviceId = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
+                                WatchInstance.getInstance().deviceId = message.result.clientNumber;
+                                SPUtil.putDeviced(WatchInstance.getInstance().deviceId);
                                 WatchInstance.getInstance().deviceNickName = bean.deviceNickName;
                                 WatchInstance.getInstance().relationShip = bean.relationShip;
                                 WatchInstance.getInstance().realName = bean.realName;
@@ -274,7 +276,7 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
                     }
 
                     @Override
-                    public void onFail(Call<BaseBean> call, Throwable t) {
+                    public void onFail(Call<BaseBean<DeviceBindingResultBean>> call, Throwable t) {
 
                     }
                 });

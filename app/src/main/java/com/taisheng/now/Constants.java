@@ -161,6 +161,9 @@ public class Constants {
             //所有的开关状态
 //            public static final String allSetting = "jeecg-boot/app/watch/setting/allSetting";
             public static final String allSetting = "jeecg-boot/app/switch/obtainAllSwitch";
+            //所有开关开关用一个接口
+            public static final String watchSwitchConfig = "jeecg-boot/app/switch/watchSwitchConfig";
+
             //            Watch-翻转检测开关设置
             public static final String flipCheckSetting = "jeecg-boot/app/watch/setting/flipCheckSetting";
 

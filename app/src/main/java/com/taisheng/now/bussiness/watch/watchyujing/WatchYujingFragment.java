@@ -140,10 +140,10 @@ public class WatchYujingFragment extends BaseFragment {
                             lv_doctors.setLoading(false);
                             if (PAGE_NO == 1) {
                                 madapter.mData.clear();
-                                Yujingbean bean1=message.result.records.get(0);
-                                EventManage.tongzhiWeidu event=new EventManage.tongzhiWeidu();
-                                event.weidu=bean1.status;
-                               EventBus.getDefault().post(event);
+                                    Yujingbean bean1 = message.result.records.get(0);
+                                    EventManage.tongzhiWeidu event = new EventManage.tongzhiWeidu();
+                                    event.weidu = bean1.status;
+                                    EventBus.getDefault().post(event);
                             }
                             //有消息
                             PAGE_NO++;
@@ -157,6 +157,11 @@ public class WatchYujingFragment extends BaseFragment {
                             }
                             madapter.notifyDataSetChanged();
                         } else {
+                            if (PAGE_NO == 1) {
+                                EventManage.tongzhiWeidu event = new EventManage.tongzhiWeidu();
+                                event.weidu = "0";
+                                EventBus.getDefault().post(event);
+                            }
                             //没有消息
                             lv_doctors.setHasLoadMore(false);
                             lv_doctors.setLoadAllViewText("暂时只有这么多消息");
