@@ -256,6 +256,9 @@ public class WatchsListActivity extends BaseActivity {
                     WatchInstance.getInstance().realName = bean.realName;
                     WatchInstance.getInstance().idcard = bean.idcard;
                     WatchInstance.getInstance().phoneNumber = bean.phoneNumber;
+
+                    WatchInstance.getInstance().createTime=bean.createTime;
+
                     Intent intent = new Intent(WatchsListActivity.this, WatchMainActivity.class);
                     startActivity(intent);
                     finish();

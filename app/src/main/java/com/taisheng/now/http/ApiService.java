@@ -99,6 +99,7 @@ import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.KaiGuanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.MiandaraoShijianduanPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.ObtainBpxyHeartStepListDTOPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
@@ -127,10 +128,13 @@ import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueYaDayResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.XueyaResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.test.WechatResultBean;
 import com.taisheng.now.yuyin.util.Constant;
 
+
+import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -179,6 +183,10 @@ public interface ApiService {
     Call<BaseBean<XueYaDayResultBean>> querythedaybpxy(@Body ShishiCollectionBean bean);
 
 
+    @POST(Constants.Url.Watch.obtainBpxyList)
+    Call<BaseBean<ArrayList<XueyaResultBean>>> obtainBpxyList(@Body ObtainBpxyHeartStepListDTOPostBean bean);
+
+
     @POST(Constants.Url.Watch.querythedayheart)
     Call<BaseBean<XinLvResultBean>> querythedayheart(@Body ShishiCollectionBean bean);
 
@@ -218,7 +226,6 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.updateSosContactSetting)
     Call<BaseBean> updateSosContactSetting(@Body UpdateSosContactSettingPostBean bean);
-
 
 
     @POST(Constants.Url.Watch.watchWarningupdateBykey)

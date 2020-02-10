@@ -262,6 +262,7 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
 //                                WatchInstance.getInstance().deviceId = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
                                 WatchInstance.getInstance().deviceId = message.result.clientNumber;
                                 SPUtil.putDeviced(WatchInstance.getInstance().deviceId);
+                                WatchInstance.getInstance().createTime=message.result.createTime;
                                 WatchInstance.getInstance().deviceNickName = bean.deviceNickName;
                                 WatchInstance.getInstance().relationShip = bean.relationShip;
                                 WatchInstance.getInstance().realName = bean.realName;
