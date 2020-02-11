@@ -126,6 +126,7 @@ import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.XinlvAnriqiResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueYaDayResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueyaResultBean;
@@ -185,6 +186,12 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.obtainBpxyList)
     Call<BaseBean<ArrayList<XueyaResultBean>>> obtainBpxyList(@Body ObtainBpxyHeartStepListDTOPostBean bean);
+
+
+
+
+    @POST(Constants.Url.Watch.obtainHeartList)
+    Call<BaseBean<ArrayList<XinlvAnriqiResultBean>>> obtainHeartList(@Body ObtainBpxyHeartStepListDTOPostBean bean);
 
 
     @POST(Constants.Url.Watch.querythedayheart)

@@ -10,7 +10,7 @@
         android:layout_height="100dp"
         android:background="@drawable/xueya_background_title"></LinearLayout>
 
-    <ScrollView
+    <com.taisheng.now.view.WithListViewScrollView
 
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -360,7 +360,7 @@
 
 
         </LinearLayout>
-    </ScrollView>
+    </com.taisheng.now.view.WithListViewScrollView>
 
 
 </LinearLayout>

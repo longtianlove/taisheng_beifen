@@ -122,6 +122,8 @@ public class Constants {
 
             //根据日期获取血压列表
             public static final String obtainBpxyList="jeecg-boot/app/watchBpxy/obtainBpxyList";
+            //根据日期获取心率列表
+            public static final String obtainHeartList="jeecg-boot/app/watchHeart/obtainHeartList";
 
 
 
