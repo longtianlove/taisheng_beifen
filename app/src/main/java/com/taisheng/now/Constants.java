@@ -76,6 +76,7 @@ public class Constants {
 //        public static String WEB_SOCKET_URL = "ws://49.233.76.254:8879";
 
 
+        //        public static String Host = "http://49.233.76.254:8080/";
         public static String Host = "http://193.112.19.18:8080/";
         public static String File_Host = "https://taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "ws://49.233.76.254:8879";
@@ -121,10 +122,9 @@ public class Constants {
 
 
             //根据日期获取血压列表
-            public static final String obtainBpxyList="jeecg-boot/app/watchBpxy/obtainBpxyList";
+            public static final String obtainBpxyList = "jeecg-boot/app/watchBpxy/obtainBpxyList";
             //根据日期获取心率列表
-            public static final String obtainHeartList="jeecg-boot/app/watchHeart/obtainHeartList";
-
+            public static final String obtainHeartList = "jeecg-boot/app/watchHeart/obtainHeartList";
 
 
             //            APP-获取血压日统计量
