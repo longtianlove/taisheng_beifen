@@ -390,7 +390,8 @@ public class FirstFragment extends BaseFragment {
         tv_secret_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).showFragment(2);
+                Intent intent = new Intent(getActivity(), SecretActivity.class);
+                startActivity(intent);
             }
         });
         lv_articles = (WithScrolleViewListView) rootView.findViewById(R.id.lv_articles);

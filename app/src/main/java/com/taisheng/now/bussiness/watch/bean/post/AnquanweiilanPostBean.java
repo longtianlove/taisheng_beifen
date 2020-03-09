@@ -10,6 +10,4 @@ public class AnquanweiilanPostBean extends BasePostBean {
     public String longitude;
     public String longitudeSign;
     public String status;
-    public String token;
-    public String userId;
 }
