@@ -197,12 +197,12 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (check()) {
-                    btn_post.setEnabled(true);
-                } else {
-                    btn_post.setEnabled(false);
-
-                }
+//                if (check()) {
+//                    btn_post.setEnabled(true);
+//                } else {
+//                    btn_post.setEnabled(false);
+//
+//                }
             }
 
             @Override
@@ -240,6 +240,12 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
             @Override
             public void onClick(View v) {
 
+
+                if (!IDCardUtil.isValidatedAllIdcard(et_idcard.getText().toString())) {
+                    ToastUtil.showAtCenter("身份证号码错误，请重新输入");
+                    return;
+                }
+
 //                showGoRecommendDialog();
                 //todo 绑定设备
                 BindDevicePostBean bean = new BindDevicePostBean();
@@ -262,7 +268,7 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
 //                                WatchInstance.getInstance().deviceId = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
                                 WatchInstance.getInstance().deviceId = message.result.clientNumber;
                                 SPUtil.putDeviced(WatchInstance.getInstance().deviceId);
-                                WatchInstance.getInstance().createTime=message.result.createTime;
+                                WatchInstance.getInstance().createTime = message.result.createTime;
                                 WatchInstance.getInstance().deviceNickName = bean.deviceNickName;
                                 WatchInstance.getInstance().relationShip = bean.relationShip;
                                 WatchInstance.getInstance().realName = bean.realName;
@@ -301,9 +307,7 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
             return false;
         }
 
-        if (!IDCardUtil.isValidatedAllIdcard(et_idcard.getText().toString())) {
-            return false;
-        }
+
         if (TextUtils.isEmpty(et_phonenumber.getText())) {
             return false;
         }

@@ -78,6 +78,7 @@ public class Constants {
 
         //        public static String Host = "http://49.233.76.254:8080/";
         public static String Host = "http://193.112.19.18:8080/";
+//        public static String Host = "http://192.168.1.12:8080/";
         public static String File_Host = "https://taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "ws://49.233.76.254:8879";
 
