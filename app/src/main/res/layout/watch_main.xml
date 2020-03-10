@@ -112,7 +112,7 @@
                     android:layout_width="26dp"
                     android:layout_height="23dp"
 
-                    android:src="@drawable/watch_main_weizhi" />
+                    android:src="@drawable/watch_main_weiliaoi" />
 
                 <TextView
                     android:id="@+id/tv_tab_wechat"
