@@ -356,7 +356,7 @@
                             android:gravity="center"
                             android:text="用药指导"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="13sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -662,7 +662,7 @@
                         android:layout_marginTop="9dp"
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="9dp"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:text="这里是视频名称这里是视频名称"
                         android:textColor="#ff333333"
                         android:textSize="14sp" />
@@ -743,6 +743,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView

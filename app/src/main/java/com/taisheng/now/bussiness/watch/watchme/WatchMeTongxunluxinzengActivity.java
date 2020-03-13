@@ -71,6 +71,7 @@ public class WatchMeTongxunluxinzengActivity extends BaseActivity implements Act
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.clientId = WatchInstance.getInstance().deviceId;
+                bean.deviceId=WatchInstance.getInstance().deviceId;
                 bean.phbxNum = nowphxNum+"";
                 bean.phbxName = et_tongxunlu_name.getText().toString();
                 bean.phbxTelephone = et_phone.getText().toString();

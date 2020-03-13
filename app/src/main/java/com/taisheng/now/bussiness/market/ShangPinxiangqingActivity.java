@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -258,6 +260,9 @@ public class ShangPinxiangqingActivity extends BaseActivity {
         wv_shangpinxiangqing = findViewById(R.id.wv_shangpinxiangqing);
         wv_shangpinxiangqing.getSettings().setJavaScriptEnabled(true);
         wv_shangpinxiangqing.setWebViewClient(new WebViewClient());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            wv_shangpinxiangqing.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
 
 
         tv_addgouwuche = findViewById(R.id.tv_addgouwuche);

@@ -21,12 +21,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="26dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="医师列表"
+            android:text="医师"
             android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textStyle="bold"
+            android:textSize="22sp" />
 
         <View
             android:layout_width="0dp"

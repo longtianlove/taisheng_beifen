@@ -11,6 +11,7 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.bussiness.bean.post.KaiguanSettingPostBean;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.AllSettingPostBean;
@@ -73,13 +74,13 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
         ll_kaiguan_gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                KaiGuanPostBean bean = new KaiGuanPostBean();
+                KaiguanSettingPostBean bean=new KaiguanSettingPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.value = iv_kaiguan_gps.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().gpsSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                bean.deviceId=WatchInstance.getInstance().deviceId;
+                bean.switchType="APPLOCK";
+                bean.switchValue= iv_kaiguan_gps.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -98,6 +99,31 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
 
                     }
                 });
+//
+//                KaiGuanPostBean bean = new KaiGuanPostBean();
+//                bean.userId = UserInstance.getInstance().getUid();
+//                bean.token = UserInstance.getInstance().getToken();
+//                bean.deviceId = WatchInstance.getInstance().deviceId;
+//                bean.value = iv_kaiguan_gps.isSelected() ? "0" : "1";
+//                ApiUtils.getApiService().gpsSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//                        switch (message.code) {
+//                            case Constants.HTTP_SUCCESS:
+//                                if (iv_kaiguan_gps.isSelected()) {
+//                                    iv_kaiguan_gps.setSelected(false);
+//                                } else {
+//                                    iv_kaiguan_gps.setSelected(true);
+//                                }
+//                                break;
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
         iv_kaiguan_gps = findViewById(R.id.iv_kaiguan_gps);
@@ -109,12 +135,15 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
             @Override
             public void onClick(View v) {
 
-                KaiGuanPostBean bean = new KaiGuanPostBean();
+
+
+                KaiguanSettingPostBean bean=new KaiguanSettingPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.value = iv_kaiguan_sos.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().sosAlarmSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                bean.deviceId=WatchInstance.getInstance().deviceId;
+                bean.switchType="SOSSMS";
+                bean.switchValue= iv_kaiguan_sos.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -133,6 +162,32 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
 
                     }
                 });
+
+
+//                KaiGuanPostBean bean = new KaiGuanPostBean();
+//                bean.userId = UserInstance.getInstance().getUid();
+//                bean.token = UserInstance.getInstance().getToken();
+//                bean.deviceId = WatchInstance.getInstance().deviceId;
+//                bean.value = iv_kaiguan_sos.isSelected() ? "0" : "1";
+//                ApiUtils.getApiService().sosAlarmSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//                        switch (message.code) {
+//                            case Constants.HTTP_SUCCESS:
+//                                if (iv_kaiguan_sos.isSelected()) {
+//                                    iv_kaiguan_sos.setSelected(false);
+//                                } else {
+//                                    iv_kaiguan_sos.setSelected(true);
+//                                }
+//                                break;
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
 
@@ -152,12 +207,14 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
         ll_kaiguan_didianduanxin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KaiGuanPostBean bean = new KaiGuanPostBean();
+
+                KaiguanSettingPostBean bean=new KaiguanSettingPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.value = iv_kaiguan_didianduanxin.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().lowElectSmsSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                bean.deviceId=WatchInstance.getInstance().deviceId;
+                bean.switchType="LOWBAT";
+                bean.switchValue= iv_kaiguan_didianduanxin.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -177,6 +234,32 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
                     }
                 });
 
+
+//                KaiGuanPostBean bean = new KaiGuanPostBean();
+//                bean.userId = UserInstance.getInstance().getUid();
+//                bean.token = UserInstance.getInstance().getToken();
+//                bean.deviceId = WatchInstance.getInstance().deviceId;
+//                bean.value = iv_kaiguan_didianduanxin.isSelected() ? "0" : "1";
+//                ApiUtils.getApiService().lowElectSmsSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//                        switch (message.code) {
+//                            case Constants.HTTP_SUCCESS:
+//                                if (iv_kaiguan_didianduanxin.isSelected()) {
+//                                    iv_kaiguan_didianduanxin.setSelected(false);
+//                                } else {
+//                                    iv_kaiguan_didianduanxin.setSelected(true);
+//                                }
+//                                break;
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                    }
+//                });
+
             }
         });
         iv_kaiguan_didianduanxin = findViewById(R.id.iv_kaiguan_didianduanxin);
@@ -186,12 +269,13 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
         ll_kaiguan_quxiashouhuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KaiGuanPostBean bean = new KaiGuanPostBean();
+                KaiguanSettingPostBean bean=new KaiguanSettingPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.value = iv_kaiguan_quxiashouhuan.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().takeOffWristbandSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                bean.deviceId=WatchInstance.getInstance().deviceId;
+                bean.switchType="REMOVE";
+                bean.switchValue= iv_kaiguan_quxiashouhuan.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -210,6 +294,30 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
 
                     }
                 });
+//                KaiGuanPostBean bean = new KaiGuanPostBean();
+//                bean.userId = UserInstance.getInstance().getUid();
+//                bean.token = UserInstance.getInstance().getToken();
+//                bean.deviceId = WatchInstance.getInstance().deviceId;
+//                bean.value = iv_kaiguan_quxiashouhuan.isSelected() ? "0" : "1";
+//                ApiUtils.getApiService().takeOffWristbandSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//                        switch (message.code) {
+//                            case Constants.HTTP_SUCCESS:
+//                                if (iv_kaiguan_quxiashouhuan.isSelected()) {
+//                                    iv_kaiguan_quxiashouhuan.setSelected(false);
+//                                } else {
+//                                    iv_kaiguan_quxiashouhuan.setSelected(true);
+//                                }
+//                                break;
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
         iv_kaiguan_quxiashouhuan = findViewById(R.id.iv_kaiguan_quxiashouhuan);
@@ -220,14 +328,13 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
         ll_kaiguan_jibu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                KaiGuanPostBean bean = new KaiGuanPostBean();
+                KaiguanSettingPostBean bean=new KaiguanSettingPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.value = iv_kaiguan_jibu.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().stepCountingSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                bean.deviceId=WatchInstance.getInstance().deviceId;
+                bean.switchType=" PEDO";
+                bean.switchValue= iv_kaiguan_jibu.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -247,6 +354,31 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
                     }
                 });
 
+//                KaiGuanPostBean bean = new KaiGuanPostBean();
+//                bean.userId = UserInstance.getInstance().getUid();
+//                bean.token = UserInstance.getInstance().getToken();
+//                bean.deviceId = WatchInstance.getInstance().deviceId;
+//                bean.value = iv_kaiguan_jibu.isSelected() ? "0" : "1";
+//                ApiUtils.getApiService().stepCountingSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//                        switch (message.code) {
+//                            case Constants.HTTP_SUCCESS:
+//                                if (iv_kaiguan_jibu.isSelected()) {
+//                                    iv_kaiguan_jibu.setSelected(false);
+//                                } else {
+//                                    iv_kaiguan_jibu.setSelected(true);
+//                                }
+//                                break;
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                    }
+//                });
+
             }
         });
         iv_kaiguan_jibu = findViewById(R.id.iv_kaiguan_jibu);
@@ -259,13 +391,13 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
             @Override
             public void onClick(View v) {
 
-
-                KaiGuanPostBean bean = new KaiGuanPostBean();
+                KaiguanSettingPostBean bean=new KaiguanSettingPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.value = iv_kaiguan_fanzhuan.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().flipCheckSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                bean.deviceId=WatchInstance.getInstance().deviceId;
+                bean.switchType=" SLEEPTIME";
+                bean.switchValue= iv_kaiguan_fanzhuan.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -284,6 +416,30 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
 
                     }
                 });
+//                KaiGuanPostBean bean = new KaiGuanPostBean();
+//                bean.userId = UserInstance.getInstance().getUid();
+//                bean.token = UserInstance.getInstance().getToken();
+//                bean.deviceId = WatchInstance.getInstance().deviceId;
+//                bean.value = iv_kaiguan_fanzhuan.isSelected() ? "0" : "1";
+//                ApiUtils.getApiService().flipCheckSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//                        switch (message.code) {
+//                            case Constants.HTTP_SUCCESS:
+//                                if (iv_kaiguan_fanzhuan.isSelected()) {
+//                                    iv_kaiguan_fanzhuan.setSelected(false);
+//                                } else {
+//                                    iv_kaiguan_fanzhuan.setSelected(true);
+//                                }
+//                                break;
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
         iv_kaiguan_fanzhuan = findViewById(R.id.iv_kaiguan_fanzhuan);
@@ -304,7 +460,7 @@ public class WatchMeKaiGuanActivity extends BaseActivity implements ActivityComp
         AllSettingPostBean bean = new AllSettingPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        bean.clientId = WatchInstance.getInstance().deviceId;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
         ApiUtils.getApiService().allSetting(bean).enqueue(new TaiShengCallback<BaseBean<AllSettingResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<AllSettingResultBean>> response, BaseBean<AllSettingResultBean> message) {

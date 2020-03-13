@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ListView
+        android:id="@+id/msg_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:divider="#00000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#eee"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingTop="6dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="6dp">
+        <CheckBox
+            android:id="@+id/yuyin_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/checkbox_watch_emotion_keyboard"
+            android:button="@null"
+            android:clickable="true"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/bar_image_add_btn"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:clickable="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/rl_editbar_bg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_reply_edittext"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/bar_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="#0000"
+                android:maxLines="3"
+                android:minHeight="36dp"
+                android:textSize="16sp" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/yuyin_text"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="#0000"-->
+<!--                android:visibility="gone"-->
+<!--                android:maxLines="3"-->
+<!--                android:text="按住说话"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:gravity="center"-->
+<!--                android:minHeight="36dp"-->
+<!--                android:textSize="16sp" />-->
+
+
+
+
+            <com.taisheng.now.yuyin.manager.AudioRecordButton
+                android:id="@+id/yuyin_text"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:background="#fff"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="按住 说话"
+                android:textColor="#000"
+                android:textSize="16dp"/>
+
+            <!--<ImageView-->
+            <!--android:id="@+id/emotion_button"-->
+            <!--android:layout_width="32dp"-->
+            <!--android:layout_height="32dp"-->
+            <!--android:clickable="true"-->
+            <!--android:src="@mipmap/ic_launcher"-->
+            <!--android:visibility="gone" />-->
+        </LinearLayout>
+
+
+        <CheckBox
+            android:id="@+id/emotion_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/checkbox_emotion_keyboard"
+            android:button="@null"
+            android:clickable="true"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_sendimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/send_img"
+            android:visibility="visible"
+
+            />
+
+        <Button
+            android:id="@+id/bar_btn_send"
+            android:layout_width="56dp"
+            android:layout_height="32dp"
+            android:background="@drawable/shape_bg_button_reply"
+            android:text="发送"
+            android:textColor="#fff"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_emotion_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.taisheng.now.view.biaoqing.NoHorizontalScrollerViewPager
+            android:id="@+id/vp_emotionview_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/bg_horizontal_line_color" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+</LinearLayout>

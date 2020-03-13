@@ -51,10 +51,10 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
 
-    <!--微信支付权限-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<!--    &lt;!&ndash;微信支付权限&ndash;&gt;-->
+<!--    <uses-permission android:name="android.permission.INTERNET" />-->
+<!--    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />-->
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
 
 
     <!--小米推送相关^开始-->
@@ -380,6 +380,7 @@
             android:name="com.taisheng.now.bussiness.market.ShangPinxiangqingActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 
@@ -856,7 +857,14 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleBottom" />
+
+
         <activity
+            android:name=".bussiness.watch.watchchat.WeChatActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+
             android:name=".chat.ImageLookActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"

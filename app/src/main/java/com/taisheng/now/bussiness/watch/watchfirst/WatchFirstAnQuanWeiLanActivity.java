@@ -52,7 +52,6 @@ import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.map.AddressAdapter;
 import com.taisheng.now.map.HomelocationInstance;
 import com.taisheng.now.map.MapLocationParser;
-import com.taisheng.now.map.NewMapInstance;
 import com.taisheng.now.map.addressParseListener;
 import com.taisheng.now.util.DensityUtil;
 import com.taisheng.now.util.ToastUtil;
@@ -145,7 +144,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseActivity implements Acti
                 AnquanweiilanPostBean bean = new AnquanweiilanPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.clientId = WatchInstance.getInstance().deviceId;
+                bean.deviceId = WatchInstance.getInstance().deviceId;
                 bean.fenceRadius = HomelocationInstance.radius;
                 bean.latitude = latitude + "";
                 bean.latitudeSign = "N";

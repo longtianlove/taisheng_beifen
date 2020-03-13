@@ -64,36 +64,36 @@
         </LinearLayout>
 
         <!--<RelativeLayout-->
-            <!--android:id="@+id/head_bg"-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_margin="16dp"-->
-            <!--android:orientation="vertical"-->
-            <!--android:gravity="center">-->
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdv_header"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="13dp"
-                android:gravity="center"
-                android:scaleType="fitXY"
-                fresco:actualImageScaleType="focusCrop"
-                fresco:fadeDuration="300"
-                fresco:failureImage="@drawable/doctor_default"
-                fresco:failureImageScaleType="centerInside"
-                fresco:placeholderImage="@drawable/doctor_default"
-                fresco:placeholderImageScaleType="fitCenter"
-                fresco:roundedCornerRadius="25dp" />
-            <!--<com.taisheng.now.chat.CircularCoverView-->
-                <!--android:id="@+id/head_cover"-->
-                <!--android:layout_width="56dp"-->
-                <!--android:layout_height="56dp"-->
-                <!--android:layout_centerInParent="true"/>-->
-            <!--<ImageView-->
-                <!--android:id="@+id/head_img"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_centerInParent="true"/>-->
+        <!--android:id="@+id/head_bg"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:orientation="vertical"-->
+        <!--android:gravity="center">-->
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_header"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="13dp"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            fresco:actualImageScaleType="focusCrop"
+            fresco:fadeDuration="300"
+            fresco:failureImage="@drawable/doctor_default"
+            fresco:failureImageScaleType="centerInside"
+            fresco:placeholderImage="@drawable/doctor_default"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:roundedCornerRadius="25dp" />
+        <!--<com.taisheng.now.chat.CircularCoverView-->
+        <!--android:id="@+id/head_cover"-->
+        <!--android:layout_width="56dp"-->
+        <!--android:layout_height="56dp"-->
+        <!--android:layout_centerInParent="true"/>-->
+        <!--<ImageView-->
+        <!--android:id="@+id/head_img"-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_centerInParent="true"/>-->
         <!--</RelativeLayout>-->
     </LinearLayout>
 

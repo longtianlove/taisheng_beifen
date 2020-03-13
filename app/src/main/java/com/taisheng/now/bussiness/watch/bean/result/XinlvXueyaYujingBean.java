@@ -4,7 +4,7 @@ import com.taisheng.now.bussiness.bean.post.BasePostBean;
 
 public class XinlvXueyaYujingBean extends BasePostBean {
     public String id;
-    public String clientId;
+    public String deviceId;
     public int bpxyHighMax;
     public int bpxyHighMin;
     public int bpxyLowMax;

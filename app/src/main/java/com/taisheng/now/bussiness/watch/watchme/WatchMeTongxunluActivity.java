@@ -18,12 +18,8 @@ import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
-import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
-import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.TongxunluDeletePostBean;
-import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
-import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluliistBean;
 import com.taisheng.now.http.ApiUtils;
@@ -116,7 +112,7 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
         DianhuabenPostbean bean = new DianhuabenPostbean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        bean.clientId = WatchInstance.getInstance().deviceId;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
         bean.pageNo = 1;
         bean.pageSize = 10;
         ApiUtils.getApiService().getWatchPhbxList(bean).enqueue(new TaiShengCallback<BaseBean<TongxunluResultBean>>() {
@@ -232,7 +228,7 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
                     TongxunluDeletePostBean tongxunluDeletePostBean = new TongxunluDeletePostBean();
                     tongxunluDeletePostBean.userId = UserInstance.getInstance().getUid();
                     tongxunluDeletePostBean.token = UserInstance.getInstance().getToken();
-                    tongxunluDeletePostBean.clientId = WatchInstance.getInstance().deviceId;
+                    tongxunluDeletePostBean.deviceId = WatchInstance.getInstance().deviceId;
                     tongxunluDeletePostBean.phbxNum = bean.phbxNum;
                     ApiUtils.getApiService().setWatchDphbx(tongxunluDeletePostBean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override

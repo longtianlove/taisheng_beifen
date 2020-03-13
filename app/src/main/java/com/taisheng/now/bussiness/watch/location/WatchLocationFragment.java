@@ -1,52 +1,28 @@
 package com.taisheng.now.bussiness.watch.location;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
 import com.taisheng.now.Constants;
-import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
-import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
-import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
-import com.taisheng.now.bussiness.watch.bean.post.YujingxinxiSetYiduPostBean;
-import com.taisheng.now.bussiness.watch.bean.result.GuijiBean;
-import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewLocationBean;
-import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
-import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;
 import com.taisheng.now.bussiness.watch.watchfirst.HistoryGuijiActivity;
 import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstAnQuanWeiLanActivity;
-import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstGuijiActivity;
-import com.taisheng.now.bussiness.watch.watchme.WatchMeYujingxinxiXiangqingActivity;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.map.NewMapInstance;
-import com.taisheng.now.view.TaishengListView;
-import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -129,7 +105,7 @@ public class WatchLocationFragment extends BaseFragment {
                 BaseWatchBean bean = new BaseWatchBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.clientId = WatchInstance.getInstance().deviceId;
+                bean.deviceId = WatchInstance.getInstance().deviceId;
                 ApiUtils.getApiService().getNewPosition(bean).enqueue(new TaiShengCallback<BaseBean<NewLocationBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<NewLocationBean>> response, BaseBean<NewLocationBean> message) {
@@ -155,7 +131,7 @@ public class WatchLocationFragment extends BaseFragment {
         BaseWatchBean bean = new BaseWatchBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        bean.clientId = WatchInstance.getInstance().deviceId;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
         ApiUtils.getApiService().getNewPosition(bean).enqueue(new TaiShengCallback<BaseBean<NewLocationBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<NewLocationBean>> response, BaseBean<NewLocationBean> message) {

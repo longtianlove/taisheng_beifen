@@ -117,15 +117,17 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
 
     void createNextMediaPlayer() {
         nextMediaPlayer = MediaPlayer.create(this, R.raw.audio);
-        mMediaPlayer.setNextMediaPlayer(nextMediaPlayer);
-        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-                mMediaPlayer = nextMediaPlayer;
-                createNextMediaPlayer();
-            }
-        });
+        if(mMediaPlayer!=null&&nextMediaPlayer!=null) {
+            mMediaPlayer.setNextMediaPlayer(nextMediaPlayer);
+            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.release();
+                    mMediaPlayer = nextMediaPlayer;
+                    createNextMediaPlayer();
+                }
+            });
+        }
     }
 
     /**
@@ -565,14 +567,17 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
      * 加入视频房间：需要 TRTCNewViewActivity 提供的  TRTCParams 函数
      */
     private void enterRoom() {
-        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mMediaPlayer.start();
-            }
-        });
+        if(mMediaPlayer!=null){
+            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    mMediaPlayer.start();
+                }
+            });
 
-        mMediaPlayer.setVolume(0.5f, 0.5f);
+            mMediaPlayer.setVolume(0.5f, 0.5f);
+        }
+
         createNextMediaPlayer();
 
 
@@ -684,14 +689,14 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
 
                             break;
                         default:
-                            ToastUtil.showTost("网络错误");
+//                            ToastUtil.showTost("网络错误");
                             break;
                     }
                 }
 
                 @Override
                 public void onFail(Call<BaseBean> call, Throwable t) {
-                    ToastUtil.showTost("网络错误");
+//                    ToastUtil.showTost("网络错误");
                 }
             });
         }
@@ -717,14 +722,14 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
 
                         break;
                     default:
-                        ToastUtil.showTost("网络错误");
+//                        ToastUtil.showTost("网络错误");
                         break;
                 }
             }
 
             @Override
             public void onFail(Call<BaseBean> call, Throwable t) {
-                ToastUtil.showTost("网络错误");
+//                ToastUtil.showTost("网络错误");
             }
         });
 
@@ -906,101 +911,102 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
             Log.d(TAG, "sdk callback onError");
             TRTCMainActivity activity = mContext.get();
             if (activity == null) return;
-
-            if (errCode == TXLiteAVCode.ERR_ROOM_REQUEST_TOKEN_HTTPS_TIMEOUT ||
-                    errCode == TXLiteAVCode.ERR_ROOM_REQUEST_IP_TIMEOUT ||
-                    errCode == TXLiteAVCode.ERR_ROOM_REQUEST_ENTER_ROOM_TIMEOUT) {
-                Toast.makeText(activity, "进房超时，请检查网络或稍后重试:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
-                activity.exitRoom();
-                return;
-            }
-
-            if (errCode == TXLiteAVCode.ERR_ROOM_REQUEST_TOKEN_INVALID_PARAMETER ||
-                    errCode == TXLiteAVCode.ERR_ENTER_ROOM_PARAM_NULL ||
-                    errCode == TXLiteAVCode.ERR_SDK_APPID_INVALID ||
-                    errCode == TXLiteAVCode.ERR_ROOM_ID_INVALID ||
-                    errCode == TXLiteAVCode.ERR_USER_ID_INVALID ||
-                    errCode == TXLiteAVCode.ERR_USER_SIG_INVALID) {
-                Toast.makeText(activity, "进房参数错误:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
-                activity.exitRoom();
-                return;
-            }
-
-            if (errCode == TXLiteAVCode.ERR_ACCIP_LIST_EMPTY ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_UNPACKING_ERROR ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_TOKEN_ERROR ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_ALLOCATE_ACCESS_FAILED ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_GENERATE_SIGN_FAILED ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_TOKEN_TIMEOUT ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_INVALID_COMMAND ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_GENERATE_KEN_ERROR ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_GENERATE_TOKEN_ERROR ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_DATABASE ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_BAD_ROOMID ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_BAD_SCENE_OR_ROLE ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_ROOMID_EXCHANGE_FAILED ||
-                    errCode == TXLiteAVCode.ERR_SERVER_INFO_STRGROUP_HAS_INVALID_CHARS ||
-                    errCode == TXLiteAVCode.ERR_SERVER_ACC_TOKEN_TIMEOUT ||
-                    errCode == TXLiteAVCode.ERR_SERVER_ACC_SIGN_ERROR ||
-                    errCode == TXLiteAVCode.ERR_SERVER_ACC_SIGN_TIMEOUT ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_INVALID_ROOMID ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_CREATE_ROOM_FAILED ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_SIGN_ERROR ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_SIGN_TIMEOUT ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_ADD_USER_FAILED ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_FIND_USER_FAILED ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_SWITCH_TERMINATION_FREQUENTLY ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_LOCATION_NOT_EXIST ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_ROUTE_TABLE_ERROR ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_INVALID_PARAMETER) {
-                Toast.makeText(activity, "进房失败，请稍后重试:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
-                activity.exitRoom();
-                return;
-            }
-
-            if (errCode == TXLiteAVCode.ERR_SERVER_CENTER_ROOM_FULL ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_REACH_PROXY_MAX) {
-                Toast.makeText(activity, "进房失败，房间满了，请稍后重试:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
-                activity.exitRoom();
-                return;
-            }
-
-            if (errCode == TXLiteAVCode.ERR_SERVER_CENTER_ROOM_ID_TOO_LONG) {
-                Toast.makeText(activity, "进房失败，roomID超出有效范围:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
-                activity.exitRoom();
-                return;
-            }
-
-            if (errCode == TXLiteAVCode.ERR_SERVER_ACC_ROOM_NOT_EXIST ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_ROOM_NOT_EXIST) {
-                Toast.makeText(activity, "进房失败，请确认房间号正确:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
-                activity.exitRoom();
-                return;
-            }
-
-            if (errCode == TXLiteAVCode.ERR_SERVER_INFO_SERVICE_SUSPENDED) {
-                Toast.makeText(activity, "进房失败，请确认腾讯云实时音视频账号状态是否欠费:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
-                activity.exitRoom();
-                return;
-            }
-
-            if (errCode == TXLiteAVCode.ERR_SERVER_INFO_PRIVILEGE_FLAG_ERROR ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_NO_PRIVILEDGE_CREATE_ROOM ||
-                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_NO_PRIVILEDGE_ENTER_ROOM) {
-                Toast.makeText(activity, "进房失败，无权限进入房间:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
-                activity.exitRoom();
-                return;
-            }
-
-            if (errCode <= TXLiteAVCode.ERR_SERVER_SSO_SIG_EXPIRED &&
-                    errCode >= TXLiteAVCode.ERR_SERVER_SSO_INTERNAL_ERROR) {
-                // 错误参考 https://cloud.tencent.com/document/product/269/1671#.E5.B8.90.E5.8F.B7.E7.B3.BB.E7.BB.9F
-                Toast.makeText(activity, "进房失败，userSig错误:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
-                activity.exitRoom();
-                return;
-            }
+//
+//            if (errCode == TXLiteAVCode.ERR_ROOM_REQUEST_TOKEN_HTTPS_TIMEOUT ||
+//                    errCode == TXLiteAVCode.ERR_ROOM_REQUEST_IP_TIMEOUT ||
+//                    errCode == TXLiteAVCode.ERR_ROOM_REQUEST_ENTER_ROOM_TIMEOUT) {
+//                Toast.makeText(activity, "进房超时，请检查网络或稍后重试:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
+//                activity.exitRoom();
+//                return;
+//            }
+//
+//            if (errCode == TXLiteAVCode.ERR_ROOM_REQUEST_TOKEN_INVALID_PARAMETER ||
+//                    errCode == TXLiteAVCode.ERR_ENTER_ROOM_PARAM_NULL ||
+//                    errCode == TXLiteAVCode.ERR_SDK_APPID_INVALID ||
+//                    errCode == TXLiteAVCode.ERR_ROOM_ID_INVALID ||
+//                    errCode == TXLiteAVCode.ERR_USER_ID_INVALID ||
+//                    errCode == TXLiteAVCode.ERR_USER_SIG_INVALID) {
+//                Toast.makeText(activity, "进房参数错误:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
+//                activity.exitRoom();
+//                return;
+//            }
+//
+//            if (errCode == TXLiteAVCode.ERR_ACCIP_LIST_EMPTY ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_UNPACKING_ERROR ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_TOKEN_ERROR ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_ALLOCATE_ACCESS_FAILED ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_GENERATE_SIGN_FAILED ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_TOKEN_TIMEOUT ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_INVALID_COMMAND ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_GENERATE_KEN_ERROR ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_GENERATE_TOKEN_ERROR ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_DATABASE ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_BAD_ROOMID ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_BAD_SCENE_OR_ROLE ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_ROOMID_EXCHANGE_FAILED ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_INFO_STRGROUP_HAS_INVALID_CHARS ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_ACC_TOKEN_TIMEOUT ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_ACC_SIGN_ERROR ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_ACC_SIGN_TIMEOUT ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_INVALID_ROOMID ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_CREATE_ROOM_FAILED ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_SIGN_ERROR ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_SIGN_TIMEOUT ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_ADD_USER_FAILED ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_FIND_USER_FAILED ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_SWITCH_TERMINATION_FREQUENTLY ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_LOCATION_NOT_EXIST ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_ROUTE_TABLE_ERROR ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_INVALID_PARAMETER) {
+//                Toast.makeText(activity, "进房失败，请稍后重试:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
+//                activity.exitRoom();
+//                return;
+//            }
+//
+//            if (errCode == TXLiteAVCode.ERR_SERVER_CENTER_ROOM_FULL ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_REACH_PROXY_MAX) {
+//                Toast.makeText(activity, "进房失败，房间满了，请稍后重试:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
+//                activity.exitRoom();
+//                return;
+//            }
+//
+//            if (errCode == TXLiteAVCode.ERR_SERVER_CENTER_ROOM_ID_TOO_LONG) {
+//                Toast.makeText(activity, "进房失败，roomID超出有效范围:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
+//                activity.exitRoom();
+//                return;
+//            }
+//
+//            if (errCode == TXLiteAVCode.ERR_SERVER_ACC_ROOM_NOT_EXIST ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_ROOM_NOT_EXIST) {
+//                Toast.makeText(activity, "进房失败，请确认房间号正确:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
+//                activity.exitRoom();
+//                return;
+//            }
+//
+//            if (errCode == TXLiteAVCode.ERR_SERVER_INFO_SERVICE_SUSPENDED) {
+//                Toast.makeText(activity, "进房失败，请确认腾讯云实时音视频账号状态是否欠费:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
+//                activity.exitRoom();
+//                return;
+//            }
+//
+//            if (errCode == TXLiteAVCode.ERR_SERVER_INFO_PRIVILEGE_FLAG_ERROR ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_NO_PRIVILEDGE_CREATE_ROOM ||
+//                    errCode == TXLiteAVCode.ERR_SERVER_CENTER_NO_PRIVILEDGE_ENTER_ROOM) {
+//                Toast.makeText(activity, "进房失败，无权限进入房间:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
+//                activity.exitRoom();
+//                return;
+//            }
+//
+//            if (errCode <= TXLiteAVCode.ERR_SERVER_SSO_SIG_EXPIRED &&
+//                    errCode >= TXLiteAVCode.ERR_SERVER_SSO_INTERNAL_ERROR) {
+//                // 错误参考 https://cloud.tencent.com/document/product/269/1671#.E5.B8.90.E5.8F.B7.E7.B3.BB.E7.BB.9F
+//                Toast.makeText(activity, "进房失败，userSig错误:" + errCode + "[" + errMsg + "]", Toast.LENGTH_SHORT).show();
+//                activity.exitRoom();
+//                return;
+//            }
 
             Toast.makeText(activity, "onError: " + errMsg + "[" + errCode + "]", Toast.LENGTH_SHORT).show();
+            activity.finish();
         }
 
         /**

@@ -28,6 +28,7 @@ import com.taisheng.now.bussiness.bean.post.GouwucheListPostBean;
 import com.taisheng.now.bussiness.bean.post.GuanzhuPostBean;
 import com.taisheng.now.bussiness.bean.post.HealthCheckListPostBean;
 import com.taisheng.now.bussiness.bean.post.HealthInfoPostBean;
+import com.taisheng.now.bussiness.bean.post.KaiguanSettingPostBean;
 import com.taisheng.now.bussiness.bean.post.KanjuanPostBean;
 import com.taisheng.now.bussiness.bean.post.LingqukajuanPostBean;
 import com.taisheng.now.bussiness.bean.post.MarketPostBean;
@@ -60,6 +61,7 @@ import com.taisheng.now.bussiness.bean.result.ArticleCollectListResultBean;
 import com.taisheng.now.bussiness.bean.result.ConnectDoctorResultBean;
 import com.taisheng.now.bussiness.bean.result.ConsultListResultBean;
 import com.taisheng.now.bussiness.bean.result.CreateOrderResultBean;
+import com.taisheng.now.bussiness.bean.result.DeviceBindingResultBean;
 import com.taisheng.now.bussiness.bean.result.DoctorBean;
 import com.taisheng.now.bussiness.bean.result.DoctorCollectListResultBean;
 import com.taisheng.now.bussiness.bean.result.DoctorCommentResultBean;
@@ -97,6 +99,7 @@ import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.KaiGuanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.MiandaraoShijianduanPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.ObtainBpxyHeartStepListDTOPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
@@ -123,11 +126,16 @@ import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.XinlvAnriqiResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueYaDayResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.XueyaResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.test.WechatResultBean;
+import com.taisheng.now.yuyin.util.Constant;
 
+
+import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -155,7 +163,7 @@ public interface ApiService {
      */
 //  绑定设备  deviceBinding
     @POST(Constants.Url.Watch.deviceBinding)
-    Call<BaseBean> deviceBinding(@Body BindDevicePostBean bean);
+    Call<BaseBean<DeviceBindingResultBean>> deviceBinding(@Body BindDevicePostBean bean);
 
 
     //解除绑定
@@ -174,6 +182,16 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.querythedaybpxy)
     Call<BaseBean<XueYaDayResultBean>> querythedaybpxy(@Body ShishiCollectionBean bean);
+
+
+    @POST(Constants.Url.Watch.obtainBpxyList)
+    Call<BaseBean<ArrayList<XueyaResultBean>>> obtainBpxyList(@Body ObtainBpxyHeartStepListDTOPostBean bean);
+
+
+
+
+    @POST(Constants.Url.Watch.obtainHeartList)
+    Call<BaseBean<ArrayList<XinlvAnriqiResultBean>>> obtainHeartList(@Body ObtainBpxyHeartStepListDTOPostBean bean);
 
 
     @POST(Constants.Url.Watch.querythedayheart)
@@ -217,7 +235,6 @@ public interface ApiService {
     Call<BaseBean> updateSosContactSetting(@Body UpdateSosContactSettingPostBean bean);
 
 
-
     @POST(Constants.Url.Watch.watchWarningupdateBykey)
     Call<BaseBean> watchWarningupdateBykey(@Body YujingxinxiSetYiduPostBean bean);
 
@@ -242,6 +259,10 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.allSetting)
     Call<BaseBean<AllSettingResultBean>> allSetting(@Body AllSettingPostBean bean);
+
+
+    @POST(Constants.Url.Watch.watchSwitchConfig)
+    Call<BaseBean> watchSwitchConfig(@Body KaiguanSettingPostBean bean);
 
 
     @POST(Constants.Url.Watch.gpsSetting)

@@ -7,10 +7,8 @@ import android.widget.ImageView;
 
 import androidx.core.app.ActivityCompat;
 
-import com.alibaba.fastjson.JSONArray;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
-import com.google.gson.JsonObject;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
@@ -20,7 +18,6 @@ import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
-import com.taisheng.now.bussiness.watch.watchme.WatchNaoZhongXinzengActivity;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.map.NewMapInstance;
@@ -94,7 +91,7 @@ public class WatchFirstGuijiActivity extends BaseActivity implements ActivityCom
         GuijiPostBean bean = new GuijiPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        bean.clientId = WatchInstance.getInstance().deviceId;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
         ApiUtils.getApiService().getWatchUdList(bean).enqueue(new TaiShengCallback<BaseBean<GuijiResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GuijiResultBean>> response, BaseBean<GuijiResultBean> message) {

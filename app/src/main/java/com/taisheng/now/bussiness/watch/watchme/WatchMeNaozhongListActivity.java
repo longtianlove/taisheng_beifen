@@ -2,7 +2,6 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +12,10 @@ import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.article.ArticleContentActivity;
-import com.taisheng.now.bussiness.bean.result.ArticleBean;
-import com.taisheng.now.bussiness.first.FirstFragment;
 import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
@@ -33,7 +28,6 @@ import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.WithScrolleViewListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -116,7 +110,7 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
         BaseWatchBean bean = new BaseWatchBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        bean.clientId = WatchInstance.getInstance().deviceId;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
         ApiUtils.getApiService().getWatchREMINDList(bean).enqueue(new TaiShengCallback<BaseBean<NaozhongListResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<NaozhongListResultBean>> response, BaseBean<NaozhongListResultBean> message) {
@@ -220,7 +214,7 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
                     SetNaozhongPostBean setNaozhongPostBean = new SetNaozhongPostBean();
                     setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
                     setNaozhongPostBean.token = UserInstance.getInstance().getToken();
-                    setNaozhongPostBean.clientId = WatchInstance.getInstance().deviceId;
+                    setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
                     setNaozhongPostBean.watchRemindList = mData;
                     ApiUtils.getApiService().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
@@ -257,7 +251,7 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
                     SetNaozhongPostBean setNaozhongPostBean = new SetNaozhongPostBean();
                     setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
                     setNaozhongPostBean.token = UserInstance.getInstance().getToken();
-                    setNaozhongPostBean.clientId = WatchInstance.getInstance().deviceId;
+                    setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
                     WatchInstance.getInstance().mDataNaoZhong.remove(position);
                     setNaozhongPostBean.watchRemindList = WatchInstance.getInstance().mDataNaoZhong;
                     ApiUtils.getApiService().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {

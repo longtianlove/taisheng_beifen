@@ -5,7 +5,7 @@ import com.taisheng.now.bussiness.bean.post.BasePostBean;
 public class SetChiyaoPostBean extends BasePostBean {
 
 
-    public String clientId;
+    public String deviceId;
     public String frequency;
     public String id;
     public String isOpen;

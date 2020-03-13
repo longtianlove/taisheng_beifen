@@ -75,7 +75,7 @@ public class WatchMeXinlvyujingActivity extends BaseActivity implements Activity
         XinlvXueyaYujingPostBean bean=new XinlvXueyaYujingPostBean();
         bean.userId= UserInstance.getInstance().getUid();
         bean.token=UserInstance.getInstance().getToken();
-        bean.clientId= WatchInstance.getInstance().deviceId;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
         ApiUtils.getApiService().getWatchWarning(bean).enqueue(new TaiShengCallback<BaseBean<XinlvXueyaYujingBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<XinlvXueyaYujingBean>> response, BaseBean<XinlvXueyaYujingBean> message) {

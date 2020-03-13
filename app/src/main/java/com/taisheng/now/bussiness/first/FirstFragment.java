@@ -265,8 +265,8 @@ public class FirstFragment extends BaseFragment {
                 BaseListPostBean bean = new BaseListPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.pageNo=1;
-                bean.pageSize=10;
+                bean.pageNo = 1;
+                bean.pageSize = 10;
                 ApiUtils.getApiService().queryDeviceBinding(bean).enqueue(new TaiShengCallback<BaseBean<WatchListResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<WatchListResultBean>> response, BaseBean<WatchListResultBean> message) {
@@ -276,15 +276,17 @@ public class FirstFragment extends BaseFragment {
                                     //跳转到绑定手表页
                                     Intent intent = new Intent(getActivity(), BindWatchsActivity.class);
                                     startActivity(intent);
-                                } else if ( message.result.records.size() == 1){
-                                    WatchListBean bean1=message.result.records.get(0);
-                                    WatchInstance.getInstance().deviceId = bean1.clientId;
+                                } else if (message.result.records.size() == 1) {
+                                    WatchListBean bean1 = message.result.records.get(0);
+                                    WatchInstance.getInstance().deviceId = bean1.deviceId;
+                                    SPUtil.putDeviced(bean1.deviceId);
                                     WatchInstance.getInstance().deviceNickName = bean1.nickName;
                                     WatchInstance.getInstance().relationShip = bean1.terminalRelationship;
                                     //todo 数据给全
-                    WatchInstance.getInstance().realName = bean1.realName;
-                    WatchInstance.getInstance().idcard = bean1.idcard;
-                    WatchInstance.getInstance().phoneNumber = bean1.phoneNumber;
+                                    WatchInstance.getInstance().realName = bean1.realName;
+                                    WatchInstance.getInstance().idcard = bean1.idcard;
+                                    WatchInstance.getInstance().phoneNumber = bean1.phoneNumber;
+                                    WatchInstance.getInstance().createTime=bean1.createTime;
                                     Intent intent = new Intent(getActivity(), WatchMainActivity.class);
                                     startActivity(intent);
                                 } else {
@@ -388,7 +390,8 @@ public class FirstFragment extends BaseFragment {
         tv_secret_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).showFragment(2);
+                Intent intent = new Intent(getActivity(), SecretActivity.class);
+                startActivity(intent);
             }
         });
         lv_articles = (WithScrolleViewListView) rootView.findViewById(R.id.lv_articles);

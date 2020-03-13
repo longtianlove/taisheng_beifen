@@ -24,6 +24,7 @@
             android:drawableRight="@null"
             android:text="一次"
             android:textColor="@color/black_33"
+            android:visibility="gone"
             android:textSize="20sp" />
 
         <TextView style="@style/horizontal_line_style" />
