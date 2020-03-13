@@ -356,7 +356,7 @@
                             android:gravity="center"
                             android:text="用药指导"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="13sp" />
                     </LinearLayout>
 
                     <LinearLayout

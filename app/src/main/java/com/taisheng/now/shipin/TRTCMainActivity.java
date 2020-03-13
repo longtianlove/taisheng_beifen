@@ -689,14 +689,14 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
 
                             break;
                         default:
-                            ToastUtil.showTost("网络错误");
+//                            ToastUtil.showTost("网络错误");
                             break;
                     }
                 }
 
                 @Override
                 public void onFail(Call<BaseBean> call, Throwable t) {
-                    ToastUtil.showTost("网络错误");
+//                    ToastUtil.showTost("网络错误");
                 }
             });
         }
@@ -722,14 +722,14 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
 
                         break;
                     default:
-                        ToastUtil.showTost("网络错误");
+//                        ToastUtil.showTost("网络错误");
                         break;
                 }
             }
 
             @Override
             public void onFail(Call<BaseBean> call, Throwable t) {
-                ToastUtil.showTost("网络错误");
+//                ToastUtil.showTost("网络错误");
             }
         });
 

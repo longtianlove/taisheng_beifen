@@ -23,7 +23,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-
 /**
  * Created by long on 17/4/7.
  */
@@ -57,7 +56,7 @@ public abstract class TaiShengCallback<T extends BaseBean> implements Callback<T
 //                }
 
             if (message != null) {
-                if(message.code== Constants.TOKEN_DIFFERENCE){
+                if (message.code == Constants.TOKEN_DIFFERENCE) {
                     //注销小米账号
                     XMPushManagerInstance.getInstance().stop();
                     ToastUtil.showTost("身份过期，请重新登录");
@@ -71,9 +70,12 @@ public abstract class TaiShengCallback<T extends BaseBean> implements Callback<T
                     //上线状态下：此处加了统一对网络请求的异常捕获，不让用户崩溃。然后上传异常信息到bugly。
                     try {
                         onSuccess(response, message);
+                        if (Constants.HTTP_SUCCESS != message.code) {
+                            ToastUtil.showAtCenter("服务器异常---" + message.code);
+                        }
                     } catch (Exception e) {
 //                        DialogUtil.closeProgress();
-                        Log.e("taishengcallback",e.getMessage());
+                        Log.e("taishengcallback", e.getMessage());
                         CrashReport.postCatchedException(e);
 //                        Toast.makeText(PetAppLike.mcontext, "系统错误，请稍后……", Toast.LENGTH_SHORT).show();
 //                        Log.e(PetAppLike.TAG, "callback出错了" + e.getMessage());

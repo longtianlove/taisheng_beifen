@@ -188,6 +188,7 @@
             android:layout_marginLeft="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="1">
 
             <ImageView
@@ -220,6 +221,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="11dp"
+            android:visibility="gone"
             android:background="#EEEEEE" />
 
 

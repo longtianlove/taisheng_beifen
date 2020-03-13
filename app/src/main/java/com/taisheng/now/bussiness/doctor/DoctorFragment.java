@@ -76,7 +76,7 @@ public class DoctorFragment extends BaseFragment {
     void initView(View rootView) {
 
 
-        iv_search_guanbi=rootView.findViewById(R.id.iv_search_guanbi);
+        iv_search_guanbi = rootView.findViewById(R.id.iv_search_guanbi);
         iv_search_guanbi.setVisibility(View.GONE);
         iv_search_guanbi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,27 +169,29 @@ public class DoctorFragment extends BaseFragment {
                 DialogUtil.closeProgress();
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result.records != null && message.result.records.size() > 0) {
-                            lv_doctors.setLoading(false);
-                            if (PAGE_NO == 1) {
-                                madapter.mData.clear();
-                            }
-                            //有消息
-                            PAGE_NO++;
-                            madapter.mData.addAll(message.result.records);
-                            if (message.result.records.size() < 10) {
+                        synchronized (DoctorFragment.class) {
+                            if (message.result.records != null && message.result.records.size() > 0) {
+                                lv_doctors.setLoading(false);
+                                if (PAGE_NO == 1) {
+                                    madapter.mData.clear();
+                                }
+                                //有消息
+                                PAGE_NO++;
+                                madapter.mData.addAll(message.result.records);
+                                if (message.result.records.size() < 10) {
+                                    lv_doctors.setHasLoadMore(false);
+                                    lv_doctors.setLoadAllViewText("暂时只有这么多医生");
+                                    lv_doctors.setLoadAllFooterVisible(true);
+                                } else {
+                                    lv_doctors.setHasLoadMore(true);
+                                }
+                                madapter.notifyDataSetChanged();
+                            } else {
+                                //没有消息
                                 lv_doctors.setHasLoadMore(false);
                                 lv_doctors.setLoadAllViewText("暂时只有这么多医生");
                                 lv_doctors.setLoadAllFooterVisible(true);
-                            } else {
-                                lv_doctors.setHasLoadMore(true);
                             }
-                            madapter.notifyDataSetChanged();
-                        } else {
-                            //没有消息
-                            lv_doctors.setHasLoadMore(false);
-                            lv_doctors.setLoadAllViewText("暂时只有这么多医生");
-                            lv_doctors.setLoadAllFooterVisible(true);
                         }
                         break;
                 }
