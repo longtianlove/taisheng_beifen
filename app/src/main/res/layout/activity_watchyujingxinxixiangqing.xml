@@ -55,10 +55,14 @@
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="		您好，这儿是系统通知详情，显示当前系统消息的全部内容。您好，这儿是系统通知详情，显示当前系统消息的全部内容。"
-            android:textColor="#ff666666"
-            android:textSize="13sp" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="left"
+            android:lineSpacingExtra="10dp"
+            android:text="您好，这儿是系统通知详情，显示当前系统消息的全部内容。您好，这儿是系统通知详情，显示当前系统消息的全部内容。"
+            android:textColor="#f2940b"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_time"

@@ -64,8 +64,11 @@ public class Constants {
 //        public static String WEB_SOCKET_URL = "ws://152.136.26.41:8879";
 
         //
-        public static String Host = "http://193.112.19.18:8080/";
-        public static String File_Host = "http://193.112.19.18:8080/jeecg-boot/sys/common/view/";
+//        public static String Host = "http://193.112.19.18:8080/";
+        public static String Host = "https://taishenghealth.com/";
+
+        //        public static String File_Host = "http://193.112.19.18:8080/jeecg-boot/sys/common/view/";
+        public static String File_Host = "https://taishenghealth.com/image-video/";
 
 //        public static String File_Host = "http://192.168.1.12:8888/";
 //        public static String WEB_SOCKET_URL = "ws://192.168.1.12:8879";
@@ -78,7 +81,7 @@ public class Constants {
 //        public static String WEB_SOCKET_URL = "ws://49.233.76.254:8879";
 
 
-//        public static String Host = "http://49.233.76.254:8080/";
+        //        public static String Host = "http://49.233.76.254:8080/";
 //        public static String Host = "http://193.112.19.18:8080/";
 //        public static String Host = "http://192.168.1.12:8080/";
 //        public static String File_Host = "https://taishenghealth.com/image-video/";

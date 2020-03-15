@@ -89,7 +89,8 @@ public class WatchMeYujingxinxiXiangqingActivity extends BaseActivity implements
         }
         tv_title.setText(temp);
         tv_content=findViewById(R.id.tv_content);
-        tv_content.setText(message);
+        String temp1=message.replace("温馨提示","\n温馨提示");
+        tv_content.setText(temp1);
         tv_time=findViewById(R.id.tv_time);
         tv_time.setText("发布于"+createTime);
 

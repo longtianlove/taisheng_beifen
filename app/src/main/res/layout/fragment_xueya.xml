@@ -216,13 +216,16 @@
                     android:orientation="horizontal"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
+
                     android:weightSum="1">
 
                     <LinearLayout
                         android:id="@+id/ll_health_left"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_marginRight="30dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -233,19 +236,14 @@
 
                             android:src="@drawable/health_left" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="前一天"
-                            android:textColor="@color/gray_word_color"
-                            android:textSize="12dp" />
+
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
+
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -287,6 +285,9 @@
                         android:id="@+id/ll_health_right"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:layout_marginLeft="30dp"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -296,12 +297,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/health_right" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="后一天"
-                            android:textColor="@color/gray_word_color"
-                            android:textSize="12dp" />
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -319,25 +315,26 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#ff666666"
-                        android:text="高压"></TextView>
+                        android:text="高压"
+                        android:textColor="#ff666666"></TextView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
-                        android:textColor="#ff666666"
-                        android:text="低压"></TextView>
+                        android:text="低压"
+                        android:textColor="#ff666666"></TextView>
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#ff666666"
-                        android:text="时间"></TextView>
+                        android:text="时间"
+                        android:textColor="#ff666666"></TextView>
                 </LinearLayout>
 
 
