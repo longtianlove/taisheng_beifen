@@ -17,12 +17,10 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
@@ -31,7 +29,6 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
-import com.taisheng.now.bussiness.MainActivity;
 import com.taisheng.now.bussiness.article.SecretActivity;
 import com.taisheng.now.bussiness.bean.post.BaseListPostBean;
 import com.taisheng.now.bussiness.bean.post.BasePostBean;
@@ -47,23 +44,34 @@ import com.taisheng.now.bussiness.doctor.DoctorDetailActivity;
 import com.taisheng.now.bussiness.doctor.DoctorsFenleiActivity;
 import com.taisheng.now.bussiness.healthfiles.HealthCheckActivity;
 import com.taisheng.now.bussiness.article.ArticleContentActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.BindWatchsActivity;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.WatchMainActivity;
 import com.taisheng.now.bussiness.watch.WatchsListActivity;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
+import com.taisheng.now.evbusbean.HomeChange;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
+import com.taisheng.now.util.GlideImageLoader;
+import com.taisheng.now.util.GlideImageLoader2;
+import com.taisheng.now.util.GlideRoundUtils;
 import com.taisheng.now.util.SPUtil;
-import com.taisheng.now.view.DoctorLabelWrapLayout;
+import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.GuideView;
-import com.taisheng.now.view.ScoreStar;
-import com.taisheng.now.view.WithScrolleViewListView;
+import com.taisheng.now.view.TaishengListView;
 import com.taisheng.now.view.banner.BannerViewPager;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
+import com.th.j.commonlibrary.utils.DateUtil;
+import com.th.j.commonlibrary.utils.LogUtilH;
+import com.th.j.commonlibrary.utils.TextsUtils;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,16 +90,11 @@ import retrofit2.Response;
 
 @SuppressLint("WrongConstant")
 public class FirstFragment extends BaseFragment {
-    TextView tv_location_city;
     View ll_search;
-
-
-    public ScrollView scl_bag;
-
 
     MaterialDesignPtrFrameLayout ptr_refresh;
 
-    private FrameLayout bannerContaner;
+    private Banner bannerContaner;
     BannerViewPager bannerViewPager;
     private View bannerView;
 
@@ -118,7 +121,7 @@ public class FirstFragment extends BaseFragment {
     GuideView guideView;
 
 
-    com.taisheng.now.view.WithScrolleViewListView lv_articles;
+    TaishengListView lv_articles;
     ArticleAdapter madapter;
 
 
@@ -143,9 +146,6 @@ public class FirstFragment extends BaseFragment {
     }
 
     void initView(View rootView) {
-        scl_bag = (ScrollView) rootView.findViewById(R.id.scl_bag);
-
-
         ptr_refresh = (MaterialDesignPtrFrameLayout) rootView.findViewById(R.id.ptr_refresh);
 
 
@@ -159,8 +159,69 @@ public class FirstFragment extends BaseFragment {
                 initData();
             }
         });
-//        ll_shipin_all=rootView.findViewById(R.id.ll_shipin_all);
-        ll_shishizixun = rootView.findViewById(R.id.ll_shishizixun);
+
+        ll_search = rootView.findViewById(R.id.ll_search);
+
+        lv_articles = rootView.findViewById(R.id.lv_articles);
+        madapter = new ArticleAdapter(mActivity);
+        lv_articles.setAdapter(madapter);
+        View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.home_head, null);
+        lv_articles.addHeaderView(inflate);
+
+        RecyclerView recyclerView = inflate.findViewById(R.id.rv_zhuanjia);
+        LinearLayoutManager layout = new LinearLayoutManager(mActivity);
+        layout.setOrientation(LinearLayoutManager.HORIZONTAL);//设置为横向排列
+        recyclerView.setLayoutManager(layout);
+//        //添加Android自带的分割线
+//        recyclerView.addItemDecoration(new DividerItemDecoration());
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+        zhuanjiaAdapter = new ZhuanjiaAdapter();
+        recyclerView.setAdapter(zhuanjiaAdapter);
+
+        tv_doctor_more = (TextView) inflate.findViewById(R.id.tv_doctor_more);
+        tv_doctor_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                EventBus.getDefault().post(new HomeChange(1));
+            }
+        });
+
+        bannerContaner = inflate.findViewById(R.id.bannerContaner);
+        List<Integer> images = new ArrayList<>();
+        images.add(R.drawable.banner1);
+        images.add(R.drawable.banner2);
+        images.add(R.drawable.banner3);
+        bannerContaner.setImageLoader(new GlideImageLoader2());
+        bannerContaner.setImages(images);
+        bannerContaner.start();
+
+
+        tv_secret_more = inflate.findViewById(R.id.tv_secret_more);
+        tv_secret_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SecretActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tv_shipintitle = inflate.findViewById(R.id.tv_shipintitle);
+        videoPlayer = (StandardGSYVideoPlayer) inflate.findViewById(R.id.video_player);
+        initShipin();
+
+        ll_shishizixun = inflate.findViewById(R.id.ll_shishizixun);
         ll_shishizixun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +232,7 @@ public class FirstFragment extends BaseFragment {
 
             }
         });
-        ll_sushenhufu = rootView.findViewById(R.id.ll_sushenhufu);
+        ll_sushenhufu = inflate.findViewById(R.id.ll_sushenhufu);
         ll_sushenhufu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,7 +248,7 @@ public class FirstFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        ll_yiliaoyangsheng = rootView.findViewById(R.id.ll_yiliaoyangsheng);
+        ll_yiliaoyangsheng = inflate.findViewById(R.id.ll_yiliaoyangsheng);
         ll_yiliaoyangsheng.setOnClickListener(new View.OnClickListener() {
 
 
@@ -211,7 +272,7 @@ public class FirstFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        ll_muyingyunyu = rootView.findViewById(R.id.ll_muyingyunyu);
+        ll_muyingyunyu = inflate.findViewById(R.id.ll_muyingyunyu);
         ll_muyingyunyu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,11 +290,10 @@ public class FirstFragment extends BaseFragment {
 //                Intent intent=new Intent(getActivity(), SecretActivity.class);
 //                startActivity(intent);
                 //跳转到商城
-                ((MainActivity) getActivity()).showFragment(2);
-
+                EventBus.getDefault().post(new HomeChange(2));
             }
         });
-        ll_yingjizixun = rootView.findViewById(R.id.ll_yingjizixun);
+        ll_yingjizixun = inflate.findViewById(R.id.ll_yingjizixun);
         ll_yingjizixun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,7 +303,7 @@ public class FirstFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        ll_jianshenyundong = rootView.findViewById(R.id.ll_jianshenyundong);
+        ll_jianshenyundong = inflate.findViewById(R.id.ll_jianshenyundong);
         ll_jianshenyundong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -286,7 +346,7 @@ public class FirstFragment extends BaseFragment {
                                     WatchInstance.getInstance().realName = bean1.realName;
                                     WatchInstance.getInstance().idcard = bean1.idcard;
                                     WatchInstance.getInstance().phoneNumber = bean1.phoneNumber;
-                                    WatchInstance.getInstance().createTime=bean1.createTime;
+                                    WatchInstance.getInstance().createTime = bean1.createTime;
                                     Intent intent = new Intent(getActivity(), WatchMainActivity.class);
                                     startActivity(intent);
                                 } else {
@@ -306,7 +366,7 @@ public class FirstFragment extends BaseFragment {
 
             }
         });
-        ll_yongyaozhidao = rootView.findViewById(R.id.ll_jiangkangbaodian);
+        ll_yongyaozhidao = inflate.findViewById(R.id.ll_jiangkangbaodian);
         ll_yongyaozhidao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -323,7 +383,7 @@ public class FirstFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        ll_jiankangceping = rootView.findViewById(R.id.ll_jiankangceping);
+        ll_jiankangceping = inflate.findViewById(R.id.ll_jiankangceping);
         ll_jiankangceping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -332,71 +392,13 @@ public class FirstFragment extends BaseFragment {
             }
         });
 
-        tv_location_city = (TextView) rootView.findViewById(R.id.tv_location_city);
-        ll_search = rootView.findViewById(R.id.ll_search);
 
-        bannerContaner = (FrameLayout) rootView.findViewById(R.id.bannerContaner);
-        bannerContaner.setVisibility(View.VISIBLE);
-        bannerViewPager = new BannerViewPager(mActivity);
-        bannerViewPager.setLocalPictureIds();
-        bannerViewPager.setmScrollSpeed(500);
-        bannerViewPager.madapter.notifyDataSetChanged();
-        bannerView = bannerViewPager.getContentView();
-        bannerViewPager.setOnItemClickListener(new BannerViewPager.ViewPagerItemListener() {
+        lv_articles.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
             @Override
-            public void onViewPagerItemClick(int i) {
-
+            public void onUpLoad() {
+                getHotArticle();
             }
         });
-        bannerContaner.addView(bannerView);
-
-
-//        hl_zhuanjia = (HorizontalListView) rootView.findViewById(R.id.hl_zhuanjia);
-//        horizontalListViewAdapter = new HorizontalListViewAdapter();
-//        hl_zhuanjia.setAdapter(horizontalListViewAdapter);
-
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_zhuanjia);
-
-        LinearLayoutManager layout = new LinearLayoutManager(mActivity);
-        layout.setOrientation(LinearLayoutManager.HORIZONTAL);//设置为横向排列
-        recyclerView.setLayoutManager(layout);
-//        //添加Android自带的分割线
-//        recyclerView.addItemDecoration(new DividerItemDecoration());
-
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-        zhuanjiaAdapter = new ZhuanjiaAdapter();
-        recyclerView.setAdapter(zhuanjiaAdapter);
-
-
-        tv_doctor_more = (TextView) rootView.findViewById(R.id.tv_doctor_more);
-        tv_doctor_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).showFragment(1);
-            }
-        });
-        tv_secret_more = (TextView) rootView.findViewById(R.id.tv_secret_more);
-        tv_secret_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SecretActivity.class);
-                startActivity(intent);
-            }
-        });
-        lv_articles = (WithScrolleViewListView) rootView.findViewById(R.id.lv_articles);
-        madapter = new ArticleAdapter(mActivity);
-        lv_articles.setAdapter(madapter);
         if (!SPUtil.getGUIDE()) {
 //文字图片
             final ImageView iv1 = new ImageView(getActivity());
@@ -441,7 +443,7 @@ public class FirstFragment extends BaseFragment {
             });
             guideView.show();
         }
-        tv_shipin_more = rootView.findViewById(R.id.tv_shipin_more);
+        tv_shipin_more = inflate.findViewById(R.id.tv_shipin_more);
         tv_shipin_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -449,8 +451,91 @@ public class FirstFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        videoPlayer = (StandardGSYVideoPlayer) rootView.findViewById(R.id.video_player);
+        videoPlayer = (StandardGSYVideoPlayer) inflate.findViewById(R.id.video_player);
         initShipin();
+
+
+        tv_dianzan = inflate.findViewById(R.id.tv_dianzan);
+        ll_shipindianzan = inflate.findViewById(R.id.ll_shipindianzan);
+        ll_shipindianzan.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                VideoOperatePostBean bean = new VideoOperatePostBean();
+                bean.userId = UserInstance.getInstance().getUid();
+                bean.token = UserInstance.getInstance().getToken();
+                bean.id = shipinId;
+                bean.operateType = "praise";
+
+                ApiUtils.getApiService().videoOperate(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                        switch (message.code) {
+                            case Constants.HTTP_SUCCESS:
+                                if (tv_dianzan.isEnabled()) {
+                                    String dianzanshuString = tv_shipindianzan.getText().toString();
+                                    int dianzanshuint = Integer.parseInt(dianzanshuString) + 1;
+                                    tv_shipindianzan.setText(dianzanshuint + "");
+                                } else {
+                                    String dianzanshuString = tv_shipindianzan.getText().toString();
+                                    int dianzanshuint = Integer.parseInt(dianzanshuString) - 1;
+                                    tv_shipindianzan.setText(dianzanshuint + "");
+                                }
+                                tv_dianzan.setEnabled(!tv_dianzan.isEnabled());
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Call<BaseBean> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+        tv_shipindianzan = inflate.findViewById(R.id.tv_shipindianzan);
+        ll_shipinguanzhu = inflate.findViewById(R.id.ll_shipinguanzhu);
+        ll_shipinguanzhu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                VideoOperatePostBean bean = new VideoOperatePostBean();
+                bean.userId = UserInstance.getInstance().getUid();
+                bean.token = UserInstance.getInstance().getToken();
+                bean.id = shipinId;
+                bean.operateType = "collection";
+
+                ApiUtils.getApiService().videoOperate(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                        switch (message.code) {
+                            case Constants.HTTP_SUCCESS:
+                                if (tv_guanzhu.isEnabled()) {
+                                    String dianzanshuString = tv_shipinguanzhu.getText().toString();
+                                    int dianzanshuint = Integer.parseInt(dianzanshuString) + 1;
+                                    tv_shipinguanzhu.setText(dianzanshuint + "");
+                                } else {
+                                    String dianzanshuString = tv_shipinguanzhu.getText().toString();
+                                    int dianzanshuint = Integer.parseInt(dianzanshuString) - 1;
+                                    tv_shipinguanzhu.setText(dianzanshuint + "");
+                                }
+                                tv_guanzhu.setEnabled(!tv_guanzhu.isEnabled());
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Call<BaseBean> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+        tv_guanzhu = inflate.findViewById(R.id.tv_guanzhu);
+        tv_shipinguanzhu = inflate.findViewById(R.id.tv_shipinguanzhu);
+        tv_shipinbofangshu = inflate.findViewById(R.id.tv_shipinbofangshu);
+
+
         initShipinDianzan(rootView);
 
 
@@ -462,11 +547,10 @@ public class FirstFragment extends BaseFragment {
 
     void initShipin() {
         source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
-
         //增加封面
         imageView = new ImageView(getActivity());
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(R.mipmap.xxx1);
+        imageView.setImageResource(R.mipmap.health01);
         videoPlayer.setThumbImageView(imageView);
         //增加title
         videoPlayer.getTitleTextView().setVisibility(View.GONE);
@@ -511,86 +595,8 @@ public class FirstFragment extends BaseFragment {
     String shipinId;
 
     void initShipinDianzan(View rootView) {
-        tv_shipintitle = rootView.findViewById(R.id.tv_shipintitle);
-        tv_dianzan = rootView.findViewById(R.id.tv_dianzan);
-        ll_shipindianzan = rootView.findViewById(R.id.ll_shipindianzan);
-        ll_shipindianzan.setOnClickListener(new View.OnClickListener() {
+        /*tv_shipintitle = rootView.findViewById(R.id.tv_shipintitle);*/
 
-            @Override
-            public void onClick(View view) {
-
-                VideoOperatePostBean bean = new VideoOperatePostBean();
-                bean.userId = UserInstance.getInstance().getUid();
-                bean.token = UserInstance.getInstance().getToken();
-                bean.id = shipinId;
-                bean.operateType = "praise";
-
-                ApiUtils.getApiService().videoOperate(bean).enqueue(new TaiShengCallback<BaseBean>() {
-                    @Override
-                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
-                        switch (message.code) {
-                            case Constants.HTTP_SUCCESS:
-                                if (tv_dianzan.isEnabled()) {
-                                    String dianzanshuString = tv_shipindianzan.getText().toString();
-                                    int dianzanshuint = Integer.parseInt(dianzanshuString) + 1;
-                                    tv_shipindianzan.setText(dianzanshuint + "");
-                                } else {
-                                    String dianzanshuString = tv_shipindianzan.getText().toString();
-                                    int dianzanshuint = Integer.parseInt(dianzanshuString) - 1;
-                                    tv_shipindianzan.setText(dianzanshuint + "");
-                                }
-                                tv_dianzan.setEnabled(!tv_dianzan.isEnabled());
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFail(Call<BaseBean> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-        tv_shipindianzan = rootView.findViewById(R.id.tv_shipindianzan);
-        ll_shipinguanzhu = rootView.findViewById(R.id.ll_shipinguanzhu);
-        ll_shipinguanzhu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                VideoOperatePostBean bean = new VideoOperatePostBean();
-                bean.userId = UserInstance.getInstance().getUid();
-                bean.token = UserInstance.getInstance().getToken();
-                bean.id = shipinId;
-                bean.operateType = "collection";
-
-                ApiUtils.getApiService().videoOperate(bean).enqueue(new TaiShengCallback<BaseBean>() {
-                    @Override
-                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
-                        switch (message.code) {
-                            case Constants.HTTP_SUCCESS:
-                                if (tv_guanzhu.isEnabled()) {
-                                    String dianzanshuString = tv_shipinguanzhu.getText().toString();
-                                    int dianzanshuint = Integer.parseInt(dianzanshuString) + 1;
-                                    tv_shipinguanzhu.setText(dianzanshuint + "");
-                                } else {
-                                    String dianzanshuString = tv_shipinguanzhu.getText().toString();
-                                    int dianzanshuint = Integer.parseInt(dianzanshuString) - 1;
-                                    tv_shipinguanzhu.setText(dianzanshuint + "");
-                                }
-                                tv_guanzhu.setEnabled(!tv_guanzhu.isEnabled());
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFail(Call<BaseBean> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-        tv_guanzhu = rootView.findViewById(R.id.tv_guanzhu);
-        tv_shipinguanzhu = rootView.findViewById(R.id.tv_shipinguanzhu);
-        tv_shipinbofangshu = rootView.findViewById(R.id.tv_shipinbofangshu);
 
     }
 
@@ -677,15 +683,18 @@ public class FirstFragment extends BaseFragment {
             util.tv_doctor_name.setText(bean.nickName);
 
 
-            util.tv_workage.setText(getWorkYear(bean.fromMedicineTime));
+            util.tv_workage.setText(getString(R.string.home03) + getWorkYear(bean.fromMedicineTime) + getString(R.string.home04));
             if (bean.goodDiseases != null) {
                 String[] doctorlabel = bean.goodDiseases.split(",");
-                util.dlwl_doctor_label.setData(doctorlabel, mActivity, 10, 5, 1, 5, 1, 4, 4, 4, 8);
+//                util.dlwl_doctor_label.setData(doctorlabel, mActivity, 10, 5, 1, 5, 1, 4, 4, 4, 8);
 
             }
-
+            util.tv_advantage.setText(getString(R.string.home02) + bean.jobIntroduction);
+            util.tv_doctor_job.setText(bean.title);
             if (bean.score != null) {
-                util.scorestar.setScore(bean.score);
+//                util.scorestar.setScore(bean.score);
+                util.tv_score.setText(bean.score + getString(R.string.home01));
+
             }
         }
 
@@ -721,8 +730,9 @@ public class FirstFragment extends BaseFragment {
             SimpleDraweeView sdv_header;
             TextView tv_doctor_name;
             TextView tv_workage;
-            DoctorLabelWrapLayout dlwl_doctor_label;
-            ScoreStar scorestar;
+            TextView tv_score;
+            TextView tv_advantage;
+            TextView tv_doctor_job;
             View view_label;
 
             public ViewHolder(View view) {
@@ -731,8 +741,11 @@ public class FirstFragment extends BaseFragment {
                 sdv_header = (SimpleDraweeView) view.findViewById(R.id.sdv_header);
                 tv_doctor_name = (TextView) view.findViewById(R.id.tv_doctor_name);
                 tv_workage = (TextView) view.findViewById(R.id.tv_workage);
-                dlwl_doctor_label = (DoctorLabelWrapLayout) view.findViewById(R.id.dlwl_doctor_label);
-                scorestar = (ScoreStar) view.findViewById(R.id.scorestar);
+                tv_advantage = (TextView) view.findViewById(R.id.tv_advantage);
+                tv_score = (TextView) view.findViewById(R.id.tv_score);
+                tv_doctor_job = (TextView) view.findViewById(R.id.tv_doctor_job);
+//                dlwl_doctor_label = (DoctorLabelWrapLayout) view.findViewById(R.id.dlwl_doctor_label);
+//                scorestar = (ScoreStar) view.findViewById(R.id.scorestar);
                 view_label = view.findViewById(R.id.view_label);
             }
         }
@@ -760,14 +773,11 @@ public class FirstFragment extends BaseFragment {
                             shipinId = bean.id;
                             source1 = bean.videoUrl;
                             videoPlayer.setUp(bean.videoUrl, true, "测试视频");
-                            Glide.with(getContext().getApplicationContext())
-                                    .setDefaultRequestOptions(
-                                            new RequestOptions()
-                                                    .frame(1000000)
-                                                    .centerCrop()
-                                                    .error(R.mipmap.xxx1)
-                                                    .placeholder(R.mipmap.xxx1))
+                            Glide.with(getActivity())
                                     .load(bean.videoBanner)
+                                    .bitmapTransform(new GlideRoundUtils(getActivity(), Uiutils.dp2px(getActivity(), 10f), GlideRoundUtils.CornerType.ALL))
+                                    .error(R.mipmap.health01)
+                                    .placeholder(R.mipmap.health01)
                                     .into(imageView);
 
                             tv_shipintitle.setText(bean.videoTitle);
@@ -818,25 +828,25 @@ public class FirstFragment extends BaseFragment {
 //                DialogUtil.closeProgress();
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-
                         if (message.result != null && message.result.records.size() > 0) {
+                            lv_articles.setLoading(false);
                             //有消息
 //                            PAGE_NO++;
                             madapter.mData.clear();
                             madapter.mData.addAll(message.result.records);
-//                            if(message.result.size()<10){
-//                                lv_articles.setHasLoadMore(false);
-//                                lv_articles.setLoadAllViewText("暂时只有这么多文章");
-//                                lv_articles.setLoadAllFooterVisible(false);
-//                            }else{
-//                                lv_articles.setHasLoadMore(true);
-//                            }
+                            if (message.result.records.size() < 1000) {
+                                lv_articles.setHasLoadMore(false);
+                                lv_articles.setLoadAllViewText("暂时只有这么多文章");
+                                lv_articles.setLoadAllFooterVisible(true);
+                            } else {
+                                lv_articles.setHasLoadMore(true);
+                            }
                             madapter.notifyDataSetChanged();
                         } else {
 //                            //没有消息
-//                            lv_articles.setHasLoadMore(false);
-//                            lv_articles.setLoadAllViewText("暂时只有这么多文章");
-//                            lv_articles.setLoadAllFooterVisible(false);
+                            lv_articles.setHasLoadMore(false);
+                            lv_articles.setLoadAllViewText("暂时只有这么多文章");
+                            lv_articles.setLoadAllFooterVisible(true);
                         }
 
                         break;
@@ -890,7 +900,7 @@ public class FirstFragment extends BaseFragment {
                 util.ll_all = convertView.findViewById(R.id.ll_all);
                 util.sdv_article = (SimpleDraweeView) convertView.findViewById(R.id.sdv_article);
                 util.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-                util.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+//                util.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
                 util.tv_typename = (TextView) convertView.findViewById(R.id.tv_typename);
                 util.tv_createtime = (TextView) convertView.findViewById(R.id.tv_createtime);
 
@@ -920,7 +930,7 @@ public class FirstFragment extends BaseFragment {
                 util.sdv_article.setImageURI(uri);
             }
             util.tv_title.setText(bean.title);
-            util.tv_content.setText(bean.summary);
+//            util.tv_content.setText(bean.summary);
 //            try {
 //                if (bean.content != null) {
 //                    util.tv_content.setMovementMethod(LinkMovementMethod.getInstance());
@@ -932,8 +942,10 @@ public class FirstFragment extends BaseFragment {
 
 
             util.tv_typename.setText(bean.typeName);
-            util.tv_createtime.setText(bean.createTime);
-
+            if (!TextsUtils.isEmpty(bean.createTime)) {
+                String time = DateUtil.getDatePoor(Long.valueOf(DateUtil.getTime()) / 1000, Long.valueOf(DateUtil.dateToStamp(bean.createTime)) / 1000);
+                util.tv_createtime.setText(TextsUtils.isEmptys(time, bean.createTime));
+            }
             return convertView;
         }
 
@@ -942,7 +954,6 @@ public class FirstFragment extends BaseFragment {
             View ll_all;
             SimpleDraweeView sdv_article;
             TextView tv_title;
-            TextView tv_content;
             TextView tv_typename;
             TextView tv_createtime;
 
@@ -967,14 +978,6 @@ public class FirstFragment extends BaseFragment {
         videoPlayer.setUp(source1, true, "测试视频");
 
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-//        GSYVideoManager.releaseAllVideos();
-//        if (orientationUtils != null)
-//            orientationUtils.releaseListener();
     }
 
 

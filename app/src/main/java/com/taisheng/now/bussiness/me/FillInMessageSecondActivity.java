@@ -2,29 +2,37 @@ package com.taisheng.now.bussiness.me;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.IdRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.MainActivity;
 import com.taisheng.now.bussiness.bean.post.HealthInfo;
 import com.taisheng.now.bussiness.bean.post.HealthInfoPostBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
 import com.taisheng.now.util.ToastUtil;
+import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.dialog.BleedDialog;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
+import androidx.annotation.IdRes;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -32,74 +40,108 @@ import retrofit2.Response;
  * Created by dragon on 2019/7/9.
  */
 
-public class FillInMessageSecondActivity extends BaseActivity implements BleedDialog.OnPickNumberListener {
+public class FillInMessageSecondActivity extends BaseHActivity implements BleedDialog.OnPickNumberListener {
 
+    @BindView(R.id.et_height)
+    EditText etHeight;
+    @BindView(R.id.et_weight)
+    EditText etWeight;
+    @BindView(R.id.tv_blood)
+    TextView tvBlood;
+    @BindView(R.id.ll_blood)
+    LinearLayout llBlood;
+    @BindView(R.id.rb_yes)
+    RadioButton rbYes;
+    @BindView(R.id.rb_no)
+    RadioButton rbNo;
+    @BindView(R.id.rg_antihistamine)
+    RadioGroup rgAntihistamine;
+    @BindView(R.id.rb_yes2)
+    RadioButton rbYes2;
+    @BindView(R.id.rb_n2)
+    RadioButton rbN2;
+    @BindView(R.id.rg_hereditaryHistory)
+    RadioGroup rgHereditaryHistory;
+    @BindView(R.id.tv_next)
+    TextView tvNext;
 
-    EditText et_height, et_weight;
-    View ll_blood;
-    TextView tv_blood;
+    private int antihistamine = 0;
+    private int hereditaryHistory = 0;
 
-    RadioGroup rg_antihistamine;
-    RadioGroup rg_hereditaryHistory;
-
-    TextView tv_next;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_fillinmessagesecond);
-        initView();
+        ButterKnife.bind(this);
+        llTop.setVisibility(View.INVISIBLE);
+        initViewS();
     }
 
-    void initView() {
+    @Override
+    public void initData() {
 
-        et_height = (EditText) findViewById(R.id.et_height);
-        et_height.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
 
-            }
+    @Override
+    public void addData() {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkInputs();
-            }
+    }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
 
-            }
-        });
-        et_weight = (EditText) findViewById(R.id.et_weight);
-        et_weight.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkInputs();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-        ll_blood = findViewById(R.id.ll_blood);
-        ll_blood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
+    @OnClick({R.id.ll_blood, R.id.tv_next})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_blood:
                 BleedDialog dialog = new BleedDialog(FillInMessageSecondActivity.this);
                 dialog.setOnPickNumberListener(FillInMessageSecondActivity.this);
                 dialog.show();
+                break;
+            case R.id.tv_next:
+                if (checkInputsToast()) {
+                    addOrUpdateHealth();
+                }
+                break;
+        }
+    }
+    private void initViewS() {
+
+        etHeight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
-        tv_blood = (TextView) findViewById(R.id.tv_blood);
-        tv_blood.addTextChangedListener(new TextWatcher() {
+        etWeight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        tvBlood.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -117,8 +159,7 @@ public class FillInMessageSecondActivity extends BaseActivity implements BleedDi
         });
 
 
-        rg_antihistamine = (RadioGroup) findViewById(R.id.rg_antihistamine);
-        rg_antihistamine.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        rgAntihistamine.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId) {
@@ -132,8 +173,7 @@ public class FillInMessageSecondActivity extends BaseActivity implements BleedDi
                 }
             }
         });
-        rg_hereditaryHistory = (RadioGroup) findViewById(R.id.rg_hereditaryHistory);
-        rg_hereditaryHistory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        rgHereditaryHistory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId) {
@@ -147,45 +187,31 @@ public class FillInMessageSecondActivity extends BaseActivity implements BleedDi
                 }
             }
         });
-
-
-        tv_next = (TextView) findViewById(R.id.tv_next);
-        tv_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkInputsToast()) {
-                    addOrUpdateHealth();
-                }
-            }
-        });
     }
 
 
-    int antihistamine = 0;
-    int hereditaryHistory = 0;
-
-    void addOrUpdateHealth() {
+    private void addOrUpdateHealth() {
 
         HealthInfoPostBean bean = new HealthInfoPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         HealthInfo userHealth = new HealthInfo();
-        userHealth.userId=UserInstance.getInstance().getUid();
-        userHealth.height=et_height.getText().toString();
-        userHealth.weight=et_weight.getText().toString();
+        userHealth.userId = UserInstance.getInstance().getUid();
+        userHealth.height = TextsUtils.getTexts(etHeight);
+        userHealth.weight = TextsUtils.getTexts(etWeight);
         userHealth.antihistamine = antihistamine;
         userHealth.hereditaryHistory = hereditaryHistory;
-        userHealth.bloodType = tv_blood.getText().toString();
-        bean.userHealth=userHealth;
+        userHealth.bloodType = TextsUtils.getTexts(tvBlood);
+        bean.userHealth = userHealth;
         ApiUtils.getApiService().addOrUpdateHealth(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        UserInstance.getInstance().healthInfo=bean.userHealth;
-                        UserInstance.getInstance().userInfo.height=bean.userHealth.height;
+                        UserInstance.getInstance().healthInfo = bean.userHealth;
+                        UserInstance.getInstance().userInfo.height = bean.userHealth.height;
                         SPUtil.putHEIGHT(bean.userHealth.height);
-                        Intent intent=new Intent(FillInMessageSecondActivity.this, MainActivity.class);
+                        Intent intent = new Intent(FillInMessageSecondActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                         break;
@@ -201,45 +227,46 @@ public class FillInMessageSecondActivity extends BaseActivity implements BleedDi
     }
 
 
-    boolean checkInputsToast() {
-        tv_next.setEnabled(false);
-        if (TextUtils.isEmpty(et_height.getText())) {
-            ToastUtil.showTost("请输入身高");
+    private boolean checkInputsToast() {
+        tvNext.setEnabled(false);
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etHeight))) {
+            Uiutils.showToast(getString(R.string.input_height));
             return false;
         }
-        if (TextUtils.isEmpty(et_weight.getText())) {
-            ToastUtil.showTost("请输入体重");
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etWeight))) {
+            Uiutils.showToast(getString(R.string.input_weight));
             return false;
         }
-        if (TextUtils.isEmpty(tv_blood.getText()) || "请选择".equals(tv_blood.getText())) {
-            ToastUtil.showTost("请选择血型");
+        if (TextUtils.isEmpty(TextsUtils.getTexts(tvBlood)) || getString(R.string.slect).equals(TextsUtils.getTexts(tvBlood))) {
+            Uiutils.showToast(getString(R.string.select_blood_type));
             return false;
         }
 
-        tv_next.setEnabled(true);
+        tvNext.setEnabled(true);
         return true;
     }
 
 
-    boolean checkInputs() {
-        tv_next.setEnabled(false);
+    private boolean checkInputs() {
+        tvNext.setEnabled(false);
 
-        if (TextUtils.isEmpty(et_height.getText())) {
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etHeight))) {
             return false;
         }
-        if (TextUtils.isEmpty(et_weight.getText())) {
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etWeight))) {
             return false;
         }
 
-        if (TextUtils.isEmpty(tv_blood.getText()) || "请选择".equals(tv_blood.getText())) {
+        if (TextUtils.isEmpty(TextsUtils.getTexts(tvBlood)) || getString(R.string.slect).equals(TextsUtils.getTexts(tvBlood))) {
             return false;
         }
-        tv_next.setEnabled(true);
+        tvNext.setEnabled(true);
         return true;
     }
 
     @Override
     public void onConfirmNumber(String number) {
-        tv_blood.setText(number);
+        tvBlood.setText(number);
     }
+
 }

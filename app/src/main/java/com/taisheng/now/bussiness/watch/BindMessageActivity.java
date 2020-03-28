@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.watch;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,10 +11,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,22 +24,18 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
-import com.taisheng.now.SampleAppLike;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.result.DeviceBindingResultBean;
 import com.taisheng.now.bussiness.me.SelectAvatarSourceDialog;
-import com.taisheng.now.bussiness.me.UpdateNickActivity;
-import com.taisheng.now.bussiness.user.LoginActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BindDevicePostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.push.XMPushManagerInstance;
 import com.taisheng.now.util.IDCardUtil;
 import com.taisheng.now.util.SPUtil;
 import com.taisheng.now.util.ToastUtil;
-import com.taisheng.now.view.AppDialog;
 import com.taisheng.now.view.crop.Crop;
 
 import org.greenrobot.eventbus.EventBus;
@@ -59,9 +51,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class BindMessageActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
-
+public class BindMessageActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     EditText et_relative;
     TextView tv_device_bianhao;
@@ -79,22 +69,31 @@ public class BindMessageActivity extends BaseActivity implements ActivityCompat.
     private final int REQ_CODE_GET_PHOTO_FROM_GALLERY = 10;//从相册获取
     private final int REQ_CODE_GET_PHOTO_FROM_TAKEPHOTO = 11;//拍照完
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_bindmessage);
-        initView();
+        initViews();
         EventBus.getDefault().register(this);
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("设备信息");
+    }
+
+    void initViews() {
+
         et_relative = findViewById(R.id.et_relative);
         et_relative.addTextChangedListener(new TextWatcher() {
             @Override

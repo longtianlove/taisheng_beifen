@@ -9,25 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.article.ArticleContentActivity;
-import com.taisheng.now.bussiness.bean.post.ArticlePostBean;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.bean.post.MarketPostBean;
-import com.taisheng.now.bussiness.bean.result.ArticleBean;
-import com.taisheng.now.bussiness.bean.result.ArticleResultBean;
-import com.taisheng.now.bussiness.bean.result.CainixihuanResultBean;
-import com.taisheng.now.bussiness.bean.result.RemenshangpinBean;
 import com.taisheng.now.bussiness.bean.result.market.ShangPinResultBeann;
 import com.taisheng.now.bussiness.bean.result.market.ShangpinBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
@@ -37,6 +30,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -44,68 +39,62 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class SearchResultActivity extends BaseActivity {
-    View iv_back;
-    MarketPostBean bean;
-    TaishengListView lv_goods;
+public class SearchResultActivity extends BaseHActivity {
 
-    ArticleAdapter madapter;
+    @BindView(R.id.lv_goods)
+    TaishengListView lvGoods;
+    private MarketPostBean bean;
+    private ArticleAdapter madapter;
+    private String searchkey;
+    private int PAGE_NO = 1;
+    private int PAGE_SIZE = 10;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_marketsearchresult);
-        initView();
-        initData();
+        ButterKnife.bind(this);
     }
-    void initView(){
-        iv_back=findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
-        lv_goods= (TaishengListView) findViewById(R.id.lv_goods);
-        madapter=new ArticleAdapter(this);
-        lv_goods.setAdapter(madapter);
-        lv_goods.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
+    @Override
+    public void initData() {
+        madapter = new ArticleAdapter(this);
+        lvGoods.setAdapter(madapter);
+        lvGoods.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
             @Override
             public void onUpLoad() {
                 getArticles();
             }
         });
-
     }
 
-    void initData(){
-        Intent intent=getIntent();
-        searchkey=intent.getStringExtra("searchkey");
-        PAGE_NO=1;
-        PAGE_SIZE=10;
-        bean=new MarketPostBean();
+    @Override
+    public void addData() {
+        Intent intent = getIntent();
+        searchkey = intent.getStringExtra("searchkey");
+        PAGE_NO = 1;
+        PAGE_SIZE = 10;
+        bean = new MarketPostBean();
         getArticles();
-
-
     }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.search_result));
+    }
+
 
     @Override
     protected void onStart() {
         super.onStart();
-        PAGE_NO=1;
+        PAGE_NO = 1;
     }
 
-    String searchkey;
-    int PAGE_NO=1;
-    int PAGE_SIZE=10;
-
-
-    void getArticles(){
-        bean.pageNo=PAGE_NO;
-        bean.pageSize=PAGE_SIZE;
-        bean.keyWord=searchkey;
-        bean.token= UserInstance.getInstance().getToken();
-        bean.userId=UserInstance.getInstance().getUid();
+   private void getArticles() {
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        bean.keyWord = searchkey;
+        bean.token = UserInstance.getInstance().getToken();
+        bean.userId = UserInstance.getInstance().getUid();
         DialogUtil.showProgress(this, "");
         ApiUtils.getApiService().goodslist(bean).enqueue(new TaiShengCallback<BaseBean<ShangPinResultBeann>>() {
             @Override
@@ -114,24 +103,24 @@ public class SearchResultActivity extends BaseActivity {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
 
-                        if(message.result.records!=null&&message.result.records.size()>0) {
-                            lv_goods.setLoading(false);
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lvGoods.setLoading(false);
                             //有消息
                             PAGE_NO++;
                             madapter.mData.addAll(message.result.records);
-                            if(message.result.records.size()<10){
-                                lv_goods.setHasLoadMore(false);
-                                lv_goods.setLoadAllViewText("暂时只有这么多商品");
-                                lv_goods.setLoadAllFooterVisible(true);
-                            }else{
-                                lv_goods.setHasLoadMore(true);
+                            if (message.result.records.size() < 10) {
+                                lvGoods.setHasLoadMore(false);
+                                lvGoods.setLoadAllViewText("暂时只有这么多商品");
+                                lvGoods.setLoadAllFooterVisible(true);
+                            } else {
+                                lvGoods.setHasLoadMore(true);
                             }
                             madapter.notifyDataSetChanged();
-                        }else{
+                        } else {
                             //没有消息
-                            lv_goods.setHasLoadMore(false);
-                            lv_goods.setLoadAllViewText("暂时只有这么多商品");
-                            lv_goods.setLoadAllFooterVisible(true);
+                            lvGoods.setHasLoadMore(false);
+                            lvGoods.setLoadAllViewText("暂时只有这么多商品");
+                            lvGoods.setLoadAllFooterVisible(true);
                         }
 
                         break;
@@ -146,9 +135,6 @@ public class SearchResultActivity extends BaseActivity {
             }
         });
     }
-
-
-
 
 
     class ArticleAdapter extends BaseAdapter {
@@ -179,7 +165,7 @@ public class SearchResultActivity extends BaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // 声明内部类
-            ArticleAdapter.Util util = null;
+            Util util = null;
             // 中间变量
             final int flag = position;
             if (convertView == null) {
@@ -190,7 +176,7 @@ public class SearchResultActivity extends BaseActivity {
                 util.sdv_article = convertView.findViewById(R.id.sdv_article);
                 util.tv_name = convertView.findViewById(R.id.tv_name);
                 util.tv_counterprice = convertView.findViewById(R.id.tv_counterprice);
-                util.tv_jifenlabel=convertView.findViewById(R.id.tv_jifenlabel);
+                util.tv_jifenlabel = convertView.findViewById(R.id.tv_jifenlabel);
                 util.tv_retailprice = convertView.findViewById(R.id.tv_retailprice);
 
                 convertView.setTag(util);
@@ -219,16 +205,16 @@ public class SearchResultActivity extends BaseActivity {
                 util.sdv_article.setImageURI(uri);
             }
             util.tv_name.setText(bean.name);
-            if(bean.scoreGoods==0){
+            if (bean.scoreGoods == 0) {
                 util.tv_counterprice.setText(bean.retailPrice.multiply(new BigDecimal(100)) + "");
                 util.tv_jifenlabel.setVisibility(View.VISIBLE);
                 util.tv_retailprice.setVisibility(View.GONE);
 //                util.tv_retailprice.setText(bean.counterPrice .multiply(new BigDecimal(100))+ "");
-            }else{
+            } else {
                 util.tv_jifenlabel.setVisibility(View.GONE);
                 util.tv_retailprice.setVisibility(View.VISIBLE);
-                util.tv_counterprice.setText("¥"+bean.retailPrice + "");
-                util.tv_retailprice.setText("¥"+bean.counterPrice + "");
+                util.tv_counterprice.setText("¥" + bean.retailPrice + "");
+                util.tv_retailprice.setText("¥" + bean.counterPrice + "");
 
             }
             util.tv_retailprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

@@ -1,85 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#fff"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <TextView
+       style="@style/my_line_h"
+        android:background="@color/colorf8f8f8" />
+    <EditText
+        android:id="@+id/et_feedbackContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="10dp">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-
-            android:src="@drawable/icon_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="意见反馈"
-            android:textColor="#ff333333"
-            android:textSize="18sp" />
-
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#f8f8f8" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="14dp"
+        android:layout_height="@dimen/size_150"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:layout_marginTop="@dimen/magin_15"
+        android:padding="@dimen/magin_12"
         android:background="@drawable/me_kapian_background"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="12dp">
-
-        <EditText
-            android:id="@+id/et_feedbackContent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="left|top"
-            android:hint="有什么不足跟需要改进的地方，尽管提出来哟~您的建议是我们进步的动力！谢谢~"
-            android:textColorHint="#ff999999"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-
-
-
+        android:gravity="left|top"
+        android:hint="有什么不足跟需要改进的地方，尽管提出来哟~您的建议是我们进步的动力！谢谢~"
+        android:textColorHint="@color/color999999"
+        android:textSize="@dimen/font12" />
 
 
     <TextView
         android:id="@+id/btn_post"
-        android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginRight="36dp"
-        android:background="@drawable/xml_login_background"
+        style="@style/my_bt"
+        android:layout_marginTop="@dimen/magin_50"
+        android:layout_marginLeft="@dimen/magin_35"
+        android:layout_marginRight="@dimen/magin_35"
         android:enabled="false"
-        android:gravity="center"
-        android:text="提交"
-        android:textColor="@color/white"
-        android:textSize="14sp"></TextView>
+        android:text="@string/submit"
+        ></TextView>
 </LinearLayout>

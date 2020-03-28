@@ -2,30 +2,36 @@ package com.taisheng.now.bussiness.me;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.IdRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.MainActivity;
 import com.taisheng.now.bussiness.bean.post.UserInfoPostBean;
 import com.taisheng.now.bussiness.bean.result.ModifyUserInfoResultBean;
 import com.taisheng.now.bussiness.bean.result.UserInfo;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
 import com.taisheng.now.util.ToastUtil;
+import com.taisheng.now.util.Uiutils;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
+import androidx.annotation.IdRes;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -33,54 +39,57 @@ import retrofit2.Response;
  * Created by dragon on 2019/7/1.
  */
 
-public class FillInMessageActivity extends BaseActivity {
+public class FillInMessageActivity extends BaseHActivity {
 
-    View tv_skip;
-    EditText et_realname;
+    @BindView(R.id.et_realname)
+    EditText etRealname;
+    @BindView(R.id.rb_male)
+    RadioButton rbMale;
+    @BindView(R.id.rb_female)
+    RadioButton rbFemale;
+    @BindView(R.id.rg)
     RadioGroup rg;
-    RadioButton rb_male;
-    RadioButton rb_female;
-    int sex;
-    EditText et_age;
-    TextView et_phone;
-    //    EditText et_height;
-//    EditText et_weight;
-    TextView tv_next;
+    @BindView(R.id.et_age)
+    EditText etAge;
+    @BindView(R.id.et_phone)
+    EditText etPhone;
+    @BindView(R.id.tv_next)
+    TextView tvNext;
+    private int sex;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_fillinmessage);
-        initView();
-
-        initData();
+        ButterKnife.bind(this);
+        initViews();
     }
 
+    @Override
+    public void initData() {
 
-    void initView() {
-        tv_next = (TextView) findViewById(R.id.tv_next);
-        tv_next.setEnabled(false);
-        tv_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkInputsToast()) {
-                    modifyuser();
-                }
-            }
-        });
-        tv_skip = findViewById(R.id.tv_skip);
-        tv_skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SPUtil.putSKIP(true);
-                Intent intent = new Intent();
-                intent.setClass(FillInMessageActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        et_realname = (EditText) findViewById(R.id.et_realname);
-        et_realname.addTextChangedListener(new TextWatcher() {
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+
+    }
+
+    @OnClick(R.id.tv_next)
+    public void onViewClicked() {
+        if (checkInputsToast()) {
+            modifyuser();
+        }
+    }
+
+    private void initViews() {
+        tvNext.setEnabled(false);
+        etRealname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -96,7 +105,6 @@ public class FillInMessageActivity extends BaseActivity {
 
             }
         });
-        rg = (RadioGroup) findViewById(R.id.rg);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -111,12 +119,8 @@ public class FillInMessageActivity extends BaseActivity {
                 }
             }
         });
-        rb_male = (RadioButton) findViewById(R.id.rb_male);
-        rb_female = (RadioButton) findViewById(R.id.rb_female);
         sex = Constants.MALE;
-
-        et_age = (EditText) findViewById(R.id.et_age);
-        et_age.addTextChangedListener(new TextWatcher() {
+        etAge.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -132,8 +136,7 @@ public class FillInMessageActivity extends BaseActivity {
 
             }
         });
-        et_phone = (TextView) findViewById(R.id.et_phone);
-        et_phone.addTextChangedListener(new TextWatcher() {
+        etPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -150,18 +153,12 @@ public class FillInMessageActivity extends BaseActivity {
             }
         });
         if (!TextUtils.isEmpty(UserInstance.getInstance().userInfo.phone)) {
-            et_phone.setText(UserInstance.getInstance().userInfo.phone);
+            etPhone.setText(UserInstance.getInstance().userInfo.phone);
         }
 
-
     }
 
-    void initData() {
-
-
-    }
-
-    void modifyuser() {
+    private void modifyuser() {
         UserInfoPostBean bean = new UserInfoPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
@@ -169,9 +166,9 @@ public class FillInMessageActivity extends BaseActivity {
         bean.sysUser.id = UserInstance.getInstance().getUid();
         bean.sysUser.token = UserInstance.getInstance().getToken();
 
-        bean.sysUser.age = et_age.getText().toString();
-        bean.sysUser.phone = et_phone.getText().toString();
-        bean.sysUser.realName = et_realname.getText().toString();
+        bean.sysUser.age = TextsUtils.getTexts(etAge);
+        bean.sysUser.phone = TextsUtils.getTexts(etPhone);
+        bean.sysUser.realName = TextsUtils.getTexts(etRealname);
         bean.sysUser.sex = sex;
 
         ApiUtils.getApiService().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
@@ -213,15 +210,15 @@ public class FillInMessageActivity extends BaseActivity {
 
     }
 
-    boolean checkInputs() {
-        tv_next.setEnabled(false);
-        if (TextUtils.isEmpty(et_realname.getText())) {
+    private boolean checkInputs() {
+        tvNext.setEnabled(false);
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etRealname))) {
             return false;
         }
-        if (TextUtils.isEmpty(et_age.getText())) {
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etAge))) {
             return false;
         }
-        if (TextUtils.isEmpty(et_phone.getText())) {
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etPhone))) {
             return false;
         }
 //        if (TextUtils.isEmpty(et_height.getText())) {
@@ -230,22 +227,22 @@ public class FillInMessageActivity extends BaseActivity {
 //        if (TextUtils.isEmpty(et_weight.getText())) {
 //            return false;
 //        }
-        tv_next.setEnabled(true);
+        tvNext.setEnabled(true);
         return true;
     }
 
-    boolean checkInputsToast() {
-        tv_next.setEnabled(false);
-        if (TextUtils.isEmpty(et_realname.getText())) {
-            ToastUtil.showTost("请输入姓名");
+    private boolean checkInputsToast() {
+        tvNext.setEnabled(false);
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etRealname))) {
+            Uiutils.showToast(getString(R.string.input_name));
             return false;
         }
-        if (TextUtils.isEmpty(et_age.getText())) {
-            ToastUtil.showTost("请输入年龄");
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etAge))) {
+            Uiutils.showToast(getString(R.string.input_age));
             return false;
         }
-        if (TextUtils.isEmpty(et_phone.getText())) {
-            ToastUtil.showTost("请输入手机号");
+        if (TextUtils.isEmpty(TextsUtils.getTexts(etPhone))) {
+            Uiutils.showToast(getString(R.string.login08));
             return false;
         }
 //        if (TextUtils.isEmpty(et_height.getText())) {
@@ -256,7 +253,8 @@ public class FillInMessageActivity extends BaseActivity {
 //            ToastUtil.showTost("请输入体重");
 //            return false;
 //        }
-        tv_next.setEnabled(true);
+        tvNext.setEnabled(true);
         return true;
     }
+
 }

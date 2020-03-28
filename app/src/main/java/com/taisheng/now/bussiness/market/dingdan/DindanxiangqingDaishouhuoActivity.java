@@ -9,27 +9,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.base.BaseFragmentActivity;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.bean.post.OrderxiangqingPostBean;
 import com.taisheng.now.bussiness.bean.result.market.DingdanxiangqingGoodBean;
 import com.taisheng.now.bussiness.bean.result.market.DingdanxiangqingResultBean;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.market.ShangPinxiangqingActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.view.WithScrolleViewListView;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -37,97 +40,90 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class DindanxiangqingDaishouhuoActivity extends BaseFragmentActivity {
-    View iv_back;
-    TextView tv_kuaidi_name;
-    TextView tv_kuaidi_bianhao;
-
-    TextView tv_dizhiname;
-    TextView tv_phone;
-    TextView tv_address;
-
-    TextView tv_orderid;
-    WithScrolleViewListView list_goods;
-
-    TextView tv_gouyou;
-    TextView tv_zongjia;
-
-
-    TextView tv_beizhu;
-    TextView tv_jiangli;
-    TextView tv_chuangjianshijian;
-    TextView tv_fukuanshijian;
-    TextView tv_fahuoshijian;
-    View tv_querenshouhuo;
+public class DindanxiangqingDaishouhuoActivity extends BaseHActivity {
+    @BindView(R.id.tv_kuaidi_name)
+    TextView tvKuaidiName;
+    @BindView(R.id.tv_kuaidi_bianhao)
+    TextView tvKuaidiBianhao;
+    @BindView(R.id.ll_kuaidi)
+    LinearLayout llKuaidi;
+    @BindView(R.id.tv_dizhiname)
+    TextView tvDizhiname;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+    @BindView(R.id.ll_dizhi)
+    LinearLayout llDizhi;
+    @BindView(R.id.tv_orderid)
+    TextView tvOrderid;
+    @BindView(R.id.list_goods)
+    WithScrolleViewListView listGoods;
+    @BindView(R.id.tv_gouyou)
+    TextView tvGouyou;
+    @BindView(R.id.tv_zongjia)
+    TextView tvZongjia;
+    @BindView(R.id.tv_beizhu)
+    TextView tvBeizhu;
+    @BindView(R.id.tv_jiangli)
+    TextView tvJiangli;
+    @BindView(R.id.tv_chuangjianshijian)
+    TextView tvChuangjianshijian;
+    @BindView(R.id.tv_fukuanshijian)
+    TextView tvFukuanshijian;
+    @BindView(R.id.tv_fahuoshijian)
+    TextView tvFahuoshijian;
+    @BindView(R.id.tv_querenshouhuo)
+    TextView tvQuerenshouhuo;
+    private String orderId;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_dingdanxiangqing_daishouhuo);
-        initView();
+        ButterKnife.bind(this);
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        tv_kuaidi_name = findViewById(R.id.tv_kuaidi_name);
-        tv_kuaidi_bianhao = findViewById(R.id.tv_kuaidi_bianhao);
+    @Override
+    public void initData() {
+        initDatas();
+    }
 
-        tv_dizhiname = findViewById(R.id.tv_dizhiname);
-        tv_phone = findViewById(R.id.tv_phone);
-        tv_address = findViewById(R.id.tv_address);
-
-        tv_orderid=findViewById(R.id.tv_orderid);
-
-        list_goods = findViewById(R.id.list_goods);
-        tv_gouyou = findViewById(R.id.tv_gouyou);
-        tv_zongjia = findViewById(R.id.tv_zongjia);
-
-
-        tv_beizhu = findViewById(R.id.tv_beizhu);
-        tv_jiangli = findViewById(R.id.tv_jiangli);
-        tv_chuangjianshijian = findViewById(R.id.tv_chuangjianshijian);
-        tv_fukuanshijian = findViewById(R.id.tv_fukuanshijian);
-        tv_querenshouhuo = findViewById(R.id.tv_querenshouhuo);
-        tv_querenshouhuo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OrderxiangqingPostBean bean = new OrderxiangqingPostBean();
-                bean.userId = UserInstance.getInstance().getUid();
-                bean.token = UserInstance.getInstance().getToken();
-                bean.orderId = orderId;
-                ApiUtils.getApiService().orderConfirmReceiveGoods(bean).enqueue(new TaiShengCallback<BaseBean>() {
-                    @Override
-                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
-                        switch (message.code) {
-                            case Constants.HTTP_SUCCESS:
-                                finish();
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFail(Call<BaseBean> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-        tv_fahuoshijian = findViewById(R.id.tv_fahuoshijian);
-
-        initData();
+    @Override
+    public void addData() {
 
     }
 
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.order_details));
+    }
 
-    String orderId;
 
-    void initData() {
+    @OnClick(R.id.tv_querenshouhuo)
+    public void onViewClicked() {
+        OrderxiangqingPostBean bean = new OrderxiangqingPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.orderId = orderId;
+        ApiUtils.getApiService().orderConfirmReceiveGoods(bean).enqueue(new TaiShengCallback<BaseBean>() {
+            @Override
+            public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        finish();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void initDatas() {
         Intent intent = getIntent();
         orderId = intent.getStringExtra("orderId");
         OrderxiangqingPostBean bean = new OrderxiangqingPostBean();
@@ -141,48 +137,48 @@ public class DindanxiangqingDaishouhuoActivity extends BaseFragmentActivity {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
 
-                        tv_kuaidi_name.setText("快递公司:"+message.result.shipChannel);
-                        tv_kuaidi_bianhao.setText("快递单号"+message.result.shipSn);
+                        tvKuaidiName.setText("快递公司:" + message.result.shipChannel);
+                        tvKuaidiBianhao.setText("快递单号" + message.result.shipSn);
 
 
-                        tv_dizhiname.setText(message.result.consignee);
-                        tv_phone.setText(message.result.phone);
-                        tv_address.setText(message.result.address);
-                        tv_orderid.setText(message.result.orderId);
+                        tvDizhiname.setText(message.result.consignee);
+                        tvPhone.setText(message.result.phone);
+                        tvAddress.setText(message.result.address);
+                        tvOrderid.setText(message.result.orderId);
 
                         DingdanShangpinAdapter adapter3 = new DingdanShangpinAdapter(DindanxiangqingDaishouhuoActivity.this);
                         adapter3.mData = message.result.list;
-                        list_goods.setAdapter(adapter3);
+                        listGoods.setAdapter(adapter3);
 
 
-                        tv_gouyou.setText("共有" + message.result.goodsNumber + "件商品");
-                        tv_zongjia.setText("¥" + message.result.totalPrice);
+                        tvGouyou.setText("共有" + message.result.goodsNumber + "件商品");
+                        tvZongjia.setText("¥" + message.result.totalPrice);
 
 
                         if (TextUtils.isEmpty(message.result.message)) {
-                            tv_beizhu.setVisibility(View.VISIBLE);
-                            tv_beizhu.setText("订单备注：无");
+                            tvBeizhu.setVisibility(View.VISIBLE);
+                            tvBeizhu.setText("订单备注：无");
 
                         } else {
-                            tv_beizhu.setVisibility(View.VISIBLE);
-                            tv_beizhu.setText("订单备注：" + message.result.message);
+                            tvBeizhu.setVisibility(View.VISIBLE);
+                            tvBeizhu.setText("订单备注：" + message.result.message);
 
                         }
-                        if(message.result.scoreGoods==0){
-                            tv_jiangli.setVisibility(View.GONE);
-                        }else{
-                            tv_jiangli.setVisibility(View.VISIBLE);
-                            tv_jiangli.setText("奖励积分：" + message.result.score);
+                        if (message.result.scoreGoods == 0) {
+                            tvJiangli.setVisibility(View.GONE);
+                        } else {
+                            tvJiangli.setVisibility(View.VISIBLE);
+                            tvJiangli.setText("奖励积分：" + message.result.score);
 
-                        }                        tv_chuangjianshijian.setText("创建时间：" + message.result.createTime);
+                        }
+                        tvChuangjianshijian.setText("创建时间：" + message.result.createTime);
                         if (TextUtils.isEmpty(message.result.payTime)) {
-                            tv_fukuanshijian.setVisibility(View.GONE);
+                            tvFukuanshijian.setVisibility(View.GONE);
                         } else {
-                            tv_fukuanshijian.setVisibility(View.VISIBLE);
-                            tv_fukuanshijian.setText("付款时间：" + message.result.payTime);
+                            tvFukuanshijian.setVisibility(View.VISIBLE);
+                            tvFukuanshijian.setText("付款时间：" + message.result.payTime);
                         }
-                        tv_fahuoshijian.setText("发货时间：" + message.result.shipTime);
-
+                        tvFahuoshijian.setText("发货时间：" + message.result.shipTime);
                         break;
                 }
             }
@@ -194,7 +190,6 @@ public class DindanxiangqingDaishouhuoActivity extends BaseFragmentActivity {
         });
 
     }
-
 
     class DingdanShangpinAdapter extends BaseAdapter {
 
@@ -234,7 +229,7 @@ public class DindanxiangqingDaishouhuoActivity extends BaseFragmentActivity {
                 util.ll_all = convertView.findViewById(R.id.ll_all);
                 util.sdv_article = convertView.findViewById(R.id.sdv_article);
                 util.tv_name = convertView.findViewById(R.id.tv_name);
-                util.tv_jianjie=convertView.findViewById(R.id.tv_jianjie);
+                util.tv_jianjie = convertView.findViewById(R.id.tv_jianjie);
                 util.tv_counterprice = convertView.findViewById(R.id.tv_counterprice);
 //                util.tv_retailprice = convertView.findViewById(R.id.tv_retailprice);
                 util.tv_number = convertView.findViewById(R.id.tv_number);

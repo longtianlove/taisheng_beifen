@@ -3,7 +3,7 @@ package com.taisheng.now.http;
 
 
 import com.taisheng.now.Constants;
-import com.taisheng.now.SampleAppLike;
+import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.util.Apputil;
 
 import java.io.IOException;
@@ -15,7 +15,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.converter.fastjson.FastJsonConverterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 

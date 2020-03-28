@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 
@@ -15,10 +16,10 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseHActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.SetTongxunluPostBean;
-import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
@@ -30,8 +31,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchMeTongxunluxinzengActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
+public class WatchMeTongxunluxinzengActivity extends BaseHActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
 
     EditText et_tongxunlu_name;
@@ -40,21 +40,28 @@ public class WatchMeTongxunluxinzengActivity extends BaseActivity implements Act
     View tv_cancel;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchme_tongxunluxinzeng);
-        initView();
-        initData();
+        initViews();
+        initDatas();
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("通讯录新增联系人");
+    }
+
+    void initViews() {
         et_tongxunlu_name = findViewById(R.id.et_tongxunlu_name);
         et_phone = findViewById(R.id.et_phone);
 
@@ -104,7 +111,7 @@ public class WatchMeTongxunluxinzengActivity extends BaseActivity implements Act
         });
     }
 
-    void initData() {
+    void initDatas() {
         Intent intent = getIntent();
         nowphxNum = intent.getIntExtra("nowphxNum",1);
         String phbxName = intent.getStringExtra("phbxName");

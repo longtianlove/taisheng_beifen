@@ -1,19 +1,20 @@
 package com.taisheng.now.bussiness.me;
 
 import android.os.Bundle;
-import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
+import com.taisheng.now.base.BaseHActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by dragon on 2019/6/28.
  */
 
-public class YisixieyiActivity extends BaseActivity {
-    View iv_back;
-    TextView tv_fuwuxieyineirong;
+public class YisixieyiActivity extends BaseHActivity {
     String fuwuxieyineirong = "您的个人信息安全对我们来说至关重要。一直以来,泰晟健康都致力于为每位用户提供更安全的互联网环境。我们将依据《中华人民共和国网络安全法》、《信息安全技术个人信息安全规范》(GB/T35273-2017)以及其他相关法律法规和技术规范收集和使用您的个人信息,以帮助我们向您提供更优质的产品和/或服务。《泰晟健康隐私保护政策》(以下简称“本政策”)更透明地呈现我们收集和使用您个人信息的情况,以及您享有的对个人信息的控制权。我们承诺会对您的个人信息和其它数据进行严格保密,并严格按照本政策所阐述的内容处理您的个人信息。我们会根据您的同意和其它可处理您个人信息的法律依据收集、使用、存储、共享和转移您的个人信息.\n" +
             "以下是《泰晟健康隐私保护政策》的要点说明\n" +
             "1.为帮助您注册并使用泰晟健康相关产品和服务,我们可能收集与提供服务相关的个人信息,您有权拒绝或撤回授权\n" +
@@ -121,25 +122,28 @@ public class YisixieyiActivity extends BaseActivity {
             "1 ．您可通过 l 设置＊设置隐私密码 1 来保护您的隐私； \n" +
             "2 ．您可通过 【 设置．推送通知设置 】 来开启或关闭「通知推送」。\n" +
             "当您收回同意后，我们将不再处理相应的个人信息。\n";
+    @BindView(R.id.tv_fuwuxieyineirong)
+    TextView tvFuwuxieyineirong;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_yinsixieyi);
-        initView();
+        ButterKnife.bind(this);
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        tv_fuwuxieyineirong = (TextView) findViewById(R.id.tv_fuwuxieyineirong);
-        tv_fuwuxieyineirong.setText(fuwuxieyineirong);
-
+    @Override
+    public void initData() {
 
     }
+
+    @Override
+    public void addData() {
+        tvFuwuxieyineirong.setText(fuwuxieyineirong);
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.mine05));
+    }
+
 }

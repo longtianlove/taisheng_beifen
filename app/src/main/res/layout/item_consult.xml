@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="郝秀英"
-            android:textColor="#ff529ffb"
+            android:textColor="@color/color00c8aa"
             android:textSize="12sp" />
 
         <View

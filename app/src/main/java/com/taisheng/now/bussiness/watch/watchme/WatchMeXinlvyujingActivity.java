@@ -12,7 +12,9 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseHActivity;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.XinlvXueyaYujingPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
@@ -26,39 +28,45 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchMeXinlvyujingActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
-
-    View iv_bianji;
+public class WatchMeXinlvyujingActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     TextView tv_xinlvpingzuidazhi;
     TextView tv_xinlvpingzuixiaozhi;
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchme_xinlvyujing);
-        initView();
+        initViews();
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initData() {
 
-        iv_bianji = findViewById(R.id.iv_bianji);
-        iv_bianji.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WatchMeXinlvyujingActivity.this, WatchMeXinlvyujingbianjiActivity.class);
-                startActivity(intent);
-            }
-        });
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+tvTitle.setText("心率预警");
+tvRight.setVisibility(View.VISIBLE);
+tvRight.setText(getString(R.string.edit));
+tvRight.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(WatchMeXinlvyujingActivity.this, WatchMeXinlvyujingbianjiActivity.class);
+        startActivity(intent);
+    }
+});
+    }
+
+    void initViews() {
+
+
+
 
         tv_xinlvpingzuidazhi=findViewById(R.id.tv_xinlvpingzuidazhi);
         tv_xinlvpingzuixiaozhi=findViewById(R.id.tv_xinlvpingzuixiaozhi);
@@ -68,10 +76,10 @@ public class WatchMeXinlvyujingActivity extends BaseActivity implements Activity
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
+        initDatas();
     }
 
-    void initData(){
+    void initDatas(){
         XinlvXueyaYujingPostBean bean=new XinlvXueyaYujingPostBean();
         bean.userId= UserInstance.getInstance().getUid();
         bean.token=UserInstance.getInstance().getToken();

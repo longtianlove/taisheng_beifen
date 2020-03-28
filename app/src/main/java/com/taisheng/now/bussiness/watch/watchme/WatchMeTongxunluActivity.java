@@ -16,7 +16,8 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
 import com.taisheng.now.bussiness.watch.bean.post.TongxunluDeletePostBean;
@@ -36,10 +37,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
-
-    TextView tv_bianji;
+public class WatchMeTongxunluActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     View iv_addnaozhong;
 
@@ -47,42 +45,44 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
     ArticleAdapter madapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchme_tongxunlu);
-        initView();
-//        EventBus.getDefault().register(this);
+        initViews();
+    }
 
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("通讯录设置");
+        tvRight.setText(getString(R.string.edit));
+        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bianji = !bianji;
+                if (bianji) {
+                    tvRight.setText("完成");
+                } else {
+                    tvRight.setText("编辑");
+
+                }
+                madapter.notifyDataSetChanged();
+            }
+        });
     }
 
     boolean bianji = false;
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        tv_bianji = findViewById(R.id.tv_bianji);
-        tv_bianji.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                bianji = !bianji;
-                if (bianji) {
-                    tv_bianji.setText("完成");
-                } else {
-                    tv_bianji.setText("编辑");
-
-                }
-                madapter.notifyDataSetChanged();
-
-
-            }
-        });
+    void initViews() {
         iv_addnaozhong = findViewById(R.id.iv_addnaozhong);
         iv_addnaozhong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,12 +103,12 @@ public class WatchMeTongxunluActivity extends BaseActivity implements ActivityCo
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
+        initDatas();
     }
 
     public int nowphxName = 0;
 
-    void initData() {
+    void initDatas() {
         DianhuabenPostbean bean = new DianhuabenPostbean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();

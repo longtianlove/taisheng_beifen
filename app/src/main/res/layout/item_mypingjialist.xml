@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_all"
@@ -149,7 +147,7 @@
                         android:paddingLeft="0dp"
                         android:paddingRight="0dp"
                         android:text="3"
-                        android:textColor="#529FFB"
+                        android:textColor="@color/color00c8aa"
                         android:textSize="10sp" />
 
                     <TextView

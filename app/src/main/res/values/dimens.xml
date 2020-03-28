@@ -12,8 +12,6 @@
     <!--44号字体-->
     <dimen name="after_word_size">15sp</dimen>
 
-
-
     <dimen name="tvs_main_tab">13sp</dimen>
     <dimen name="tvs_userinfo">20sp</dimen>
     <dimen name="tvs_me_item">16sp</dimen>
@@ -24,7 +22,6 @@
     <dimen name="pet_varitey_padding">6dp</dimen>
 
     <dimen name="dialog_change_avater_item_height">46dp</dimen>
-
 
     <!--图表类-->
     <dimen name="chart_bar_interval">1dp</dimen>
@@ -44,10 +41,6 @@
     <dimen name="common_dialog_title">25dp</dimen>
     <dimen name="common_dialog_message">16dp</dimen>
     <dimen name="common_dialog_button">16dp</dimen>
-
-
-
     <dimen name="corner">2dp</dimen>
-
 
 </resources>

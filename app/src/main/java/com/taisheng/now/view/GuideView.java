@@ -15,13 +15,12 @@ import android.graphics.RectF;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.taisheng.now.R;
-import com.taisheng.now.SampleAppLike;
+import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.util.DensityUtil;
 
 

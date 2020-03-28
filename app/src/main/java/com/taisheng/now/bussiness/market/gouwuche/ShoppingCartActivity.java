@@ -21,7 +21,7 @@ import com.taisheng.now.bussiness.bean.result.xiadanshangpinBean;
 import com.taisheng.now.bussiness.market.DingdanInstance;
 import com.taisheng.now.bussiness.market.dingdan.DingdanjiesuanActivity;
 import com.taisheng.now.bussiness.market.dizhi.DizhiBianjiActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
@@ -54,7 +54,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
     TextView btnEdit;//tv_edit
 
 
-//    MaterialDesignPtrFrameLayout ptr_refresh;
+    //    MaterialDesignPtrFrameLayout ptr_refresh;
     com.taisheng.now.view.TaishengListView list_shopping_cart;
     private ShoppingCartAdapter shoppingCartAdapter;
     private boolean flag = false;
@@ -275,7 +275,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
      * 结算订单、支付
      */
     private void lementOnder() {
-        if(DingdanInstance.getInstance().putongshangpindingdanList.isEmpty()){
+        if (DingdanInstance.getInstance().putongshangpindingdanList.isEmpty()) {
             ToastUtil.showAtCenter("请选择商品");
             return;
         }
@@ -294,7 +294,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
             }
         }
 //        ToastUtil.showAtCenter("总价：" + totalPrice);
-        DingdanInstance.getInstance().zongjia=totalPrice+"";
+        DingdanInstance.getInstance().zongjia = totalPrice + "";
 
 
         //跳转到支付界面
@@ -314,12 +314,12 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
 
-                        DingdanInstance.getInstance().flag="Y";
+                        DingdanInstance.getInstance().flag = "Y";
                         if (message.result.records != null && message.result.records.size() > 0) {
                             Intent intent = new Intent(ShoppingCartActivity.this, DingdanjiesuanActivity.class);
                             startActivity(intent);
                         } else {
-                            DingdanInstance.getInstance().fromDizhi="2";
+                            DingdanInstance.getInstance().fromDizhi = "2";
                             Intent intent = new Intent(ShoppingCartActivity.this, DizhiBianjiActivity.class);
                             startActivity(intent);
                         }
@@ -374,7 +374,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
      */
     public void statistics() {
         totalCount = 0;
-        totalPrice =new BigDecimal(0.00);
+        totalPrice = new BigDecimal(0.00);
         for (int i = 0; i < shoppingCartBeanList.size(); i++) {
             ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(i);
             if (shoppingCartBean.isChoosed()) {
@@ -436,10 +436,10 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
     public void childDelete(int position) {
         ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(position);
 
-        CartDetePostBean bean=new CartDetePostBean();
-        bean.userId=UserInstance.getInstance().getUid();
-        bean.token=UserInstance.getInstance().getToken();
-        bean.cartId=shoppingCartBean.getId()+",";
+        CartDetePostBean bean = new CartDetePostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.cartId = shoppingCartBean.getId() + ",";
         ApiUtils.getApiService().cartDelete(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -460,16 +460,5 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
     @Override
     protected void onStart() {
         super.onStart();
-        //当FitsSystemWindows设置 true 时，会在屏幕最上方预留出状态栏高度的 padding
-        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
-        //设置状态栏透明
-        StatusBarUtil.setTranslucentStatus(this);
-        //一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
-        //所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
-        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
-            //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
-            //这样半透明+白=灰, 状态栏的文字能看得清
-            StatusBarUtil.setStatusBarColor(this, 0x55000000);
-        }
     }
 }

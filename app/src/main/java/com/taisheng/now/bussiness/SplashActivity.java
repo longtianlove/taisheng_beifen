@@ -11,15 +11,17 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.taisheng.now.R;
-import com.taisheng.now.SampleAppLike;
+import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.bussiness.me.FillInMessageActivity;
 import com.taisheng.now.bussiness.me.FillInMessageSecondActivity;
-import com.taisheng.now.bussiness.user.LoginActivity;
+import com.taisheng.now.bussiness.login.LoginActivity;
 import com.taisheng.now.push.XMPushManagerInstance;
+import com.taisheng.now.util.AppUtils;
 import com.taisheng.now.util.Apputil;
 import com.taisheng.now.util.SPUtil;
 import com.xiaomi.mipush.sdk.MiPushClient;
@@ -32,15 +34,18 @@ import java.util.List;
  * Created by long on 2017/4/13.
  */
 
-public class SplashActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class SplashActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 隐藏状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //避免每次启动都走splash界面
+        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
+            finish();
+            return;
+        }
+        AppUtils.fullScreen(this);
         setContentView(R.layout.activity_splash);
         checkPermission();
     }

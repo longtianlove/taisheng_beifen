@@ -4,69 +4,63 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.MainActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dragon on 2019/7/10.
  */
 
-public class HealthCheckResultActivity extends BaseActivity {
-    View iv_back;
+public class HealthCheckResultActivity extends BaseHActivity {
 
-    TextView tv_completeBatch;
-
-    TextView tv_remarks;
-
-    View ll_zixun;
+    @BindView(R.id.tv_completeBatch)
+    TextView tvCompleteBatch;
+    @BindView(R.id.tv_remarks)
+    TextView tvRemarks;
+    @BindView(R.id.ll_zixun)
+    LinearLayout llZixun;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_health_check_result);
-        initView();
-        initData();
-    }
-
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        tv_completeBatch = (TextView) findViewById(R.id.tv_completeBatch);
-        tv_remarks = (TextView) findViewById(R.id.tv_remarks);
-
-        ll_zixun = findViewById(R.id.ll_zixun);
-
-        ll_zixun.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HealthCheckResultActivity.this, MainActivity.class);
-                intent.putExtra("fromwhere","HealthCheckResultActivity");
-                startActivity(intent);
-            }
-        });
+        ButterKnife.bind(this);
 
     }
 
-    void initData() {
+    @Override
+    public void initData() {
+    }
+
+    @Override
+    public void addData() {
         Intent intent = getIntent();
         String completeBatch = intent.getStringExtra("completeBatch");
         String remarks = intent.getStringExtra("remarks");
 //        int score=intent.getIntExtra("score",0);
-
-        tv_completeBatch.setText(completeBatch);
-        tv_remarks.setText(remarks);
-
-
+        tvCompleteBatch.setText(completeBatch);
+        tvRemarks.setText(remarks);
     }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.evaluation_results));
+    }
+
+
+    @OnClick(R.id.ll_zixun)
+    public void onViewClicked() {
+        Intent intent = new Intent(HealthCheckResultActivity.this, MainActivity.class);
+        intent.putExtra("fromwhere", "HealthCheckResultActivity");
+        startActivity(intent);
+    }
+
 }

@@ -12,11 +12,15 @@ import android.widget.LinearLayout;
 
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.R;
-import com.taisheng.now.SampleAppLike;
+import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.util.DensityUtil;
+import com.taisheng.now.util.GlideRoundUtils;
 import com.taisheng.now.util.ScreenUtil;
+import com.taisheng.now.util.Uiutils;
 
 
 import java.util.ArrayList;
@@ -69,11 +73,10 @@ public class BannerViewPager {
     ViewPager mviewPager;
     ViewGroup mgroup;
     ImageView[] mtips;
-    SimpleDraweeView[] mbannerItems;
+    ImageView[] mbannerItems;
     ViewPagerItemListener mviewPagerItemListener;
     ArrayList<String> mpictureUrls;
     int msize = 2;
-
     public BannerViewPager(Context context) {
         mcontext = context;
         mview = View.inflate(mcontext, R.layout.header_banner_recommend, null);
@@ -116,6 +119,7 @@ public class BannerViewPager {
                 }
                 final float scale = mcontext.getResources().getDisplayMetrics().density;
                 int width = (int) (8 * scale + 0.5f);
+                int screenHeight = Uiutils.getScreenHeight(mcontext);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(width, width));
                 layoutParams.leftMargin = 10;
                 layoutParams.rightMargin = 10;
@@ -124,12 +128,18 @@ public class BannerViewPager {
             }
         }
 
-        mbannerItems = new SimpleDraweeView[msize];
+        mbannerItems = new ImageView[msize];
         for (int i = 0; i < msize; i++) {
-            mbannerItems[i] = new SimpleDraweeView(mcontext);
+            mbannerItems[i] = new ImageView(mcontext);
             mbannerItems[i].setScaleType(ImageView.ScaleType.FIT_XY);
-            Uri uri = Uri.parse(mpictureUrls.get(i));
-            mbannerItems[i].setImageURI(uri);
+
+            Glide.with(mcontext)
+                    .load(mpictureUrls.get(i))
+                    .bitmapTransform(new GlideRoundUtils(mcontext,10,GlideRoundUtils.CornerType.ALL))
+                    .placeholder(R.drawable.article_default)
+                    .error(R.drawable.article_default)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into( mbannerItems[i]);
         }
         madapter = new ViewPagerAdapter(mbannerItems, mpictureUrls, mcontext, mviewPager, mviewPagerItemListener);
         mviewPager.setAdapter(madapter);
@@ -140,7 +150,8 @@ public class BannerViewPager {
             mimageHandler.sendEmptyMessageDelayed(ImageHandler.MSG_FIRST, ImageHandler.MSG_DELAY);
 
         int height = (int) (SCALEH * ScreenUtil.getScreenW(SampleAppLike.mcontext));
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, height);
+        int screenHeight = Uiutils.getScreenWidth(mcontext);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, screenHeight);
         mviewPager.setLayoutParams(layoutParams);
     }
 

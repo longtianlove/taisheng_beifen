@@ -20,8 +20,7 @@ import com.taisheng.now.bussiness.bean.post.KanjuanPostBean;
 import com.taisheng.now.bussiness.bean.result.MallYouhuiquanBean;
 import com.taisheng.now.bussiness.bean.result.MallYouhuiquanResultBanner;
 import com.taisheng.now.bussiness.market.DingdanInstance;
-import com.taisheng.now.bussiness.market.dingdan.DingdanjiesuanActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
@@ -117,24 +116,30 @@ public class JiangyaoshiyongKanjuanFragment extends BaseFragment {
                 DialogUtil.closeProgress();
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result.records != null && message.result.records.size() > 0) {
-                            list_kajuan.setLoading(false);
-                            if (PAGE_NO == 1) {
-                                madapter.mData.clear();
-                            }
-                            //有消息
+                        if (message.result != null) {
+                            if (message.result.records != null && message.result.records.size() > 0) {
+                                list_kajuan.setLoading(false);
+                                if (PAGE_NO == 1) {
+                                    madapter.mData.clear();
+                                }
+                                //有消息
 //                            PAGE_NO++;
-                            madapter.mData.addAll(message.result.records);
-                            if (message.result.records.size() < 10) {
+                                madapter.mData.addAll(message.result.records);
+                                if (message.result.records.size() < 10) {
+                                    list_kajuan.setHasLoadMore(false);
+                                    list_kajuan.setLoadAllViewText("暂时只有这么多优惠券");
+                                    list_kajuan.setLoadAllFooterVisible(true);
+                                } else {
+                                    list_kajuan.setHasLoadMore(true);
+                                }
+                                madapter.notifyDataSetChanged();
+                            } else {
+                                //没有消息
                                 list_kajuan.setHasLoadMore(false);
                                 list_kajuan.setLoadAllViewText("暂时只有这么多优惠券");
                                 list_kajuan.setLoadAllFooterVisible(true);
-                            } else {
-                                list_kajuan.setHasLoadMore(true);
                             }
-                            madapter.notifyDataSetChanged();
-                        } else {
-                            //没有消息
+                        }else {
                             list_kajuan.setHasLoadMore(false);
                             list_kajuan.setLoadAllViewText("暂时只有这么多优惠券");
                             list_kajuan.setLoadAllFooterVisible(true);
@@ -205,14 +210,14 @@ public class JiangyaoshiyongKanjuanFragment extends BaseFragment {
 
                     if ("1".equals(assessmentType)) {
 
-                        if(bean.min.compareTo(new BigDecimal(DingdanInstance.getInstance().zongjia))==1){
+                        if (bean.min.compareTo(new BigDecimal(DingdanInstance.getInstance().zongjia)) == 1) {
                             ToastUtil.showAtCenter("不可使用");
                             return;
                         }
                         Intent intent = new Intent();
                         intent.putExtra("tv_discount", bean.discount);
-                        DingdanInstance.getInstance().tv_discount=bean.discount+"";
-                        DingdanInstance.getInstance().couponId=bean.id;
+                        DingdanInstance.getInstance().tv_discount = bean.discount + "";
+                        DingdanInstance.getInstance().couponId = bean.id;
                         getActivity().setResult(2, intent);
                         getActivity().finish();
                     }
@@ -220,7 +225,7 @@ public class JiangyaoshiyongKanjuanFragment extends BaseFragment {
 
                 }
             });
-            util.tv_discount.setText("¥"+bean.discount + "");
+            util.tv_discount.setText("¥" + bean.discount + "");
             util.tv_name.setText(bean.name);
             util.tv_tag.setText(bean.tag);
             util.tv_usedate.setText(bean.useDate);

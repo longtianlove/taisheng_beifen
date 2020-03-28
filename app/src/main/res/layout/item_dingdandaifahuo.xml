@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="待发货"
-                    android:textColor="#ff529ffb"
+                    android:textColor="@color/color00c8aa"
                     android:textSize="13sp" />
 
             </LinearLayout>
@@ -121,7 +121,7 @@
 
                     android:gravity="center"
                     android:text="已付款，等待卖家发货"
-                    android:textColor="#ff529ffb"
+                    android:textColor="@color/color00c8aa"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>

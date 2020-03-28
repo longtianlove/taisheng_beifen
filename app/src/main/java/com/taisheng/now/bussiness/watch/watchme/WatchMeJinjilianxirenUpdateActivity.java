@@ -9,19 +9,21 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
-import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UpdateSosContactSettingPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
 
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -29,8 +31,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class WatchMeJinjilianxirenUpdateActivity extends BaseActivity {
-    View iv_back;
+public class WatchMeJinjilianxirenUpdateActivity extends BaseIvActivity {
     EditText et_nickname;
     ImageView iv_nickname_guanbi;
 
@@ -41,40 +42,46 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseActivity {
     View btn_update;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_jinjilianxiren_update);
-        initView();
-        initData();
+        ButterKnife.bind(this);
+        initViews();
+        initDatas();
+    }
+
+    @Override
+    public void initData() {
 
     }
 
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("更新紧急联系人");
+    }
 
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    void initViews() {
         btn_update = findViewById(R.id.btn_update);
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ("".equals(et_nickname.getText().toString())||"".equals(et_phone.getText().toString())) {
+                if ("".equals(et_nickname.getText().toString()) || "".equals(et_phone.getText().toString())) {
                     ToastUtil.showAtCenter("请输入值");
                     return;
                 }
 
-                UpdateSosContactSettingPostBean bean=new UpdateSosContactSettingPostBean();
+                UpdateSosContactSettingPostBean bean = new UpdateSosContactSettingPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.sosUserName=et_nickname.getText().toString();
-                bean.sosPhone=et_phone.getText().toString();
-                bean.type=type;
+                bean.sosUserName = et_nickname.getText().toString();
+                bean.sosPhone = et_phone.getText().toString();
+                bean.type = type;
                 ApiUtils.getApiService().updateSosContactSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -91,8 +98,6 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseActivity {
 
                     }
                 });
-
-
 
 
 //                UpdateWatchPostBean bean = new UpdateWatchPostBean();
@@ -159,7 +164,7 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseActivity {
 
             }
         });
-        et_phone=findViewById(R.id.et_phone);
+        et_phone = findViewById(R.id.et_phone);
         et_phone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -187,7 +192,7 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseActivity {
             }
         });
 
-        iv_phone_guanbi=findViewById(R.id.iv_phone_guanbi);
+        iv_phone_guanbi = findViewById(R.id.iv_phone_guanbi);
         iv_phone_guanbi.setVisibility(View.INVISIBLE);
         iv_phone_guanbi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,11 +207,12 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseActivity {
     public String type;
     public String name;
     public String phone;
-    void initData(){
-        Intent intent=getIntent();
-        type=intent.getStringExtra("type");
-        name=intent.getStringExtra("name");
-        phone=intent.getStringExtra("phone");
+
+    void initDatas() {
+        Intent intent = getIntent();
+        type = intent.getStringExtra("type");
+        name = intent.getStringExtra("name");
+        phone = intent.getStringExtra("phone");
 
         et_nickname.setText(name);
         CharSequence text = et_nickname.getText();

@@ -5,20 +5,25 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.bean.post.FeedbackPostBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
+import com.taisheng.now.util.Uiutils;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -26,91 +31,83 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class TousuzhongxinActivity extends BaseActivity {
+public class TousuzhongxinActivity extends BaseHActivity implements TextWatcher {
 
-    View iv_back;
-    EditText et_feedbackContent;
-//    TextView tv_nickname;
-//    TextView tv_phone;
-    TextView btn_post;
+    @BindView(R.id.et_feedbackContent)
+    EditText etFeedbackContent;
+    @BindView(R.id.btn_post)
+    TextView btnPost;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_tousuzhongxin);
-        initView();
+        ButterKnife.bind(this);
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initData() {
+        etFeedbackContent.addTextChangedListener(this);
+    }
 
-        et_feedbackContent = (EditText) findViewById(R.id.et_feedbackContent);
-        et_feedbackContent.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    @Override
+    public void addData() {
 
-            }
+    }
 
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.complaint_center));
+    }
+
+    @OnClick(R.id.btn_post)
+    public void onViewClicked() {
+        String feedbackContent = TextsUtils.getTexts(etFeedbackContent);
+        if (TextUtils.isEmpty(feedbackContent)) {
+            return;
+        }
+        FeedbackPostBean bean = new FeedbackPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.remark = "";
+        bean.doctorId = "";
+        bean.feedbackContent = feedbackContent;
+        bean.feedbackType = "1";
+        bean.feedbackTitle = "";
+        ApiUtils.getApiService().feedback(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s != null && s.length() > 0) {
-                    btn_post.setEnabled(true);
-                } else {
-                    btn_post.setEnabled(false);
+            public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        Uiutils.showToast(getString(R.string.successfully_complains));
+                        finish();
+                        break;
                 }
 
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void onFail(Call<BaseBean> call, Throwable t) {
 
             }
         });
-//        tv_nickname = (TextView) findViewById(R.id.tv_nickname);
-//        tv_nickname.setText(UserInstance.getInstance().getNickname());
-//        tv_phone= (TextView) findViewById(R.id.tv_phone);
-//        tv_phone.setText(UserInstance.getInstance().getPhone());
-        btn_post= (TextView) findViewById(R.id.btn_post);
-        btn_post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String feedbackContent=et_feedbackContent.getText().toString();
-                if(TextUtils.isEmpty(feedbackContent)) {
-                    return;
-                }
-                FeedbackPostBean bean=new FeedbackPostBean();
-                bean.userId=UserInstance.getInstance().getUid();
-                bean.token=UserInstance.getInstance().getToken();
-                bean.remark="";
-                bean.doctorId="";
-                bean.feedbackContent=feedbackContent;
-                bean.feedbackType="1";
-                bean.feedbackTitle="";
-                ApiUtils.getApiService().feedback(bean).enqueue(new TaiShengCallback<BaseBean>() {
-                    @Override
-                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
-                        switch (message.code) {
-                            case Constants.HTTP_SUCCESS:
-                                ToastUtil.showTost("投诉成功");
-                                finish();
-                                break;
-                        }
+    }
 
-                    }
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    @Override
-                    public void onFail(Call<BaseBean> call, Throwable t) {
+    }
 
-                    }
-                });
-            }
-        });
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s != null && s.length() > 0) {
+            btnPost.setEnabled(true);
+        } else {
+            btnPost.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
 
     }
 }

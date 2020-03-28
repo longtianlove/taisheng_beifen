@@ -24,14 +24,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
-import com.taisheng.now.SampleAppLike;
+import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.MainActivity;
 import com.taisheng.now.bussiness.me.SelectAvatarSourceDialog;
-import com.taisheng.now.bussiness.me.UpdatePasswordFirstActivity;
-import com.taisheng.now.bussiness.user.LoginActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.LoginActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
 import com.taisheng.now.http.ApiUtils;
@@ -46,6 +46,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -53,8 +54,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchMeMessageActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
+public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     View ll_nickname;
     View ll_avatar;
     SimpleDraweeView sdv_header;
@@ -74,26 +74,35 @@ public class WatchMeMessageActivity extends BaseActivity implements ActivityComp
     TextView btn_post;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchmemessage);
-        initView();
+        ButterKnife.bind(this);
+        initViews();
         EventBus.getDefault().register(this);
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        ll_guanxi=findViewById(R.id.ll_guanxi);
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("设备信息");
+    }
+
+    void initViews() {
+
+        ll_guanxi = findViewById(R.id.ll_guanxi);
         ll_guanxi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(WatchMeMessageActivity.this,UpdateRelationShipActivity.class);
+                Intent intent = new Intent(WatchMeMessageActivity.this, UpdateRelationShipActivity.class);
                 startActivity(intent);
             }
         });
@@ -276,7 +285,7 @@ public class WatchMeMessageActivity extends BaseActivity implements ActivityComp
     protected void onStart() {
         super.onStart();
         if (WatchInstance.getInstance().headUrl != null) {
-            Uri uri = Uri.parse(Constants.Url.File_Host + WatchInstance.getInstance().headUrl );
+            Uri uri = Uri.parse(Constants.Url.File_Host + WatchInstance.getInstance().headUrl);
             sdv_header.setImageURI(uri);
         }
         tv_relative.setText(WatchInstance.getInstance().relationShip);

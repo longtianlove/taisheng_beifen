@@ -13,7 +13,7 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewLocationBean;
@@ -22,6 +22,7 @@ import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstAnQuanWeiLanActivit
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.map.NewMapInstance;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -138,9 +139,11 @@ public class WatchLocationFragment extends BaseFragment {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         NewLocationBean newLocationBean = message.result;
-                        LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
-                        NewMapInstance.shebeiLatLng=NewMapInstance.converterLatLng(latLng);
-                        NewMapInstance.getInstance().refreshMap();
+                        if (TextsUtils.isInteger(newLocationBean.latitude)&&TextsUtils.isInteger(newLocationBean.latitude)) {
+                            LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
+                            NewMapInstance.shebeiLatLng=NewMapInstance.converterLatLng(latLng);
+                            NewMapInstance.getInstance().refreshMap();
+                        }
                         break;
                 }
             }

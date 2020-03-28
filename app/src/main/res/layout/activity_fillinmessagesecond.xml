@@ -1,372 +1,313 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     android:orientation="vertical">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/imageView5"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:scaleType="centerCrop"-->
-    <!--android:src="@drawable/splash_logo" />-->
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:gravity="center_vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:id="@+id/tv_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="8dp"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="跳过"
-            android:textColor="#ffbbbbbb"
-            android:visibility="invisible"
-
-            android:textSize="14sp" />
-
-
-    </RelativeLayout>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:gravity="center"
+            android:text="@string/mine09"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font25" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:gravity="center"
+            android:text="@string/mine10"
+            android:textColor="@color/color999999"
+            android:textSize="@dimen/font16" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_height="@dimen/size_50"
+            android:layout_marginTop="@dimen/magin_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/magin_18"
+            android:paddingRight="@dimen/magin_18"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="欢迎来到泰晟健康"
-                android:textColor="#ff333333"
-                android:textSize="25sp" />
+                android:text="@string/height"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+
+
+            <EditText
+                android:id="@+id/et_height"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:hint="@string/input_height"
+                android:inputType="numberDecimal"
+                android:maxLength="4"
+                android:textColorHint="@color/color999999"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
+                android:layout_marginLeft="@dimen/magin_6"
                 android:gravity="center"
-                android:text="完善信息，定制您的专属健康档案"
-                android:textColor="#ff999999"
-                android:textSize="17sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="18dp"
-                android:layout_marginTop="50dp"
-                android:paddingRight="12dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="身高"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/et_height"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="请输入身高"
-                    android:maxLength="4"
-                    android:inputType="numberDecimal"
-                    android:textColorHint="#999999"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:text="cm"
-                    android:gravity="center"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="18dp"
-                android:paddingRight="12dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="体重"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/et_weight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="请输入体重"
-                    android:maxLength="4"
-                    android:inputType="numberDecimal"
-                    android:textColorHint="#999999"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:text="kg"
-                    android:gravity="center"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
-
-            <LinearLayout
-                android:id="@+id/ll_blood"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="18dp"
-                android:paddingRight="12dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="血型"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_blood"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="请选择"
-                    android:textColorHint="#999999"
-                    android:textColor="#333333"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="9dp"
-                    android:src="@drawable/icon_youjiantou" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="18dp"
-                android:paddingRight="12dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="药物过敏史"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <RadioGroup
-                    android:id="@+id/rg_antihistamine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb_yes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@null"
-
-                        android:drawableLeft="@drawable/selector_radio"
-                        android:drawablePadding="4dp"
-                        android:gravity="center"
-                        android:paddingRight="5dp"
-                        android:paddingTop="5dp"
-                        android:text="有"
-                        android:textColor="#333333"
-                        android:textSize="14sp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_no"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:button="@null"
-                        android:drawableLeft="@drawable/selector_radio"
-                        android:drawablePadding="4dp"
-                        android:gravity="center"
-                        android:paddingRight="5dp"
-                        android:paddingTop="5dp"
-                        android:text="无"
-                        android:checked="true"
-                        android:textColor="#333333"
-                        android:textSize="14sp" />
-                </RadioGroup>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="18dp"
-                android:paddingRight="12dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="遗传病史"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <RadioGroup
-                    android:id="@+id/rg_hereditaryHistory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb_yes2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@null"
-
-                        android:drawableLeft="@drawable/selector_radio"
-                        android:drawablePadding="4dp"
-                        android:gravity="center"
-                        android:paddingRight="5dp"
-                        android:paddingTop="5dp"
-                        android:text="有"
-                        android:textColor="#333333"
-                        android:textSize="14sp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_n2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:button="@null"
-                        android:drawableLeft="@drawable/selector_radio"
-                        android:drawablePadding="4dp"
-                        android:gravity="center"
-                        android:paddingRight="5dp"
-                        android:paddingTop="5dp"
-                        android:checked="true"
-                        android:text="无"
-                        android:textColor="#333333"
-                        android:textSize="14sp" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
-
-
-            <TextView
-                android:id="@+id/tv_next"
-                android:layout_width="match_parent"
-                android:layout_height="39dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="37dp"
-                android:layout_marginRight="35dp"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/xml_login_background"
-                android:enabled="false"
-                android:gravity="center"
-                android:text="完成"
-                android:textColor="@color/white"
-                android:textSize="14sp"></TextView>
+                android:text="cm"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@color/coloreeeeee" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/magin_18"
+            android:paddingRight="@dimen/magin_18"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/weight"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+
+
+
+            <EditText
+                android:id="@+id/et_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:hint="@string/input_weight"
+                android:inputType="numberDecimal"
+                android:maxLength="4"
+                android:textColorHint="@color/color999999"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/magin_6"
+                android:gravity="center"
+                android:text="kg"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@color/coloreeeeee" />
+
+        <LinearLayout
+            android:id="@+id/ll_blood"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/magin_18"
+            android:paddingRight="@dimen/magin_18"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/blood_type"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+
+
+            <TextView
+                android:id="@+id/tv_blood"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="@string/slect"
+                android:textColor="@color/color333333"
+                android:textColorHint="@color/color999999"
+                android:drawableRight="@drawable/icon_youjiantou"
+                android:drawablePadding="@dimen/margin_10"
+                android:textSize="@dimen/font14" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@color/coloreeeeee" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/magin_18"
+            android:paddingRight="@dimen/magin_18"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/allergy"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+
+
+
+            <RadioGroup
+                android:id="@+id/rg_antihistamine"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/selector_radio"
+                    android:drawablePadding="@dimen/margin_4"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/margin_5"
+                    android:paddingTop="@dimen/margin_5"
+                    android:text="@string/have"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
+
+                <RadioButton
+                    android:id="@+id/rb_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/magin_30"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/selector_radio"
+                    android:drawablePadding="@dimen/margin_4"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/margin_5"
+                    android:paddingTop="@dimen/margin_5"
+                    android:text="@string/nothing"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@color/coloreeeeee" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/magin_18"
+            android:paddingRight="@dimen/magin_18"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/genetic_history"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+
+
+
+            <RadioGroup
+                android:id="@+id/rg_hereditaryHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_yes2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+
+                    android:drawableLeft="@drawable/selector_radio"
+                    android:drawablePadding="@dimen/margin_4"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/margin_5"
+                    android:paddingTop="@dimen/margin_5"
+                    android:text="@string/have"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
+
+                <RadioButton
+                    android:id="@+id/rb_n2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/magin_30"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/selector_radio"
+                    android:drawablePadding="@dimen/margin_4"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/margin_5"
+                    android:paddingTop="@dimen/margin_5"
+                    android:text="@string/nothing"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@color/coloreeeeee" />
+
+
+        <TextView
+            android:id="@+id/tv_next"
+            style="@style/my_bt"
+            android:layout_marginBottom="@dimen/magin_20"
+            android:layout_marginLeft="@dimen/magin_35"
+            android:layout_marginRight="@dimen/magin_35"
+            android:layout_marginTop="@dimen/magin_50"
+            android:enabled="false"
+            android:text="@string/complete"></TextView>
+    </LinearLayout>
+</ScrollView>

@@ -40,7 +40,7 @@
             android:layout_marginTop="9dp"
             android:gravity="center"
             android:text="确定"
-            android:textColor="#ff529ffb"
+            android:textColor="@color/color00c8aa"
             android:textSize="15sp" />
 
     </LinearLayout>

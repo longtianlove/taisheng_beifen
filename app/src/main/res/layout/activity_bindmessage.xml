@@ -8,41 +8,11 @@
     android:background="@drawable/background_shangchengtitle"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_shangchengtitle"
-        android:gravity="center_vertical"
-        android:paddingLeft="12dp"
-        android:paddingTop="10dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="10dp">
+    <ImageView style="@style/iv_title" />
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-            android:src="@drawable/icon_back_new" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="设备信息"
-            android:textColor="#ffffffff"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-
-        android:background="#f8f8f8" />
+    <TextView
+        style="@style/my_line_h"
+        android:background="@color/colorf8f8f8" />
 
 
     <LinearLayout
@@ -207,7 +177,6 @@
                 android:textSize="14sp" />
 
 
-
             <EditText
                 android:id="@+id/et_nickname"
                 android:layout_width="0dp"
@@ -327,16 +296,15 @@
                 android:textSize="14sp" />
 
 
-
             <EditText
                 android:id="@+id/et_phonenumber"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
-                android:maxLength="11"
                 android:gravity="right"
                 android:inputType="phone"
+                android:maxLength="11"
                 android:text=""
                 android:textColor="#ff333333"
                 android:textSize="14sp" />
@@ -356,8 +324,8 @@
             android:layout_width="match_parent"
             android:layout_height="39dp"
             android:layout_marginLeft="36dp"
-            android:layout_marginTop="30dp"
             android:layout_marginRight="36dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/xml_login_background"
             android:enabled="false"
             android:gravity="center"

@@ -17,12 +17,8 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.CoordinateConverter;
-import com.taisheng.now.SampleAppLike;
-import com.taisheng.now.SampleApplication;
+import com.taisheng.now.application.SampleAppLike;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.List;
 
 public class NewMapInstance extends BDAbstractLocationListener {

@@ -94,8 +94,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"
                             android:gravity="center"
-                            android:text="测评结果"
-                            android:textColor="#ff529ffb"
+                            android:text="@string/evaluation_results"
+                            android:textColor="@color/color28b28b"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -147,7 +147,7 @@
                             android:layout_marginLeft="6dp"
                             android:gravity="center"
                             android:text="测评建议"
-                            android:textColor="#ff529ffb"
+                            android:textColor="@color/color28b28b"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -192,7 +192,7 @@
                         android:layout_width="17dp"
                         android:layout_height="17dp"
                         android:layout_marginLeft="11dp"
-                        android:src="@drawable/icon_lishishuju" />
+                        android:src="@drawable/icon_cepingjianyi" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -200,7 +200,7 @@
                         android:layout_marginLeft="8dp"
                         android:gravity="center"
                         android:text="历史数据"
-                        android:textColor="#ff529ffb"
+                        android:textColor="@color/color28b28b"
                         android:textSize="12sp" />
                 </LinearLayout>
 

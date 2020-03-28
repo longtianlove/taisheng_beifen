@@ -7,8 +7,8 @@ import android.os.Process;
 
 
 import com.taisheng.now.EventManage;
-import com.taisheng.now.SampleAppLike;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.application.SampleAppLike;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.util.LogUtil;
 import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.xiaomi.mipush.sdk.Logger;

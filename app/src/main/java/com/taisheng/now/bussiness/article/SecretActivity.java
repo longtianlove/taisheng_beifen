@@ -2,235 +2,135 @@ package com.taisheng.now.bussiness.article;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
-import com.taisheng.now.base.BaseFragment;
-import com.taisheng.now.base.BaseFragmentActivity;
-import com.taisheng.now.bussiness.MainActivity;
-import com.taisheng.now.util.DensityUtil;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.adapter.DoctorTabAdapter;
+import com.th.j.commonlibrary.utils.IndicatorLineUtil;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-//import android.support.v4.app.Fragment;
-//import android.support.v4.app.FragmentManager;
-//import android.support.v4.app.FragmentPagerAdapter;
-//import android.support.v4.view.ViewPager;
-
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2015/6/12.
  */
 
 @SuppressLint("WrongConstant")
-public class SecretActivity extends BaseFragmentActivity {
+public class SecretActivity extends BaseIvActivity {
 
-    View iv_search;
-    public static TabLayout tl_tab;
-    ViewPager vp_content;
-    private List<String> tabIndicators;
-    private List<Fragment> tabFragments;
-    private ContentPagerAdapter contentAdapter;
-
-    public static int selectTab = 0;
-
-
+    @BindView(R.id.tl_tab)
+    TabLayout tlTab;
+    @BindView(R.id.vp_content)
+    ViewPager vpContent;
+    private DoctorTabAdapter adapter;
+    private SecretTabFragment zhongyitizhiFragment1;
+    private SecretTabFragment jichudaixieFragment;
+    private SecretTabFragment fukejiankangFragment;
+    private SecretTabFragment xinfeigongnengFragment;
+    private SecretTabFragment yaojingjianbeiFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_secret);
-        initView();
-
-
-//        EventBus.getDefault().register(this);
-        initData();
+        ButterKnife.bind(this);
     }
 
-    void initView() {
-        iv_search = findViewById(R.id.iv_search);
-        iv_search.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void initData() {
+        orderTabSet();
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.treasure));
+        ivRight.setVisibility(View.VISIBLE);
+        ivRight.setBackgroundResource(R.drawable.icon_search2);
+        ivRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SecretActivity.this, SecretSearchActivity.class);
                 startActivity(intent);
             }
         });
-        tl_tab = (TabLayout) findViewById(R.id.tl_tab);
-        vp_content = (ViewPager) findViewById(R.id.vp_content);
-        initContent();
-        initTab();
-    }
-
-    void initData() {
-
-
-    }
-
-
-    private void initTab() {
-        tl_tab.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tl_tab.setSelectedTabIndicatorColor(ContextCompat.getColor(SecretActivity.this, R.color.SelectedTabIndicatorColor));
-        tl_tab.setSelectedTabIndicatorHeight(DensityUtil.dip2px(SecretActivity.this, 2));
-        tl_tab.setTabTextColors(ContextCompat.getColor(SecretActivity.this, R.color.UnSelectedTextColor), ContextCompat.getColor(SecretActivity.this, R.color.SelectedTextColor));
-        tl_tab.setBackgroundColor(ContextCompat.getColor(SecretActivity.this, R.color.white));
-//        tl_tab.setTabTextColors(ContextCompat.getColor(this, R.color.gray), ContextCompat.getColor(this, R.color.white));
-//        tl_tab.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
-//        ViewCompat.setElevation(tl_tab, 10);
-        tl_tab.setupWithViewPager(vp_content);
-        changeTabIndicatorWidth(tl_tab, 15);
-
-        tl_tab.getTabAt(selectTab).select();
-
     }
 
 
     /**
-     * 改变tablayout指示器的宽度
-     *
-     * @param tabLayout
-     * @param margin
+     * 设置tab控件添加tab数据页面
      */
-    public void changeTabIndicatorWidth(final TabLayout tabLayout, final int margin) {
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Field mTabStripField = tabLayout.getClass().getDeclaredField("mTabStrip");
-                    mTabStripField.setAccessible(true);
+    private void orderTabSet() {
+        List<String> tabIndicators = new ArrayList<>();
+        List<Fragment> fragmentList = new ArrayList<>();
 
-                    LinearLayout mTabStrip = (LinearLayout) mTabStripField.get(tabLayout);
-
-                    int dp10 = margin == 0 ? 50 : margin;
-
-                    for (int i = 0; i < mTabStrip.getChildCount(); i++) {
-                        View tabView = mTabStrip.getChildAt(i);
-
-                        Field mTextViewField = tabView.getClass().getDeclaredField("mTextView");
-                        mTextViewField.setAccessible(true);
-
-                        TextView mTextView = (TextView) mTextViewField.get(tabView);
-
-                        tabView.setPadding(0, 0, 0, 0);
-
-                        int width = 0;
-                        width = mTextView.getWidth();
-                        if (width == 0) {
-                            mTextView.measure(0, 0);
-                            width = mTextView.getMeasuredWidth();
-                        }
-
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                        params.width = width;
-                        params.leftMargin = dp10;
-                        params.rightMargin = dp10;
-                        tabView.setLayoutParams(params);
-
-                        tabView.invalidate();
-                    }
-
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-
-    SecretTabFragment zhongyitizhiFragment1;
-    SecretTabFragment jichudaixieFragment;
-    SecretTabFragment fukejiankangFragment;
-    SecretTabFragment xinfeigongnengFragment;
-    SecretTabFragment yaojingjianbeiFragment;
-
-    //    SecretTabFragment piweiganshen;
-    private void initContent() {
-        tabIndicators = new ArrayList<>();
-        tabIndicators.add(Constants.SUSHENHUFU);
-        tabIndicators.add(Constants.JIANSHENYUNDONG);
-        tabIndicators.add(Constants.SHILIAOYANGSHENG);
-        tabIndicators.add(Constants.YONGYAOZHIDAO);
-        tabIndicators.add(Constants.MUYINGYUNYU);
-//        tabIndicators.add("脾胃肝肾");
-//        for (int i = 0; i < 3; i++) {
-//            tabIndicators.add("Tab " + i);
-//        }
-        tabFragments = new ArrayList<>();
         zhongyitizhiFragment1 = new SecretTabFragment();
         zhongyitizhiFragment1.typeName = Constants.SUSHENHUFU;
+        zhongyitizhiFragment1.typeSoure = "fe50b23ae5e68434def76f67cef35d01";
+//        zhongyitizhiFragment1.typeSoure = "fe50b23ae5e68434def76f67cef35d04";
 
         jichudaixieFragment = new SecretTabFragment();
         jichudaixieFragment.typeName = Constants.JIANSHENYUNDONG;
+        jichudaixieFragment.typeSoure = "fe50b23ae5e68434def76f67cef35d04";
+
         fukejiankangFragment = new SecretTabFragment();
         fukejiankangFragment.typeName = Constants.SHILIAOYANGSHENG;
+        fukejiankangFragment.typeSoure = "fe50b23ae5e68434def76f67cef35d02";
 
         xinfeigongnengFragment = new SecretTabFragment();
         xinfeigongnengFragment.typeName = Constants.YONGYAOZHIDAO;
+        xinfeigongnengFragment.typeSoure = "fe50b23ae5e68434def76f67cef35d05";
+//        xinfeigongnengFragment.typeSoure = "fe50b23ae5e68434def76f67cef35d02";
 
         yaojingjianbeiFragment = new SecretTabFragment();
         yaojingjianbeiFragment.typeName = Constants.MUYINGYUNYU;
-//        piweiganshen=new SecretTabFragment();
-//        piweiganshen.typeName=Constants.PIWEIGANSHEN;
+        yaojingjianbeiFragment.typeSoure = "fe50b23ae5e68434def76f67cef35d03";
 
-        tabFragments.add(zhongyitizhiFragment1);
-        tabFragments.add(jichudaixieFragment);
-        tabFragments.add(fukejiankangFragment);
-        tabFragments.add(xinfeigongnengFragment);
-        tabFragments.add(yaojingjianbeiFragment);
-//        tabFragments.add(piweiganshen);
-//        for (String s : tabIndicators) {
-////            tabFragments.add(TabContentFragment.newInstance(s));
-//        }
-        contentAdapter = new ContentPagerAdapter((this).getSupportFragmentManager());
-        vp_content.setAdapter(contentAdapter);
-    }
 
-    class ContentPagerAdapter extends FragmentPagerAdapter {
+        fragmentList.add(zhongyitizhiFragment1);
+        fragmentList.add(jichudaixieFragment);
+        fragmentList.add(fukejiankangFragment);
+        fragmentList.add(xinfeigongnengFragment);
+        fragmentList.add(yaojingjianbeiFragment);
 
-        public ContentPagerAdapter(FragmentManager fm) {
-            super(fm);
+
+        final String[] stringArray = getResources().getStringArray(R.array.secret_tab);
+        for (int i = 0; i < stringArray.length; i++) {
+            tabIndicators.add(stringArray[i]);
         }
+        adapter = new DoctorTabAdapter(getSupportFragmentManager(), fragmentList, tabIndicators);
+        vpContent.setAdapter(adapter);
+        vpContent.setCurrentItem(0);
+        tlTab.setupWithViewPager(vpContent);
+        tlTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                vpContent.setCurrentItem(tab.getPosition(), false);
+            }
 
-        @Override
-        public Fragment getItem(int position) {
-            return tabFragments.get(position);
-        }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
 
-        @Override
-        public int getCount() {
-            return tabIndicators.size();
-        }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabIndicators.get(position);
-        }
-    }
-
-
-    public void onDestroy() {
-        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
+            }
+        });
+//        IndicatorLineUtil.changeTabIndicatorWidth(tlTab, 15);
 
     }
 }

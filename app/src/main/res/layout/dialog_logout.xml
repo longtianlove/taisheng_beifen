@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="退出登录"
-            android:textColor="#ff529ffb"
+            android:textColor="@color/color00c8aa"
             android:textSize="18sp"
             android:background="#fff"
             android:gravity="center"

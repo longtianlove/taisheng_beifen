@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -15,7 +16,8 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
@@ -34,8 +36,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 
-public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.OnClickListener {
-    public View iv_back;
+public class WatchNaoZhongXinzengActivity extends BaseIvActivity implements View.OnClickListener {
     private TextView date_tv;
     //    private TimePickerView pvTime;
     private TimePickerDialog timePickerDialog;
@@ -51,18 +52,10 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
     private int ring;
     private JobScheduler mJobScheduler;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.layout_watchnaozhong);
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
 
 
         allLayout = (RelativeLayout) findViewById(R.id.all_layout);
@@ -74,7 +67,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
                     ToastUtil.showAtCenter("请选择时间");
                     return;
                 }
-                if("".equals(tv_repeat_value.getText().toString())){
+                if ("".equals(tv_repeat_value.getText().toString())) {
                     WatchInstance.getInstance().naozhongLIstBean.frequency = "2";//设置成每天
                 }
                 SetNaozhongPostBean setNaozhongPostBean = new SetNaozhongPostBean();
@@ -83,7 +76,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
                 setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
 //                setNaozhongPostBean.startTime=date_tv.getText().toString();
                 WatchInstance.getInstance().naozhongLIstBean.isOpen = "1";
-                WatchInstance.getInstance().naozhongLIstBean.startTime=date_tv.getText().toString();
+                WatchInstance.getInstance().naozhongLIstBean.startTime = date_tv.getText().toString();
                 WatchInstance.getInstance().mDataNaoZhong.add(WatchInstance.getInstance().naozhongLIstBean);
 
                 setNaozhongPostBean.watchRemindList = WatchInstance.getInstance().mDataNaoZhong;
@@ -208,6 +201,21 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
 ////        bindService(daemonIntent, myConn, BIND_AUTO_CREATE);
 //        startService(daemonIntent);
 
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("新增闹钟");
     }
 
     public static String getTime(Date date) {
@@ -360,7 +368,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
             cycle = "星期一";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek1 = "1";
             weeks = "1";
-        }else{
+        } else {
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek1 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek2 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek3 = "0";
@@ -380,7 +388,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
             }
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek2 = "1";
 
-        }else{
+        } else {
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek2 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek3 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek4 = "0";
@@ -398,7 +406,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
             }
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek3 = "1";
 
-        }else{
+        } else {
 
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek3 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek4 = "0";
@@ -416,7 +424,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
             }
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek4 = "1";
 
-        }else{
+        } else {
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek4 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek5 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "0";
@@ -432,7 +440,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
             }
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek5 = "1";
 
-        }else{
+        } else {
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek5 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
@@ -447,7 +455,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
             }
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "1";
 
-        }else{
+        } else {
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek6 = "0";
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
         }
@@ -461,7 +469,7 @@ public class WatchNaoZhongXinzengActivity extends BaseActivity implements View.O
             }
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "1";
 
-        }else{
+        } else {
             WatchInstance.getInstance().naozhongLIstBean.isOpenWeek7 = "0";
         }
 

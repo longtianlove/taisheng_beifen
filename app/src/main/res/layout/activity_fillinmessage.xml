@@ -1,290 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     android:orientation="vertical">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/imageView5"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:scaleType="centerCrop"-->
-    <!--android:src="@drawable/splash_logo" />-->
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:gravity="center_vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:id="@+id/tv_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="8dp"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="跳过"
-            android:textColor="#ffbbbbbb"
-            android:visibility="invisible"
-
-            android:textSize="14sp" />
-
-
-    </RelativeLayout>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:gravity="center"
+            android:text="@string/mine09"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font25" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:gravity="center"
+            android:text="@string/mine10"
+            android:textColor="@color/color999999"
+            android:textSize="@dimen/font16" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_height="@dimen/size_50"
+            android:layout_marginTop="@dimen/magin_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/magin_18"
+            android:paddingRight="@dimen/magin_18"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="欢迎来到泰晟健康"
-                android:textColor="#ff333333"
-                android:textSize="25sp" />
+                android:text="@string/name"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
 
-            <TextView
+
+            <EditText
+                android:id="@+id/et_realname"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
-                android:gravity="center"
-                android:text="完善信息，定制您的专属健康档案"
-                android:textColor="#ff999999"
-                android:textSize="17sp" />
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="18dp"
-                android:paddingRight="12dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="姓名"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/et_realname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="请输入姓名"
-                    android:textColorHint="#999999"
-                    android:textColor="#333333"
-                    android:gravity="right"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="18dp"
-                android:paddingRight="12dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="性别"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-                <RadioGroup
-                    android:id="@+id/rg"
-                    android:layout_height="match_parent"
-                    android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-                    <RadioButton
-                        android:id="@+id/rb_male"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:textColor="#333333"
-                        android:drawableLeft="@drawable/selector_radio"
-                        android:textSize="14sp"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:drawablePadding="4dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="5dp"
-                        android:text="男" />
-                    <RadioButton
-                        android:id="@+id/rb_female"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#333333"
-                        android:layout_marginLeft="30dp"
-                        android:drawableLeft="@drawable/selector_radio"
-                        android:textSize="14sp"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:drawablePadding="4dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="5dp"
-                        android:text="女"/>
-                </RadioGroup>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="18dp"
-                android:paddingRight="12dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="年龄"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/et_age"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="请输入年龄"
-                    android:inputType="number"
-                    android:textColorHint="#999999"
-                    android:gravity="right"
-                    android:textColor="#333333"
-                    android:maxLength="2"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="18dp"
-                android:paddingRight="12dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="手机号"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/et_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="请输入手机号"
-                    android:inputType="phone"
-                    android:textColorHint="#999999"
-                    android:maxLength="11"
-                    android:gravity="right"
-                    android:textColor="#333333"
-
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-
-
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
-
-
-            <TextView
-                android:id="@+id/tv_next"
-                android:layout_width="match_parent"
-                android:layout_height="39dp"
-                android:layout_marginLeft="37dp"
-                android:layout_marginRight="35dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/xml_login_background"
-                android:enabled="false"
-                android:gravity="center"
-                android:text="下一步"
-                android:textColor="@color/white"
-                android:textSize="14sp"></TextView>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:hint="@string/input_name"
+                android:textColor="@color/color333333"
+                android:textColorHint="@color/color999999"
+                android:textSize="@dimen/font14" />
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@color/coloreeeeee" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/magin_18"
+            android:paddingRight="@dimen/magin_18"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/sex"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/selector_radio"
+                    android:drawablePadding="@dimen/margin_4"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/margin_5"
+                    android:paddingTop="@dimen/margin_5"
+                    android:text="@string/boy"
+                    android:textColor="@color/color333333" />
+
+                <RadioButton
+                    android:id="@+id/rb_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/magin_30"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/selector_radio"
+                    android:drawablePadding="@dimen/margin_4"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/margin_5"
+                    android:paddingTop="@dimen/margin_5"
+                    android:text="@string/girl"
+                    android:textColor="@color/color333333" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@color/coloreeeeee" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/magin_18"
+            android:paddingRight="@dimen/magin_18"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/age"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+
+
+
+            <EditText
+                android:id="@+id/et_age"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:hint="@string/input_age"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@color/color333333"
+                android:textColorHint="@color/color999999"
+                android:textSize="@dimen/font14" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@color/coloreeeeee" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/magin_18"
+            android:paddingRight="@dimen/magin_18"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/mine06"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:hint="@string/mine07"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:textColor="@color/color333333"
+                android:textColorHint="@color/color999999"
+                android:textSize="@dimen/font14" />
+        </LinearLayout>
+
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@color/coloreeeeee" />
+
+
+        <TextView
+            android:id="@+id/tv_next"
+            style="@style/my_bt"
+            android:layout_marginBottom="@dimen/magin_20"
+            android:layout_marginLeft="@dimen/magin_35"
+            android:layout_marginRight="@dimen/magin_35"
+            android:layout_marginTop="@dimen/magin_50"
+            android:enabled="false"
+            android:text="@string/next"></TextView>
+    </LinearLayout>
+</ScrollView>

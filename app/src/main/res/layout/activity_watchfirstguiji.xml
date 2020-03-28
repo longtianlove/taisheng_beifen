@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,13 +7,13 @@
     android:background="@drawable/background_shangchengtitle"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background_shangchengtitle"
         android:gravity="center_vertical"
         android:paddingLeft="12dp"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/size_33"
         android:paddingRight="12dp"
         android:paddingBottom="10dp">
 
@@ -30,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="轨迹地图"
@@ -41,9 +41,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
             android:src="@drawable/icon_shezhi"></ImageView>
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

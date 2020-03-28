@@ -4,7 +4,6 @@
     <application
         android:allowBackup="true"
         >
-
         <activity
             android:configChanges="orientation|keyboardHidden"
             android:name="com.uuzuche.lib_zxing.activity.CaptureActivity"

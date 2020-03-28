@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,51 +6,11 @@
     android:background="@drawable/background_shangchengtitle"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_shangchengtitle"
-        android:gravity="center_vertical"
-        android:paddingLeft="12dp"
-        android:paddingTop="10dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="10dp">
+    <ImageView style="@style/iv_title" />
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-            android:src="@drawable/icon_back_new" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="安全围栏"
-            android:textColor="#ffffffff"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_queding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="确定"
-            android:textColor="#ffffffff"
-            android:textSize="13sp" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-
-        android:background="#f8f8f8" />
+    <TextView
+        style="@style/my_line_h"
+        android:background="@color/colorf8f8f8" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,9 +39,9 @@
                     android:id="@+id/et_search"
                     android:layout_width="0dp"
                     android:layout_height="25dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/search_button"
                     android:gravity="left|center_vertical"
@@ -119,9 +77,9 @@
                     android:id="@+id/et_fanwei"
                     android:layout_width="0dp"
                     android:layout_height="25dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/search_button"
                     android:gravity="left|center_vertical"
@@ -154,10 +112,10 @@
             android:layout_height="wrap_content"
             android:background="#fff"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
             android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
             android:visibility="gone">
 
             <TextView
@@ -223,11 +181,11 @@
                 android:id="@+id/btn_phone_center"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="bottom|right"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/icon_dingwei"></ImageView>
 
         </RelativeLayout>

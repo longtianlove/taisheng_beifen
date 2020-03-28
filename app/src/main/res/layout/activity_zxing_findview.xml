@@ -17,7 +17,7 @@
         app:inner_width="280dp"
         app:inner_height="280dp"
         app:inner_margintop="143dp"
-        app:inner_corner_color="#ff529ffb"
+        app:inner_corner_color="@color/color00c8aa"
         app:inner_corner_length="20dp"
         app:inner_corner_width="3dp"
         app:inner_scan_speed="20"

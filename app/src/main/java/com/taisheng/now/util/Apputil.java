@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 
-import com.taisheng.now.SampleAppLike;
+import com.taisheng.now.application.SampleAppLike;
 
 import java.util.List;
 

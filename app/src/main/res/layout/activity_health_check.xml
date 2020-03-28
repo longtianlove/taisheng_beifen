@@ -1,126 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/colorf6f6f6"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="10dp">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-
-            android:src="@drawable/icon_back" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="健康测评"
-            android:textColor="#ff333333"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_checkhistory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/tv_title"
-            android:layout_alignParentEnd="true"
-            android:gravity="center_horizontal"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="测试历史"
-            android:textColor="#ff529ffb"
-            android:textSize="13sp" />
-
-
-    </RelativeLayout>
-
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f6f6f6">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/magin_90"
+            android:gravity="center"
+            android:text="@string/health_assessment01"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font18" />
+
+        <TextView
+            android:id="@+id/btn_zhongyitizhi"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_height="@dimen/size_45"
+            android:layout_marginLeft="@dimen/magin_60"
+            android:layout_marginRight="@dimen/magin_60"
+            android:layout_marginTop="@dimen/magin_30"
+            android:background="@drawable/healthcheck_item_background"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/health_assessment02"
+            android:textColor="@drawable/healthcheck_item_text_colorback"
+            android:textSize="@dimen/font20"></TextView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="90dp"
-                android:gravity="center"
-                android:text="请选择测试项目"
-                android:textColor="#ff333333"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/btn_zhongyitizhi"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginLeft="63dp"
-                android:layout_marginRight="63dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/healthcheck_item_background"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="中医体质测评"
-                android:textColor="@drawable/healthcheck_item_text_colorback"
-                android:textSize="20sp"></TextView>
-
-            <TextView
-                android:id="@+id/btn_jichudaixie"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginLeft="63dp"
-                android:layout_marginRight="63dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/healthcheck_item_background"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="基础代谢测评"
-                android:textColor="@drawable/healthcheck_item_text_colorback"
-                android:textSize="20sp"></TextView>
+        <TextView
+            android:id="@+id/btn_jichudaixie"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:layout_marginLeft="@dimen/magin_60"
+            android:layout_marginRight="@dimen/magin_60"
+            android:layout_marginTop="@dimen/magin_30"
+            android:background="@drawable/healthcheck_item_background"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/health_assessment03"
+            android:textColor="@drawable/healthcheck_item_text_colorback"
+            android:textSize="@dimen/font20"></TextView>
 
 
+        <TextView
+            android:id="@+id/btn_fukejiankang"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:layout_marginLeft="@dimen/magin_60"
+            android:layout_marginRight="@dimen/magin_60"
+            android:layout_marginTop="@dimen/size_30"
+            android:background="@drawable/healthcheck_item_background"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/health_assessment04"
+            android:textColor="@drawable/healthcheck_item_text_colorback"
+            android:textSize="@dimen/font20"></TextView>
 
-            <TextView
-                android:id="@+id/btn_fukejiankang"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginLeft="63dp"
-                android:layout_marginRight="63dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/healthcheck_item_background"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="女性健康测评"
-                android:textColor="@drawable/healthcheck_item_text_colorback"
-                android:textSize="20sp"></TextView>
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#f8f8f8" />
-
-</LinearLayout>
+</ScrollView>

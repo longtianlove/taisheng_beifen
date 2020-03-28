@@ -6,13 +6,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -20,11 +17,10 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
-import com.taisheng.now.bussiness.bean.post.RecommendDoctorPostBean;
 import com.taisheng.now.bussiness.bean.post.getListDoctorTypePostBean;
 import com.taisheng.now.bussiness.bean.result.DoctorBean;
 import com.taisheng.now.bussiness.bean.result.DoctorsResultBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
@@ -32,10 +28,12 @@ import com.taisheng.now.view.DoctorLabelWrapLayout;
 import com.taisheng.now.view.ScoreStar;
 import com.taisheng.now.view.TaishengListView;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
+import com.th.j.commonlibrary.utils.SpanUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import retrofit2.Call;
@@ -50,11 +48,11 @@ import retrofit2.Response;
 public class DoctorsFenleiFragment extends BaseFragment {
 
 
-
     MaterialDesignPtrFrameLayout ptr_refresh;
 
     TaishengListView lv_doctors;
     DoctorAdapter madapter;
+    private List<DoctorBean> data;
 
 
     @Override
@@ -72,7 +70,7 @@ public class DoctorsFenleiFragment extends BaseFragment {
     }
 
     void initView(View rootView) {
-
+        data=new ArrayList();
         ptr_refresh = (MaterialDesignPtrFrameLayout) rootView.findViewById(R.id.ptr_refresh);
         /**
          * 下拉刷新
@@ -81,6 +79,9 @@ public class DoctorsFenleiFragment extends BaseFragment {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 PAGE_NO = 1;
+                if (data != null) {
+                    data.clear();
+                }
                 getDoctors();
 
             }
@@ -91,6 +92,7 @@ public class DoctorsFenleiFragment extends BaseFragment {
         lv_doctors.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
             @Override
             public void onUpLoad() {
+                PAGE_NO ++;
                 getDoctors();
             }
         });
@@ -98,6 +100,9 @@ public class DoctorsFenleiFragment extends BaseFragment {
 
     void initData() {
         PAGE_NO = 1;
+        if (data != null) {
+            data.clear();
+        }
         getDoctors();
     }
 
@@ -122,12 +127,7 @@ public class DoctorsFenleiFragment extends BaseFragment {
                     case Constants.HTTP_SUCCESS:
                         if (message.result.records != null && message.result.records.size() > 0) {
                             lv_doctors.setLoading(false);
-                            if (PAGE_NO == 1) {
-                                madapter.mData.clear();
-                            }
-                            //有消息
-                            PAGE_NO++;
-                            madapter.mData.addAll(message.result.records);
+                            data.addAll( message.result.records);
                             if (message.result.records.size() < 10) {
                                 lv_doctors.setHasLoadMore(false);
                                 lv_doctors.setLoadAllViewText("暂时只有这么多医生");
@@ -135,6 +135,7 @@ public class DoctorsFenleiFragment extends BaseFragment {
                             } else {
                                 lv_doctors.setHasLoadMore(true);
                             }
+                            madapter.setmData(data);
                             madapter.notifyDataSetChanged();
                         } else {
                             //没有消息
@@ -158,12 +159,16 @@ public class DoctorsFenleiFragment extends BaseFragment {
 
     class DoctorAdapter extends BaseAdapter {
 
-        public Context mcontext;
+        private Context mcontext;
 
-        List<DoctorBean> mData = new ArrayList<DoctorBean>();
+        private List<DoctorBean> mData ;
 
         public DoctorAdapter(Context context) {
             this.mcontext = context;
+        }
+
+        public void setmData(List<DoctorBean> mData) {
+            this.mData = mData;
         }
 
         @Override
@@ -231,12 +236,17 @@ public class DoctorsFenleiFragment extends BaseFragment {
             util.tv_title.setText(bean.title);
             if ("1".equals(bean.onlineStatus)) {
                 util.tv_onlineStatus.setText("在线");
-                util.tv_onlineStatus.setTextColor(Color.parseColor("#ff0dd500"));
+                util.tv_onlineStatus.setBackgroundResource(R.drawable.bg_online);
             } else {
                 util.tv_onlineStatus.setText("忙碌");
-                util.tv_onlineStatus.setTextColor(Color.parseColor("#ffff554e"));
+                util.tv_onlineStatus.setBackgroundResource(R.drawable.bg_online2);
             }
-            util.tv_times.setText(bean.servicesNum);
+            SpanUtil.create()
+//                            .addSection(String.valueOf(messageWaitTime) + "S"+"重新发送")  //添加带前景色的文字片段
+                    .addForeColorSection("解答", ContextCompat.getColor(getActivity(), R.color.color666666)) //设置相对字体
+                    .addForeColorSection(bean.servicesNum, ContextCompat.getColor(getActivity(), R.color.color00c8aa)) //设置相对字体
+                    .addForeColorSection("次", ContextCompat.getColor(getActivity(), R.color.color666666)) //设置相对字体
+                    .showIn(util.tv_times); //显示到控件TextView中
             if (bean.goodDiseases != null) {
                 String[] doctorlabel = bean.goodDiseases.split(",");
                 util.dlwl_doctor_label.setData(doctorlabel, mActivity, 10, 5, 1, 5, 1, 4, 4, 4, 8);

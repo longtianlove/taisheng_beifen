@@ -1,9 +1,7 @@
 package com.taisheng.now.bussiness.me;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,32 +10,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.mob.MobSDK;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.RecommendSharePostBean;
-import com.taisheng.now.bussiness.bean.result.CheckHistoryBean;
 import com.taisheng.now.bussiness.bean.result.RecommendShareBean;
 import com.taisheng.now.bussiness.bean.result.RecommendSharedResultBean;
-import com.taisheng.now.bussiness.healthfiles.HealthCheckResultHistoryActivity;
-import com.taisheng.now.bussiness.healthfiles.ZhongyitizhiFragment;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.util.Apputil;
 import com.taisheng.now.util.DensityUtil;
 import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.ZXingUtils;
 import com.taisheng.now.view.TaishengListView;
+import com.th.j.commonlibrary.utils.LogUtilH;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
@@ -48,70 +47,39 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class RecommendShareActivity extends BaseActivity {
-    View iv_back;
+public class RecommendShareActivity extends BaseIvActivity {
 
-
-    SimpleDraweeView sdv_header;
-    TextView tv_nickname;
-
-    ImageView iv_share_qr;
-
-
-    View ll_weixin;
-    View ll_pengyouquan;
-
-
-    View ll_sharelabel;
-    View ll_share_all;
-    TaishengListView lv_shared;
-    RecommendHistoryAdapter madapter;
+    @BindView(R.id.sdv_header)
+    SimpleDraweeView sdvHeader;
+    @BindView(R.id.tv_nickname)
+    TextView tvNickname;
+    @BindView(R.id.iv_share_qr)
+    ImageView ivShareQr;
+    @BindView(R.id.ll_weixin)
+    LinearLayout llWeixin;
+    @BindView(R.id.ll_pengyouquan)
+    LinearLayout llPengyouquan;
+    @BindView(R.id.ll_sharelabel)
+    LinearLayout llSharelabel;
+    @BindView(R.id.lv_shared)
+    TaishengListView lvShared;
+    @BindView(R.id.ll_share_all)
+    LinearLayout llShareAll;
+    private RecommendHistoryAdapter madapter;
+    private int PAGE_NO = 1;
+    private int PAGE_SIZE = 10;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_recommendshare);
-        initView();
-        initData();
+        ButterKnife.bind(this);
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        sdv_header = (SimpleDraweeView) findViewById(R.id.sdv_header);
-        tv_nickname = (TextView) findViewById(R.id.tv_nickname);
-
-        iv_share_qr = (ImageView) findViewById(R.id.iv_share_qr);
-
-        ll_weixin = findViewById(R.id.ll_weixin);
-        ll_weixin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showShare(Wechat.NAME);
-            }
-        });
-
-        ll_pengyouquan = findViewById(R.id.ll_pengyouquan);
-        ll_pengyouquan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showShare(WechatMoments.NAME);
-            }
-        });
-
-        ll_sharelabel = findViewById(R.id.ll_sharelabel);
-        ll_share_all = findViewById(R.id.ll_share_all);
-
-        lv_shared = findViewById(R.id.lv_shared);
+    @Override
+    public void initData() {
         madapter = new RecommendHistoryAdapter(this);
-        lv_shared.setAdapter(madapter);
-        lv_shared.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
+        lvShared.setAdapter(madapter);
+        lvShared.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
             @Override
             public void onUpLoad() {
                 getMore();
@@ -119,11 +87,35 @@ public class RecommendShareActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void addData() {
+        initDatas();
+    }
 
-    int PAGE_NO = 1;
-    int PAGE_SIZE = 10;
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.qr_code));
+    }
 
-    void initData() {
+
+    @OnClick({R.id.ll_weixin, R.id.ll_pengyouquan})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_weixin:
+                showShare(Wechat.NAME);
+                break;
+            case R.id.ll_pengyouquan:
+                showShare(WechatMoments.NAME);
+                break;
+        }
+    }
+
+
+
+
+
+
+    private void initDatas() {
         PAGE_NO = 1;
         RecommendSharePostBean bean = new RecommendSharePostBean();
         bean.userId = UserInstance.getInstance().getUid();
@@ -138,25 +130,24 @@ public class RecommendShareActivity extends BaseActivity {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         if (message.result.records != null && message.result.records.size() > 0) {
-                            ll_sharelabel.setVisibility(View.VISIBLE);
-                            ll_share_all.setVisibility(View.VISIBLE);
-                            lv_shared.setLoading(false);
-
+                            llSharelabel.setVisibility(View.VISIBLE);
+                            llShareAll.setVisibility(View.VISIBLE);
+                            lvShared.setLoading(false);
 
                             //有消息
                             PAGE_NO++;
                             madapter.mData.addAll(message.result.records);
                             if (message.result.records.size() < 10 && message.result.records.size() > 0) {
-                                lv_shared.setHasLoadMore(false);
-                                lv_shared.setLoadAllViewText("暂时只有这么多结果");
-                                lv_shared.setLoadAllFooterVisible(true);
+                                lvShared.setHasLoadMore(false);
+                                lvShared.setLoadAllViewText("暂时只有这么多结果");
+                                lvShared.setLoadAllFooterVisible(true);
                             } else {
-                                lv_shared.setHasLoadMore(true);
+                                lvShared.setHasLoadMore(true);
                             }
                             madapter.notifyDataSetChanged();
                         } else {
-                            ll_sharelabel.setVisibility(View.GONE);
-                            ll_share_all.setVisibility(View.GONE);
+                            llSharelabel.setVisibility(View.GONE);
+                            llShareAll.setVisibility(View.GONE);
                         }
                         break;
                 }
@@ -165,8 +156,8 @@ public class RecommendShareActivity extends BaseActivity {
             @Override
             public void onFail(Call<BaseBean<RecommendSharedResultBean>> call, Throwable t) {
                 DialogUtil.closeProgress();
-                ll_sharelabel.setVisibility(View.GONE);
-                ll_share_all.setVisibility(View.GONE);
+                llSharelabel.setVisibility(View.GONE);
+                llShareAll.setVisibility(View.GONE);
             }
         });
 
@@ -187,18 +178,18 @@ public class RecommendShareActivity extends BaseActivity {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         if (message.result.records != null && message.result.records.size() > 0) {
-                            lv_shared.setLoading(false);
+                            lvShared.setLoading(false);
 
 
                             //有消息
                             PAGE_NO++;
                             madapter.mData.addAll(message.result.records);
                             if (message.result.records.size() < 10 && message.result.records.size() > 0) {
-                                lv_shared.setHasLoadMore(false);
-                                lv_shared.setLoadAllViewText("暂时只有这么多结果");
-                                lv_shared.setLoadAllFooterVisible(true);
+                                lvShared.setHasLoadMore(false);
+                                lvShared.setLoadAllViewText("暂时只有这么多结果");
+                                lvShared.setLoadAllFooterVisible(true);
                             } else {
-                                lv_shared.setHasLoadMore(true);
+                                lvShared.setHasLoadMore(true);
                             }
                             madapter.notifyDataSetChanged();
                         }
@@ -220,13 +211,11 @@ public class RecommendShareActivity extends BaseActivity {
         super.onStart();
         if (UserInstance.getInstance().userInfo.avatar != null) {
             Uri uri = Uri.parse(Constants.Url.File_Host + UserInstance.getInstance().userInfo.avatar);
-            sdv_header.setImageURI(uri);
+            sdvHeader.setImageURI(uri);
         }
         if (!TextUtils.isEmpty(UserInstance.getInstance().userInfo.nickName)) {
-            tv_nickname.setText(UserInstance.getInstance().userInfo.nickName);
+            tvNickname.setText(UserInstance.getInstance().userInfo.nickName);
         }
-
-
     }
 
     Bitmap bitmap;
@@ -235,8 +224,10 @@ public class RecommendShareActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         //todo 修改分享的url
-        bitmap = ZXingUtils.createQRImage("http://192.168.1.111:8020/article/app_downLoad.html?recommender=" + UserInstance.getInstance().getUid() + "&extensionSource=EXTENSION_02", DensityUtil.dip2px(this, 230), DensityUtil.dip2px(this, 230));
-        iv_share_qr.setImageBitmap(bitmap);
+//        bitmap = ZXingUtils.createQRImage("http://192.168.1.111:8020/article/app_downLoad.html?recommender=" + UserInstance.getInstance().getUid() + "&extensionSource=EXTENSION_02", DensityUtil.dip2px(this, 230), DensityUtil.dip2px(this, 230));
+        LogUtilH.e(Constants.Url.Host + "article/app_downLoad.html?recommender=" + UserInstance.getInstance().getUid() + "&extensionSource=EXTENSION_02");
+        bitmap = ZXingUtils.createQRImage(Constants.Url.Host + "article/app_downLoad.html?recommender=" + UserInstance.getInstance().getUid() + "&extensionSource=EXTENSION_02", DensityUtil.dip2px(this, 230), DensityUtil.dip2px(this, 230));
+        ivShareQr.setImageBitmap(bitmap);
     }
 
 
@@ -259,6 +250,8 @@ public class RecommendShareActivity extends BaseActivity {
         //启动分享
         oks.show(MobSDK.getContext());
     }
+
+
 
 
     class RecommendHistoryAdapter extends BaseAdapter {

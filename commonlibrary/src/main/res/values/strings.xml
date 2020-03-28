@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name"></string>
+    <string name="sure">确定</string>
+    <string name="just">刚刚</string>
+    <string name="minutes_ago1">10分钟以前</string>
+    <string name="minutes_ago2">20分钟以前</string>
+    <string name="yesterday">昨天</string>
+    <string name="afternoon">下午</string>
+    <string name="morning">上午</string>
+</resources>

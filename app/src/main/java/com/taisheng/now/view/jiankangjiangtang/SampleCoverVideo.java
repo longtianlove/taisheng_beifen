@@ -10,7 +10,6 @@ import android.widget.SeekBar;
 
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -18,8 +17,8 @@ import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.taisheng.now.R;
 
 /**
- 带封面
- Created by guoshuyu on 2017/9/3.
+ * 带封面
+ * Created by guoshuyu on 2017/9/3.
  */
 
 public class SampleCoverVideo extends StandardGSYVideoPlayer {
@@ -62,13 +61,16 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
         mCoverOriginUrl = url;
         mDefaultRes = res;
         Glide.with(getContext().getApplicationContext())
-                .setDefaultRequestOptions(
-                        new RequestOptions()
-                                .frame(1000000)
-                                .centerCrop()
-                                .error(res)
-                                .placeholder(res))
+//                .setDefaultRequestOptions(
+//                        new RequestOptions()
+//                                .frame(1000000)
+//                                .centerCrop()
+//                                .error(res)
+//                                .placeholder(res))
+
                 .load(url)
+                .error(res)
+                .placeholder(res)
                 .into(mCoverImage);
     }
 

@@ -19,6 +19,8 @@ import com.taisheng.now.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
+
 public class GuigeLabelWrapLayout extends ViewGroup {
     private static final String TAG = "GuigeLabelWrapLayout";
     /**
@@ -31,17 +33,21 @@ public class GuigeLabelWrapLayout extends ViewGroup {
     public int BUTTON_STYLE = 1;
     private int style=0;
     private View btn;
+    private Context context;
 
     public GuigeLabelWrapLayout(Context context) {
         super(context);
+        this.context=context;
     }
 
     public GuigeLabelWrapLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context=context;
     }
 
     public GuigeLabelWrapLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        this.context=context;
     }
 
     /**
@@ -89,9 +95,9 @@ public class GuigeLabelWrapLayout extends ViewGroup {
                 ((TextView) btn).setTextSize(textSize);
                 ((TextView) btn).setBackground(getResources().getDrawable(R.drawable.search_history_bg));
                 if(selectedId==i){
-                    ((TextView) btn).setTextColor(Color.parseColor("#529FFB"));
+                    ((TextView) btn).setTextColor(ContextCompat.getColor(context,R.color.color00c8aa));
                 }else{
-                    ((TextView) btn).setTextColor(Color.parseColor("#ff333333"));
+                    ((TextView) btn).setTextColor(ContextCompat.getColor(context,R.color.color333333));
                 }
             }else if (style == BUTTON_STYLE){
                 btn = new Button(context);

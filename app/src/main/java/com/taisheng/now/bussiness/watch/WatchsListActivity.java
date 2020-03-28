@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -15,8 +16,9 @@ import com.taisheng.now.R;
 import com.taisheng.now.ZXing.ZXingActivity;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.BaseListPostBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.http.ApiUtils;
@@ -36,28 +38,35 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class WatchsListActivity extends BaseActivity {
-    View iv_back;
+public class WatchsListActivity extends BaseIvActivity {
 
     com.taisheng.now.view.WithScrolleViewListView lv_watchslist;
     MyPingjiaAdapter madapter;
     View tv_adddevice;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchslist);
-        initView();
+        initViews();
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("设备绑定");
+    }
+
+    void initViews() {
+
         lv_watchslist = findViewById(R.id.lv_watchslist);
         madapter = new MyPingjiaAdapter(this);
         lv_watchslist.setAdapter(madapter);
@@ -83,14 +92,14 @@ public class WatchsListActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
+        initDatas();
     }
 
     int PAGE_NO = 1;
     int PAGE_SIZE = 10;
 
 
-    void initData() {
+    void initDatas() {
         PAGE_NO = 1;
         PAGE_SIZE = 10;
         getMyPingjias();
@@ -249,7 +258,7 @@ public class WatchsListActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     WatchInstance.getInstance().deviceId = bean.deviceId;
-                    SPUtil.putDeviced( WatchInstance.getInstance().deviceId);
+                    SPUtil.putDeviced(WatchInstance.getInstance().deviceId);
                     WatchInstance.getInstance().deviceNickName = bean.nickName;
                     WatchInstance.getInstance().relationShip = bean.terminalRelationship;
                     //todo 数据给全
@@ -257,7 +266,7 @@ public class WatchsListActivity extends BaseActivity {
                     WatchInstance.getInstance().idcard = bean.idcard;
                     WatchInstance.getInstance().phoneNumber = bean.phoneNumber;
 
-                    WatchInstance.getInstance().createTime=bean.createTime;
+                    WatchInstance.getInstance().createTime = bean.createTime;
 
                     Intent intent = new Intent(WatchsListActivity.this, WatchMainActivity.class);
                     startActivity(intent);

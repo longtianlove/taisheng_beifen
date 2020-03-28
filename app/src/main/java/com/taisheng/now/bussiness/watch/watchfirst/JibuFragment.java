@@ -14,7 +14,7 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
@@ -138,7 +138,7 @@ public class JibuFragment extends BaseFragment {
                             //显示个数
 //                            xAxis.setLabelCount(days.size());
                             xAxis.setValueFormatter(formatter);
-                            LineChartUtils lineChartUtils = new LineChartUtils(list, mChart, "#529FFB", "步数");
+                            LineChartUtils lineChartUtils = new LineChartUtils(list, mChart, "#00C8AA", "步数");
 
                         }
 
@@ -194,11 +194,8 @@ public class JibuFragment extends BaseFragment {
                             //显示个数
 //                            xAxis.setLabelCount(days.size());
                             xAxis.setValueFormatter(formatter);
-                            LineChartUtils lineChartUtils = new LineChartUtils(list_month, chart_month, "#529FFB", "步数");
-
+                            LineChartUtils lineChartUtils = new LineChartUtils(list_month, chart_month, "#00C8AA", "步数");
                         }
-
-
                         break;
                 }
             }

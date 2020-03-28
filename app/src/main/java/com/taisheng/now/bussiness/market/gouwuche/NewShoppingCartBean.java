@@ -11,6 +11,7 @@ package com.taisheng.now.bussiness.market.gouwuche;
 
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Auto-generated: 2019-10-24 11:15:10
@@ -25,7 +26,7 @@ public class NewShoppingCartBean {
     public String goodsSn;
     public String updateTime;
     public String userId;
-    public String specifications;
+    public List<String> specifications;
     public int number;
     public String picUrl;
     public int deleted;
@@ -34,6 +35,7 @@ public class NewShoppingCartBean {
     public String checked;
     public String id;
     public String goodsName;
+
     public void setProductId(String productId) {
         this.productId = productId;
     }
@@ -69,11 +71,20 @@ public class NewShoppingCartBean {
         return userId;
     }
 
-    public void setSpecifications(String specifications) {
+    public List<String> getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(List<String> specifications) {
         this.specifications = specifications;
     }
-    public String getSpecifications() {
-        return specifications;
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public void setNumber(int number) {

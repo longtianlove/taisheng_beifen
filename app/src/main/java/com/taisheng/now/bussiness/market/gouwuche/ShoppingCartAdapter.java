@@ -2,23 +2,22 @@ package com.taisheng.now.bussiness.market.gouwuche;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.taisheng.now.R;
 import com.taisheng.now.bussiness.bean.result.xiadanshangpinBean;
 import com.taisheng.now.bussiness.market.DingdanInstance;
 import com.taisheng.now.bussiness.market.ShangPinxiangqingActivity;
-import com.taisheng.now.bussiness.market.dingdan.DindanxiangqingYiwanchengActivity;
+import com.th.j.commonlibrary.wight.RoundImgView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
     public void setShoppingCartBeanList(List<ShoppingCartBean> shoppingCartBeanList) {
         this.shoppingCartBeanList = shoppingCartBeanList;
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
 
     /**
@@ -92,7 +91,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
      */
     public void isShow(boolean flag) {
         isShow = flag;
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -106,7 +105,6 @@ public class ShoppingCartAdapter extends BaseAdapter {
         }
         final ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(position);
         xiadanshangpinBean xbean=new xiadanshangpinBean();
-
 
         xbean.goodsId=shoppingCartBean.goodsId;
         xbean.name=shoppingCartBean.shoppingName;
@@ -134,15 +132,12 @@ public class ShoppingCartAdapter extends BaseAdapter {
             holder.ckOneChose.setChecked(false);
         }
 
-        String temp_url = shoppingCartBean.imageUrl;
-        if (temp_url == null || "".equals(temp_url)) {
-            holder.sdv_article.setBackgroundResource(R.drawable.article_default);
-
-        } else {
-            Uri uri = Uri.parse(temp_url);
-            holder.sdv_article.setImageURI(uri);
-        }
-
+        Glide.with(context)
+                .load(shoppingCartBean.imageUrl)
+                .placeholder(R.drawable.article_default)
+                .error(R.drawable.article_default)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.sdv_article);
 
         String attribute = shoppingCartBean.getAttribute();
         if (!StringUtil.isEmpty(attribute)){
@@ -256,32 +251,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                 modifyCountInterface.doDecrease(position, holder.tvCommodityShowNum, holder.ckOneChose.isChecked());//暴露删减接口
             }
         });
-        //删除弹窗
-        holder.tvCommodityDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                modifyCountInterface.childDelete(position);//删除
-//                AlertDialog alert = new AlertDialog.Builder(context).create();
-//                alert.setTitle("操作提示");
-//                alert.setMessage("您确定要将这些商品从购物车中移除吗？");
-//                alert.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                return;
-//                            }
-//                        });
-//                alert.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                modifyCountInterface.childDelete(position);//删除 目前只是从item中移除
-//
-//                            }
-//                        });
-//                alert.show();
-            }
-        });
+
         //判断是否在编辑状态下
 //        if (isShow) {
 //            holder.tvCommodityName.setVisibility(View.VISIBLE);
@@ -290,9 +260,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 //            holder.tvCommodityDelete.setVisibility(View.GONE);
 //        } else {
             holder.tvCommodityName.setVisibility(View.VISIBLE);
-            holder.rlEdit.setVisibility(View.VISIBLE);
             holder.tvCommodityNum.setVisibility(View.VISIBLE);
-            holder.tvCommodityDelete.setVisibility(View.VISIBLE);
 //        }
 
         return convertView;
@@ -300,11 +268,9 @@ public class ShoppingCartAdapter extends BaseAdapter {
     //初始化控件
     class ViewHolder {
         View ll_all;
-        ImageView tvCommodityDelete;
         TextView tvCommodityName, tvCommodityAttr, tvCommodityPrice, tvCommodityNum, tvCommodityShowNum,ivSub, ivAdd;
         CheckBox ckOneChose;
-        LinearLayout rlEdit;
-        SimpleDraweeView sdv_article;;
+        RoundImgView sdv_article;;
         public ViewHolder(View itemView) {
             ll_all=itemView.findViewById(R.id.ll_all);
             ckOneChose = (CheckBox) itemView.findViewById(R.id.ck_chose);
@@ -315,8 +281,6 @@ public class ShoppingCartAdapter extends BaseAdapter {
             tvCommodityPrice = (TextView) itemView.findViewById(R.id.tv_commodity_price);
             tvCommodityNum = (TextView) itemView.findViewById(R.id.tv_commodity_num);
             tvCommodityShowNum = (TextView) itemView.findViewById(R.id.tv_commodity_show_num);
-            tvCommodityDelete = (ImageView) itemView.findViewById(R.id.tv_commodity_delete);
-            rlEdit = (LinearLayout) itemView.findViewById(R.id.rl_edit);
             sdv_article=itemView.findViewById(R.id.sdv_article);
 
 

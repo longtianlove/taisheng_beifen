@@ -19,6 +19,8 @@ import com.taisheng.now.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
+
 public class DoctorLabelWrapLayout extends ViewGroup {
     private static final String TAG = "WrapLayout";
     /**
@@ -31,17 +33,21 @@ public class DoctorLabelWrapLayout extends ViewGroup {
     public int BUTTON_STYLE = 1;
     private int style = 0;
     private View btn;
+    private Context context;
 
     public DoctorLabelWrapLayout(Context context) {
         super(context);
+        this.context=context;
     }
 
     public DoctorLabelWrapLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context=context;
     }
 
     public DoctorLabelWrapLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        this.context=context;
     }
 
     /**
@@ -88,14 +94,14 @@ public class DoctorLabelWrapLayout extends ViewGroup {
                 ((TextView) btn).setGravity(Gravity.CENTER);
                 ((TextView) btn).setText(text);
                 ((TextView) btn).setTextSize(textSize);
-                ((TextView) btn).setTextColor(Color.parseColor("#ff529ffb"));
+                ((TextView) btn).setTextColor(ContextCompat.getColor(context,R.color.color00c8aa));
                 ((TextView) btn).setBackground(getResources().getDrawable(R.drawable.doctorlabel_bg));
             } else if (style == BUTTON_STYLE) {
                 btn = new Button(context);
                 ((Button) btn).setGravity(Gravity.CENTER);
                 ((Button) btn).setText(text);
                 ((Button) btn).setTextSize(textSize);
-                ((Button) btn).setTextColor(Color.parseColor("#ff529ffb"));
+                ((Button) btn).setTextColor(ContextCompat.getColor(context,R.color.color00c8aa));
             }
             btn.setClickable(true);
 
@@ -279,8 +285,6 @@ public class DoctorLabelWrapLayout extends ViewGroup {
             top = lineHeight;
         }
     }
-
-
     public void setStyle(int style) {
         this.style = style;
     }

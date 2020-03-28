@@ -16,7 +16,8 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
@@ -36,9 +37,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchMeNaozhongListActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
-    TextView tv_bianji;
+public class WatchMeNaozhongListActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     boolean bianji = false;
 
 
@@ -48,41 +47,42 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
     ArticleAdapter madapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchme_naozhong);
-        initView();
-//        EventBus.getDefault().register(this);
+        initViews();
+    }
+
+    @Override
+    public void initData() {
 
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("闹钟设置");
+        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setText(getString(R.string.edit));
+        tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-            }
-        });
-
-
-        tv_bianji = findViewById(R.id.tv_bianji);
-        tv_bianji.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
                 bianji = !bianji;
                 if (bianji) {
-                    tv_bianji.setText("完成");
+                    tvRight.setText("完成");
                 } else {
-                    tv_bianji.setText("编辑");
+                    tvRight.setText("编辑");
 
                 }
                 madapter.notifyDataSetChanged();
-
-
             }
         });
+    }
+
+    void initViews() {
 
         iv_addnaozhong = findViewById(R.id.iv_addnaozhong);
         iv_addnaozhong.setOnClickListener(new View.OnClickListener() {
@@ -103,10 +103,10 @@ public class WatchMeNaozhongListActivity extends BaseActivity implements Activit
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
+        initDatas();
     }
 
-    void initData() {
+    void initDatas() {
         BaseWatchBean bean = new BaseWatchBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();

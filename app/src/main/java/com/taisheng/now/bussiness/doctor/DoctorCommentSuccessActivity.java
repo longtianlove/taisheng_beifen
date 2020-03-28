@@ -3,44 +3,60 @@ package com.taisheng.now.bussiness.doctor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.MainActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dragon on 2019/6/28.
  */
 
-public class DoctorCommentSuccessActivity extends BaseActivity {
+public class DoctorCommentSuccessActivity extends BaseHActivity {
+    @BindView(R.id.ll_go_detail)
+    LinearLayout llGoDetail;
+    @BindView(R.id.btn_post)
+    TextView btnPost;
 
-
-    View ll_go_detail;
-    TextView btn_post;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_doctor_comment_success);
-        initView();
+        ButterKnife.bind(this);
     }
-    void initView(){
-        ll_go_detail=findViewById(R.id.ll_go_detail);
-        ll_go_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
-        btn_post= (TextView) findViewById(R.id.btn_post);
-        btn_post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(DoctorCommentSuccessActivity.this, MainActivity.class);
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.valuation_success));
+        tvLeft.setVisibility(View.INVISIBLE);
+    }
+
+    @OnClick({R.id.ll_go_detail, R.id.btn_post})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_go_detail:
+                finish();
+                break;
+            case R.id.btn_post:
+                Intent intent = new Intent(DoctorCommentSuccessActivity.this, MainActivity.class);
                 startActivity(intent);
-            }
-        });
+                break;
+        }
     }
 }

@@ -16,7 +16,8 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.ChiyaolistPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
@@ -28,6 +29,7 @@ import com.taisheng.now.view.WithScrolleViewListView;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -35,31 +37,38 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchChiYaoListActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
+public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     View iv_addnaozhong;
 
     WithScrolleViewListView lv_chiyaos;
     ArticleAdapter madapter;
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchme_chiyao);
-        initView();
+        ButterKnife.bind(this);
+        initViews();
 //        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void initData() {
 
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("吃药提醒");
+    }
+
+    void initViews() {
 
         iv_addnaozhong = findViewById(R.id.iv_addnaozhong);
         iv_addnaozhong.setOnClickListener(new View.OnClickListener() {
@@ -94,12 +103,12 @@ public class WatchChiYaoListActivity extends BaseActivity implements ActivityCom
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
+        initDatas();
     }
 
     int size = 0;
 
-    void initData() {
+    void initDatas() {
         ChiyaolistPostBean bean = new ChiyaolistPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();

@@ -3,59 +3,55 @@ package com.taisheng.now.bussiness.watch;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.taisheng.now.R;
 import com.taisheng.now.ZXing.ZXingActivity;
-import com.taisheng.now.base.BaseActivity;
-import com.taisheng.now.bussiness.me.FuwuxieyiActivity;
-import com.taisheng.now.bussiness.me.YisixieyiActivity;
-import com.taisheng.now.util.Apputil;
+import com.taisheng.now.base.BaseIvActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by dragon on 2019/6/28.
  */
 
-public class BindWatchsActivity extends BaseActivity {
-    View iv_back;
-
-
-    View tv_adddevice;
+public class BindWatchsActivity extends BaseIvActivity {
+    @BindView(R.id.tv_adddevice)
+    TextView tvAdddevice;
+    public static final int REQUEST_SWEEP_CODE = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_bindwatchs);
-        initView();
+        ButterKnife.bind(this);
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        tv_adddevice = findViewById(R.id.tv_adddevice);
-        tv_adddevice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ZXingActivity.skipToAsResult(BindWatchsActivity.this, REQUEST_SWEEP_CODE);
-
-            }
-        });
-
+    @Override
+    public void initData() {
 
     }
 
+    @Override
+    public void addData() {
 
-    public static final int REQUEST_SWEEP_CODE = 0;
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.device_binding));
+    }
+    @OnClick(R.id.tv_adddevice)
+    public void onViewClicked() {
+        ZXingActivity.skipToAsResult(BindWatchsActivity.this, REQUEST_SWEEP_CODE);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -105,4 +101,6 @@ public class BindWatchsActivity extends BaseActivity {
         Matcher m = p.matcher(result);
         return m.matches();
     }
+
+
 }

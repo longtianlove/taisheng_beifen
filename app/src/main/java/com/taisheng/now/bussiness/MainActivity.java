@@ -1,323 +1,183 @@
 package com.taisheng.now.bussiness;
-
-
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-//import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import androidx.fragment.app.FragmentTransaction;
-
 import com.taisheng.now.R;
+import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseFragmentActivity;
+import com.taisheng.now.base.BaseHActivity;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.doctor.DoctorFragment;
 import com.taisheng.now.bussiness.first.FirstFragment;
 import com.taisheng.now.bussiness.market.MarketFragment;
 import com.taisheng.now.bussiness.me.MeFragment;
-import com.taisheng.now.bussiness.article.SecretFragment;
 import com.taisheng.now.bussiness.message.MessageFragment;
 import com.taisheng.now.chat.ChatManagerInstance;
+import com.taisheng.now.evbusbean.HomeChange;
 import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.SPUtil;
+import com.th.j.commonlibrary.wight.BottomBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 @SuppressLint("WrongConstant")
-public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class MainActivity extends BaseIvActivity implements BottomBar.OnItemListener {
 
-    private static int mTabID[] = {
-            R.id.tab_first,
-            R.id.tab_doctor,
-            R.id.tab_message,
-            R.id.tab_secret,
-            R.id.tab_me};
-
-    private ImageView iv_tab_first, iv_tab_doctor,iv_tab_message, iv_tab_secret,iv_tab_me;
-private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_me;
-
-    private View mTabs[] = {null, null,null,null, null};
-
+    @BindView(R.id.fl_mains)
+    FrameLayout flMains;
+    @BindView(R.id.bottom)
+    BottomBar bottom;
     private FirstFragment firstFragment;
-    private DoctorFragment doctorFragment;
-    private MessageFragment messageFragment;
-    public MarketFragment marketFragment;
-    private MeFragment meFragment;
-
-    View toolBar;
-
-
-
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+    public void initView() {
         setContentView(R.layout.main);
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void initData() {
         ChatManagerInstance.getInstance().init();
-        //进入主页
         SPUtil.putHome(true);
-        initView();
-        if (savedInstanceState != null) {
-            firstFragment = (FirstFragment) getSupportFragmentManager().findFragmentByTag(FirstFragment.class.getName());
-            doctorFragment = (DoctorFragment) getSupportFragmentManager().findFragmentByTag(DoctorFragment.class.getName());
-            messageFragment= (MessageFragment) getSupportFragmentManager().findFragmentByTag(MessageFragment.class.getName());
-            marketFragment = (MarketFragment) getSupportFragmentManager().findFragmentByTag(SecretFragment.class.getName());
-            meFragment = (MeFragment) getSupportFragmentManager().findFragmentByTag(MeFragment.class.getName());
-            if (firstFragment == null) {
-                firstFragment = new FirstFragment();
-            }
-            if (doctorFragment == null) {
-                doctorFragment = new DoctorFragment();
-            }
-            if(messageFragment==null){
-                messageFragment=new MessageFragment();
-            }
-            if(marketFragment ==null){
-                marketFragment =new MarketFragment();
-            }
-            if (meFragment == null) {
-                meFragment = new MeFragment();
-            }
-            getSupportFragmentManager().beginTransaction()
-                    .show(firstFragment)
-                    .hide(doctorFragment)
-                    .hide(messageFragment)
-                    .hide(marketFragment)
-                    .hide(meFragment).commit();
-        } else {
-            firstFragment = new FirstFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment, FirstFragment.class.getName())
-                    .show(firstFragment).commit();
-        }
+        EventBus.getDefault().register(this);
+        bottom.setOnItemListener(this);
+        llTop.setVisibility(View.GONE);
+        initBottom();
+    }
 
-
-        for (int i = 0; i < 5; i++) {
-            mTabs[i] = findViewById(mTabID[i]);
-            mTabs[i].setOnClickListener(this);
-        }
-
-        iv_tab_first.setSelected(true);
-        toolBar.setVisibility(View.VISIBLE);
-
-//        EventBus.getDefault().register(this);
-
+    @Override
+    public void addData() {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void initView() {
-        toolBar=findViewById(R.id.toolBar);
-        iv_tab_first= (ImageView) findViewById(R.id.iv_tab_first);
-        iv_tab_doctor= (ImageView) findViewById(R.id.iv_tab_doctor);
-        iv_tab_message=findViewById(R.id.iv_tab_message);
-        iv_tab_secret= (ImageView) findViewById(R.id.iv_tab_secret);
-        iv_tab_me= (ImageView) findViewById(R.id.iv_tab_me);
-        tv_tab_first= (TextView) findViewById(R.id.tv_tab_first);
-        tv_tab_doctor= (TextView) findViewById(R.id.tv_tab_doctor);
-        tv_tab_message=findViewById(R.id.tv_tab_message);
-        tv_tab_secret= (TextView) findViewById(R.id.tv_tab_secret);
-        tv_tab_me= (TextView) findViewById(R.id.tv_tab_me);
-
-
-
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
 
     }
 
-    private void hideAllTabIcon(FragmentTransaction transaction) {
-        if (null != firstFragment) {
-            transaction.hide(firstFragment);
-        }
-        if (null != doctorFragment) {
-            transaction.hide(doctorFragment);
-        }
-        if(null!=messageFragment){
-            transaction.hide(messageFragment);
-        }
-        if(null!= marketFragment){
-            transaction.hide(marketFragment);
-        }
-        if (null != meFragment) {
-            transaction.hide(meFragment);
-        }
-        iv_tab_first.setSelected(false);
-        tv_tab_first.setTextColor(getResources().getColor(R.color.tv_tab_color_normal));
-        iv_tab_doctor.setSelected(false);
-        tv_tab_doctor.setTextColor(getResources().getColor(R.color.tv_tab_color_normal));
+    /**
+     * 初始化
+     */
+    private void initBottom() {
 
-        iv_tab_message.setSelected(false);
-        tv_tab_message.setTextColor(getResources().getColor(R.color.tv_tab_color_normal));
+        firstFragment = new FirstFragment();
+        DoctorFragment doctorFragment = new DoctorFragment();
+        MarketFragment marketFragment = new MarketFragment();
+        MessageFragment messageFragment = new MessageFragment();
+        MeFragment meFragment = new MeFragment();
 
-        iv_tab_secret.setSelected(false);
-        tv_tab_secret.setTextColor(getResources().getColor(R.color.tv_tab_color_normal));
-
-        iv_tab_me.setSelected(false);
-        tv_tab_me.setTextColor(getResources().getColor(R.color.tv_tab_color_normal));
-
-
+        bottom.init(getSupportFragmentManager(), R.id.fl_mains, this)
+                .addItem(getString(R.string.home13), R.drawable.main_bottom_first_select, R.drawable.main_bottom_first_normal, firstFragment, false)
+                .addItem(getString(R.string.home14), R.drawable.main_bottom_doctor_select, R.drawable.main_bottom_doctor_normal, doctorFragment, false)
+                .addItem(getString(R.string.home15), R.drawable.main_bottom_market_select, R.drawable.main_bottom_market_normal, marketFragment, false)
+                .addItem(getString(R.string.home16), R.drawable.main_bottom_chat_select, R.drawable.main_bottom_chat_normal, messageFragment, false)
+                .addItem(getString(R.string.home17), R.drawable.main_bottom_me_select, R.drawable.main_bottom_me_normal, meFragment, false)
+                .defaultIndext(0);
     }
 
-    public static int select_index;
-
-    public void showFragment(int index) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        hideAllTabIcon(transaction);
-        toolBar.setVisibility(View.VISIBLE);
-
-
-        switch (index) {
+    @Override
+    public void onItem(int i) {
+        switch (i) {
             case 0:
-
-                if (firstFragment == null) {
-                    firstFragment = new FirstFragment();
-                    transaction.add(R.id.fragment_container, firstFragment, FirstFragment.class.getName());
-                }
-                transaction.show(firstFragment).commit();
-
-                iv_tab_first.setSelected(true);
-                tv_tab_first.setTextColor(getResources().getColor(R.color.tv_tab_color_select));
-//                firstFragment.videoPlayer.onVideoResume();
-//                firstFragment.videoPlayer.onVideoPause();
-
-
-
-
-//                getLocationWithOneMinute = false;
-                select_index = 0;
+                llTop.setVisibility(View.GONE);
                 break;
             case 1:
-                if (doctorFragment == null) {
-                    doctorFragment = new DoctorFragment();
-                    transaction.add(R.id.fragment_container, doctorFragment, DoctorFragment.class.getName());
-                }
-                select_index = 1;
-
-
-                transaction
-                        .show(doctorFragment).commit();
-                toolBar.setVisibility(View.GONE);
-                iv_tab_doctor.setSelected(true);
-                tv_tab_doctor.setTextColor(getResources().getColor(R.color.tv_tab_color_select));
+                llTop.setVisibility(View.VISIBLE);
+                ivRight.setVisibility(View.GONE);
+                ivRightT.setVisibility(View.GONE);
+                tvLeft.setVisibility(View.INVISIBLE);
+                tvTitle.setText(getString(R.string.doctor01));
                 firstFragment.videoPlayer.onVideoPause();
                 break;
             case 2:
-                if(marketFragment ==null){
-                    marketFragment =new MarketFragment();
-                    transaction.add(R.id.fragment_container, marketFragment,SecretFragment.class.getName());
-                }
-                select_index=2;
-                transaction.show(marketFragment).commit();
-                iv_tab_secret.setSelected(true);
-                tv_tab_secret.setTextColor(getResources().getColor(R.color.tv_tab_color_select));
-                toolBar.setVisibility(View.GONE);
+                llTop.setVisibility(View.VISIBLE);
+                tvTitle.setText(getString(R.string.home15));
+                ivRight.setVisibility(View.VISIBLE);
+                ivRight.setBackgroundResource(R.drawable.icon_gouwuche);
+                tvLeft.setVisibility(View.INVISIBLE);
+                tvRight.setVisibility(View.GONE);
+                ivRightT.setVisibility(View.GONE);
                 firstFragment.videoPlayer.onVideoPause();
                 break;
             case 3:
-
-                if (meFragment == null) {
-                    meFragment = new MeFragment();
-                    transaction.add(R.id.fragment_container, meFragment, MeFragment.class.getName());
-                }
-//                getLocationWithOneMinute = false;
-                select_index = 3;
-                transaction
-                        .show(meFragment).commit();
-                iv_tab_me.setSelected(true);
-                tv_tab_me.setTextColor(getResources().getColor(R.color.tv_tab_color_select));
-                toolBar.setVisibility(View.GONE);
+                llTop.setVisibility(View.VISIBLE);
+                tvLeft.setVisibility(View.INVISIBLE);
+                tvTitle.setText(getString(R.string.home16));
+                tvRight.setVisibility(View.GONE);
+                ivRightT.setVisibility(View.GONE);
+                tvLeft.setVisibility(View.INVISIBLE);
+                tvRight.setText(getString(R.string.delete));
+                ivRight.setVisibility(View.GONE);
                 firstFragment.videoPlayer.onVideoPause();
                 break;
             case 4:
-                if (messageFragment == null) {
-                    messageFragment = new MessageFragment();
-                    transaction.add(R.id.fragment_container, messageFragment, MessageFragment.class.getName());
-                }
-//                getLocationWithOneMinute = false;
-                select_index = 4;
-                transaction
-                        .show(messageFragment).commit();
-                toolBar.setVisibility(View.GONE);
-                iv_tab_message.setSelected(true);
-
-                tv_tab_message.setTextColor(getResources().getColor(R.color.tv_tab_color_select));
+                llTop.setVisibility(View.VISIBLE);
+                ivRight.setVisibility(View.VISIBLE);
+                tvTitle.setText(getString(R.string.personal_center));
+                ivRight.setBackgroundResource(R.drawable.icon_set);
+                tvLeft.setVisibility(View.INVISIBLE);
+                tvRight.setVisibility(View.GONE);
+                ivRightT.setVisibility(View.GONE);
                 firstFragment.videoPlayer.onVideoPause();
                 break;
         }
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tab_first:
-                showFragment(0);
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void fenlei(HomeChange change) {
+        switch (change.getCode()) {
+            case 1:
+                llTop.setVisibility(View.VISIBLE);
+                ivRight.setVisibility(View.GONE);
+                ivRightT.setVisibility(View.GONE);
+                tvLeft.setVisibility(View.INVISIBLE);
+                tvTitle.setText(getString(R.string.doctor01));
                 break;
-            case R.id.tab_doctor:
-                showFragment(1);
-                break;
-            case R.id.tab_secret:
-                showFragment(2);
-                break;
-            case R.id.tab_me:
-                showFragment(3);
-                break;
-            case R.id.tab_message:
-                showFragment(4);
+            case 2:
+                llTop.setVisibility(View.VISIBLE);
+                tvTitle.setText(getString(R.string.home15));
+                ivRight.setVisibility(View.VISIBLE);
+                ivRight.setBackgroundResource(R.drawable.icon_gouwuche);
+                tvLeft.setVisibility(View.INVISIBLE);
+                ivRightT.setVisibility(View.GONE);
                 break;
         }
+        firstFragment.videoPlayer.onVideoPause();
+        bottom.defaultIndext(change.getCode());
     }
-
-
-
-
-
-
-
-
-
-
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if("HealthCheckResultActivity".equals(intent.getStringExtra("fromwhere"))){
-            showFragment(1);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if ("HealthCheckResultActivity".equals(intent.getStringExtra("fromwhere"))) {
+            bottom.defaultIndext(0);
+        }
+    }
 
     @Override
     public void onBackPressed() {
-        DialogUtil.showTwoButtonDialog(this, "确定要退出泰晟健康吗？", "取消","退出", new View.OnClickListener() {
+        DialogUtil.showTwoButtonDialog(this, getString(R.string.home18), getString(R.string.cancal), getString(R.string.exit), new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
@@ -333,7 +193,6 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
                 }
         );
     }
-
 
 
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -374,6 +233,8 @@ private TextView tv_tab_first,tv_tab_doctor,tv_tab_message,tv_tab_secret,tv_tab_
         }
         return false;
     }
+
+
 }
     
     

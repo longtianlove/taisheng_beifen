@@ -44,7 +44,8 @@ import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.AnquanweiilanPostBean;
 import com.taisheng.now.http.ApiUtils;
@@ -63,6 +64,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -70,9 +72,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchFirstAnQuanWeiLanActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
-    View tv_queding;
+public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     View iv_dingwei;
 
     private MapView mMapView = null;
@@ -117,24 +117,28 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseActivity implements Acti
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchfirstanquanweilan);
-        initView();
+        ButterKnife.bind(this);
+        initViews();
+    }
+
+    @Override
+    public void initData() {
 
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        tv_queding = findViewById(R.id.tv_queding);
-        tv_queding.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void addData() {
 
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("安全围栏");
+        tvRight.setText("确定");
+        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!(latitude > 0)) {
@@ -167,10 +171,11 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseActivity implements Acti
 
                     }
                 });
-
-
             }
         });
+    }
+
+  private   void initViews() {
         et_search = (EditText) findViewById(R.id.et_search);
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -342,7 +347,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseActivity implements Acti
                 projection = mBaiduMap.getProjection();
                 int indexy = (int) (iv_location.getHeight());
                 Point aimPoint = new Point(mapStatus.targetScreen.x, mapStatus.targetScreen.y + DensityUtil.dip2px(WatchFirstAnQuanWeiLanActivity.this, 10));
-                if(projection==null){
+                if (projection == null) {
                     return;
                 }
                 final LatLng position = projection.fromScreenLocation(aimPoint);
@@ -401,7 +406,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseActivity implements Acti
         HomelocationInstance.getInstance().init(mMapView);
 
         initAnim();
-        initData();
+        initDatas();
 
         EventBus.getDefault().register(this);
 
@@ -428,7 +433,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseActivity implements Acti
         iv_location.startAnimation(translateAnimation);
     }
 
-    public void initData() {
+    public void initDatas() {
         mPoiSearch = PoiSearch.newInstance();
         wait_search = 0;
 

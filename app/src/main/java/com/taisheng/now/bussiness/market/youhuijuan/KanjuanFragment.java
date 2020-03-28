@@ -1,10 +1,7 @@
 package com.taisheng.now.bussiness.market.youhuijuan;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,28 +12,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
-import com.taisheng.now.bussiness.bean.post.BaseListPostBean;
 import com.taisheng.now.bussiness.bean.post.KanjuanPostBean;
-import com.taisheng.now.bussiness.bean.result.JifenzhuanquBean;
 import com.taisheng.now.bussiness.bean.result.MallYouhuiquanBean;
 import com.taisheng.now.bussiness.bean.result.MallYouhuiquanResultBanner;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
+import com.th.j.commonlibrary.utils.LogUtilH;
 import com.taisheng.now.view.TaishengListView;
-import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -122,27 +114,31 @@ public class KanjuanFragment extends BaseFragment {
                 DialogUtil.closeProgress();
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result.records != null && message.result.records.size() > 0) {
-                            list_kajuan.setLoading(false);
-                            if (PAGE_NO == 1) {
-                                madapter.mData.clear();
-                            }
-                            //有消息
+                        if (message.result!=null){
+                            if (message.result.records != null && message.result.records.size() > 0) {
+                                list_kajuan.setLoading(false);
+                                if (PAGE_NO == 1) {
+                                    madapter.mData.clear();
+                                }
+                                //有消息
 //                            PAGE_NO++;
-                            madapter.mData.addAll(message.result.records);
-                            if (message.result.records.size() < 10) {
+                                madapter.mData.addAll(message.result.records);
+                                if (message.result.records.size() < 10) {
+                                    list_kajuan.setHasLoadMore(false);
+                                    list_kajuan.setLoadAllViewText("暂时只有这么多优惠券");
+                                    list_kajuan.setLoadAllFooterVisible(true);
+                                } else {
+                                    list_kajuan.setHasLoadMore(true);
+                                }
+                                madapter.notifyDataSetChanged();
+                            } else {
+                                //没有消息
                                 list_kajuan.setHasLoadMore(false);
                                 list_kajuan.setLoadAllViewText("暂时只有这么多优惠券");
                                 list_kajuan.setLoadAllFooterVisible(true);
-                            } else {
-                                list_kajuan.setHasLoadMore(true);
                             }
-                            madapter.notifyDataSetChanged();
-                        } else {
-                            //没有消息
-                            list_kajuan.setHasLoadMore(false);
-                            list_kajuan.setLoadAllViewText("暂时只有这么多优惠券");
-                            list_kajuan.setLoadAllFooterVisible(true);
+                        }else {
+
                         }
                         break;
                 }
@@ -210,25 +206,24 @@ public class KanjuanFragment extends BaseFragment {
             util.tv_tag.setText(bean.tag);
             util.tv_usedate.setText(bean.useDate);
 
-
             switch (assessmentType) {
                 case "1":
                     util.tv_discount.setTextColor(Color.parseColor("#FF3B30"));
                     util.tv_shiyong.setBackgroundResource(R.drawable.youhuijuanweishiyong_back);
                     util.tv_shiyong.setTextColor(Color.parseColor("#FFFFFF"));
-                    util.tv_yiguoqi.setVisibility(View.GONE);
+                    util.tv_yiguoqi.setBackgroundResource(R.drawable.icon_youhuijuanweishiyong_back);
                     break;
                 case "2":
                     util.tv_discount.setTextColor(Color.parseColor("#FF3B30"));
                     util.tv_shiyong.setBackgroundResource(R.drawable.youhuijuanyishiyong_back);
                     util.tv_shiyong.setTextColor(Color.parseColor("#FFFFFF"));
-                    util.tv_yiguoqi.setVisibility(View.GONE);
+                    util.tv_yiguoqi.setBackgroundResource(R.drawable.icon_youhuijuanyishiyong_back);
                     break;
                 case "3":
                     util.tv_discount.setTextColor(Color.parseColor("#999999"));
                     util.tv_shiyong.setBackgroundResource(R.drawable.youhuijuanyiguoqi_back);
                     util.tv_shiyong.setTextColor(Color.parseColor("#999999"));
-                    util.tv_yiguoqi.setVisibility(View.VISIBLE);
+                    util.tv_yiguoqi.setBackgroundResource(R.drawable.icon_yiguoqi);
                     break;
 
             }
