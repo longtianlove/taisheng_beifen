@@ -3,9 +3,9 @@ package com.taisheng.now.bussiness.market;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +13,15 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.AddgouwuchePostBean;
 import com.taisheng.now.bussiness.bean.post.BaseListPostBean;
 import com.taisheng.now.bussiness.bean.post.ShangpinxaingqingPostBean;
@@ -34,18 +34,23 @@ import com.taisheng.now.bussiness.bean.result.xiadanshangpinBean;
 import com.taisheng.now.bussiness.market.dingdan.DingdanjiesuanActivity;
 import com.taisheng.now.bussiness.market.dizhi.DizhiBianjiActivity;
 import com.taisheng.now.bussiness.market.gouwuche.GouwucheActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
+import com.taisheng.now.util.GlideImageLoader;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.GuigeLabelWrapLayout;
-import com.taisheng.now.view.banner.BannerViewPager;
+import com.th.j.commonlibrary.utils.SpanUtil;
+import com.th.j.commonlibrary.utils.TextsUtils;
+import com.youth.banner.Banner;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -53,13 +58,10 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class ShangPinxiangqingActivity extends BaseActivity {
-    View iv_back;
+public class ShangPinxiangqingActivity extends BaseIvActivity {
 
 
-    private FrameLayout bannerContaner;
-    BannerViewPager bannerViewPager;
-    private View bannerView;
+    private Banner bannerContaner;
     public TextView tv_counterprice;
     public TextView tv_jifenlabel;
     public TextView tv_retailprice;
@@ -94,29 +96,34 @@ public class ShangPinxiangqingActivity extends BaseActivity {
     public View tv_goumai;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_shangpinxiangqing);
-        initView();
-
-        initData();
+        ButterKnife.bind(this);
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initData() {
+        initViews();
+        initDatas();
+    }
 
+    @Override
+    public void addData() {
 
-        bannerContaner = (FrameLayout) findViewById(R.id.bannerContaner);
-        bannerContaner.setVisibility(View.VISIBLE);
-        bannerViewPager = new BannerViewPager(this);
-        bannerView = bannerViewPager.getContentView();
-        bannerContaner.addView(bannerView);
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.good_detial));
+        tvTitle.setTextColor(ContextCompat.getColor(this, R.color.color333333));
+        Drawable drawable = getResources().getDrawable(R.drawable.icon_back);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tvLeft.setCompoundDrawables(drawable, null, null, null);
+    }
+
+    private void initViews() {
+        bannerContaner = findViewById(R.id.bannerContaner);
+
         tv_guigeresult = findViewById(R.id.tv_guigeresult);
 
         iv_gouwuche = findViewById(R.id.iv_gouwuche);
@@ -185,13 +192,13 @@ public class ShangPinxiangqingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                UpdateCartNumberPostBean updateCartNumberPostBean=new UpdateCartNumberPostBean();
-                updateCartNumberPostBean.userId=UserInstance.getInstance().getUid();
-                updateCartNumberPostBean.token=UserInstance.getInstance().getToken();
-                updateCartNumberPostBean.goodsId=goodsid;
-                updateCartNumberPostBean.number=Integer.parseInt(number);
-                updateCartNumberPostBean.operateType=1;
-                updateCartNumberPostBean.productId=productid;
+                UpdateCartNumberPostBean updateCartNumberPostBean = new UpdateCartNumberPostBean();
+                updateCartNumberPostBean.userId = UserInstance.getInstance().getUid();
+                updateCartNumberPostBean.token = UserInstance.getInstance().getToken();
+                updateCartNumberPostBean.goodsId = goodsid;
+                updateCartNumberPostBean.number = Integer.parseInt(number);
+                updateCartNumberPostBean.operateType = 1;
+                updateCartNumberPostBean.productId = productid;
                 ApiUtils.getApiService().fastBuyCheckNumbe(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -213,12 +220,6 @@ public class ShangPinxiangqingActivity extends BaseActivity {
 
                     }
                 });
-
-
-
-
-
-
 
 
             }
@@ -274,7 +275,6 @@ public class ShangPinxiangqingActivity extends BaseActivity {
                     ToastUtil.showAtCenter("请选择商品规格");
                     return;
                 }
-
                 // 添加到购物车
                 AddgouwuchePostBean bean = new AddgouwuchePostBean();
                 bean.userId = UserInstance.getInstance().getUid();
@@ -289,10 +289,8 @@ public class ShangPinxiangqingActivity extends BaseActivity {
                             case Constants.HTTP_SUCCESS:
                                 ToastUtil.showAtCenter("添加成功");
                                 break;
-
                             default:
                                 ToastUtil.showAtCenter(message.message);
-
                                 break;
 
                         }
@@ -312,51 +310,47 @@ public class ShangPinxiangqingActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-
-
                 if ("请选择".equals(tv_guigeresult.getText().toString())) {
                     ToastUtil.showAtCenter("请选择商品规格");
                     return;
                 }
 
-
                 DingdanInstance.getInstance().scoreGoods = scoreGoods;
-
-                    if (scoreGoods == 1) {
-                        DingdanInstance.getInstance().putongshangpindingdanList.clear();
-                        xiadanshangpinBean xbean = new xiadanshangpinBean();
-                        xbean.goodsId = goodsid;
-                        xbean.name = name;
-                        xbean.counterPrice = counterPrice + "";
+                if (scoreGoods == 1) {
+                    DingdanInstance.getInstance().putongshangpindingdanList.clear();
+                    xiadanshangpinBean xbean = new xiadanshangpinBean();
+                    xbean.goodsId = goodsid;
+                    xbean.name = name;
+                    xbean.counterPrice = counterPrice + "";
 //                xbean.retailPrice=retailPrice;
-                        xbean.number = number;
-                        xbean.picUrl = picUrl;
-                        xbean.productId = productid;
-                        DingdanInstance.getInstance().putongshangpindingdanList.add(xbean);
+                    xbean.number = number;
+                    xbean.picUrl = picUrl;
+                    xbean.productId = productid;
+                    DingdanInstance.getInstance().putongshangpindingdanList.add(xbean);
 
-                        DingdanInstance.getInstance().zongjia = counterPrice.multiply(new BigDecimal((Integer.parseInt(number)))) + "";
-                    } else {
-                        DingdanInstance.getInstance().jifenshangpindingdanList.clear();
-                        xiadanshangpinBean xbean = new xiadanshangpinBean();
-                        xbean.goodsId = goodsid;
-                        xbean.name = name;
-                        xbean.counterPrice = counterPrice + "";
+                    DingdanInstance.getInstance().zongjia = counterPrice.multiply(new BigDecimal((Integer.parseInt(number)))) + "";
+                } else {
+                    DingdanInstance.getInstance().jifenshangpindingdanList.clear();
+                    xiadanshangpinBean xbean = new xiadanshangpinBean();
+                    xbean.goodsId = goodsid;
+                    xbean.name = name;
+                    xbean.counterPrice = counterPrice + "";
 //                xbean.retailPrice=retailPrice;
-                        xbean.number = number;
-                        xbean.picUrl = picUrl;
-                        xbean.productId = productid;
-                        DingdanInstance.getInstance().jifenshangpindingdanList.add(xbean);
+                    xbean.number = number;
+                    xbean.picUrl = picUrl;
+                    xbean.productId = productid;
+                    DingdanInstance.getInstance().jifenshangpindingdanList.add(xbean);
 
-                        DingdanInstance.getInstance().zongjia = counterPrice.multiply(new BigDecimal((Integer.parseInt(number)))) + "";
-                    }
+                    DingdanInstance.getInstance().zongjia = counterPrice.multiply(new BigDecimal((Integer.parseInt(number)))) + "";
+                }
 
-                UpdateCartNumberPostBean updateCartNumberPostBean=new UpdateCartNumberPostBean();
-                updateCartNumberPostBean.userId=UserInstance.getInstance().getUid();
-                updateCartNumberPostBean.token=UserInstance.getInstance().getToken();
-                updateCartNumberPostBean.goodsId=goodsid;
-                updateCartNumberPostBean.number=Integer.parseInt(number);
-                updateCartNumberPostBean.operateType=1;
-                updateCartNumberPostBean.productId=productid;
+                UpdateCartNumberPostBean updateCartNumberPostBean = new UpdateCartNumberPostBean();
+                updateCartNumberPostBean.userId = UserInstance.getInstance().getUid();
+                updateCartNumberPostBean.token = UserInstance.getInstance().getToken();
+                updateCartNumberPostBean.goodsId = goodsid;
+                updateCartNumberPostBean.number = Integer.parseInt(number);
+                updateCartNumberPostBean.operateType = 1;
+                updateCartNumberPostBean.productId = productid;
                 ApiUtils.getApiService().fastBuyCheckNumbe(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -378,13 +372,11 @@ public class ShangPinxiangqingActivity extends BaseActivity {
                 });
 
 
-
-
             }
         });
 
         tv_counterprice = findViewById(R.id.tv_counterprice);
-        tv_jifenlabel=findViewById(R.id.tv_jifenlabel);
+        tv_jifenlabel = findViewById(R.id.tv_jifenlabel);
 
         tv_retailprice = findViewById(R.id.tv_retailprice);
         tv_name = findViewById(R.id.tv_name);
@@ -392,7 +384,7 @@ public class ShangPinxiangqingActivity extends BaseActivity {
 
     }
 
-    public void next(){
+    public void next() {
         //获取地址信息
 
         BaseListPostBean bean = new BaseListPostBean();
@@ -450,7 +442,7 @@ public class ShangPinxiangqingActivity extends BaseActivity {
 
     public String number = 1 + "";
 
-    void initData() {
+    void initDatas() {
         Intent intent = getIntent();
         goodsid = intent.getStringExtra("goodsid");
 
@@ -469,31 +461,26 @@ public class ShangPinxiangqingActivity extends BaseActivity {
                             for (String urlTemp : message.result.goodsEntity.gallery) {
                                 pictureUrls.add(urlTemp);
                             }
-                            bannerViewPager.setPictureUrls(pictureUrls);
-                            bannerViewPager.setmScrollSpeed(500);
-                            bannerViewPager.setOnItemClickListener(new BannerViewPager.ViewPagerItemListener() {
-                                @Override
-                                public void onViewPagerItemClick(int i) {
-
-                                }
-                            });
-                            bannerViewPager.madapter.notifyDataSetChanged();
+                            bannerContaner.setImageLoader(new GlideImageLoader());
+                            bannerContaner.setImages(pictureUrls);
+                            bannerContaner.start();
 
                             scoreGoods = message.result.goodsEntity.scoreGoods;
-                            if(scoreGoods==1){
-                                tv_counterprice.setText("¥"+message.result.goodsEntity.retailPrice + "");
+                            if (scoreGoods == 1) {
                                 tv_jifenlabel.setVisibility(View.GONE);
                                 tv_retailprice.setVisibility(View.VISIBLE);
-
-                                tv_retailprice.setText(message.result.goodsEntity.counterPrice + "");
-                            }else{
+                                tv_retailprice.setVisibility(View.VISIBLE);
+                                tv_retailprice.setText(TextsUtils.span(getString(R.string.mony_code) + message.result.goodsEntity.retailPrice));
+                                SpanUtil.create()
+                                        .addSection(getString(R.string.mony_code) + message.result.goodsEntity.counterPrice)
+                                        .setAbsSize(getString(R.string.mony_code) + message.result.goodsEntity.counterPrice + "", 40)
+                                        .setRelSize(getString(R.string.mony_code), 0.6f)
+                                        .showIn(tv_counterprice);
+                            } else {
                                 tv_counterprice.setText(message.result.goodsEntity.retailPrice.multiply(new BigDecimal(100)) + "");
                                 tv_jifenlabel.setVisibility(View.VISIBLE);
-                                tv_retailprice.setVisibility(View.GONE);
-                                tv_retailprice.setText(message.result.goodsEntity.counterPrice .multiply(new BigDecimal(100))+ "");
                             }
                             counterPrice = message.result.goodsEntity.retailPrice;
-                            tv_retailprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                             retailPrice = message.result.goodsEntity.retailPrice;
                             name = message.result.goodsEntity.name;
                             tv_name.setText(message.result.goodsEntity.name);
@@ -506,15 +493,14 @@ public class ShangPinxiangqingActivity extends BaseActivity {
                             wv_shangpinxiangqing.loadDataWithBaseURL(null, sHead + message.result.goodsEntity.detail + "</body></html>", "text/html", "utf-8", null);
 
 
-
                             Uri uri = Uri.parse(message.result.goodsEntity.picUrl);
                             picUrl = message.result.goodsEntity.picUrl;
                             sdv_shangpin.setImageURI(uri);
-                            if(scoreGoods==1){
-                                tv_price.setText("￥"+message.result.goodsEntity.counterPrice + "");
+                            if (scoreGoods == 1) {
+                                tv_price.setText("￥" + message.result.goodsEntity.counterPrice + "");
 
-                            }else{
-                                tv_price.setText(""+message.result.goodsEntity.counterPrice.multiply(new BigDecimal(100)) + "");
+                            } else {
+                                tv_price.setText("" + message.result.goodsEntity.counterPrice.multiply(new BigDecimal(100)) + "");
 
                             }
 
@@ -580,11 +566,11 @@ public class ShangPinxiangqingActivity extends BaseActivity {
                                             productid = bean.getId();
                                             counterPrice = bean.price;
 //                                            tv_price.setText(counterPrice + "");
-                                            if(scoreGoods==1){
-                                                tv_price.setText("￥"+counterPrice + "");
+                                            if (scoreGoods == 1) {
+                                                tv_price.setText("￥" + counterPrice + "");
 
-                                            }else{
-                                                tv_price.setText(""+counterPrice.multiply(new BigDecimal(100)) + "");
+                                            } else {
+                                                tv_price.setText("" + counterPrice.multiply(new BigDecimal(100)) + "");
 
                                             }
                                             return;
@@ -594,11 +580,11 @@ public class ShangPinxiangqingActivity extends BaseActivity {
                                         productid = bean.getId();
                                         counterPrice = bean.price;
 //                                        tv_price.setText(counterPrice + "");
-                                        if(scoreGoods==1){
-                                            tv_price.setText("￥"+counterPrice + "");
+                                        if (scoreGoods == 1) {
+                                            tv_price.setText("￥" + counterPrice + "");
 
-                                        }else{
-                                            tv_price.setText(""+counterPrice.multiply(new BigDecimal(100)) + "");
+                                        } else {
+                                            tv_price.setText("" + counterPrice.multiply(new BigDecimal(100)) + "");
 
                                         }
                                         return;
@@ -607,8 +593,6 @@ public class ShangPinxiangqingActivity extends BaseActivity {
                             }
 
                             //解决选择的价格
-
-
 
 
                         }

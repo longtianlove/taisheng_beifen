@@ -9,19 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.bean.post.BaseListPostBean;
-import com.taisheng.now.bussiness.bean.result.DoctorBean;
 import com.taisheng.now.bussiness.bean.result.MyPingjiaBean;
 import com.taisheng.now.bussiness.bean.result.MyPingjiaResultBean;
 import com.taisheng.now.bussiness.doctor.DoctorDetailActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
@@ -34,6 +34,8 @@ import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import retrofit2.Call;
@@ -43,42 +45,52 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class MyPingjiaActivity extends BaseActivity {
-    View iv_back;
-    MaterialDesignPtrFrameLayout ptr_refresh;
-    TaishengListView lv_mypingluns;
-    MyPingjiaAdapter madapter;
+public class MyPingjiaActivity extends BaseHActivity {
 
+    @BindView(R.id.lv_mypingluns)
+    TaishengListView lvMypingluns;
+    @BindView(R.id.ptr_refresh)
+    MaterialDesignPtrFrameLayout ptrRefresh;
+    private MyPingjiaAdapter madapter;
+    private int PAGE_NO = 1;
+    private int PAGE_SIZE = 10;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_my_pingjia);
-        initView();
-        initData();
+        ButterKnife.bind(this);
+        initViews();
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        ptr_refresh = (MaterialDesignPtrFrameLayout)findViewById(R.id.ptr_refresh);
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+        PAGE_NO = 1;
+        PAGE_SIZE = 10;
+        getMyPingjias();
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.my_evaluation));
+    }
+
+  private  void initViews() {
         /**
          * 下拉刷新
          */
-        ptr_refresh.setPtrHandler(new PtrDefaultHandler() {
+        ptrRefresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                initData();
+                addData();
             }
         });
-        lv_mypingluns = (TaishengListView) findViewById(R.id.lv_mypingluns);
         madapter = new MyPingjiaAdapter(this);
-        lv_mypingluns.setAdapter(madapter);
-        lv_mypingluns.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
+        lvMypingluns.setAdapter(madapter);
+        lvMypingluns.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
             @Override
             public void onUpLoad() {
                 getMyPingjias();
@@ -87,16 +99,8 @@ public class MyPingjiaActivity extends BaseActivity {
 
     }
 
-    void initData() {
-
-         PAGE_NO = 1;
-         PAGE_SIZE = 10;
-        getMyPingjias();
-    }
 
 
-    int PAGE_NO = 1;
-    int PAGE_SIZE = 10;
 
     void getMyPingjias() {
         BaseListPostBean bean = new BaseListPostBean();
@@ -108,12 +112,12 @@ public class MyPingjiaActivity extends BaseActivity {
         ApiUtils.getApiService().myDoctorScores(bean).enqueue(new TaiShengCallback<BaseBean<MyPingjiaResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<MyPingjiaResultBean>> response, BaseBean<MyPingjiaResultBean> message) {
-                ptr_refresh.refreshComplete();
+                ptrRefresh.refreshComplete();
                 DialogUtil.closeProgress();
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         if (message.result.records != null && message.result.records.size() > 0) {
-                            lv_mypingluns.setLoading(false);
+                            lvMypingluns.setLoading(false);
                             if (PAGE_NO == 1) {
                                 madapter.mData.clear();
                             }
@@ -121,18 +125,18 @@ public class MyPingjiaActivity extends BaseActivity {
                             PAGE_NO++;
                             madapter.mData.addAll(message.result.records);
                             if (message.result.records.size() < 10) {
-                                lv_mypingluns.setHasLoadMore(false);
-                                lv_mypingluns.setLoadAllViewText("暂时只有这么多评论");
-                                lv_mypingluns.setLoadAllFooterVisible(true);
+                                lvMypingluns.setHasLoadMore(false);
+                                lvMypingluns.setLoadAllViewText("暂时只有这么多评论");
+                                lvMypingluns.setLoadAllFooterVisible(true);
                             } else {
-                                lv_mypingluns.setHasLoadMore(true);
+                                lvMypingluns.setHasLoadMore(true);
                             }
                             madapter.notifyDataSetChanged();
                         } else {
                             //没有消息
-                            lv_mypingluns.setHasLoadMore(false);
-                            lv_mypingluns.setLoadAllViewText("暂时只有这么多评论");
-                            lv_mypingluns.setLoadAllFooterVisible(true);
+                            lvMypingluns.setHasLoadMore(false);
+                            lvMypingluns.setLoadAllViewText("暂时只有这么多评论");
+                            lvMypingluns.setLoadAllFooterVisible(true);
                         }
                         break;
                 }
@@ -140,7 +144,7 @@ public class MyPingjiaActivity extends BaseActivity {
 
             @Override
             public void onFail(Call<BaseBean<MyPingjiaResultBean>> call, Throwable t) {
-                ptr_refresh.refreshComplete();
+                ptrRefresh.refreshComplete();
                 DialogUtil.closeProgress();
             }
         });
@@ -179,11 +183,11 @@ public class MyPingjiaActivity extends BaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // 声明内部类
-            MyPingjiaAdapter.Util util = null;
+            Util util = null;
             // 中间变量
             final int flag = position;
             if (convertView == null) {
-                util = new MyPingjiaAdapter.Util();
+                util = new Util();
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_mypingjialist, null);
                 util.ll_all = convertView.findViewById(R.id.ll_all);
@@ -199,7 +203,7 @@ public class MyPingjiaActivity extends BaseActivity {
                 util.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
                 convertView.setTag(util);
             } else {
-                util = (MyPingjiaAdapter.Util) convertView.getTag();
+                util = (Util) convertView.getTag();
             }
             MyPingjiaBean bean = mData.get(position);
             util.ll_all.setOnClickListener(new View.OnClickListener() {
@@ -263,7 +267,7 @@ public class MyPingjiaActivity extends BaseActivity {
 
         class Util {
             View ll_all;
-            com.taisheng.now.view.StarGrade starGrade;
+            StarGrade starGrade;
             TextView tv_content;
             SimpleDraweeView sdv_header;
             TextView tv_doctor_name;

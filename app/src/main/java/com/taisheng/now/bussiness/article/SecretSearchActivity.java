@@ -12,26 +12,32 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseHActivity;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.HotPostBean;
 import com.taisheng.now.bussiness.bean.result.HotResultBean;
 import com.taisheng.now.bussiness.bean.result.HotSearchBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
 import com.taisheng.now.view.TaishengListView;
 import com.taisheng.now.view.WrapLayout;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -39,75 +45,67 @@ import retrofit2.Response;
  * Created by dragon on 2019/7/5.
  */
 
-public class SecretSearchActivity extends BaseActivity {
-    View iv_back;
-    EditText et_search;
-    View iv_search_guanbi;
-    View tv_search;
-    View iv_deletehistory;
+public class SecretSearchActivity extends BaseIvActivity implements TextWatcher {
 
-    View ll_history_label;
-    WrapLayout wl_histroy_search;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    @BindView(R.id.iv_search_guanbi)
+    ImageView ivSearchGuanbi;
+    @BindView(R.id.ll_search)
+    LinearLayout llSearch;
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
+    @BindView(R.id.iv_deletehistory)
+    ImageView ivDeletehistory;
+    @BindView(R.id.ll_history_label)
+    LinearLayout llHistoryLabel;
+    @BindView(R.id.wl_histroy_search)
+    WrapLayout wlHistroySearch;
+    @BindView(R.id.ll_hot)
+    LinearLayout llHot;
+    @BindView(R.id.lv_hotsearch)
+    TaishengListView lvHotsearch;
 
-    TaishengListView lv_hotsearch;
-
-    ArrayList<String> historysearchlist;
-
-    MessageAdapter madapter;//适配器
-
-    String searchKey;//搜索关键字
+    private ArrayList<String> historysearchlist;
+    private MessageAdapter madapter;//适配器
+    private String searchKey;//搜索关键字
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_serert_search);
-        initView();
+        ButterKnife.bind(this);
     }
 
+    @Override
+    public void initData() {
+        llTop.setVisibility(View.GONE);
+        ivSearchGuanbi.setVisibility(View.GONE);
+        madapter = new MessageAdapter(this);
+        lvHotsearch.setAdapter(madapter);
+        lvHotsearch.setHasLoadMore(false);
+        etSearch.addTextChangedListener(this);
+    }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void addData() {
+        getHot();
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+
+    }
+
+    @OnClick({R.id.iv_back, R.id.tv_search, R.id.iv_deletehistory, R.id.iv_search_guanbi})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
                 finish();
-            }
-        });
-        iv_search_guanbi = findViewById(R.id.iv_search_guanbi);
-        iv_search_guanbi.setVisibility(View.GONE);
-        iv_search_guanbi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                et_search.setText("");
-            }
-        });
-        et_search = (EditText) findViewById(R.id.et_search);
-        et_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s != null && s.length() > 0) {
-                    iv_search_guanbi.setVisibility(View.VISIBLE);
-                } else {
-                    iv_search_guanbi.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        tv_search = findViewById(R.id.tv_search);
-        tv_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String searchString = et_search.getText().toString();
+                break;
+            case R.id.tv_search:
+                String searchString = TextsUtils.getTexts(etSearch);
                 if (TextUtils.isEmpty(searchString)) {
                     return;
                 }
@@ -134,32 +132,38 @@ public class SecretSearchActivity extends BaseActivity {
                 Intent intent = new Intent(SecretSearchActivity.this, SearchResultActivity.class);
                 intent.putExtra("searchkey", searchKey);
                 startActivity(intent);
-
-            }
-        });
-        iv_deletehistory = findViewById(R.id.iv_deletehistory);
-        iv_deletehistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ll_history_label.setVisibility(View.GONE);
-                wl_histroy_search.setVisibility(View.GONE);
+                break;
+            case R.id.iv_deletehistory:
+                llHistoryLabel.setVisibility(View.GONE);
+                wlHistroySearch.setVisibility(View.GONE);
                 historysearchlist.clear();
                 SPUtil.putHistorySearch(historysearchlist);
-            }
-        });
-        ll_history_label = findViewById(R.id.ll_history_label);
-        wl_histroy_search = (WrapLayout) findViewById(R.id.wl_histroy_search);
+                break;
+            case R.id.iv_search_guanbi:
+                etSearch.setText("");
+                break;
+        }
+    }
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-
-        madapter = new MessageAdapter(this);
-        lv_hotsearch = (TaishengListView) findViewById(R.id.lv_hotsearch);
-        lv_hotsearch.setAdapter(madapter);
-        lv_hotsearch.setHasLoadMore(false);
-        getHot();
     }
 
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s != null && s.length() > 0) {
+            ivSearchGuanbi.setVisibility(View.VISIBLE);
+        } else {
+            ivSearchGuanbi.setVisibility(View.GONE);
+        }
+    }
 
-    void getHot() {
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+  private  void getHot() {
         HotPostBean bean = new HotPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
@@ -185,6 +189,7 @@ public class SecretSearchActivity extends BaseActivity {
             }
         });
     }
+
 
 
     class MessageAdapter extends BaseAdapter {
@@ -265,13 +270,13 @@ public class SecretSearchActivity extends BaseActivity {
         super.onStart();
         historysearchlist = SPUtil.getHistorySearch();
         if (historysearchlist == null || historysearchlist.isEmpty()) {
-            ll_history_label.setVisibility(View.GONE);
-            wl_histroy_search.setVisibility(View.GONE);
+            llHistoryLabel.setVisibility(View.GONE);
+            wlHistroySearch.setVisibility(View.GONE);
         } else {
-            ll_history_label.setVisibility(View.VISIBLE);
-            wl_histroy_search.setVisibility(View.VISIBLE);
-            wl_histroy_search.setData(historysearchlist, this, 14, 15, 4, 14, 4, 24, 12, 24, 12);
-            wl_histroy_search.setMarkClickListener(new WrapLayout.MarkClickListener() {
+            llHistoryLabel.setVisibility(View.VISIBLE);
+            wlHistroySearch.setVisibility(View.VISIBLE);
+            wlHistroySearch.setData(historysearchlist, this, 14, 15, 4, 14, 4, 24, 12, 24, 12);
+            wlHistroySearch.setMarkClickListener(new WrapLayout.MarkClickListener() {
                 @Override
                 public void clickMark(int position) {
                     String searchString = historysearchlist.get(position);

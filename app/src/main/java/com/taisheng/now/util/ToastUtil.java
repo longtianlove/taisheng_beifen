@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.taisheng.now.SampleAppLike;
+import com.taisheng.now.application.SampleAppLike;
 
 
 /**

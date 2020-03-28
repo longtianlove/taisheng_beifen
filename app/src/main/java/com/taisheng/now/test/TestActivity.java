@@ -5,24 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
-import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.SplashActivity;
 import com.taisheng.now.bussiness.bean.post.BasePostBean;
 import com.taisheng.now.bussiness.bean.post.WexinZhifuPostBean;
-import com.taisheng.now.bussiness.market.dingdan.DingdanjiesuanActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
-import com.taisheng.now.http.ApiService;
-import com.taisheng.now.http.ApiUtils;
-import com.taisheng.now.http.TaiShengCallback;
-import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
-import retrofit2.Call;
-import retrofit2.Response;
+import com.taisheng.now.bussiness.login.UserInstance;
 
 
 /**

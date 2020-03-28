@@ -1,13 +1,9 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,22 +13,15 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
-import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
-import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SosListpostBean;
-import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
-import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResultBean;
-import com.taisheng.now.bussiness.watch.bean.result.SosLIstBean;
-import com.taisheng.now.bussiness.watch.bean.result.SosListResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.view.WithScrolleViewListView;
 
-import java.util.ArrayList;
-
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -40,8 +29,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchMejinjilianxirenActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
+public class WatchMejinjilianxirenActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
 //    View iv_bianji;
 
@@ -65,28 +53,32 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_watchme_jinjilianxiren);
-        initView();
+
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initView() {
+        setContentView(R.layout.activity_watchme_jinjilianxiren);
+        ButterKnife.bind(this);
+        initViews();
+    }
 
-//        iv_bianji = findViewById(R.id.iv_bianji);
-//        iv_bianji.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeXueyajingBianjiActivity.class);
-////                startActivity(intent);
-//            }
-//        });
+    @Override
+    public void initData() {
 
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("紧急联系人");
+    }
+
+    void initViews() {
 
         ll_first = findViewById(R.id.ll_first);
         tv_first_name = findViewById(R.id.tv_first_name);
@@ -151,7 +143,7 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
+        initDatas();
     }
 
     public String watchNameSos1;
@@ -162,7 +154,7 @@ public class WatchMejinjilianxirenActivity extends BaseActivity implements Activ
 
     public String watchNameSos3;
     public String watchSos3;
-    void initData() {
+    void initDatas() {
         SosListpostBean bean = new SosListpostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();

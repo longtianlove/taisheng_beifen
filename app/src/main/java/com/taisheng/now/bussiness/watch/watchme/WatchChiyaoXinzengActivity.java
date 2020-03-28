@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -14,7 +15,8 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
 import com.taisheng.now.http.ApiUtils;
@@ -27,12 +29,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
 
-public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnClickListener {
-    public View iv_back;
+public class WatchChiyaoXinzengActivity extends BaseIvActivity implements View.OnClickListener {
     private TextView date_tv;
     //    private TimePickerView pvTime;
     private TimePickerDialog timePickerDialog;
@@ -53,18 +55,11 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
     public String takepillsNum;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.layout_watchchiyao);
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        et_shuru = findViewById(R.id.et_shuru);
+        ButterKnife.bind(this);
 
+        et_shuru = findViewById(R.id.et_shuru);
         allLayout = (RelativeLayout) findViewById(R.id.all_layout);
         tv_save = findViewById(R.id.tv_save);
         tv_save.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +118,7 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
                 });
             }
         });
-        takepillsNum=getIntent().getStringExtra("takepillsNum");
+        takepillsNum = getIntent().getStringExtra("takepillsNum");
         WatchInstance.getInstance().chiyaobean = new SetChiyaoPostBean();
         tv_cancel = findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +129,7 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
         });
 
         date_tv = (TextView) findViewById(R.id.date_tv);
-        String startTime=getIntent().getStringExtra("startTime");
+        String startTime = getIntent().getStringExtra("startTime");
         if (!TextUtils.isEmpty(startTime)) {
             date_tv.setText(startTime);
         }
@@ -230,7 +225,21 @@ public class WatchChiyaoXinzengActivity extends BaseActivity implements View.OnC
 //        Intent daemonIntent = new Intent(this, DaemonService.class);
 ////        bindService(daemonIntent, myConn, BIND_AUTO_CREATE);
 //        startService(daemonIntent);
+    }
 
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("新增吃药");
     }
 
     public static String getTime(Date date) {

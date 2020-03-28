@@ -8,13 +8,6 @@ import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import com.neovisionaries.ws.client.WebSocketFrame;
 import com.taisheng.now.Constants;
-import com.taisheng.now.bussiness.bean.post.HealthInfo;
-import com.taisheng.now.bussiness.bean.result.UserInfo;
-import com.taisheng.now.bussiness.user.UserInstance;
-import com.taisheng.now.util.SPUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;

@@ -16,7 +16,7 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.bean.post.UserInfoPostBean;
 import com.taisheng.now.bussiness.bean.result.ModifyUserInfoResultBean;
 import com.taisheng.now.bussiness.bean.result.UserInfo;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
@@ -37,9 +37,9 @@ public class UpdateZhanghaoActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updatezhanghao);
-        initView();
+        initViews();
     }
-    void initView(){
+    void initViews(){
         iv_back=findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override

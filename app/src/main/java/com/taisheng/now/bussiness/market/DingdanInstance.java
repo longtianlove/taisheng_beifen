@@ -1,8 +1,6 @@
 package com.taisheng.now.bussiness.market;
 
-import com.taisheng.now.bussiness.bean.result.JifenzhuanquBean;
 import com.taisheng.now.bussiness.bean.result.xiadanshangpinBean;
-import com.taisheng.now.bussiness.user.UserInstance;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

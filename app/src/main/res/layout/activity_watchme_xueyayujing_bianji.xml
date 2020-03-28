@@ -8,42 +8,11 @@
     android:background="@drawable/background_shangchengtitle"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_shangchengtitle"
-        android:gravity="center_vertical"
-        android:paddingLeft="12dp"
-        android:paddingTop="10dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="10dp">
+    <ImageView style="@style/iv_title" />
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-            android:src="@drawable/icon_back_new" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="血压预警"
-            android:textColor="#ffffffff"
-            android:textSize="18sp" />
-
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-
-        android:background="#f8f8f8" />
+    <TextView
+        style="@style/my_line_h"
+        android:background="@color/colorf8f8f8" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -113,15 +82,14 @@
                 android:textSize="14sp" />
 
 
-
             <EditText
                 android:id="@+id/tv_gaoyazuixiao"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:inputType="number"
-                android:gravity="right"
                 android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:inputType="number"
                 android:text=""
                 android:textColor="#ff666666"
                 android:textSize="14sp" />
@@ -157,16 +125,15 @@
                 android:textSize="14sp" />
 
 
-
             <EditText
                 android:id="@+id/tv_diyazuida"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@null"
+                android:gravity="right"
                 android:inputType="number"
                 android:text=""
-                android:gravity="right"
-                android:layout_weight="1"
 
                 android:textColor="#ff666666"
                 android:textSize="14sp" />
@@ -204,16 +171,15 @@
                 android:textSize="14sp" />
 
 
-
             <EditText
                 android:id="@+id/tv_diyazuixiao"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@null"
+                android:gravity="right"
                 android:inputType="number"
                 android:text=""
-                android:gravity="right"
-                android:layout_weight="1"
                 android:textColor="#ff666666"
                 android:textSize="14sp" />
 
@@ -252,11 +218,11 @@
                 android:id="@+id/tv_maiyaca"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@null"
+                android:gravity="right"
                 android:inputType="number"
                 android:text=""
-                android:gravity="right"
-                android:layout_weight="1"
                 android:textColor="#ff666666"
                 android:textSize="14sp" />
 
@@ -277,8 +243,8 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="50dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="50dp"
 
             android:background="@drawable/xinzhengdizhi_button"
             android:gravity="center"
@@ -292,10 +258,10 @@
             android:layout_height="42dp"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/naozhongcancel_button"
             android:gravity="center"
             android:text="取消"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 
@@ -13,7 +14,8 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiBean;
@@ -24,6 +26,7 @@ import com.taisheng.now.map.NewMapInstance;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -31,38 +34,43 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchFirstGuijiActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
-    View iv_shezhi;
+public class WatchFirstGuijiActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     View iv_dingwei;
 
     private MapView mMapView = null;
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchfirstguiji);
-        initView();
+        ButterKnife.bind(this);
+        initViews();
+    }
+
+    @Override
+    public void initData() {
 
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        iv_shezhi = findViewById(R.id.iv_shezhi);
-        iv_shezhi.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("轨迹地图");
+        ivRight.setVisibility(View.VISIBLE);
+        ivRight.setBackgroundResource(R.drawable.icon_set);
+        ivRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WatchFirstGuijiActivity.this, WatchFirstAnQuanWeiLanActivity.class);
                 startActivity(intent);
             }
         });
-
+    }
+    void initViews() {
 
         //获取地图控件引用
         mMapView = (MapView) findViewById(R.id.bmapView);
@@ -141,6 +149,8 @@ public class WatchFirstGuijiActivity extends BaseActivity implements ActivityCom
 
 
     }
+
+
 
     @Override
     protected void onPause() {

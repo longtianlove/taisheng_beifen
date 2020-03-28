@@ -9,30 +9,27 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
-import com.taisheng.now.SampleAppLike;
-import com.taisheng.now.base.BaseActivity;
-import com.taisheng.now.bussiness.user.LoginActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.application.SampleAppLike;
+import com.taisheng.now.base.BaseHActivity;
+import com.taisheng.now.bussiness.login.LoginActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.push.XMPushManagerInstance;
 import com.taisheng.now.view.AppDialog;
 import com.taisheng.now.view.crop.Crop;
+import com.th.j.commonlibrary.utils.LogUtilH;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,112 +37,70 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by dragon on 2019/6/29.
  */
 
-public class MeMessageActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
-    View ll_nickname;
-    View ll_zhanghao;
-    View ll_bindphone;
-    View ll_updatepwd;
-    View ll_avatar;
+public class MeMessageActivity extends BaseHActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    TextView tv_nickname;
-    TextView tv_zhanghao;
-    TextView tv_phone;
-
-    TextView btn_post;
-    SimpleDraweeView sdv_header;
     private final int REQ_CODE_PHOTO_SOURCE = 6;//选择方式
     private final int REQ_CODE_GET_PHOTO_FROM_GALLERY = 10;//从相册获取
     private final int REQ_CODE_GET_PHOTO_FROM_TAKEPHOTO = 11;//拍照完
+    @BindView(R.id.sdv_header)
+    SimpleDraweeView sdvHeader;
+    @BindView(R.id.ll_avatar)
+    LinearLayout llAvatar;
+    @BindView(R.id.tv_nickname)
+    TextView tvNickname;
+    @BindView(R.id.ll_nickname)
+    LinearLayout llNickname;
+    @BindView(R.id.tv_zhanghao)
+    TextView tvZhanghao;
+    @BindView(R.id.ll_zhanghao)
+    LinearLayout llZhanghao;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.ll_bindphone)
+    LinearLayout llBindphone;
+    @BindView(R.id.ll_updatepwd)
+    LinearLayout llUpdatepwd;
+    @BindView(R.id.btn_post)
+    TextView btnPost;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_memessage);
-        initView();
+        ButterKnife.bind(this);
+
+
+    }
+
+    @Override
+    public void initData() {
         EventBus.getDefault().register(this);
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        ll_avatar = findViewById(R.id.ll_avatar);
-        ll_avatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                modifyAvatar();
-            }
-        });
-        sdv_header = (SimpleDraweeView) findViewById(R.id.sdv_header);
-
-
-
-
-
-        ll_nickname = findViewById(R.id.ll_nickname);
-        ll_nickname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MeMessageActivity.this, UpdateNickActivity.class);
-                startActivity(intent);
-            }
-        });
-        ll_zhanghao = findViewById(R.id.ll_zhanghao);
-        ll_zhanghao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(MeMessageActivity.this, UpdateZhanghaoActivity.class);
-//                startActivity(intent);
-            }
-        });
-        ll_bindphone = findViewById(R.id.ll_bindphone);
-        ll_bindphone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent=new Intent(MeMessageActivity.this,BindPhoneActivity.class);
-//                startActivity(intent);
-            }
-        });
-        ll_updatepwd = findViewById(R.id.ll_updatepwd);
-        ll_updatepwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MeMessageActivity.this, UpdatePasswordFirstActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        tv_nickname = (TextView) findViewById(R.id.tv_nickname);
-
-        tv_zhanghao = (TextView) findViewById(R.id.tv_zhanghao);
-
-        tv_phone = (TextView) findViewById(R.id.tv_phone);
-
-        btn_post= (TextView) findViewById(R.id.btn_post);
-        btn_post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showGoRecommendDialog();
-
-            }
-        });
+    @Override
+    public void addData() {
 
     }
 
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.personal_data));
+    }
 
     public void modifyAvatar() {
 
-        WatchInstance.getInstance().isWtch=false;
+        WatchInstance.getInstance().isWtch = false;
 
         Intent intent = new Intent(this, SelectAvatarSourceDialog.class);
         startActivityForResult(intent, REQ_CODE_PHOTO_SOURCE);
@@ -168,7 +123,7 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
             } else {
 
-                 permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
                 if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITEEXTRENAL_STOR);
@@ -176,20 +131,16 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        Uri contentUri=FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider", new File(Environment
+                        Uri contentUri = FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider", new File(Environment
                                 .getExternalStorageDirectory(), "temp.jpg"));
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT,contentUri);
-                    }else{
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+                    } else {
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment
                                 .getExternalStorageDirectory(), "temp.jpg")));
                     }
                     startActivityForResult(intent, REQ_CODE_GET_PHOTO_FROM_TAKEPHOTO);
                 }
             }
-
-
-
-
 
 
         }
@@ -199,12 +150,6 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
     public final static int REQUEST_CAMERA = 1;
 
     public final static int REQUEST_WRITEEXTRENAL_STOR = 2;
-
-
-
-
-
-
 
 
     @Override
@@ -223,10 +168,10 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                            Uri contentUri=FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider", new File(Environment
+                            Uri contentUri = FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider", new File(Environment
                                     .getExternalStorageDirectory(), "temp.jpg"));
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT,contentUri);
-                        }else{
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+                        } else {
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment
                                     .getExternalStorageDirectory(), "temp.jpg")));
                         }
@@ -241,10 +186,10 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        Uri contentUri=FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider",new File(Environment
+                        Uri contentUri = FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider", new File(Environment
                                 .getExternalStorageDirectory(), "temp.jpg"));
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT,contentUri);
-                    }else{
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+                    } else {
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment
                                 .getExternalStorageDirectory(), "temp.jpg")));
                     }
@@ -259,18 +204,16 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
     }
 
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
         if (UserInstance.getInstance().userInfo.avatar != null) {
-            Uri uri = Uri.parse(Constants.Url.File_Host+UserInstance.getInstance().userInfo.avatar);
-            sdv_header.setImageURI(uri);
+            Uri uri = Uri.parse(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar);
+            sdvHeader.setImageURI(uri);
         }
-        tv_nickname.setText(UserInstance.getInstance().getNickname());
-        tv_zhanghao.setText(UserInstance.getInstance().getZhanghao());
-        tv_phone.setText(UserInstance.getInstance().getPhone());
+        tvNickname.setText(UserInstance.getInstance().getNickname());
+        tvZhanghao.setText(UserInstance.getInstance().getZhanghao());
+        tvPhone.setText(UserInstance.getInstance().getPhone());
     }
 
     private void beginCrop(Uri source, Bundle bundle) {
@@ -279,12 +222,12 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
-    public void uploadImageSuccess(EventManage.uploadImageSuccess event){
+    public void uploadImageSuccess(EventManage.uploadImageSuccess event) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Uri source=FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider",new File(Environment
+            Uri source = FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider", new File(Environment
                     .getExternalStorageDirectory(), "temp.jpg"));
             getContentResolver().delete(source, null, null);
-        }else{
+        } else {
 
             File picture = new File(Environment.getExternalStorageDirectory()
                     , "temp.jpg");
@@ -319,9 +262,9 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
                 Uri source;
                 Bundle bundle = new Bundle();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                     source=FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider",new File(Environment
+                    source = FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider", new File(Environment
                             .getExternalStorageDirectory(), "temp.jpg"));
-                }else{
+                } else {
                     // 选择图片后进入裁剪
                     File picture = new File(Environment.getExternalStorageDirectory()
                             , "temp.jpg");
@@ -332,24 +275,18 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
                 }
 
 
-
                 beginCrop(source, bundle);
-
 
 
                 break;
 
             case Crop.REQUEST_CROP:
 //                modifyBean.logo_url = PetInfoInstance.getInstance().getPackBean().logo_url;
-                Uri uri = Uri.parse(Constants.Url.File_Host+UserInstance.getInstance().userInfo.avatar);
-                if (sdv_header == null) {
-                    return;
-                }
-                sdv_header.setImageURI(uri);
+                Uri uri = Uri.parse(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar);
+                sdvHeader.setImageURI(uri);
                 break;
         }
     }
-
 
 
     public void showGoRecommendDialog() {
@@ -394,5 +331,40 @@ public class MeMessageActivity extends BaseActivity implements ActivityCompat.On
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.ll_avatar, R.id.ll_nickname, R.id.ll_zhanghao, R.id.ll_bindphone, R.id.ll_updatepwd, R.id.btn_post})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_avatar:
+                modifyAvatar();
+                break;
+            case R.id.ll_nickname:
+                Intent intent = new Intent(MeMessageActivity.this, UpdateNickActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_zhanghao:
+                //                Intent intent = new Intent(MeMessageActivity.this, UpdateZhanghaoActivity.class);
+//                startActivity(intent);
+                break;
+            case R.id.ll_bindphone:
+                //                Intent intent=new Intent(MeMessageActivity.this,BindPhoneActivity.class);
+//                startActivity(intent);
+                break;
+            case R.id.ll_updatepwd:
+                Intent intent2 = new Intent(MeMessageActivity.this, UpdatePasswordFirstActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.btn_post:
+                showGoRecommendDialog();
+                break;
+        }
     }
 }

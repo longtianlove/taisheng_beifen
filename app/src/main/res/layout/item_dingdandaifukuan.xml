@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="待付款"
-                    android:textColor="#ff529ffb"
+                    android:textColor="@color/color00c8aa"
                     android:textSize="13sp" />
 
             </LinearLayout>
@@ -124,7 +124,7 @@
                     android:background="@drawable/quxiaodingdan"
                     android:gravity="center"
                     android:text="取消订单"
-                    android:textColor="#ff529ffb"
+                    android:textColor="@color/color00c8aa"
                     android:textSize="14sp" />
 
                 <TextView
@@ -135,7 +135,7 @@
                     android:background="@drawable/quzhifu"
                     android:gravity="center"
                     android:text="去支付"
-                    android:textColor="#ffffffff"
+                    android:textColor="@color/colorWhite"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30"
+        android:paddingLeft="@dimen/size_title12"
+        android:gravity="center_vertical"
+        android:paddingRight="@dimen/size_title12"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/iv_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:src="@drawable/icon_scan" />
+
+        <LinearLayout
+            android:id="@+id/ll_search"
+            android:layout_width="@dimen/size_0"
+            android:layout_height="@dimen/size_30"
+            android:layout_weight="1"
+            android:background="@drawable/search_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_14"
+                android:layout_height="@dimen/size_15"
+                android:layout_marginLeft="@dimen/margin_15"
+                android:src="@drawable/icon_search" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/magin_6"
+                android:layout_weight="1"
+                android:text="搜索医师、疾病、知识"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/font12" />
+
+            <ImageView
+                android:layout_width="@dimen/size_14"
+                android:layout_height="@dimen/size_15"
+                android:layout_marginLeft="@dimen/margin_15"
+                android:layout_marginRight="@dimen/margin_15"
+                android:visibility="invisible"
+                android:src="@drawable/icon_voice" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_news"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/magin_15"
+            android:src="@drawable/icon_news" />
+    </LinearLayout>
+
+</merge>

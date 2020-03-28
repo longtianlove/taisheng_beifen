@@ -1,1 +1,1 @@
-include ':app', ':addresspickerlib', ':libskywebrtc', ':libwebrtc', ':libskywebrtc2', ':libwebrtc3', ':lib-zxing', ':alarmmanagerclock', ':lib-zxing1'
+include ':app',  ':lib-zxing1', ':commonlibrary'

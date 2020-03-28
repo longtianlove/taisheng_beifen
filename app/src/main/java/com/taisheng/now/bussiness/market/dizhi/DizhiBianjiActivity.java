@@ -1,46 +1,35 @@
 package com.taisheng.now.bussiness.market.dizhi;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.article.ArticleContentActivity;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.AddDizhiPostBean;
 import com.taisheng.now.bussiness.bean.post.DeleteDizhiPostBean;
-import com.taisheng.now.bussiness.bean.result.ArticleBean;
 import com.taisheng.now.bussiness.market.DingdanInstance;
 import com.taisheng.now.bussiness.market.dingdan.DingdanjiesuanActivity;
 import com.taisheng.now.bussiness.market.gouwuche.StringUtil;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
-import com.taisheng.now.view.WithScrolleViewListView;
-import com.taisheng.now.view.chenjinshi.StatusBarUtil;
-import com.ywp.addresspickerlib.AddressPickerView;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.th.j.commonlibrary.wight.AddressPickerView;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -50,8 +39,7 @@ import retrofit2.Response;
  */
 
 
-public class DizhiBianjiActivity extends BaseActivity {
-    View iv_back;
+public class DizhiBianjiActivity extends BaseIvActivity {
     EditText et_xingming;
     EditText et_phone;
     View ll_dizhi;
@@ -64,23 +52,28 @@ public class DizhiBianjiActivity extends BaseActivity {
 
     public String dizhiid;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_dizhibianji);
-        initView();
-        initData();
+        initViews();
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initData() {
+        initDatas();
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+               tvTitle.setText(getString(R.string.edit_address));
+    }
+
+    void initViews() {
 
         et_xingming = findViewById(R.id.et_xingming);
         et_xingming.addTextChangedListener(watcher);
@@ -235,7 +228,7 @@ public class DizhiBianjiActivity extends BaseActivity {
 
     }
 
-    void initData() {
+    void initDatas() {
         dizhiid = getIntent().getStringExtra("dizhiid");
         if (StringUtil.isEmpty(dizhiid)) {
             btn_delete.setVisibility(View.GONE);
@@ -308,22 +301,6 @@ public class DizhiBianjiActivity extends BaseActivity {
     };
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //当FitsSystemWindows设置 true 时，会在屏幕最上方预留出状态栏高度的 padding
-        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
-        //设置状态栏透明
-        StatusBarUtil.setTranslucentStatus(this);
-        //一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
-        //所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
-        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
-            //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
-            //这样半透明+白=灰, 状态栏的文字能看得清
-            StatusBarUtil.setStatusBarColor(this, 0x55000000);
-        }
-    }
-
 
     public String province;
     public String city;
@@ -341,8 +318,9 @@ public class DizhiBianjiActivity extends BaseActivity {
             return;
         }
         popupWindow = new PopupWindow(this);
-        View rootView = LayoutInflater.from(this).inflate(R.layout.pop_address_picker, null, false);
+        View rootView = View.inflate(this,R.layout.pop_address_picker, null);
         AddressPickerView addressView = rootView.findViewById(R.id.apvAddress);
+        LinearLayout llPop = rootView.findViewById(R.id.ll_pop);
         addressView.setOnAddressPickerSure(new AddressPickerView.OnAddressPickerSureListener() {
             @Override
             public void onSureClick(String address, String provinceCode, String cityCode, String districtCode) {
@@ -354,10 +332,13 @@ public class DizhiBianjiActivity extends BaseActivity {
                 popupWindow.dismiss();
             }
         });
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setContentView(rootView);
         popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.showAsDropDown(ll_dizhi);
+//        popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.showAtLocation(llPop, Gravity.BOTTOM , 0, 0);
+//        popupWindow.showAtLocation(view, Gravity.TOP, 0, y);
 
     }
 

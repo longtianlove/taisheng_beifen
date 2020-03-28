@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.bean.post.RecommendDoctorPostBean;
 import com.taisheng.now.bussiness.bean.result.DoctorBean;
 import com.taisheng.now.bussiness.bean.result.DoctorsResultBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
@@ -32,10 +31,12 @@ import com.taisheng.now.view.DoctorLabelWrapLayout;
 import com.taisheng.now.view.ScoreStar;
 import com.taisheng.now.view.TaishengListView;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
+import com.th.j.commonlibrary.utils.SpanUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import retrofit2.Call;
@@ -66,7 +67,6 @@ public class DoctorFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_doctor, container, false);
         initView(rootView);
 
-
 //        EventBus.getDefault().register(this);
         initData();
 
@@ -74,7 +74,6 @@ public class DoctorFragment extends BaseFragment {
     }
 
     void initView(View rootView) {
-
 
         iv_search_guanbi = rootView.findViewById(R.id.iv_search_guanbi);
         iv_search_guanbi.setVisibility(View.GONE);
@@ -282,16 +281,21 @@ public class DoctorFragment extends BaseFragment {
             util.tv_title.setText(bean.title);
             if ("1".equals(bean.onlineStatus)) {
                 util.tv_onlineStatus.setText("在线");
-                util.tv_onlineStatus.setTextColor(Color.parseColor("#ff0dd500"));
+                util.tv_onlineStatus.setBackgroundResource(R.drawable.bg_online);
             } else {
                 util.tv_onlineStatus.setText("忙碌");
-                util.tv_onlineStatus.setTextColor(Color.parseColor("#ffff554e"));
+                util.tv_onlineStatus.setBackgroundResource(R.drawable.bg_online2);
             }
-            util.tv_times.setText(bean.servicesNum);
+
+            SpanUtil.create()
+//                            .addSection(String.valueOf(messageWaitTime) + "S"+"重新发送")  //添加带前景色的文字片段
+                    .addForeColorSection("解答", ContextCompat.getColor(getActivity(), R.color.color666666)) //设置相对字体
+                    .addForeColorSection(bean.servicesNum, ContextCompat.getColor(getActivity(), R.color.color00c8aa)) //设置相对字体
+                    .addForeColorSection("次", ContextCompat.getColor(getActivity(), R.color.color666666)) //设置相对字体
+                    .showIn(util.tv_times); //显示到控件TextView中
             if (bean.goodDiseases != null) {
                 String[] doctorlabel = bean.goodDiseases.split(",");
                 util.dlwl_doctor_label.setData(doctorlabel, mActivity, 10, 5, 1, 5, 1, 4, 4, 4, 8);
-
             }
 
             if (bean.score != null) {

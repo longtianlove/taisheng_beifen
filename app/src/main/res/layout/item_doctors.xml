@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ll_all"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="@drawable/item_doctor_background"
-    android:orientation="horizontal"
-    android:paddingBottom="15dp"
-    android:paddingLeft="6dp"
-    android:paddingRight="6dp"
-    android:paddingTop="15dp"
-    android:weightSum="1">
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/ll_all"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:layout_marginTop="@dimen/magin_12"
+        android:background="@drawable/item_doctor_background"
+        android:layout_height="wrap_content">
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdv_header"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="13dp"
+            android:layout_width="@dimen/size_70"
+            android:layout_height="@dimen/size_70"
+            android:layout_marginBottom="@dimen/magin_25"
+            android:layout_marginLeft="@dimen/magin_8"
+            android:layout_marginTop="@dimen/magin_25"
             android:gravity="center"
             android:scaleType="fitXY"
             fresco:actualImageScaleType="focusCrop"
@@ -35,125 +31,91 @@
             fresco:roundedCornerRadius="35dp" />
 
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="6dp"
-            android:gravity="center_vertical"
-            android:layout_weight="1"
-            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_onlineStatus"
+            android:layout_width="@dimen/size_36"
+            android:layout_height="@dimen/size_14"
+            android:layout_alignBottom="@+id/sdv_header"
+            android:layout_marginLeft="@dimen/magin_25"
+            android:background="@drawable/bg_online"
+            android:gravity="center"
+            android:text="在线"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font9" />
 
-                <TextView
-                    android:id="@+id/tv_doctor_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:text="何德林"
-                    android:textColor="#ff000000"
-                    android:textSize="17sp" />
+        <TextView
+            android:id="@+id/tv_doctor_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/sdv_header"
+            android:layout_marginLeft="@dimen/magin_8"
+            android:layout_marginTop="@dimen/magin_22"
+            android:layout_gravity="center_vertical"
+            android:gravity="top"
+            android:text="何德林"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/font16" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_doctor_name"
+            android:layout_alignBottom="@+id/tv_doctor_name"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:gravity="center"
+            android:text="资深医生"
+            android:textColor="#ff000000"
+            android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="4dp"
-                    android:gravity="center"
-                    android:text="资深医生"
-                    android:textColor="#ff000000"
-                    android:textSize="12sp" />
+        <com.taisheng.now.view.DoctorLabelWrapLayout
+            android:id="@+id/dlwl_doctor_label"
+            android:layout_below="@+id/tv_title"
+            android:layout_toRightOf="@+id/sdv_header"
+            android:layout_marginLeft="@dimen/magin_8"
+            android:layout_marginRight="@dimen/magin_12"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/magin_20"/>
 
+        <TextView
+            android:id="@+id/tv_times"
+            android:layout_below="@+id/dlwl_doctor_label"
+            android:layout_toRightOf="@+id/sdv_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_8"
+            android:layout_marginTop="@dimen/magin_10"
+            android:text="3"
+            android:textColor="@color/color00c8aa"
+            android:textSize="@dimen/font10" />
 
-                <TextView
-                    android:id="@+id/tv_onlineStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center"
-                    android:text="在线"
-                    android:layout_gravity="bottom"
-                    android:textColor="#ff0dd500"
-                    android:textSize="10sp" />
-            </LinearLayout>
-
-            <com.taisheng.now.view.DoctorLabelWrapLayout
-                android:id="@+id/dlwl_doctor_label"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="14dp"
-            ></com.taisheng.now.view.DoctorLabelWrapLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="0dp"
-                    android:gravity="center"
-                    android:paddingRight="0dp"
-                    android:text="解答"
-                    android:textColor="#999999"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/tv_times"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:gravity="center"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="0dp"
-                    android:text="3"
-                    android:textColor="#529FFB"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:gravity="center"
-                    android:paddingLeft="0dp"
-                    android:text="次"
-                    android:textColor="#999999"
-                    android:textSize="10sp" />
-
-
-                <com.taisheng.now.view.ScoreStar
-                    android:id="@+id/scorestar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:gravity="center"
-                    android:orientation="horizontal" />
-            </LinearLayout>
-
-        </LinearLayout>
+        <com.taisheng.now.view.ScoreStar
+            android:id="@+id/scorestar"
+            android:gravity="bottom"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/tv_times"
+            android:layout_marginRight="@dimen/magin_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
 
         <TextView
             android:id="@+id/btn_zixun"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_20"
             android:layout_gravity="top"
+            android:layout_marginTop="@dimen/magin_22"
+            android:layout_marginRight="@dimen/magin_8"
             android:background="@drawable/item_doctor_zixun"
             android:gravity="center"
             android:text="咨询"
-            android:textColor="@color/white"
-            android:textSize="10sp"></TextView>
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font10"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

@@ -3,96 +3,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
+
     android:orientation="vertical"
     android:weightSum="1">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/imageView5"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:scaleType="centerCrop"-->
-    <!--android:src="@drawable/splash_logo" />-->
+    <ImageView style="@style/iv_title" />
 
+    <TextView
+        style="@style/my_line_h"
+        android:background="@color/colorf8f8f8" />
 
-    <RelativeLayout
+    <com.th.j.commonlibrary.wight.MyWebView
+        android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingLeft="12dp"
-        android:paddingTop="10dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="10dp">
+        android:layout_height="@dimen/weight_0"
+        android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-            android:src="@drawable/icon_back" />
+    </com.th.j.commonlibrary.wight.MyWebView>
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLength="8"
-            android:maxLines="1"
-            android:text="文章详情"
-            android:textColor="#ff333333"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:paddingRight="10dp"
-            android:text="···"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#f8f8f8" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#fff"
-        android:overScrollMode="never"
-        android:scrollbars="none">
-
-        <!--<TextView-->
-        <!--android:id="@+id/tv_content"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--/>-->
-        <WebView
-            android:id="@+id/webView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:background="#EEEEEE" />
+    <TextView
+        style="@style/my_line_h"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:background="@color/coloreeeeee" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/size_45"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
+        android:paddingLeft="@dimen/magin_12"
+        android:paddingRight="@dimen/magin_12"
         android:weightSum="3">
 
         <LinearLayout
@@ -105,8 +46,8 @@
 
             <TextView
                 android:id="@+id/tv_collect"
-                android:layout_width="11dp"
-                android:layout_height="10dp"
+                android:layout_width="@dimen/size_15"
+                android:layout_height="@dimen/size_15"
                 android:background="@drawable/shoucang_backgrounnd"
                 android:enabled="false"></TextView>
 
@@ -115,9 +56,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="  收藏"
-                android:textColor="#ff666666"
-                android:textSize="10sp" />
+                android:text="@string/article_details03"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font10" />
         </LinearLayout>
 
         <LinearLayout
@@ -125,22 +66,22 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="文章分类:"
-                android:textSize="10sp"></TextView>
+                android:textColor="@color/color666666"
+                android:text="@string/article_details05"
+                android:textSize="@dimen/font10"></TextView>
 
             <TextView
                 android:id="@+id/tv_typename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="食疗养生"
-                android:textColor="#529FFB"
-                android:textSize="10sp"></TextView>
+                android:textColor="@color/color00c8aa"
+                android:textSize="@dimen/font10"></TextView>
 
         </LinearLayout>
 
@@ -153,22 +94,21 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="8dp"
-                android:layout_height="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/icon_time"
-
                 />
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="@dimen/magin_2"
                 android:gravity="center"
                 android:text="2019-10-24 10:29:43"
-                android:textColor="#999999"
-                android:textSize="10sp" />
+                android:textColor="@color/color999999"
+                android:textSize="@dimen/font10" />
         </LinearLayout>
 
     </LinearLayout>

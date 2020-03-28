@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 
@@ -11,7 +12,8 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.http.ApiUtils;
@@ -25,9 +27,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchMeXueyajingBianjiActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
-
+public class WatchMeXueyajingBianjiActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     EditText tv_gaoyazuida;
     EditText tv_gaoyazuixiao;
@@ -40,20 +40,27 @@ public class WatchMeXueyajingBianjiActivity extends BaseActivity implements Acti
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchme_xueyayujing_bianji);
-        initView();
+        initViews();
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("血压预警");
+    }
+
+    void initViews() {
 
 
         tv_gaoyazuida = findViewById(R.id.tv_gaoyazuida);
@@ -71,7 +78,7 @@ public class WatchMeXueyajingBianjiActivity extends BaseActivity implements Acti
                         || "".equals(tv_diyazuida.getText().toString())
                         || "".equals(tv_diyazuixiao.getText().toString())
                         || "".equals(tv_maiyaca.getText().toString())
-                ) {
+                        ) {
                     ToastUtil.showAtCenter("请输入值");
                     return;
                 }

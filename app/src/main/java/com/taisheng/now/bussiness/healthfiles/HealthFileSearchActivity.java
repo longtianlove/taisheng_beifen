@@ -2,15 +2,13 @@ package com.taisheng.now.bussiness.healthfiles;
 
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
-
 import android.view.View;
 import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseFragmentActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 
 /**
  * Created by dragon on 2019/6/28.

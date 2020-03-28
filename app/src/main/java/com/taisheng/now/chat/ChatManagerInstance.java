@@ -1,17 +1,13 @@
 package com.taisheng.now.chat;
 
-import android.util.JsonReader;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
-import com.taisheng.now.SampleAppLike;
-import com.taisheng.now.bussiness.bean.post.HealthInfo;
-import com.taisheng.now.bussiness.bean.result.UserInfo;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.application.SampleAppLike;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.chat.websocket.WebSocketManager;
-import com.taisheng.now.util.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -1,0 +1,59 @@
+<resources>
+    <!--横线-->
+    <style name="my_line_h">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/line_0.5</item>
+        <item name="android:background">@color/colorfafcfe</item>
+    </style>
+
+    <!--竖线-->
+    <style name="my_line_v">
+        <item name="android:layout_width">@dimen/line_0.5</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/colorfafcfe</item>
+    </style>
+
+    <!--listView-->
+    <style name="my_lv">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:divider">@null</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:listSelector">@color/transparent</item>
+        <!--<item name="android:layoutAnimation">@anim/layout</item>-->
+    </style>
+
+    <!--按钮样式-->
+    <style name="my_bt">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/size_40</item>
+        <item name="android:background">@drawable/xml_login_background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/login04</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/font14</item>
+        <item name="android:layout_marginLeft">@dimen/magin_60</item>
+        <item name="android:layout_marginRight">@dimen/magin_60</item>
+    </style>
+
+    <style name="iv_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/size_title48</item>
+        <item name="android:background">@drawable/bg_title</item>
+    </style>
+    <style name="MyTablayoutstyle2" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/size_44</item>
+        <item name="tabIndicatorColor">@color/color00c8aa</item>
+        <item name="tabIndicatorHeight">@dimen/size_2</item>
+        <item name="tabSelectedTextColor">@color/color00c8aa</item>
+        <item name="android:textSize">@dimen/font14</item>
+        <item name="android:textColor">@color/color333333</item>
+        <item name="tabBackground">@color/colorWhite</item>
+    </style>
+    <style name="MyTabVp">
+       <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+</resources>

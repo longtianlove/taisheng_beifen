@@ -4,32 +4,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.bean.result.ArticleBean;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.bean.post.ArticlePostBean;
+import com.taisheng.now.bussiness.bean.result.ArticleBean;
 import com.taisheng.now.bussiness.bean.result.ArticleResultBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.view.TaishengListView;
-import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -37,32 +37,46 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class SearchResultActivity extends BaseActivity {
-    View iv_back;
-    ArticlePostBean bean;
-    TaishengListView lv_articles;
+public class SearchResultActivity extends BaseHActivity {
 
-    ArticleAdapter madapter;
+    @BindView(R.id.lv_articles)
+    TaishengListView lvArticles;
+    private ArticlePostBean bean;
+    private ArticleAdapter madapter;
+    private  String searchkey;
+    private  int PAGE_NO = 1;
+    private  int PAGE_SIZE = 10;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_searchresult);
-        initView();
-        initData();
+        ButterKnife.bind(this);
+        initViews();
     }
-    void initView(){
-        iv_back=findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
-        lv_articles= (TaishengListView) findViewById(R.id.lv_articles);
-        madapter=new ArticleAdapter(this);
-        lv_articles.setAdapter(madapter);
-        lv_articles.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
+    @Override
+    public void initData() {
+        Intent intent = getIntent();
+        searchkey = intent.getStringExtra("searchkey");
+        PAGE_NO = 1;
+        PAGE_SIZE = 10;
+        bean = new ArticlePostBean();
+
+    }
+
+    @Override
+    public void addData() {
+        getArticles();
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.search_result));
+    }
+
+    private void initViews() {
+        madapter = new ArticleAdapter(this);
+        lvArticles.setAdapter(madapter);
+        lvArticles.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
             @Override
             public void onUpLoad() {
                 getArticles();
@@ -71,35 +85,19 @@ public class SearchResultActivity extends BaseActivity {
 
     }
 
-    void initData(){
-        Intent intent=getIntent();
-        searchkey=intent.getStringExtra("searchkey");
-        PAGE_NO=1;
-        PAGE_SIZE=10;
-        bean=new ArticlePostBean();
-        getArticles();
-
-
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
-        PAGE_NO=1;
+        PAGE_NO = 1;
     }
 
-    String searchkey;
-    int PAGE_NO=1;
-    int PAGE_SIZE=10;
-
-
-    void getArticles(){
-        bean.pageNo=PAGE_NO;
-        bean.pageSize=PAGE_SIZE;
-        bean.search=searchkey;
-        bean.token= UserInstance.getInstance().getToken();
-        bean.userId=UserInstance.getInstance().getUid();
-        bean.type="";
+    private void getArticles() {
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        bean.search = searchkey;
+        bean.token = UserInstance.getInstance().getToken();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.type = "";
         DialogUtil.showProgress(this, "");
         ApiUtils.getApiService().articleList(bean).enqueue(new TaiShengCallback<BaseBean<ArticleResultBean>>() {
             @Override
@@ -108,24 +106,24 @@ public class SearchResultActivity extends BaseActivity {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
 
-                        if(message.result.records!=null&&message.result.records.size()>0) {
-                            lv_articles.setLoading(false);
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lvArticles.setLoading(false);
                             //有消息
                             PAGE_NO++;
                             madapter.mData.addAll(message.result.records);
-                            if(message.result.records.size()<10){
-                                lv_articles.setHasLoadMore(false);
-                                lv_articles.setLoadAllViewText("暂时只有这么多文章");
-                                lv_articles.setLoadAllFooterVisible(true);
-                            }else{
-                                lv_articles.setHasLoadMore(true);
+                            if (message.result.records.size() < 10) {
+                                lvArticles.setHasLoadMore(false);
+                                lvArticles.setLoadAllViewText("暂时只有这么多文章");
+                                lvArticles.setLoadAllFooterVisible(true);
+                            } else {
+                                lvArticles.setHasLoadMore(true);
                             }
                             madapter.notifyDataSetChanged();
-                        }else{
+                        } else {
                             //没有消息
-                            lv_articles.setHasLoadMore(false);
-                            lv_articles.setLoadAllViewText("暂时只有这么多文章");
-                            lv_articles.setLoadAllFooterVisible(true);
+                            lvArticles.setHasLoadMore(false);
+                            lvArticles.setLoadAllViewText("暂时只有这么多文章");
+                            lvArticles.setLoadAllFooterVisible(true);
                         }
 
                         break;
@@ -140,7 +138,6 @@ public class SearchResultActivity extends BaseActivity {
             }
         });
     }
-
 
 
     class ArticleAdapter extends BaseAdapter {
@@ -171,19 +168,19 @@ public class SearchResultActivity extends BaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // 声明内部类
-        Util util = null;
+            Util util = null;
             // 中间变量
             final int flag = position;
             if (convertView == null) {
                 util = new Util();
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_article, null);
-                util.ll_all=convertView.findViewById(R.id.ll_all);
-                util.sdv_article= (SimpleDraweeView) convertView.findViewById(R.id.sdv_article);
-                util.tv_title= (TextView) convertView.findViewById(R.id.tv_title);
-                util.tv_content= (TextView) convertView.findViewById(R.id.tv_content);
-                util.tv_typename= (TextView) convertView.findViewById(R.id.tv_typename);
-                util.tv_createtime= (TextView) convertView.findViewById(R.id.tv_createtime);
+                util.ll_all = convertView.findViewById(R.id.ll_all);
+                util.sdv_article = (SimpleDraweeView) convertView.findViewById(R.id.sdv_article);
+                util.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+                util.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+                util.tv_typename = (TextView) convertView.findViewById(R.id.tv_typename);
+                util.tv_createtime = (TextView) convertView.findViewById(R.id.tv_createtime);
 
                 convertView.setTag(util);
             } else {
@@ -193,11 +190,11 @@ public class SearchResultActivity extends BaseActivity {
             util.ll_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(SearchResultActivity.this,ArticleContentActivity.class);
-                    intent.putExtra("articleId",bean.id);
-                    intent.putExtra("articlePic",bean.picUrl);
-                    intent.putExtra("summary",bean.summary);
-                    intent.putExtra("title",bean.title);
+                    Intent intent = new Intent(SearchResultActivity.this, ArticleContentActivity.class);
+                    intent.putExtra("articleId", bean.id);
+                    intent.putExtra("articlePic", bean.picUrl);
+                    intent.putExtra("summary", bean.summary);
+                    intent.putExtra("title", bean.title);
                     startActivity(intent);
                 }
             });

@@ -7,7 +7,7 @@ import android.util.Log;
 
 
 import com.taisheng.now.EventManage;
-import com.taisheng.now.SampleAppLike;
+import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.bussiness.MainActivity;
 import com.taisheng.now.util.Apputil;
 import com.taisheng.now.util.DeviceUtils;

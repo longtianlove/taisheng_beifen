@@ -1,123 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#fff"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginTop="7dp"
-        android:background="#fff"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:weightSum="1">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-            android:src="@drawable/icon_back" />
+        android:layout_height="wrap_content">
+        <ImageView style="@style/iv_title" />
 
         <LinearLayout
-            android:id="@+id/ll_search"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/search_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/size_title25"
+            android:paddingLeft="@dimen/magin_12"
+            android:paddingRight="@dimen/magin_12"
             android:weightSum="1">
 
             <ImageView
-                android:layout_width="14dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/icon_search" />
-
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="6dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:layout_weight="1"
-                android:textCursorDrawable="@drawable/my_cursor"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="搜索文章"
-                android:textColor="#ff666666"
-                android:textColorHint="#ff999999"
-                android:textSize="14sp" />
-            <ImageView
-                android:id="@+id/iv_search_guanbi"
+                android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
-                android:layout_height="12dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginRight="11dp"
-                android:src="@drawable/icon_guanbi"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingRight="10dp"
+                android:src="@drawable/icon_back_new" />
 
-                />
+            <LinearLayout
+                android:id="@+id/ll_search"
+                android:layout_width="@dimen/weight_0"
+                android:layout_height="@dimen/size_30"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:layout_weight="1"
+                android:background="@drawable/search_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/magin_15"
+                    android:src="@drawable/icon_search" />
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="@dimen/weight_0"
+                    android:layout_height="@dimen/size_20"
+                    android:layout_marginLeft="@dimen/magin_6"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/search_articles"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:textCursorDrawable="@drawable/my_cursor"
+                    android:textSize="@dimen/font14" />
+
+                <ImageView
+                    android:id="@+id/iv_search_guanbi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:src="@drawable/icon_guanbi" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:gravity="center"
+                android:text="@string/search"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/font14" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_search"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginLeft="9dp"
-            android:gravity="center"
-            android:text="搜索"
-            android:textColor="#ff666666"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-
+    </FrameLayout>
     <LinearLayout
         android:id="@+id/ll_history_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
+        android:paddingLeft="@dimen/magin_12"
+        android:paddingRight="@dimen/magin_12"
         android:weightSum="1">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/jianbiantiao" />
+            android:src="@drawable/titlejianbian" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:gravity="center"
-            android:text="历史搜索"
-            android:textColor="#ff333333"
-            android:textSize="18sp" />
+            android:layout_marginLeft="@dimen/margin_5"
+            android:layout_weight="1"
+            android:text="@string/history_search"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font18" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/iv_deletehistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_12"
             android:src="@drawable/history_delete" />
     </LinearLayout>
 
@@ -126,14 +122,16 @@
         android:id="@+id/wl_histroy_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"></com.taisheng.now.view.WrapLayout>
+        android:layout_marginTop="@dimen/magin_2">
+
+    </com.taisheng.now.view.WrapLayout>
 
 
     <LinearLayout
         android:id="@+id/ll_hot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/magin_12"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="12dp"
@@ -143,29 +141,25 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/jianbiantiao" />
+            android:src="@drawable/titlejianbian" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="@dimen/margin_5"
             android:gravity="center"
-            android:text="热门推荐"
-            android:textColor="#ff333333"
-            android:textSize="18sp" />
+            android:text="@string/popular_recommendation"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font18" />
     </LinearLayout>
 
 
     <com.taisheng.now.view.TaishengListView
         android:id="@+id/lv_hotsearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:background="#fff"
-        android:divider="@null"
-        android:scrollbars="none"
+        style="@style/my_lv"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
         android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
-        android:listSelector="@android:color/transparent" />
+        android:headerDividersEnabled="false" />
 
 </LinearLayout>

@@ -2,31 +2,26 @@ package com.taisheng.now.bussiness.market;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
-import com.taisheng.now.bussiness.article.SecretActivity;
+import com.taisheng.now.bussiness.MainActivity;
 import com.taisheng.now.bussiness.bean.post.BaseListPostBean;
 import com.taisheng.now.bussiness.bean.post.BasePostBean;
 import com.taisheng.now.bussiness.bean.post.LingqukajuanPostBean;
@@ -37,21 +32,31 @@ import com.taisheng.now.bussiness.bean.result.MallBannerResultBanner;
 import com.taisheng.now.bussiness.bean.result.MallYouhuiquanBean;
 import com.taisheng.now.bussiness.bean.result.MallYouhuiquanResultBanner;
 import com.taisheng.now.bussiness.bean.result.RemenshangpinBean;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.market.gouwuche.GouwucheActivity;
-import com.taisheng.now.bussiness.market.gouwuche.ShoppingCartActivity;
 import com.taisheng.now.bussiness.market.youhuijuan.MoreYouhuijuanActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.GlideImageLoader;
 import com.taisheng.now.util.ToastUtil;
+import com.taisheng.now.util.Uiutils;
+import com.taisheng.now.view.WithListViewScrollView;
 import com.taisheng.now.view.WithScrolleViewListView;
 import com.taisheng.now.view.banner.BannerViewPager;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
+import com.th.j.commonlibrary.wight.RoundImgView;
+import com.youth.banner.Banner;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import retrofit2.Call;
@@ -59,53 +64,61 @@ import retrofit2.Response;
 
 public class MarketFragment extends BaseFragment {
 
-    View iv_gouwuche;
-    EditText et_doctor_search;
-    View iv_search_guanbi;
-    View tv_search;
+    @BindView(R.id.iv_scan)
+    ImageView ivScan;
+    @BindView(R.id.ll_search)
+    LinearLayout llSearch;
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
+    @BindView(R.id.bannerContaner)
+    Banner bannerContaner;
+    @BindView(R.id.ll_healthfile)
+    LinearLayout llHealthfile;
+    @BindView(R.id.ll_shipinzibu)
+    LinearLayout llShipinzibu;
+    @BindView(R.id.textView)
+    TextView textView;
+    @BindView(R.id.ll_zhongyaocai)
+    LinearLayout llZhongyaocai;
+    @BindView(R.id.ll_jifenduihuan)
+    LinearLayout llJifenduihuan;
+    @BindView(R.id.lv_youhuijuans)
+    WithScrolleViewListView lvYouhuijuans;
+    @BindView(R.id.tv_moreyouhuijuan)
+    TextView tvMoreyouhuijuan;
+    @BindView(R.id.rv_hot_goods)
+    RecyclerView rvHotGoods;
+    @BindView(R.id.activity_main)
+    RelativeLayout activityMain;
+    @BindView(R.id.lv_jifenduihuan)
+    WithScrolleViewListView lvJifenduihuan;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    @BindView(R.id.scl_bag)
+    WithListViewScrollView sclBag;
+    @BindView(R.id.ptr_refresh)
+    MaterialDesignPtrFrameLayout ptrRefresh;
 
-
-    View ll_healthfile;
-    View ll_shipinzibu;
-    View ll_zhongyaocai;
-    View ll_jifenduihuan;
-
-    MaterialDesignPtrFrameLayout ptr_refresh;
-
-    private FrameLayout bannerContaner;
-    BannerViewPager bannerViewPager;
-    private View bannerView;
-
-    public View tv_moreyouhuijuan;
-
-
-    RecyclerView rv_hot_goods;
     RecyclerView.LayoutManager mLayoutManager;
     HotGoodsAdapter hotGoodsAdapter;
-
-    com.taisheng.now.view.WithScrolleViewListView lv_articles;
     ArticleAdapter madapter;
-
-    WithScrolleViewListView lv_youhuijuans;
+    private View bannerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_market, container, false);
+        ButterKnife.bind(this, rootView);
 
         initView(rootView);
-
-
-//        EventBus.getDefault().register(this);
         initData();
-
         return rootView;
     }
 
     void initView(View rootView) {
-        iv_gouwuche = rootView.findViewById(R.id.iv_gouwuche);
-        iv_gouwuche.setOnClickListener(new View.OnClickListener() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.flRight.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -114,45 +127,10 @@ public class MarketFragment extends BaseFragment {
             }
         });
 
-        iv_search_guanbi = rootView.findViewById(R.id.iv_search_guanbi);
-        iv_search_guanbi.setVisibility(View.GONE);
-        iv_search_guanbi.setOnClickListener(new View.OnClickListener() {
+        tvSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                et_doctor_search.setText("");
-            }
-        });
-        et_doctor_search = (EditText) rootView.findViewById(R.id.et_doctor_search);
-        et_doctor_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s != null && s.length() > 0) {
-                    iv_search_guanbi.setVisibility(View.VISIBLE);
-                } else {
-                    iv_search_guanbi.setVisibility(View.GONE);
-                }
-                String searchkey = s.toString();
-//                nickName = searchkey;
-//                PAGE_NO = 1;
-//                madapter.mData.clear();
-//                getDoctors();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        tv_search = rootView.findViewById(R.id.tv_search);
-        tv_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String searchkey = et_doctor_search.getText().toString();
+                String searchkey = etSearch.getText().toString();
                 if (TextUtils.isEmpty(searchkey)) {
                     return;
                 }
@@ -163,62 +141,57 @@ public class MarketFragment extends BaseFragment {
         });
 
 
-        ll_healthfile=rootView.findViewById(R.id.ll_healthfile);
-        ll_healthfile.setOnClickListener(new View.OnClickListener() {
+        llHealthfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FenleiMarketActivity.selectTab = 0;
-                if (FenleiMarketActivity.tl_tab != null) {
-                    (FenleiMarketActivity.tl_tab.getTabAt(0)).select();
+                if (FenleiMarketActivity.tlTab != null) {
+                    (FenleiMarketActivity.tlTab.getTabAt(0)).select();
                 }
-                Intent intent=new Intent(getActivity(), FenleiMarketActivity.class);
+                Intent intent = new Intent(getActivity(), FenleiMarketActivity.class);
                 startActivity(intent);
             }
         });
-        ll_shipinzibu=rootView.findViewById(R.id.ll_shipinzibu);
-        ll_shipinzibu.setOnClickListener(new View.OnClickListener(){
+        llShipinzibu.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 FenleiMarketActivity.selectTab = 1;
-                if (FenleiMarketActivity.tl_tab != null) {
-                    (FenleiMarketActivity.tl_tab.getTabAt(1)).select();
+                if (FenleiMarketActivity.tlTab != null) {
+                    (FenleiMarketActivity.tlTab.getTabAt(1)).select();
                 }
-                Intent intent=new Intent(getActivity(), FenleiMarketActivity.class);
+                Intent intent = new Intent(getActivity(), FenleiMarketActivity.class);
                 startActivity(intent);
             }
         });
-        ll_zhongyaocai=rootView.findViewById(R.id.ll_zhongyaocai);
-        ll_zhongyaocai.setOnClickListener(new View.OnClickListener(){
+        llZhongyaocai.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 FenleiMarketActivity.selectTab = 2;
-                if (FenleiMarketActivity.tl_tab != null) {
-                    (FenleiMarketActivity.tl_tab.getTabAt(2)).select();
+                if (FenleiMarketActivity.tlTab != null) {
+                    (FenleiMarketActivity.tlTab.getTabAt(2)).select();
                 }
-                Intent intent=new Intent(getActivity(), FenleiMarketActivity.class);
+                Intent intent = new Intent(getActivity(), FenleiMarketActivity.class);
                 startActivity(intent);
             }
         });
-        ll_jifenduihuan=rootView.findViewById(R.id.ll_jifenduihuan);
-        ll_jifenduihuan.setOnClickListener(new View.OnClickListener() {
+        llJifenduihuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FenleiMarketActivity.selectTab = 3;
-                if (FenleiMarketActivity.tl_tab != null) {
-                    (FenleiMarketActivity.tl_tab.getTabAt(3)).select();
+                if (FenleiMarketActivity.tlTab != null) {
+                    (FenleiMarketActivity.tlTab.getTabAt(3)).select();
                 }
-                Intent intent=new Intent(getActivity(), FenleiMarketActivity.class);
+                Intent intent = new Intent(getActivity(), FenleiMarketActivity.class);
                 startActivity(intent);
             }
         });
 
-        ptr_refresh = (MaterialDesignPtrFrameLayout) rootView.findViewById(R.id.ptr_refresh);
         /**
          * 下拉刷新
          */
-        ptr_refresh.setPtrHandler(new PtrDefaultHandler() {
+        ptrRefresh.setPtrHandler(new PtrDefaultHandler() {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -227,17 +200,10 @@ public class MarketFragment extends BaseFragment {
         });
 //
 
-        bannerContaner = (FrameLayout) rootView.findViewById(R.id.bannerContaner);
-        bannerContaner.setVisibility(View.VISIBLE);
-        bannerViewPager = new BannerViewPager(mActivity);
-
-        bannerView = bannerViewPager.getContentView();
-
-        bannerContaner.addView(bannerView);
+        bannerContaner =  rootView.findViewById(R.id.bannerContaner);
 
 
-        tv_moreyouhuijuan = rootView.findViewById(R.id.tv_moreyouhuijuan);
-        tv_moreyouhuijuan.setOnClickListener(new View.OnClickListener() {
+        tvMoreyouhuijuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MoreYouhuijuanActivity.class);
@@ -245,22 +211,20 @@ public class MarketFragment extends BaseFragment {
             }
         });
 
-        rv_hot_goods = rootView.findViewById(R.id.rv_hot_goods);
         //设置布局管理器为2列，纵向
         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         hotGoodsAdapter = new HotGoodsAdapter(getActivity());
-        rv_hot_goods.setLayoutManager(mLayoutManager);
-        rv_hot_goods.setAdapter(hotGoodsAdapter);
+        rvHotGoods.setLayoutManager(mLayoutManager);
+//        rvHotGoods.addItemDecoration(new DividerGridItemDecoration(getActivity()));
+        rvHotGoods.setAdapter(hotGoodsAdapter);
 
 
-        lv_articles = (WithScrolleViewListView) rootView.findViewById(R.id.lv_jifenduihuan);
         madapter = new ArticleAdapter(mActivity);
-        lv_articles.setAdapter(madapter);
+        lvJifenduihuan.setAdapter(madapter);
 
 
-        lv_youhuijuans = rootView.findViewById(R.id.lv_youhuijuans);
         youhuiquanAdapter = new YouhuiquanAdapter(getActivity());
-        lv_youhuijuans.setAdapter(youhuiquanAdapter);
+        lvYouhuijuans.setAdapter(youhuiquanAdapter);
     }
 
     void initData() {
@@ -279,34 +243,28 @@ public class MarketFragment extends BaseFragment {
         ApiUtils.getApiService().banner(bean).enqueue(new TaiShengCallback<BaseBean<MallBannerResultBanner>>() {
             @Override
             public void onSuccess(Response<BaseBean<MallBannerResultBanner>> response, BaseBean<MallBannerResultBanner> message) {
-                ptr_refresh.refreshComplete();
+                ptrRefresh.refreshComplete();
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        ArrayList<String> pictureUrls = new ArrayList<>();
+                        List<String> pictureUrls = new ArrayList<>();
                         if (message.result.records != null && !message.result.records.isEmpty()) {
 
                             for (MallBannerBean bean :
                                     message.result.records) {
                                 pictureUrls.add(bean.url);
                             }
-                            bannerViewPager.setPictureUrls(pictureUrls);
-                            bannerViewPager.setmScrollSpeed(500);
-                            bannerViewPager.setOnItemClickListener(new BannerViewPager.ViewPagerItemListener() {
-                                @Override
-                                public void onViewPagerItemClick(int i) {
+                            bannerContaner.setImageLoader(new GlideImageLoader());
+                            bannerContaner.setImages(pictureUrls);
+                            bannerContaner.start();
 
-                                }
-                            });
-                            bannerViewPager.madapter.notifyDataSetChanged();
                         }
-
                         break;
                 }
             }
 
             @Override
             public void onFail(Call<BaseBean<MallBannerResultBanner>> call, Throwable t) {
-                ptr_refresh.refreshComplete();
+                ptrRefresh.refreshComplete();
             }
         });
     }
@@ -393,7 +351,7 @@ public class MarketFragment extends BaseFragment {
                 public void onClick(View v) {
                 }
             });
-            util.tv_discount.setText("¥"+bean.discount + "");
+            util.tv_discount.setText("¥" + bean.discount + "");
             util.tv_name.setText(bean.name);
             util.tv_tag.setText(bean.tag);
             util.tv_usedate.setText(bean.useDate);
@@ -450,10 +408,9 @@ public class MarketFragment extends BaseFragment {
                     case Constants.HTTP_SUCCESS:
                         if (message.result.hotGoodsList != null && !message.result.hotGoodsList.isEmpty()) {
                             hotGoodsAdapter.mData = message.result.hotGoodsList;
+
                             hotGoodsAdapter.notifyDataSetChanged();
                         }
-
-
                         if (message.result.scoreList != null && !message.result.scoreList.isEmpty()) {
                             madapter.mData = message.result.scoreList;
                             madapter.notifyDataSetChanged();
@@ -464,7 +421,6 @@ public class MarketFragment extends BaseFragment {
 
             @Override
             public void onFail(Call<BaseBean<CainixihuanResultBean>> call, Throwable t) {
-
             }
         });
     }
@@ -477,7 +433,7 @@ public class MarketFragment extends BaseFragment {
 
         //定义构造方法，默认传入上下文和数据源
         public HotGoodsAdapter(Context context) {
-            mContext = context;
+            this.mContext = context;
 
         }
 
@@ -492,9 +448,12 @@ public class MarketFragment extends BaseFragment {
             MyViewHolder holder2 = (MyViewHolder) holder;
             RemenshangpinBean hotGoodsBean = mData.get(position);
             if (hotGoodsBean != null) {
-
-                Uri uri = Uri.parse(hotGoodsBean.picUrl);
-                holder2.sdv_header.setImageURI(uri);
+                Glide.with(mContext)
+                        .load(hotGoodsBean.picUrl)
+                        .placeholder(R.drawable.article_default)
+                        .error(R.drawable.article_default)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(holder2.sdv_header);
                 holder2.tv_goods_name.setText(hotGoodsBean.name);
                 holder2.tv_goods_jiage.setText("¥" + hotGoodsBean.retailPrice + "");
                 holder2.ll_all.setOnClickListener(new View.OnClickListener() {
@@ -509,6 +468,20 @@ public class MarketFragment extends BaseFragment {
                 });
             }
 
+            int screenWidth = (Uiutils.getScreenWidth(mContext) / 2) - Uiutils.dp2px(mContext, 6f);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, screenWidth);
+            holder2.sdv_header.setLayoutParams(layoutParams);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            if (position % 2 == 0) {
+                params.leftMargin = Uiutils.dp2px(mContext, 6f);
+                params.rightMargin = Uiutils.dp2px(mContext, 3f);
+            } else {
+                params.leftMargin = Uiutils.dp2px(mContext, 3f);
+                params.rightMargin = Uiutils.dp2px(mContext, 6f);
+            }
+            params.bottomMargin = Uiutils.dp2px(mContext, 6f);
+            holder2.ll_all.setLayoutParams(params);
         }
 
         @Override
@@ -522,21 +495,21 @@ public class MarketFragment extends BaseFragment {
         //定义自己的ViewHolder，将View的控件引用在成员变量上
         public class MyViewHolder extends RecyclerView.ViewHolder {
             public View ll_all;
-            public SimpleDraweeView sdv_header;
+            public RoundImgView sdv_header;
             public TextView tv_goods_name;
             public TextView tv_goods_jiage;
+            public TextView tv_sales;
             public View iv_jifennduihuan;
 
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 ll_all = itemView.findViewById(R.id.ll_all);
-                sdv_header = (SimpleDraweeView) itemView.findViewById(R.id.sdv_header);
+                sdv_header = itemView.findViewById(R.id.sdv_header);
                 tv_goods_name = itemView.findViewById(R.id.tv_goods_name);
                 tv_goods_jiage = itemView.findViewById(R.id.tv_goods_jiage);
                 iv_jifennduihuan = itemView.findViewById(R.id.iv_jifennduihuan);
-
-
+                tv_sales = itemView.findViewById(R.id.tv_sales);
             }
         }
     }
@@ -570,23 +543,23 @@ public class MarketFragment extends BaseFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // 声明内部类
-            ArticleAdapter.Util util = null;
+            Util util = null;
             // 中间变量
             final int flag = position;
             if (convertView == null) {
-                util = new ArticleAdapter.Util();
+                util = new Util();
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_jifenduihuanshouye, null);
                 util.ll_all = convertView.findViewById(R.id.ll_all);
                 util.sdv_article = convertView.findViewById(R.id.sdv_article);
                 util.tv_name = convertView.findViewById(R.id.tv_name);
-                util.tv_jianjie=convertView.findViewById(R.id.tv_jianjie);
+                util.tv_jianjie = convertView.findViewById(R.id.tv_jianjie);
                 util.tv_counterprice = convertView.findViewById(R.id.tv_counterprice);
 //                util.tv_retailprice = convertView.findViewById(R.id.tv_retailprice);
 
                 convertView.setTag(util);
             } else {
-                util = (ArticleAdapter.Util) convertView.getTag();
+                util = (Util) convertView.getTag();
             }
             JifenzhuanquBean bean = mData.get(position);
             util.ll_all.setOnClickListener(new View.OnClickListener() {
@@ -600,15 +573,13 @@ public class MarketFragment extends BaseFragment {
                     startActivity(intent);
                 }
             });
+            Glide.with(mcontext)
+                    .load(bean.picUrl)
+                    .placeholder(R.drawable.article_default)
+                    .error(R.drawable.article_default)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(util.sdv_article);
 
-            String temp_url = bean.picUrl;
-            if (temp_url == null || "".equals(temp_url)) {
-                util.sdv_article.setBackgroundResource(R.drawable.article_default);
-
-            } else {
-                Uri uri = Uri.parse(temp_url);
-                util.sdv_article.setImageURI(uri);
-            }
             util.tv_name.setText(bean.name);
             util.tv_jianjie.setText(bean.brief);
             util.tv_counterprice.setText(bean.retailPrice.multiply(new BigDecimal(100)) + "");
@@ -622,7 +593,7 @@ public class MarketFragment extends BaseFragment {
 
         class Util {
             View ll_all;
-            SimpleDraweeView sdv_article;
+            RoundImgView sdv_article;
             TextView tv_name;
             TextView tv_jianjie;
             TextView tv_counterprice;

@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply from: 'tinker-support.gradle'
 apply plugin: 'com.mob.sdk'
+
+
 MobSDK {
     appKey "2c3ce5b35f0b0"
     appSecret "19e779f031f0b512874aa4fb2b92b989"
@@ -30,7 +32,6 @@ android {
             storePassword '123456'
         }
     }
-
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.taisheng.now"
@@ -45,8 +46,12 @@ android {
 //        }
 
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
+//            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
+            abiFilters "armeabi-v7a", "arm64-v8a","x86"
         }
+        aaptOptions.cruncherEnabled = false
+
+        aaptOptions.useNewCruncher = false
 
     }
     buildTypes {
@@ -60,18 +65,21 @@ android {
             signingConfig signingConfigs.release_sign_config
         }
     }
-
-
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    sourceSets{
-        main{
+    sourceSets {
+        main {
             jniLibs.srcDir 'libs'
             jni.srcDirs = []    //disable automatic ndk-build
         }
+    }
+    buildToolsVersion '28'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -83,56 +91,60 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'com.android.support.constraint:constraint-layout:1.1.3'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //    // 支付宝 SDK AAR 包所需的配置
     //    api(name: 'alipaySdk-15.6.5-20190718211148', ext: 'aar')
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    api 'androidx.appcompat:appcompat:1.0.0'
     //    testCompile 'junit:junit:4.12'
-    implementation 'androidx.multidex:multidex:2.0.0'
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.3.4'
-    implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    implementation 'org.ligboy.retrofit2:converter-fastjson:2.1.0'
-
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
-    implementation 'com.facebook.fresco:fresco:0.12.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.tencent.liteav:LiteAVSDK_TRTC:latest.release'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.multidex:multidex:2.0.0'
+    api 'com.tencent.bugly:crashreport_upgrade:1.3.4'
+    api 'org.greenrobot:eventbus:3.0.0'
+    api 'com.squareup.retrofit2:retrofit:2.1.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    api 'org.ligboy.retrofit2:converter-fastjson:2.1.0'
+    //    api 'com.google.code.gson:gson:2.8.6'
+    api 'com.squareup.retrofit2:converter-gson:2.6.2'
+    api 'com.facebook.fresco:fresco:0.12.0'
+    api 'com.google.android.material:material:1.0.0'
+    api 'com.tencent.liteav:LiteAVSDK_TRTC:latest.release'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
     //小米推送
     //首先引入gson库
-    implementation 'com.google.code.gson:gson:2.8.1'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'com.zzhoujay.richtext:richtext:2.4.7'
+
+    api 'androidx.recyclerview:recyclerview:1.0.0'
+    api 'com.zzhoujay.richtext:richtext:2.4.7'
     //下拉刷新
-    implementation 'in.srain.cube:ultra-ptr:1.0.11'
+    api 'in.srain.cube:ultra-ptr:1.0.11'
     //    implementation project(':libskywebrtc')
     //    implementation 'com.github.longtianlove:taisheng_webrtc:1.0.1'
     //    compile 'com.google.zxing:core:3.2.1'
     //    compile 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
     //    compile 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
     //完整版视频播放引入
-    implementation 'com.shuyu:GSYVideoPlayer:7.1.0'
-    implementation 'com.github.bumptech.glide:glide:4.4.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
-    implementation 'jp.wasabeef:glide-transformations:2.0.2'
+    api 'com.shuyu:GSYVideoPlayer:7.1.0'
     //图形变换依赖库
-    implementation 'com.neovisionaries:nv-websocket-client:2.9'
-    implementation 'com.ycjiang:imgepreviewlibrary:1.1.3'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.33'
+    api 'com.neovisionaries:nv-websocket-client:2.9'
+    api 'com.ycjiang:imgepreviewlibrary:1.1.3'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.33'
     /*微信支付集成*/
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-    implementation project(':addresspickerlib')
-    implementation project(':lib-zxing1')
-    implementation 'com.veken:chart_view:1.0.2'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-    implementation files('libs/BaiduLBS_Android.jar')
-    implementation files('libs/MiPush_SDK_Client_3_6_18.jar')
-    implementation files('libs/BaiduTraceSDK_v3_1_4.jar')
-    implementation files('libs/bos-android-sdk-1.0.3.jar')
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    api project(':lib-zxing1')
+    api 'com.veken:chart_view:1.0.2'
+    api 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    api files('libs/BaiduLBS_Android.jar')
+    api files('libs/MiPush_SDK_Client_3_6_18.jar')
+    api files('libs/BaiduTraceSDK_v3_1_4.jar')
+    api files('libs/bos-android-sdk-1.0.3.jar')
+
+    api 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor  "com.jakewharton:butterknife-compiler:10.0.0"
+    implementation "com.google.android.material:material:1.0.0"
+    implementation project(':commonlibrary')
+    api 'com.github.bumptech.glide:glide:3.7.0'
+//    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 }

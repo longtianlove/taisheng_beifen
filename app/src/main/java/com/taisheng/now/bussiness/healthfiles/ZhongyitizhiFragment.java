@@ -17,7 +17,7 @@ import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.bean.post.HealthCheckListPostBean;
 import com.taisheng.now.bussiness.bean.result.CheckHistoryBean;
 import com.taisheng.now.bussiness.bean.result.CheckHistoryResultBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
@@ -72,7 +72,6 @@ public class ZhongyitizhiFragment extends BaseFragment {
                 String assessmentTypeToQuestion = "0";
                 Intent intent = new Intent(getActivity(), HealthQuestionActivity.class);
                 switch (assessmentType) {
-
                     case "1":
                         assessmentTypeToQuestion="1";
                         break;

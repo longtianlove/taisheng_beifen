@@ -3,40 +3,11 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#529FFB"
+    android:background="@color/color00c8aa"
     android:orientation="vertical">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="#529FFB"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-
-        <ImageView
-            android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:src="@drawable/icon_back_new" />
-
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="订单结算"
-            android:textColor="@color/white_c"
-            android:textSize="16dp" />
-
-
-    </RelativeLayout>
+    <ImageView
+        style="@style/iv_title" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -179,8 +150,8 @@
                     android:id="@+id/lv_jiesuan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="15dp"
+                    android:layout_marginTop="10dp"
                     android:background="#fff"
                     android:divider="#EEEEEE"
                     android:dividerHeight="1dp"
@@ -189,9 +160,6 @@
                     android:listSelector="@android:color/transparent"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp" />
-
-
-
 
 
                 <LinearLayout
@@ -233,8 +201,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="#EEEEEE" />
 
 
@@ -277,8 +245,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="#EEEEEE" />
 
                 <LinearLayout
@@ -317,10 +285,10 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="#EEEEEE" />
             </LinearLayout>
 
@@ -331,10 +299,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:paddingBottom="8dp"
             android:background="#fff"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"

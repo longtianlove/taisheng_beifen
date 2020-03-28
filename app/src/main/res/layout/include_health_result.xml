@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorf6f6f6"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_14"
+        android:paddingLeft="@dimen/magin_12"
+        android:paddingRight="@dimen/magin_12"
+        android:paddingTop="@dimen/margin_14">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_13"
+            android:background="@drawable/check_jianyi_bg"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_10">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_5"
+                android:drawableLeft="@drawable/icon_cepingjieguo"
+                android:drawablePadding="@dimen/margin_5"
+                android:gravity="center"
+                android:text="@string/evaluation_results"
+                android:textColor="@color/color00c8aa"
+                android:textSize="@dimen/font14" />
+
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee" />
+
+            <TextView
+                android:id="@+id/tv_completeBatch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:layout_marginRight="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_10"
+                android:lineSpacingMultiplier="1.5"
+                android:text="您的新陈代谢类型为：蛋白质型。
+饮食方面，高蛋白的食谱比较适合你，但是同时要注意维生素、碳水化合物、膳食纤维的摄入。锻炼方面，可以选择游泳、搏击、举重等强度较大的运动方式，帮助你更快燃烧脂肪，达到减重效果。"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_13"
+            android:background="@drawable/check_jianyi_bg"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginTop="@dimen/magin_6"
+                    android:drawableLeft="@drawable/icon_cepingjianyi"
+                    android:drawablePadding="@dimen/magin_6"
+                    android:gravity="center"
+                    android:text="@string/evaluation_suggestions"
+                    android:textColor="@color/color00c8aa"
+                    android:textSize="@dimen/font14" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee" />
+
+            <TextView
+                android:id="@+id/tv_remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:layout_marginRight="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_10"
+                android:lineSpacingMultiplier="1.5"
+                android:text="新陈代谢快的人，能量转化率高，热量也消耗得快；而相反，新陈代谢慢的人，热量消耗的慢，容易转化为脂肪堆积在体内。想要高效减肥，就要根据自身的新陈代谢类型进行不同的选择。只有对症下药，才能事半功倍。
+还要提醒大家：早上6点到9点，下午5点到7点，是人体新陈代谢最为活跃的时间段。这个时候选择进食或者锻炼，巧妙利用新陈代谢，即可事半功倍减掉赘肉哟~"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font14" />
+        </LinearLayout>
+    </LinearLayout>
+</merge>

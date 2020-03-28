@@ -1,27 +1,22 @@
 package com.taisheng.now.wxapi;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.SampleAppLike;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.MainActivity;
 import com.taisheng.now.bussiness.bean.post.WexinZhifuPostBean;
 import com.taisheng.now.bussiness.market.DingdanInstance;
-import com.taisheng.now.bussiness.market.ZhifuchenggongActivity;
 import com.taisheng.now.bussiness.market.dingdan.DindanxiangqingDaifahuoActivity;
-import com.taisheng.now.bussiness.market.dingdan.DingdanjiesuanActivity;
-import com.taisheng.now.bussiness.me.MyDingdanActivity;
-import com.taisheng.now.bussiness.user.LoginActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.test.WechatResultBean;
@@ -38,14 +33,12 @@ import java.math.BigDecimal;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
+public class WXPayEntryActivity extends BaseHActivity implements IWXAPIEventHandler {
 
     private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
 
     private IWXAPI api;
 
-    public View btn_back;
-    public TextView tv_title;
     public View ll_chenggong;
     public View btn_chakandingdan;
     public View ll_shibai;
@@ -55,19 +48,10 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
     public TextView tv_jifenhuoqu;
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.pay_result);
-//        btn_back = findViewById(R.id.btn_back);
-//        btn_back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-        tv_title = findViewById(R.id.tv_title);
+
         ll_chenggong = findViewById(R.id.ll_chenggong);
         btn_chakandingdan = findViewById(R.id.btn_chakandingdan);
         btn_chakandingdan.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +123,22 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
         tv_jifenhuoqu = findViewById(R.id.tv_jifenhuoqu);
         tv_jifenhuoqu.setText("恭喜您此次支付获得" + DingdanInstance.getInstance().gangzhifu_zongjia.setScale(0, BigDecimal.ROUND_HALF_UP) + "积分");
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvLeft.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -163,12 +163,12 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 //            builder.show();
             switch (resp.errCode) {
                 case 0:
-                    tv_title.setText("支付成功");
+                    tvTitle.setText("支付成功");
                     ll_chenggong.setVisibility(View.VISIBLE);
                     ll_shibai.setVisibility(View.GONE);
                     break;
                 default:
-                    tv_title.setText("支付失败");
+                    tvTitle.setText("支付失败");
                     ll_chenggong.setVisibility(View.GONE);
                     ll_shibai.setVisibility(View.VISIBLE);
                     break;

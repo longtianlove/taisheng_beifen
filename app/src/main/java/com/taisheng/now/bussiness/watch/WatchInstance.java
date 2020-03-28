@@ -4,9 +4,7 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.bean.result.PictureBean;
-import com.taisheng.now.bussiness.user.UserInstance;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
-import com.taisheng.now.bussiness.watch.bean.result.ChiyaoBeann;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
@@ -16,7 +14,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

@@ -5,33 +5,7 @@
     android:background="#fff"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_shangchengtitle"
-        android:gravity="center"
-        android:paddingBottom="10dp"
-        android:weightSum="1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="26dp"
-            android:layout_marginBottom="10dp"
-            android:text="消息"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:textSize="22sp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-    </LinearLayout>
+    <ImageView style="@style/iv_title" />
 
     <ListView
         android:id="@+id/history_list"

@@ -20,16 +20,17 @@
     <color name="light_black">#141414</color>
 
 
-    <color name="SelectedTabIndicatorColor">#529FFB</color>
+    <color name="SelectedTabIndicatorColor">@color/color00c8aa</color>
     <color name="UnSelectedTextColor">#333333</color>
-    <color name="SelectedTextColor">#529FFB</color>
+    <color name="SelectedTextColor">@color/color00c8aa</color>
 
 
     <color name="tv_tab_color_normal">#ff999999</color>
-    <color name="tv_tab_color_select">#ff529ffb</color>
+    <color name="tv_tab_color_select">#12d29c</color>
 
     <color name="colorBtn">#016EFF</color>
-    <color name="colorWhite">#FFFFFF</color>
+
+
     <color name="line_btn">#BBBBBB</color>
     <color name="hlfTransparent">#30000000</color>
     <color name="colorComBg">#0B1829</color>
@@ -343,9 +344,9 @@
     <color name="lightsalmon">#FFA07A</color>
     <color name="btn_purple_press_ok">#FFFFFF</color>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#00c8aa</color>
+    <color name="colorPrimaryDark">#00c8aa</color>
+    <color name="colorAccent">#00c8aa</color>
     <!-- 亮肉色 -->
     <color name="darkorange">#FF8C00</color>
     <!-- 暗桔黄色 -->
@@ -610,6 +611,8 @@
 
 
     <color name="navpage">#FFE1E8EB</color>
+
+
 
 </resources>
 

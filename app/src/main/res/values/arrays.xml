@@ -33,4 +33,44 @@
         <item>@color/refresh_color</item>
         <item>@color/refresh_color</item>
     </integer-array>
+
+    <string-array name="doctor_tab">
+        <item>@string/doctor03</item>
+        <item>@string/doctor04</item>
+        <item>@string/doctor05</item>
+    </string-array>
+    <string-array name="dmarket_tab">
+        <item>@string/dmarket01</item>
+        <item>@string/dmarket02</item>
+        <item>@string/dmarket03</item>
+        <item>@string/dmarket04</item>
+    </string-array>
+    <string-array name="car_tab">
+        <item>@string/car01</item>
+        <item>@string/car02</item>
+    </string-array>
+    <string-array name="order_tab">
+        <item>@string/order01</item>
+        <item>@string/order02</item>
+        <item>@string/order03</item>
+        <item>@string/order04</item>
+    </string-array>
+    <string-array name="card_tab">
+        <item>@string/card01</item>
+        <item>@string/card02</item>
+        <item>@string/card03</item>
+    </string-array>
+    <string-array name="health_tab">
+        <item>@string/health_tab01</item>
+        <item>@string/health_tab02</item>
+
+    </string-array>
+   <!-- <item>@string/health_tab03</item>-->
+    <string-array name="secret_tab">
+        <item>@string/secret01</item>
+        <item>@string/secret02</item>
+        <item>@string/secret03</item>
+        <item>@string/secret04</item>
+        <item>@string/secret05</item>
+    </string-array>
 </resources>

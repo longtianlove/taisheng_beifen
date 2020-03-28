@@ -1,5 +1,8 @@
 package com.taisheng.now.http;
 
+import com.google.gson.Gson;
+import com.th.j.commonlibrary.utils.LogUtilH;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -19,6 +22,10 @@ public class NullOnEmptyConverterFactory extends  Converter.Factory  {
         return new Converter<ResponseBody, Object>() {
             @Override
             public Object convert(ResponseBody body) throws IOException {
+
+                Gson gson = new Gson();
+                String jsonBDID = gson.toJson(body);
+                LogUtilH.e("请求参数--》"+jsonBDID);
                 if (body.contentLength() == 0) return null;
                 return delegate.convert(body);
             }

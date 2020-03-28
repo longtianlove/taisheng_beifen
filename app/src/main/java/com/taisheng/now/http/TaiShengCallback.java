@@ -3,20 +3,17 @@ package com.taisheng.now.http;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.Environment;
-import com.taisheng.now.SampleAppLike;
+import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.LoginActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.LoginActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.push.XMPushManagerInstance;
 import com.taisheng.now.util.ToastUtil;
 import com.tencent.bugly.crashreport.CrashReport;
 
-
-import org.greenrobot.eventbus.EventBus;
 
 import retrofit2.Call;
 import retrofit2.Callback;

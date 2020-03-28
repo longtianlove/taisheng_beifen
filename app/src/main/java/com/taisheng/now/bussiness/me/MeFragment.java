@@ -21,12 +21,9 @@ import com.taisheng.now.bussiness.bean.post.BasePostBean;
 import com.taisheng.now.bussiness.bean.result.IsSign;
 import com.taisheng.now.bussiness.doctor.DoctorCollectActivity;
 import com.taisheng.now.bussiness.healthfiles.HealthCheckHistoryActivity;
-import com.taisheng.now.bussiness.healthfiles.HealthFileSearchActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-
-import org.greenrobot.eventbus.EventBus;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -94,7 +91,6 @@ public class MeFragment extends BaseFragment {
         tv_qiandao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_qiandao.setText("・已签到");
                 Intent intent = new Intent(getActivity(), QuqiandaoActivity.class);
                 startActivity(intent);
             }
@@ -217,10 +213,9 @@ public class MeFragment extends BaseFragment {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         if ("true".equals(message.result.signFlag)) {
-                            tv_qiandao.setText("・已签到");
+                            tv_qiandao.setText(getString(R.string.sigin));
                         }else{
-                            tv_qiandao.setText("・去签到");
-
+                            tv_qiandao.setText(getString(R.string.sigin2));
                         }
                         break;
                 }
@@ -238,7 +233,7 @@ public class MeFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         if (UserInstance.getInstance().userInfo.avatar != null) {
-            Uri uri = Uri.parse(Constants.Url.File_Host + UserInstance.getInstance().userInfo.avatar);
+            Uri uri = Uri.parse(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar);
             sdv_header.setImageURI(uri);
         }
         if (!TextUtils.isEmpty(UserInstance.getInstance().userInfo.nickName)) {
@@ -249,9 +244,4 @@ public class MeFragment extends BaseFragment {
         }
     }
 
-    public void onDestroy() {
-        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
-
-    }
 }

@@ -17,7 +17,7 @@ import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragmentActivity;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;

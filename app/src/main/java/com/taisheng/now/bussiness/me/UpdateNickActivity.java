@@ -8,19 +8,24 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.bean.post.UserInfoPostBean;
 import com.taisheng.now.bussiness.bean.result.ModifyUserInfoResultBean;
 import com.taisheng.now.bussiness.bean.result.UserInfo;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -28,29 +33,49 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class UpdateNickActivity extends BaseActivity {
-    View iv_back;
-    EditText et_nickname;
-    ImageView iv_nickname_guanbi;
-    View btn_update;
+public class UpdateNickActivity extends BaseHActivity implements TextWatcher {
+    @BindView(R.id.et_nickname)
+    EditText etNickname;
+    @BindView(R.id.iv_nickname_guanbi)
+    ImageView ivNicknameGuanbi;
+    @BindView(R.id.btn_update)
+    TextView btnUpdate;
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_updatenickname);
-        initView();
+        ButterKnife.bind(this);
     }
-    void initView(){
-        iv_back=findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        btn_update=findViewById(R.id.btn_update);
-        btn_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+    @Override
+    public void initData() {
+        ivNicknameGuanbi.setVisibility(View.INVISIBLE);
+        etNickname.addTextChangedListener(this);
+    }
+
+    @Override
+    public void addData() {
+        etNickname.setText(UserInstance.getInstance().getNickname());
+        CharSequence text = TextsUtils.getTexts(etNickname);
+        //Debug.asserts(text instanceof Spannable);
+        if (text instanceof Spannable) {
+            Spannable spanText = (Spannable) text;
+            Selection.setSelection(spanText, text.length());
+        }
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText(getString(R.string.updata_nickname));
+    }
+
+    @OnClick({R.id.iv_nickname_guanbi, R.id.btn_update})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_nickname_guanbi:
+                etNickname.setText("");
+                break;
+            case R.id.btn_update:
                 UserInfoPostBean bean = new UserInfoPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
@@ -63,8 +88,8 @@ public class UpdateNickActivity extends BaseActivity {
                 bean.sysUser.realName = UserInstance.getInstance().userInfo.realName;
                 bean.sysUser.sex = UserInstance.getInstance().userInfo.sex;
                 bean.sysUser.avatar = UserInstance.getInstance().userInfo.avatar;
-                bean.sysUser.userName=UserInstance.getInstance().userInfo.userName;
-                bean.sysUser.nickName=et_nickname.getText().toString();
+                bean.sysUser.userName = UserInstance.getInstance().userInfo.userName;
+                bean.sysUser.nickName = TextsUtils.getTexts(etNickname);
 
                 ApiUtils.getApiService().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
                     @Override
@@ -81,7 +106,7 @@ public class UpdateNickActivity extends BaseActivity {
                                 SPUtil.putSex(UserInstance.getInstance().userInfo.sex);
                                 UserInstance.getInstance().userInfo.avatar = bean.sysUser.avatar;
                                 SPUtil.putAVATAR(bean.sysUser.avatar);
-                                UserInstance.getInstance().userInfo.nickName=bean.sysUser.nickName;
+                                UserInstance.getInstance().userInfo.nickName = bean.sysUser.nickName;
                                 SPUtil.putNickname(bean.sysUser.nickName);
                                 finish();
                                 break;
@@ -94,52 +119,32 @@ public class UpdateNickActivity extends BaseActivity {
 
                     }
                 });
-            }
-        });
-        iv_nickname_guanbi= (ImageView) findViewById(R.id.iv_nickname_guanbi);
-        iv_nickname_guanbi.setVisibility(View.INVISIBLE);
-        iv_nickname_guanbi.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                et_nickname.setText("");
-            }
-        });
+                break;
+        }
+    }
 
-        et_nickname= (EditText) findViewById(R.id.et_nickname);
-        et_nickname.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s != null && s.length() > 0) {
-                    iv_nickname_guanbi.setVisibility(View.VISIBLE);
-                }else{
-                    iv_nickname_guanbi.setVisibility(View.GONE);
-                }
-
-                if(s != null && s.length() > 0&&!s.equals(UserInstance.getInstance().getNickname())){
-                    btn_update.setEnabled(true);
-                }else{
-                    btn_update.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        et_nickname.setText(UserInstance.getInstance().getNickname());
-        CharSequence text = et_nickname.getText();
-        //Debug.asserts(text instanceof Spannable);
-        if (text instanceof Spannable) {
-            Spannable spanText = (Spannable)text;
-            Selection.setSelection(spanText, text.length());
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s != null && s.length() > 0) {
+            ivNicknameGuanbi.setVisibility(View.VISIBLE);
+        } else {
+            ivNicknameGuanbi.setVisibility(View.GONE);
         }
 
+        if (s != null && s.length() > 0 && !s.equals(UserInstance.getInstance().getNickname())) {
+            btnUpdate.setEnabled(true);
+        } else {
+            btnUpdate.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
 
     }
 }

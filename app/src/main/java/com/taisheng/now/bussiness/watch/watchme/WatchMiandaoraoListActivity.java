@@ -16,7 +16,8 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.result.Miandaraobean;
@@ -34,31 +35,35 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchMiandaoraoListActivity extends BaseActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    ImageView iv_back;
-
+public class WatchMiandaoraoListActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     View iv_addnaozhong;
 
     WithScrolleViewListView lv_articles;
     ArticleAdapter madapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_watchme_miandaraolist);
-        initView();
+        initViews();
 //        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void initData() {
 
     }
 
-    void initView() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+tvTitle.setText("免打扰时间段");
+    }
+
+    void initViews() {
 
         iv_addnaozhong = findViewById(R.id.iv_addnaozhong);
         iv_addnaozhong.setOnClickListener(new View.OnClickListener() {
@@ -79,10 +84,10 @@ public class WatchMiandaoraoListActivity extends BaseActivity implements Activit
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
+        initDatas();
     }
 
-    void initData() {
+    void initDatas() {
         BaseWatchBean bean = new BaseWatchBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();

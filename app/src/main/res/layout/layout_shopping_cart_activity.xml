@@ -2,102 +2,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#529FFB"
     android:orientation="vertical">
 
-<!--    <include-->
-<!--        android:id="@+id/shopping_title"-->
-<!--        layout="@layout/layout_title" />-->
 
-    <FrameLayout
+    <com.taisheng.now.view.TaishengListView
+        android:id="@+id/list_shopping_cart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:background="#fff"
-        >
+        android:divider="#fff"
+        android:dividerHeight="9dp"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" />
 
-<!--        <com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"-->
-<!--            android:id="@+id/ptr_refresh"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="#fff"-->
-<!--            cube_ptr:ptr_duration_to_close="300"-->
-<!--            cube_ptr:ptr_duration_to_close_header="2000"-->
-<!--            cube_ptr:ptr_keep_header_when_refresh="true"-->
-<!--            cube_ptr:ptr_pull_to_fresh="false"-->
-<!--            cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"-->
-<!--            cube_ptr:ptr_resistance="1.7">-->
+    <TextView style="@style/my_line_h" />
 
+    <LinearLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/white_c">
 
+        <CheckBox
+            android:id="@+id/ck_all"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/magin_16"
+            android:button="@drawable/check_box_style"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin_10"
+            android:text="全选"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_30"
+            android:text="合计："
+            android:gravity="center_vertical"
+            android:textSize="@dimen/font12"
+            android:textColor="@color/color333333" />
 
-            <com.taisheng.now.view.TaishengListView
-                android:id="@+id/list_shopping_cart"
+        <TextView
+            android:id="@+id/tv_show_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="0.00"
+            android:textSize="@dimen/font16"
+            android:textColor="@color/colorff0202" />
 
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="12dp"
-                android:background="#fff"
-                android:divider="#fff"
-                android:dividerHeight="9dp"
-                android:footerDividersEnabled="false"
-                android:headerDividersEnabled="false"
-                android:listSelector="@android:color/transparent"
-                android:scrollbars="none" />
+        <TextView
+            android:id="@+id/tv_settlement"
+            style="@style/my_bt"
+            android:layout_width="100dp"
+            android:layout_height="@dimen/size_30"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@drawable/item_doctor_zixun"
+            android:gravity="center"
+            android:text="结算(0)"
+            android:textColor="@color/colorWhite" />
 
-<!--        </com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout>-->
-、
-
-        <LinearLayout
-            android:id="@+id/rl_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="@color/white_c">
-
-
-            <CheckBox
-                android:id="@+id/ck_all"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:button="@drawable/check_box_style"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:text="全选"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/tv_show_price"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="合计:0.00"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/tv_settlement"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:background="#529FFB"
-                android:gravity="center"
-                android:text="结算(0)"
-                android:textColor="@color/white_c" />
-
-
-        </LinearLayout>
-
-
-    </FrameLayout>
+    </LinearLayout>
 
 </LinearLayout>

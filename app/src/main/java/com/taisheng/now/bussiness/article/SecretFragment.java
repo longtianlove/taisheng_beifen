@@ -85,9 +85,9 @@ View iv_search;
 
     private void initTab(){
         tl_tab.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tl_tab.setSelectedTabIndicatorColor(ContextCompat.getColor(mActivity, R.color.SelectedTabIndicatorColor));
+        tl_tab.setSelectedTabIndicatorColor(ContextCompat.getColor(mActivity, R.color.color00c8aa));
         tl_tab.setSelectedTabIndicatorHeight(DensityUtil.dip2px(mActivity,2));
-        tl_tab.setTabTextColors(ContextCompat.getColor(mActivity, R.color.UnSelectedTextColor), ContextCompat.getColor(mActivity, R.color.SelectedTextColor));
+        tl_tab.setTabTextColors(ContextCompat.getColor(mActivity, R.color.UnSelectedTextColor), ContextCompat.getColor(mActivity, R.color.color00c8aa));
         tl_tab.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
 //        tl_tab.setTabTextColors(ContextCompat.getColor(this, R.color.gray), ContextCompat.getColor(this, R.color.white));
 //        tl_tab.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
@@ -170,10 +170,7 @@ View iv_search;
         tabIndicators.add(Constants.SHILIAOYANGSHENG);
         tabIndicators.add(Constants.YONGYAOZHIDAO);
         tabIndicators.add(Constants.MUYINGYUNYU);
-//        tabIndicators.add("脾胃肝肾");
-//        for (int i = 0; i < 3; i++) {
-//            tabIndicators.add("Tab " + i);
-//        }
+
         tabFragments = new ArrayList<>();
         zhongyitizhiFragment1=new SecretTabFragment();
         zhongyitizhiFragment1.typeName=Constants.SUSHENHUFU;

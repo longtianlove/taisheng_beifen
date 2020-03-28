@@ -2,27 +2,25 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Selection;
-import android.text.Spannable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.bussiness.user.UserInstance;
+import com.taisheng.now.base.BaseHActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
-import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
 
-import org.w3c.dom.Text;
-
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -30,8 +28,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class WatchMeJinjilianxirenXinzengActivity extends BaseActivity {
-    View iv_back;
+public class WatchMeJinjilianxirenXinzengActivity extends BaseHActivity {
     EditText et_nickname;
     ImageView iv_nickname_guanbi;
 
@@ -41,21 +38,30 @@ public class WatchMeJinjilianxirenXinzengActivity extends BaseActivity {
 
     View btn_update;
 
+
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_jinjilianxiren_xinzeng);
-        initView();
+        ButterKnife.bind(this);
+        initViews();
+    }
+    @Override
+    public void initData() {
+
     }
 
-    void initView() {
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+        tvTitle.setText("新增紧急联系人");
+    }
+
+    void initViews() {
         btn_update = findViewById(R.id.btn_update);
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,4 +200,6 @@ public class WatchMeJinjilianxirenXinzengActivity extends BaseActivity {
 
 
     }
+
+
 }
