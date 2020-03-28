@@ -163,7 +163,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 //            recordModel.setPath(filePath);
 //            recordModel.setPlayed(false);
             String rawAudiomessage="audio[";
-            rawAudiomessage+=((seconds <= 0 ? 1 : (int) seconds)+","+filePath+","+"1]");
+            rawAudiomessage+=(   (seconds <= 0 ? 1 : (int) seconds)   +","+filePath+","+"1]");
             sendYuyinMsg(rawAudiomessage);
 //
 //            //添加到数据库

@@ -146,5 +146,6 @@ dependencies {
     implementation "com.google.android.material:material:1.0.0"
     implementation project(':commonlibrary')
     api 'com.github.bumptech.glide:glide:3.7.0'
-//    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+    api 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 }

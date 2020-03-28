@@ -14,7 +14,6 @@ public class GlideImageLoader2 extends ImageLoader {
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
         Glide.with(context).load((Integer) path)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
     }
 }

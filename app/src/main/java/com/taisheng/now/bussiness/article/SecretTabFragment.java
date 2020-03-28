@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.taisheng.now.Constants;
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.core.content.ContextCompat;
+
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import retrofit2.Call;
@@ -68,7 +70,7 @@ public class SecretTabFragment extends BaseFragment {
     TextView tv_doctor_name;
 
     TextView tv_title;
-    TextView btn_zixun, tv_goo_at, tv_praise,tv_year;
+    TextView btn_zixun, tv_goo_at, tv_praise, tv_year;
 
     private TextView tv_scorestar;
 
@@ -119,7 +121,7 @@ public class SecretTabFragment extends BaseFragment {
         });
     }
 
-  public  void initData() {
+    public void initData() {
         DOCTOR_pageNo = 1;
         getDoctorTypeList();
         PAGE_NO = 1;
@@ -141,26 +143,26 @@ public class SecretTabFragment extends BaseFragment {
         bean.pageNo = DOCTOR_pageNo;
         bean.pageSize = DOCTOR_pageSize;
 
-        if(typeName.equals(Constants.SUSHENHUFU)){
+        if (typeName.equals(Constants.SUSHENHUFU)) {
             bean.type = 1;
-        }else if (typeName.equals(Constants.JIANSHENYUNDONG)){
+        } else if (typeName.equals(Constants.JIANSHENYUNDONG)) {
             bean.type = 2;
-        }else if (typeName.equals(Constants.SHILIAOYANGSHENG)){
+        } else if (typeName.equals(Constants.SHILIAOYANGSHENG)) {
             bean.type = 3;
-        }else if (typeName.equals(Constants.YONGYAOZHIDAO)){
+        } else if (typeName.equals(Constants.YONGYAOZHIDAO)) {
             bean.type = 4;
-        }else if (typeName.equals(Constants.MUYINGYUNYU)){
+        } else if (typeName.equals(Constants.MUYINGYUNYU)) {
             bean.type = 5;
         }
         Gson gson = new Gson();
         String jsonBDID = gson.toJson(bean);
-        LogUtilH.e(jsonBDID+"----");
+        LogUtilH.e(jsonBDID + "----");
         ApiUtils.getApiService().getDoctorTypeList(bean).enqueue(new TaiShengCallback<BaseBean<DoctorsResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DoctorsResultBean>> response, BaseBean<DoctorsResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        LogUtilH.e(message.toString()+"----");
+                        LogUtilH.e(message.toString() + "----");
                         if (message.result.records != null && message.result.records.size() > 0) {
 
                             DoctorBean bean = message.result.records.get(0);
@@ -191,7 +193,7 @@ public class SecretTabFragment extends BaseFragment {
                             }
                             if (!TextsUtils.isEmpty(bean.fromMedicineTime)) {
                                 String time = DateUtil.getDatePoor2(Long.valueOf(DateUtil.getTime()) / 1000, Long.valueOf(DateUtil.dateToStamp(bean.fromMedicineTime)) / 1000);
-                                tv_year.setText(getString(R.string.home03)+time+getString(R.string.home04));
+                                tv_year.setText(getString(R.string.home03) + time + getString(R.string.home04));
                             }
                             tv_goo_at.setText(getString(R.string.home02) + bean.goodDiseases);
 
@@ -217,7 +219,7 @@ public class SecretTabFragment extends BaseFragment {
                                     intent.putExtra("jobIntroduction", bean.jobIntroduction);
                                     intent.putExtra("score", bean.score);
                                     intent.putExtra("goodDiseases", bean.goodDiseases);
-                                    LogUtilH.e(bean.score+"===bean.score");
+                                    LogUtilH.e(bean.score + "===bean.score");
                                     startActivity(intent);
                                 }
                             });
@@ -246,10 +248,10 @@ public class SecretTabFragment extends BaseFragment {
         bean.pageNo = PAGE_NO;
         bean.pageSize = PAGE_SIZE;
         bean.search = "";
-        if (TextsUtils.isEmpty(typeSoure)){
+        if (TextsUtils.isEmpty(typeSoure)) {
             return;
         }
-        bean.type=typeSoure;
+        bean.type = typeSoure;
         bean.token = UserInstance.getInstance().getToken();
         bean.userId = UserInstance.getInstance().getUid();
         DialogUtil.showProgress(mActivity, "");
@@ -310,7 +312,7 @@ public class SecretTabFragment extends BaseFragment {
         }
 
         public void setmData(List<ArticleBean> mData) {
-            if (mData!=null) {
+            if (mData != null) {
                 this.mData = mData;
                 this.notifyDataSetChanged();
             }
@@ -343,7 +345,7 @@ public class SecretTabFragment extends BaseFragment {
                 convertView = inflater.inflate(R.layout.item_article, null);
                 util.ll_all = convertView.findViewById(R.id.ll_all);
                 util.sdv_article = (SimpleDraweeView) convertView.findViewById(R.id.sdv_article);
-                util.sdv_article2 =  convertView.findViewById(R.id.sdv_article2);
+                util.sdv_article2 = convertView.findViewById(R.id.sdv_article2);
                 util.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
                 util.tv_typename = (TextView) convertView.findViewById(R.id.tv_typename);
                 util.tv_createtime = (TextView) convertView.findViewById(R.id.tv_createtime);
@@ -371,12 +373,10 @@ public class SecretTabFragment extends BaseFragment {
             Glide.with(mcontext)
                     .load(temp_url)
 //                    .bitmapTransform(new GlideRoundUtils(mcontext,10, GlideRoundUtils.CornerType.ALL))
-                    .placeholder(R.drawable.article_default)
-                    .error(R.drawable.article_default)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .apply(new RequestOptions().error(R.drawable.article_default).placeholder(R.drawable.article_default))
                     .into(util.sdv_article2);
-            util.tv_title.setText(TextsUtils.isEmptys(bean.title,""));
-            util.tv_typename.setText(TextsUtils.isEmptys(bean.typeName,""));
+            util.tv_title.setText(TextsUtils.isEmptys(bean.title, ""));
+            util.tv_typename.setText(TextsUtils.isEmptys(bean.typeName, ""));
             if (!TextsUtils.isEmpty(bean.createTime)) {
                 String time = DateUtil.getDatePoor(Long.valueOf(DateUtil.getTime()) / 1000, Long.valueOf(DateUtil.dateToStamp(bean.createTime)) / 1000);
                 util.tv_createtime.setText(TextsUtils.isEmptys(time, bean.createTime));

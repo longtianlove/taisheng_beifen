@@ -10,6 +10,7 @@ import android.widget.SeekBar;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -69,8 +70,7 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
 //                                .placeholder(res))
 
                 .load(url)
-                .error(res)
-                .placeholder(res)
+                .apply(new RequestOptions().error(res).placeholder(res))
                 .into(mCoverImage);
     }
 

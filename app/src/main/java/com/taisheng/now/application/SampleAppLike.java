@@ -16,15 +16,18 @@ import com.baidu.mapapi.SDKInitializer;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.previewlibrary.ZoomMediaLoader;
 import com.taisheng.now.Constants;
 import com.taisheng.now.Environment;
 import com.taisheng.now.R;
 import com.taisheng.now.bussiness.MainActivity;
 import com.taisheng.now.util.Apputil;
+import com.taisheng.now.util.ImageLoader;
 import com.tencent.bugly.Bugly;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
+
 
 
 public class SampleAppLike extends DefaultApplicationLike {
@@ -116,7 +119,7 @@ public class SampleAppLike extends DefaultApplicationLike {
             // 调试时，将第三个参数改为true
             Bugly.init(getApplication(), Constants.BUGLY_APP_ID, true);
 
-//            ZoomMediaLoader.getInstance().init(new ImageLoader());
+            ZoomMediaLoader.getInstance().init(new ImageLoader());
 
 
             //在使用SDK各组件之前初始化context信息，传入ApplicationContext
