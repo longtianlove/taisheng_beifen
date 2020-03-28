@@ -33,33 +33,33 @@ public class ImageLoader implements IZoomMediaLoader {
 
     @Override
     public void displayImage(Fragment context, String path, final MySimpleTarget<Bitmap> simpleTarget) {
-        Glide.with(context)
-                .asBitmap()
-                .load(path)
-                .apply(options)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        simpleTarget.onResourceReady(resource);
-                    }
-
-                    @Override
-                    public void onLoadStarted(Drawable placeholder) {
-                        super.onLoadStarted(placeholder);
-                        simpleTarget.onLoadStarted();
-                    }
-
-                    @Override
-                    public void onLoadFailed(Drawable errorDrawable) {
-                        super.onLoadFailed(errorDrawable);
-                        simpleTarget.onLoadFailed(errorDrawable);
-                    }
-                });
+//        Glide.with(context)
+//                .asBitmap()
+//                .load(path)
+//                .apply(options)
+//                .into(new SimpleTarget<Bitmap>() {
+//                    @Override
+//                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+//                        simpleTarget.onResourceReady(resource);
+//                    }
+//
+//                    @Override
+//                    public void onLoadStarted(Drawable placeholder) {
+//                        super.onLoadStarted(placeholder);
+//                        simpleTarget.onLoadStarted();
+//                    }
+//
+//                    @Override
+//                    public void onLoadFailed(Drawable errorDrawable) {
+//                        super.onLoadFailed(errorDrawable);
+//                        simpleTarget.onLoadFailed(errorDrawable);
+//                    }
+//                });
     }
 
     @Override
     public void onStop( Fragment context) {
-        Glide.with(context).onStop();
+//        Glide.with(context).onStop();
     }
 
     @Override

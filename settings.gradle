@@ -1,1 +1,1 @@
-include ':app',  ':lib-zxing1', ':commonlibrary'
+include ':app', ':lib-zxing1', ':commonlibrary', ':imagezoom1'

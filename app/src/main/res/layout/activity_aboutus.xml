@@ -20,6 +20,7 @@
         <ImageView
             android:layout_width="@dimen/size_60"
             android:layout_height="@dimen/size_60"
+
             android:src="@drawable/icon_about_logo" />
 
         <TextView
