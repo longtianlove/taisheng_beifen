@@ -166,4 +166,13 @@ public class CoreDB  {
                         messageBean.getMsg(),messageBean.getTime()});
     }
 
+    public void updateMessage(MessageBean messageBean){
+        coreDBM.execSQL("UPDATE "+MSG_TABLE+" SET msg = ?"+
+                        " where conversationId=? and fromId=? and time = ?",
+                new Object[]{
+                        messageBean.getMsg(), messageBean.getConversationId(),messageBean.getFromId(),
+                       messageBean.getTime()});
+    }
+
+
 }

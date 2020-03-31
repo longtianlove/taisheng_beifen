@@ -507,6 +507,14 @@ public interface ApiService {
             @Part MultipartBody.Part file
     );
 
+
+    //上传语音
+    @Multipart
+    @POST(Constants.Url.Watch.microcharVoice)
+    Call<BaseBean<PictureBean>> microcharVoice(
+            @Part MultipartBody.Part file
+    );
+
     //反馈
     @POST(Constants.Url.feedback)
     Call<BaseBean> feedback(@Body FeedbackPostBean bean);

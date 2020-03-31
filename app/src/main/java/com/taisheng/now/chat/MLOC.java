@@ -189,6 +189,11 @@ public class MLOC {
             coreDB.setMessage(messageBean);
         }
     }
+    public static void updateMessage(MessageBean messageBean){
+        if(coreDB!=null){
+            coreDB.updateMessage(messageBean);
+        }
+    }
 
     public static void saveSharedData(Context context,String key,String value){
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences("stardemo", Activity.MODE_PRIVATE);

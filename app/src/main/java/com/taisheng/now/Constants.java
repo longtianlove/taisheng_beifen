@@ -48,7 +48,8 @@ public class Constants {
 //      public static String File_Host = "http://193.112.19.18:8080/jeecg-boot/sys/common/view/";
 //      public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
         //正式服务器
-        public static String Host = "https://taishenghealth.com/";
+//        public static String Host = "https://taishenghealth.com/";
+        public static String Host = "http://192.168.1.19:8080/";
 
         public static String File_Host = "https://taishenghealth.com/image-video/";
         public static String File_Host_head = "https://taishenghealth.com/image-video/";
@@ -67,6 +68,11 @@ public class Constants {
         public static String WEB_SOCKET_URL = "ws://49.234.71.11:8879";*/
 
         public static class Watch {
+            //上传语音
+            public static final String microcharVoice = "jeecg-boot/app/microchar/getvoice";
+
+
+
             //            绑定设备  deviceBinding
             public static final String deviceBinding = "jeecg-boot/app/watchDevice/deviceBinding";
             //设备列表

@@ -1,11 +1,11 @@
 package com.taisheng.now.chat;
 
 public class MessageBean {
-    private int id;
-    private String conversationId;
-    private String fromId;
-    private String msg;
-    private String time;
+    public int id;
+    public String conversationId;
+    public String fromId;
+    public String msg;
+    public String time;
 
     public int getId() {
         return id;

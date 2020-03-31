@@ -163,13 +163,62 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 //            recordModel.setSecond((int) seconds <= 0 ? 1 : (int) seconds);
 //            recordModel.setPath(filePath);
 //            recordModel.setPlayed(false);
-            String rawAudiomessage="audio[";
-            rawAudiomessage+=(   (seconds <= 0 ? 1 : (int) seconds)   +","+filePath+","+"1]");
+            String rawAudiomessage = "audio[";
+            rawAudiomessage += ((seconds <= 0 ? 1 : (int) seconds) + "," + filePath + "," + "1]");
             sendYuyinMsg(rawAudiomessage);
+            uploadYuyin(filePath);
 //
 //            //添加到数据库
 //            mgr.add(recordModel);
         });
+    }
+
+    public void uploadYuyin(String path) {
+        try {
+
+            File fYuyin = new File(path);
+
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fYuyin);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", fYuyin.getName(), requestFile);
+            ApiUtils.getApiService().microcharVoice(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+
+                                                                      @Override
+                                                                      public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
+                                                                          switch (message.code) {
+                                                                              case Constants.HTTP_SUCCESS:
+
+                                                                                  break;
+//                                                                              case 4031:
+                                                                              default:
+                                                                                  MessageBean messageBean = mDatas.get(mDatas.size() - 1);
+                                                                                  int length = messageBean.msg.length();
+                                                                                  messageBean.msg = messageBean.msg.substring(0, length - 2);
+                                                                                  messageBean.msg += "0]";
+                                                                                  MLOC.updateMessage(messageBean);
+                                                                                  mAdapter.notifyDataSetChanged();
+                                                                                  break;
+
+
+                                                                          }
+
+
+                                                                      }
+
+                                                                      @Override
+                                                                      public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
+                                                                          MessageBean messageBean = mDatas.get(mDatas.size() - 1);
+                                                                          int length = messageBean.msg.length();
+                                                                          messageBean.msg = messageBean.msg.substring(0, length - 2);
+                                                                          messageBean.msg += "0]";
+                                                                          MLOC.updateMessage(messageBean);
+                                                                          mAdapter.notifyDataSetChanged();
+                                                                      }
+                                                                  }
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -576,7 +625,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
     public void onResume() {
         super.onResume();
         mDatas.clear();
-        mTargetId=WatchInstance.getInstance().deviceId;
+        mTargetId = WatchInstance.getInstance().deviceId;
         List<MessageBean> list = MLOC.getMessageList(mTargetId);
         if (list != null && list.size() > 0) {
             mDatas.addAll(list);
@@ -812,7 +861,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                     itemSelfHolder.ieaIvVoiceLine = (ImageView) convertView.findViewById(R.id.iea_iv_voiceLine);
                     itemSelfHolder.ieaLlSinger = (LinearLayout) convertView.findViewById(R.id.iea_ll_singer);
                     itemSelfHolder.ieaTvVoicetime1 = (TextView) convertView.findViewById(R.id.iea_tv_voicetime1);
-                    itemSelfHolder.ieaIvRed = (ImageView) convertView.findViewById(R.id.iea_iv_red);
+                    itemSelfHolder.iea_iv_sendfail = (ImageView) convertView.findViewById(R.id.iea_iv_sendfail);
 //                    itemSelfHolder.vHeadBg = convertView.findViewById(R.id.head_bg);
                     itemSelfHolder.sdv_header = convertView.findViewById(R.id.sdv_header);
 //                    itemSelfHolder.vHeadCover = (CircularCoverView) convertView.findViewById(R.id.head_cover);
@@ -859,10 +908,10 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 //                                    // 小圆点
 ////  .setType(GPreviewBuilder.IndicatorType.Dot)
 //                                    .start();//启动
-                            String url= Constants.Url.File_Host + finalRawmessage;
-                            ArrayList<String> urls=new ArrayList<>();
+                            String url = Constants.Url.File_Host + finalRawmessage;
+                            ArrayList<String> urls = new ArrayList<>();
                             urls.add(url);
-                            ImageZoom.show(getActivity(), url,urls);
+                            ImageZoom.show(getActivity(), url, urls);
 
                         }
                     });
@@ -877,19 +926,63 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
 //                    String rawAudiomessage="audio[";
 //                    rawAudiomessage+=((seconds <= 0 ? 1 : (int) seconds)+","+filePath+","+"1]");
-                    String[] temp=rawmessage.split(",");
+                    String[] temp = rawmessage.split(",");
 
-                    String seconds=temp[0];
-                    int secondstemp=Integer.parseInt(seconds);
-                    String filePath=temp[1];
-                    String isPlayed=temp[2];
+                    String seconds = temp[0];
+                    int secondstemp = Integer.parseInt(seconds);
+                    String filePath = temp[1];
+                    String isSendFail = temp[2];
                     //设置显示时长
-                    itemSelfHolder.ieaTvVoicetime1.setText(secondstemp<= 0 ? 1 + "''" : seconds + "''");
-                    if (!"1".equals(isPlayed)) {
-                        itemSelfHolder.ieaIvRed.setVisibility(View.VISIBLE);
+                    itemSelfHolder.ieaTvVoicetime1.setText(secondstemp <= 0 ? 1 + "''" : seconds + "''");
+                    if (!"1".equals(isSendFail)) {
+                        itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
                     } else {
-                        itemSelfHolder.ieaIvRed.setVisibility(View.GONE);
+                        itemSelfHolder.iea_iv_sendfail.setVisibility(View.GONE);
                     }
+                    itemSelfHolder.iea_iv_sendfail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                itemSelfHolder.iea_iv_sendfail.setVisibility(View.GONE);
+                                File fYuyin = new File(filePath);
+
+                                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fYuyin);
+                                MultipartBody.Part body = MultipartBody.Part.createFormData("file", fYuyin.getName(), requestFile);
+                                ApiUtils.getApiService().microcharVoice(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+
+                                                                                          @Override
+                                                                                          public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
+                                                                                              switch (message.code) {
+                                                                                                  case Constants.HTTP_SUCCESS:
+
+                                                                                                      int length = mDatas.get(position).msg.length();
+                                                                                                      mDatas.get(position).msg = mDatas.get(position).msg.substring(0, length - 2);
+                                                                                                      mDatas.get(position).msg += "1]";
+                                                                                                      MLOC.updateMessage(mDatas.get(position));
+                                                                                                      break;
+                                                                                                  case 4031:
+                                                                                                      itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
+                                                                                                      break;
+                                                                                                  default:
+                                                                                                      itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
+                                                                                                      break;
+                                                                                              }
+
+
+                                                                                          }
+
+                                                                                          @Override
+                                                                                          public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
+                                                                                              itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
+                                                                                          }
+                                                                                      }
+                                );
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
 
                     //更改并显示录音条长度
                     RelativeLayout.LayoutParams ps = (RelativeLayout.LayoutParams) itemSelfHolder.ieaIvVoiceLine.getLayoutParams();
@@ -902,8 +995,10 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                         public void onClick(View v) {
                             //只要点击就设置为已播放状态（隐藏小红点）
 //                            record.setPlayed(true);
-                            //todo  更新数据库
-                            notifyDataSetChanged();
+//
+
+//                            //todo  更新数据库
+//                            notifyDataSetChanged();
                             //这里更新数据库小红点。这里不知道为什么可以强转建议复习复习基础~
 //                            ((ExampleActivity) mContext).getMgr().updateRecord(record);
 
@@ -934,7 +1029,6 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                                     });
                         }
                     });
-
 
 
                 } else {
@@ -1058,6 +1152,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         LinearLayout ieaLlSinger;
         TextView ieaTvVoicetime1;
         ImageView ieaIvRed;
+        ImageView iea_iv_sendfail;
     }
 
     @Override

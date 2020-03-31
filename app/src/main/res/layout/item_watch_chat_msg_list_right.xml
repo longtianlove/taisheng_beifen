@@ -67,6 +67,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
+                <ImageView
+                    android:id="@+id/iea_iv_sendfail"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="4dp"
+                    android:src="@drawable/yuyin_tixing_red"
+                    />
                 <TextView
                     android:id="@+id/iea_tv_voicetime1"
                     android:layout_width="wrap_content"
@@ -84,8 +92,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="4dp"
                     android:src="@drawable/yuyin_tixing_red"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     />
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
