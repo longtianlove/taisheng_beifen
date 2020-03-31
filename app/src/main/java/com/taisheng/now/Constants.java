@@ -25,7 +25,10 @@ public class Constants {
     public final static int LOGIN_VERIFYCODE_OVERDUE_FAIL = 1007;//"验证码已过期，请重新获取！"
     public final static int LOGIN_USERNAME_NOT_EXISTENCE = 1002;//账号不存在,请切换手机号登陆！
     public final static int LOGIN_PASSWORD_ERROR = 101;//密码错误
-    public final static int TOKEN_DIFFERENCE = 401023;//token异常
+    public final static int USER_FREEZE = 401020;//用户冻结
+    public final static int USER_ACCOUNT_SOURCE_ERROR = 401021;//用户来源错误
+    public final static int USER_DATABASE_TOKEN_NOT_EXIST = 401022;//token异常，数据库token不存在
+    public final static int TOKEN_DIFFERENCE = 401023;//token异常,数据库token和用户参数token不一致
     public final static int DOCTOR_NOEXIST = 70000;//医生不存在
     public final static int DOCTOR_BUSY = 70001;//医生忙碌中,请稍后联系
 
