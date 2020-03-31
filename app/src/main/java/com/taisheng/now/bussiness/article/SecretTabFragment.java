@@ -363,11 +363,8 @@ public class SecretTabFragment extends BaseFragment {
             });
             util.sdv_article.setVisibility(View.GONE);
             util.sdv_article2.setVisibility(View.VISIBLE);
-            String temp_url = bean.picUrl;
-//            util.sdv_article.setImageURI(temp_url);
             Glide.with(mcontext)
-                    .load(temp_url)
-//                    .bitmapTransform(new GlideRoundUtils(mcontext,10, GlideRoundUtils.CornerType.ALL))
+                    .load(bean.picUrl)
                     .apply(new RequestOptions().error(R.drawable.article_default).placeholder(R.drawable.article_default))
                     .into(util.sdv_article2);
             util.tv_title.setText(TextsUtils.isEmptys(bean.title, ""));

@@ -78,11 +78,6 @@ android {
     }
 
     buildToolsVersion '28.0.3'
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 
@@ -145,7 +140,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0"
     implementation 'com.google.android.material:material:1.0.0'
     implementation project(':commonlibrary')
-    api 'com.github.bumptech.glide:glide:3.7.0'
 
     implementation files('libs/BaiduTraceSDK_v3_1_4.jar')
     implementation files('libs/BaiduLBS_Android.jar')
@@ -153,7 +147,6 @@ dependencies {
     api 'com.github.bumptech.glide:glide:4.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 
-//    compile 'liji.library.dev:imagezoom:1.2.1'
     api project(':imagezoom1')
 
 }

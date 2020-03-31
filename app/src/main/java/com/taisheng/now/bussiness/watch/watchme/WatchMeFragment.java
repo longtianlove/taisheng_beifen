@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
@@ -184,9 +185,9 @@ public class WatchMeFragment extends BaseFragment {
     private void initData() {
         Glide.with(getActivity())
                 .load(Constants.Url.File_Host + WatchInstance.getInstance().headUrl)
-                .placeholder(R.drawable.article_default)
-                .error(R.drawable.article_default)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .apply(new RequestOptions().placeholder(R.drawable.article_default)
+                        .error(R.drawable.article_default)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(sdvHeader);
         if (!TextUtils.isEmpty(WatchInstance.getInstance().deviceNickName)) {
             tvNickname.setText(WatchInstance.getInstance().deviceNickName);

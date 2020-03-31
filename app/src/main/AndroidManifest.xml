@@ -177,7 +177,11 @@
         <activity
             android:name=".bussiness.SplashActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".test.TestActivity"
@@ -191,9 +195,7 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:scheme="wxa371cf7bae0024bf" />
             </intent-filter>
         </activity>
@@ -280,7 +282,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.WatchMainActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
 

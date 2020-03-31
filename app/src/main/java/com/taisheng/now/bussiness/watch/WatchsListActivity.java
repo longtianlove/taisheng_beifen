@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
@@ -226,15 +227,12 @@ public class WatchsListActivity extends BaseIvActivity {
                     finish();
                 }
             });
-//            if (bean.avatar != null) {
-//                Uri uri = Uri.parse(bean.avatar);
-//                util.sdv_header.setImageURI(uri);
-//            }
             Glide.with(mcontext)
                     .load(bean.url)
-                    .placeholder(R.drawable.article_default)
-                    .error(R.drawable.article_default)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.article_default)
+                            .error(R.drawable.article_default)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(util.sdv_header);
             util.tv_nickname.setText(bean.nickName);
             util.tv_zhanghao.setText("我是TA的" + bean.terminalRelationship);

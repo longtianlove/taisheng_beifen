@@ -136,7 +136,6 @@ public class BannerViewPager {
 
             Glide.with(mcontext)
                     .load(mpictureUrls.get(i))
-//                    .bitmapTransform(new GlideRoundUtils(mcontext,10,GlideRoundUtils.CornerType.ALL))
                     .apply(new RequestOptions().error(R.drawable.article_default).placeholder(R.drawable.article_default))
                     .into( mbannerItems[i]);
         }

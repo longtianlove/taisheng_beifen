@@ -775,7 +775,6 @@ public class FirstFragment extends BaseFragment {
                             videoPlayer.setUp(bean.videoUrl, true, "测试视频");
                             Glide.with(getActivity())
                                     .load(bean.videoBanner)
-//                                    .bitmapTransform(new GlideRoundUtils(getActivity(), Uiutils.dp2px(getActivity(), 10f), GlideRoundUtils.CornerType.ALL))
                                     .apply(new RequestOptions().error(R.mipmap.health01).placeholder(R.mipmap.health01))
                                     .into(imageView);
 
