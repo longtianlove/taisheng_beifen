@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_shangchengtitle"
     android:orientation="vertical">
 
     <ImageView style="@style/iv_title" />
@@ -14,47 +10,42 @@
         style="@style/my_line_h"
         android:background="@color/colorf8f8f8" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff">
 
-        <com.taisheng.now.view.WithListViewScrollView
-            android:id="@+id/scl_bag"
+    <com.taisheng.now.view.WithListViewScrollView
+        android:id="@+id/scl_bag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff">
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
-
-            <LinearLayout
+            <com.taisheng.now.view.WithScrolleViewListView
+                android:id="@+id/lv_chiyaos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:background="@color/coloreeeeee"
+                android:divider="@null"
+                android:dividerHeight="1dp"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
+                android:listSelector="@android:color/transparent" />
+
+            <TextView
+                android:id="@+id/tv_addnaozhong"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_50"
+                android:drawableLeft="@drawable/add_contact"
+                android:drawablePadding="@dimen/magin_10"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:text="@string/add_alarm_clock"
+                android:textColor="@color/color00c8aa"
+                android:textSize="@dimen/font14" />
+        </LinearLayout>
+    </com.taisheng.now.view.WithListViewScrollView>
 
-                <com.taisheng.now.view.WithScrolleViewListView
-                    android:id="@+id/lv_chiyaos"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="15dp"
-                    android:background="#fff"
-                    android:divider="#EEEEEE"
-                    android:dividerHeight="1dp"
-                    android:footerDividersEnabled="false"
-                    android:headerDividersEnabled="false"
-                    android:listSelector="@android:color/transparent" />
-            </LinearLayout>
-        </com.taisheng.now.view.WithListViewScrollView>
-
-        <ImageView
-            android:id="@+id/iv_addnaozhong"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="35dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/icon_addnaozhong"></ImageView>
-    </FrameLayout>
 </LinearLayout>

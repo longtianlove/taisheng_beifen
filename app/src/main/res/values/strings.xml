@@ -420,8 +420,19 @@
     <string name="watch_msg06">开关设置</string>
     <string name="watch_msg07">重启手环</string>
     <string name="watch_msg08">恢复出厂设置</string>
+    <string name="watch_msg09">通讯录</string>
+    <string name="watch_msg10">输入联系人电话</string>
+    <string name="watch_msg11">输入联系人姓名</string>
+    <string name="watch_msg12">新增联系人</string>
+    <string name="watch_msg13">修改联系人</string>
+
     <string name="manage">管理</string>
+    <string name="save">保存</string>
     <string name="add_contact">添加联系人</string>
+    <string name="add_alarm_clock">添加闹钟</string>
+    <string name="ad_sculpture">编辑头像</string>
+    <string name="add_success">添加成功</string>
+    <string name="delete_success">删除成功</string>
 
 
 </resources>

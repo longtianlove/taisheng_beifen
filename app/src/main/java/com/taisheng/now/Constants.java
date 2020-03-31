@@ -48,16 +48,16 @@ public class Constants {
 //      public static String File_Host = "http://193.112.19.18:8080/jeecg-boot/sys/common/view/";
 //      public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
         //正式服务器
-       /* public static String Host = "https://taishenghealth.com/";
+        public static String Host = "https://taishenghealth.com/";
         public static String File_Host = "https://taishenghealth.com/image-video/";
         public static String File_Host_head = "https://taishenghealth.com/image-video/";
-        public static String WEB_SOCKET_URL = "ws://49.233.76.254:8879";*/
+        public static String WEB_SOCKET_URL = "ws://49.233.76.254:8879";
         //测试服务器
-        public static String Host = "http://49.234.71.11:8080/";//有视频的
+       /* public static String Host = "http://49.234.71.11:8080/";//有视频的
 //        public static String File_Host = "http://49.234.71.11:8888/";
         public static String File_Host = "http://49.234.71.11/jeecg-boot/sys/common/view/";
         public static String File_Host_head = "http://49.234.71.11:8888/img/";
-        public static String WEB_SOCKET_URL = "ws://49.234.71.11:8879";
+        public static String WEB_SOCKET_URL = "ws://49.234.71.11:8879";*/
 
        /* public static String Host = "http://192.168.1.15:8080/";//有视频的
         //        public static String File_Host = "http://49.234.71.11:8888/";

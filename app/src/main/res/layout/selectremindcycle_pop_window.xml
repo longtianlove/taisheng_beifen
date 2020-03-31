@@ -10,10 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:background="@drawable/bg_pop_list"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_drugcycle_once"
@@ -24,130 +22,168 @@
             android:drawableRight="@null"
             android:text="一次"
             android:textColor="@color/black_33"
-            android:visibility="gone"
-            android:textSize="20sp" />
-
-        <TextView style="@style/horizontal_line_style" />
+            android:textSize="20sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_drugcycle_0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/magin_20"
+            android:layout_marginTop="@dimen/magin_20"
             android:drawableRight="@null"
-            android:text="每天"
-            android:textColor="@color/black_33"
-            android:textSize="20sp" />
+            android:gravity="center"
+            android:text="重复"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
 
-        <TextView style="@style/horizontal_line_style" />
+        <TextView
+            android:background="@color/coloreeeeee"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            style="@style/my_line_h" />
 
         <TextView
             android:id="@+id/tv_drugcycle_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
             android:text="星期一"
-            android:textColor="@color/black_33"
-            android:textSize="20sp" />
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
 
-        <TextView style="@style/horizontal_line_style" />
+        <TextView
+            android:background="@color/coloreeeeee"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            style="@style/my_line_h" />
 
         <TextView
             android:id="@+id/tv_drugcycle_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
             android:text="星期二"
-            android:textColor="@color/black_33"
-            android:textSize="20sp" />
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
 
-        <TextView style="@style/horizontal_line_style" />
+        <TextView
+            android:background="@color/coloreeeeee"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            style="@style/my_line_h" />
 
         <TextView
             android:id="@+id/tv_drugcycle_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
             android:text="星期三"
-            android:textColor="@color/black_33"
-            android:textSize="20sp" />
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
 
-        <TextView style="@style/horizontal_line_style" />
+        <TextView
+            android:background="@color/coloreeeeee"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            style="@style/my_line_h" />
 
         <TextView
             android:id="@+id/tv_drugcycle_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
             android:text="星期四"
-            android:textColor="@color/black_33"
-            android:textSize="20sp" />
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
 
-        <TextView style="@style/horizontal_line_style" />
+        <TextView
+            android:background="@color/coloreeeeee"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            style="@style/my_line_h" />
 
         <TextView
             android:id="@+id/tv_drugcycle_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
             android:text="星期五"
-            android:textColor="@color/black_33"
-            android:textSize="20sp" />
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
 
-        <TextView style="@style/horizontal_line_style" />
+        <TextView
+            android:background="@color/coloreeeeee"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            style="@style/my_line_h" />
 
         <TextView
             android:id="@+id/tv_drugcycle_6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
             android:text="星期六"
-            android:textColor="@color/black_33"
-            android:textSize="20sp" />
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
 
-        <TextView style="@style/horizontal_line_style" />
+        <TextView
+            android:background="@color/coloreeeeee"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            style="@style/my_line_h" />
 
         <TextView
             android:id="@+id/tv_drugcycle_7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
             android:text="星期日"
-            android:textColor="@color/black_33"
-            android:textSize="20sp" />
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
 
         <TextView style="@style/horizontal_line_style" />
 
         <TextView
             android:id="@+id/tv_drugcycle_sure"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_50"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
             android:gravity="center"
             android:text="@string/cycle_sure"
-            android:textColor="@color/black_33"
-            android:textSize="20sp" />
+            android:textColor="@color/color00c8aa"
+            android:textSize="@dimen/font14" />
 
-        <TextView
-            style="@style/horizontal_line_style"
-            android:layout_marginBottom="20dp" />
     </LinearLayout>
 
 </RelativeLayout>

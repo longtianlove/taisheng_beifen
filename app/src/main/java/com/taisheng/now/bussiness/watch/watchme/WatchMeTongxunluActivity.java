@@ -11,6 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
@@ -24,7 +27,9 @@ import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.view.WithListViewScrollView;
 import com.taisheng.now.view.WithScrolleViewListView;
+import com.th.j.commonlibrary.global.Global;
 import com.th.j.commonlibrary.utils.LogUtilH;
+import com.th.j.commonlibrary.wight.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +46,6 @@ import retrofit2.Response;
  */
 
 public class WatchMeTongxunluActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback, AdapterView.OnItemClickListener {
-
 
     @BindView(R.id.lv_naozhongs)
     WithScrolleViewListView lvNaozhongs;
@@ -68,12 +72,12 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
 
     @Override
     public void addData() {
-
+        getData();
     }
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("通讯录设置");
+        tvTitle.setText(getString(R.string.watch_msg09));
         tvRight.setText(getString(R.string.edit));
         tvRight.setVisibility(View.GONE);
         tvRight.setOnClickListener(new View.OnClickListener() {
@@ -95,31 +99,23 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
     public void onViewClicked() {
         Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
         intent.putExtra("nowphxNum", nowphxName + 1);
+        intent.putExtra(Global.INTENT_TYPE, Global.MAIL_ADD);
         startActivity(intent);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        LogUtilH.e(position + "-----");
         if (data != null && data.size() > 0) {
             TongxunluliistBean bean = data.get(position);
             Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
-
             intent.putExtra("nowphxNum", position + 1);
             intent.putExtra("phbxName", bean.phbxName);
+            intent.putExtra("phbxNum", bean.phbxNum);
             intent.putExtra("phbxTelephone", bean.phbxTelephone);
-
+            intent.putExtra(Global.INTENT_TYPE, Global.MAIL_UPDATA);
             startActivity(intent);
         }
     }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        getData();
-    }
-
 
     private void getData() {
         DianhuabenPostbean bean = new DianhuabenPostbean();
@@ -210,36 +206,19 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
                 convertView = inflater.inflate(R.layout.item_tongxunlu, null);
                 util.tv_name = convertView.findViewById(R.id.tv_name);
                 util.tv_phone = convertView.findViewById(R.id.tv_phone);
+                util.sdv_header = convertView.findViewById(R.id.sdv_header);
                 convertView.setTag(util);
             } else {
                 util = (Util) convertView.getTag();
             }
             TongxunluliistBean bean = mData.get(position);
-
-
-
-                    /*TongxunluDeletePostBean tongxunluDeletePostBean = new TongxunluDeletePostBean();
-                    tongxunluDeletePostBean.userId = UserInstance.getInstance().getUid();
-                    tongxunluDeletePostBean.token = UserInstance.getInstance().getToken();
-                    tongxunluDeletePostBean.deviceId = WatchInstance.getInstance().deviceId;
-                    tongxunluDeletePostBean.phbxNum = bean.phbxNum;
-                    ApiUtils.getApiService().setWatchDphbx(tongxunluDeletePostBean).enqueue(new TaiShengCallback<BaseBean>() {
-                        @Override
-                        public void onSuccess(Response<BaseBean> response, BaseBean message) {
-                            switch (message.code) {
-                                case Constants.HTTP_SUCCESS:
-                                    ToastUtil.showAtCenter("删除成功");
-                                    initData();
-                                    break;
-                            }
-                        }
-
-                        @Override
-                        public void onFail(Call<BaseBean> call, Throwable t) {
-
-                        }
-                    });*/
-
+            Glide.with(mcontext)
+                    .load(bean.phbxDataImg)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.ad_sculpture)
+                            .error(R.drawable.ad_sculpture)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(util.sdv_header);
             util.tv_name.setText(bean.phbxName);
             util.tv_phone.setText(bean.phbxTelephone);
 
@@ -249,6 +228,7 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
 
         class Util {
             TextView tv_name;
+            CircleImageView sdv_header;
             TextView tv_phone;
 
 

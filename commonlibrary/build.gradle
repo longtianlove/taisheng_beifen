@@ -36,4 +36,5 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.1'
     api 'com.youth.banner:banner:1.4.10'
 
+
 }

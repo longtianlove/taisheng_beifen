@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name"></string>
     <string name="sure">确定</string>
+    <string name="sure2">确认</string>
     <string name="just">刚刚</string>
     <string name="minutes_ago1">10分钟以前</string>
     <string name="minutes_ago2">20分钟以前</string>

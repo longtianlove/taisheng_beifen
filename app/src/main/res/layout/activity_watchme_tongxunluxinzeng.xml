@@ -1,141 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_shangchengtitle"
-    android:orientation="vertical">
-
-    <ImageView style="@style/iv_title" />
-
-    <TextView
-        style="@style/my_line_h"
-        android:background="@color/colorf8f8f8" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
-
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
+        <ImageView style="@style/iv_title" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="姓名"
-                android:textColor="#ff333333"
-                android:textSize="14sp" />
+        <TextView
+            style="@style/my_line_h"
+            android:background="@color/colorf8f8f8" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"></View>
+        <com.th.j.commonlibrary.wight.CircleImageView
+            android:id="@+id/sdv_header"
+            android:layout_width="@dimen/size_60"
+            android:layout_height="@dimen/size_60"
+            android:layout_marginTop="@dimen/magin_25"
+            android:scaleType="fitXY" />
 
-
-            <EditText
-                android:id="@+id/et_tongxunlu_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="请输入姓名"
-                android:text=""
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#EEEEEE"
-            android:visibility="gone"></View>
-
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/magin_10"
+            android:text="@string/ad_sculpture"
+            android:textColor="@color/color00c8aa" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/magin_30"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="电话号码"
-                android:textColor="#ff333333"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"></View>
+            <ImageView
+                android:layout_width="@dimen/magin_30"
+                android:layout_height="@dimen/magin_30"
+                android:layout_marginLeft="@dimen/magin_15"
+                android:src="@drawable/icon_phone" />
 
             <EditText
                 android:id="@+id/et_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/magin_38"
+                android:layout_weight="1"
                 android:background="@null"
-                android:hint="请输入电话号码"
+                android:hint="@string/watch_msg10"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:text=""
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
+                android:textColor="@color/colorbbbbbb"
+                android:textColorHint="@color/colorbbbbbb"
+                android:textSize="@dimen/font14" />
+
+            <TextView
+                style="@style/my_line_v"
+                android:layout_height="@dimen/size_10"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:layout_marginRight="@dimen/margin_5"
+                android:background="@color/colorbbbbbb" />
+
+            <TextView
+                android:id="@+id/tv_mail_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/magin_12"
+                android:drawablePadding="@dimen/margin_5"
+                android:drawableRight="@drawable/icon_right_jiantou"
+                android:gravity="center"
+                android:text="@string/watch_msg09"
+                android:textColor="@color/color00c8aa" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/my_line_h"
+            android:layout_margin="@dimen/magin_12"
+            android:background="@color/colorbbbbbb" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/magin_30"
+                android:layout_height="@dimen/magin_30"
+                android:layout_marginLeft="@dimen/magin_15"
+                android:src="@drawable/icon_people" />
+
+            <EditText
+                android:id="@+id/et_tongxunlu_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/magin_38"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@null"
+                android:hint="@string/watch_msg11"
+                android:textColor="@color/colorbbbbbb"
+                android:textColorHint="@color/colorbbbbbb"
+                android:textSize="@dimen/font14" />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#EEEEEE"></View>
-
+        <TextView
+            style="@style/my_line_h"
+            android:layout_margin="@dimen/magin_12"
+            android:background="@color/colorbbbbbb" />
 
         <TextView
             android:id="@+id/tv_save"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="10dp"
-
+            style="@style/my_bt"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:layout_marginTop="@dimen/magin_35"
             android:background="@drawable/xinzhengdizhi_button"
-            android:gravity="center"
-            android:text="确认"
-            android:textColor="#ffffffff"
-            android:textSize="13sp" />
+            android:text="@string/save" />
 
         <TextView
             android:id="@+id/tv_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            style="@style/my_bt"
             android:layout_marginBottom="40dp"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginRight="@dimen/magin_12"
+            android:layout_marginTop="@dimen/magin_15"
             android:background="@drawable/naozhongcancel_button"
-            android:gravity="center"
-            android:text="取消"
-            android:textColor="#ff999999"
-            android:textSize="13sp" />
+            android:text="@string/cancal"
+            android:textColor="@color/color999999" />
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

@@ -6,15 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
@@ -26,10 +24,15 @@ import com.taisheng.now.bussiness.watch.bean.result.ChiyaoLIstResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.view.WithScrolleViewListView;
+import com.th.j.commonlibrary.global.Global;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import androidx.core.app.ActivityCompat;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -37,78 +40,78 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback, AdapterView.OnItemClickListener {
 
-    View iv_addnaozhong;
-
-    WithScrolleViewListView lv_chiyaos;
-    ArticleAdapter madapter;
-
+    @BindView(R.id.lv_chiyaos)
+    WithScrolleViewListView lvChiyaos;
+    @BindView(R.id.tv_addnaozhong)
+    TextView tvAddnaozhong;
+    private ArticleAdapter madapter;
+    private int size = 0;
+    private List<ChiyaoBeann> data;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_watchme_chiyao);
         ButterKnife.bind(this);
-        initViews();
-//        EventBus.getDefault().register(this);
     }
 
     @Override
     public void initData() {
-
+        data = new ArrayList();
+        madapter = new ArticleAdapter(this);
+        lvChiyaos.setAdapter(madapter);
+        lvChiyaos.setOnItemClickListener(this);
     }
 
     @Override
     public void addData() {
-
+        getData();
     }
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("吃药提醒");
+        tvTitle.setText(getString(R.string.watch_msg02));
     }
 
-    void initViews() {
+    @OnClick(R.id.tv_addnaozhong)
+    public void onViewClicked() {
+        Intent intent = new Intent(WatchChiYaoListActivity.this, WatchChiyaoXinzengActivity.class);
+        String takepillsNum = "1";
+        switch (size) {
+            case 0:
+                takepillsNum = "1";
+                break;
+            case 1:
+                takepillsNum = "2";
+                break;
+            case 2:
+                takepillsNum = "3";
+                break;
+        }
 
-        iv_addnaozhong = findViewById(R.id.iv_addnaozhong);
-        iv_addnaozhong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WatchChiYaoListActivity.this, WatchChiyaoXinzengActivity.class);
-                String takepillsNum = "1";
-                switch (size) {
-                    case 0:
-                        takepillsNum = "1";
-                        break;
-                    case 1:
-                        takepillsNum = "2";
-                        break;
-                    case 2:
-                        takepillsNum = "3";
-                        break;
-                }
-
-                intent.putExtra("takepillsNum", takepillsNum);
-                startActivity(intent);
-            }
-        });
-
-        lv_chiyaos = (WithScrolleViewListView) findViewById(R.id.lv_chiyaos);
-        madapter = new ArticleAdapter(this);
-        lv_chiyaos.setAdapter(madapter);
-
-
+        intent.putExtra("takepillsNum", takepillsNum);
+        intent.putExtra(Global.INTENT_TYPE, Global.MEDICINE_ADD);
+        startActivity(intent);
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        initDatas();
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (data!=null&&data.size()>0) {
+            ChiyaoBeann bean = data.get(position);
+            Intent intent = new Intent(WatchChiYaoListActivity.this, WatchChiyaoXinzengActivity.class);
+            intent.putExtra("takepillsNum", bean.takepillsNum);
+            intent.putExtra(Global.INTENT_TYPE, Global.MEDICINE_UPDATA);
+            intent.putExtra("startTime", bean.startTime);
+            intent.putExtra("frequency", bean.frequency);
+            intent.putExtra("takepillsText", bean.takepillsText);
+
+            startActivity(intent);
+        }
+
     }
 
-    int size = 0;
-
-    void initDatas() {
+    private void getData() {
         ChiyaolistPostBean bean = new ChiyaolistPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
@@ -121,15 +124,12 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
                         if (message.result != null && message.result.records.size() >= 0) {
                             //有消息
 //                            PAGE_NO++;
-                            madapter.mData.clear();
-                            madapter.mData.addAll(message.result.records);
-
+                            data.addAll(message.result.records);
                             size = message.result.records.size();
                             if (size >= 3) {
-                                iv_addnaozhong.setVisibility(View.GONE);
+                                tvAddnaozhong.setVisibility(View.GONE);
                             } else {
-                                iv_addnaozhong.setVisibility(View.VISIBLE);
-
+                                tvAddnaozhong.setVisibility(View.VISIBLE);
                             }
 
 
@@ -142,7 +142,7 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
 //                            }else{
 //                                lv_articles.setHasLoadMore(true);
 //                            }
-                            madapter.notifyDataSetChanged();
+                            madapter.setmData(data);
                         } else {
 //                            //没有消息
 //                            lv_articles.setHasLoadMore(false);
@@ -162,9 +162,14 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
 
     class ArticleAdapter extends BaseAdapter {
 
-        public Context mcontext;
+        private Context mcontext;
 
-        ArrayList<ChiyaoBeann> mData = new ArrayList<ChiyaoBeann>();
+        private List<ChiyaoBeann> mData;
+
+        public void setmData(List<ChiyaoBeann> mData) {
+            this.mData = mData;
+            this.notifyDataSetChanged();
+        }
 
         public ArticleAdapter(Context context) {
             this.mcontext = context;
@@ -172,7 +177,7 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
 
         @Override
         public int getCount() {
-            return mData.size();
+            return mData == null ? 0 : mData.size();
         }
 
         @Override
@@ -188,14 +193,11 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // 声明内部类
-            ArticleAdapter.Util util = null;
-            // 中间变量
-            final int flag = position;
+            Util util = null;
             if (convertView == null) {
-                util = new ArticleAdapter.Util();
+                util = new Util();
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_chiyao, null);
-                util.ll_all = convertView.findViewById(R.id.ll_all);
                 util.tv_time = convertView.findViewById(R.id.tv_time);
                 util.tv_pinlv = convertView.findViewById(R.id.tv_pinlv);
                 util.iv_kaiguan_naozhong = convertView.findViewById(R.id.iv_kaiguan_naozhong);
@@ -203,21 +205,10 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
 
                 convertView.setTag(util);
             } else {
-                util = (ArticleAdapter.Util) convertView.getTag();
+                util = (Util) convertView.getTag();
             }
             ChiyaoBeann bean = mData.get(position);
-            Util finalUtil = util;
-            util.ll_all.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(WatchChiYaoListActivity.this, WatchChiyaoXinzengActivity.class);
 
-                    intent.putExtra("takepillsNum", bean.takepillsNum);
-                    intent.putExtra("startTime", bean.startTime);
-
-                    startActivity(intent);
-                }
-            });
             util.tv_time.setText(bean.startTime);
             if ("1".equals(bean.frequency)) {
                 util.tv_pinlv.setText("一次");
@@ -285,7 +276,7 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
                     setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
                     setNaozhongPostBean.takepillsNum = bean.takepillsNum;
                     setNaozhongPostBean.frequency = bean.frequency;
-                    setNaozhongPostBean.isOpen = finalUtil1.iv_kaiguan_naozhong.isSelected()?"0":"1";
+                    setNaozhongPostBean.isOpen = finalUtil1.iv_kaiguan_naozhong.isSelected() ? "0" : "1";
                     setNaozhongPostBean.isOpenWeek1 = bean.isOpenWeek1;
                     setNaozhongPostBean.isOpenWeek2 = bean.isOpenWeek2;
                     setNaozhongPostBean.isOpenWeek3 = bean.isOpenWeek3;
@@ -308,7 +299,7 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
                                 case Constants.HTTP_SUCCESS:
                                     if (finalUtil1.iv_kaiguan_naozhong.isSelected()) {
                                         finalUtil1.iv_kaiguan_naozhong.setSelected(false);
-                                    }else{
+                                    } else {
                                         finalUtil1.iv_kaiguan_naozhong.setSelected(true);
                                     }
 
@@ -339,7 +330,6 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
 
 
         class Util {
-            View ll_all;
             TextView tv_time;
             TextView tv_pinlv;
             ImageView iv_kaiguan_naozhong;
@@ -349,10 +339,4 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
-    }
 }

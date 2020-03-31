@@ -76,7 +76,18 @@ public class DateUtil {
         }
         return res;
     }
-
+    public static String stampToDate2(String s) {
+        String res = "";
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+            long lt = new Long(s);
+            Date date = new Date(lt);
+            res = simpleDateFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
     public static String stampToDate(long s) {
         String res = "";
         try {
