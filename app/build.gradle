@@ -138,11 +138,11 @@ dependencies {
     api files('libs/bos-android-sdk-1.0.3.jar')
     api 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0"
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation project(':commonlibrary')
+    api 'com.google.android.material:material:1.0.0'
+    api project(':commonlibrary')
 
-    implementation files('libs/BaiduTraceSDK_v3_1_4.jar')
-    implementation files('libs/BaiduLBS_Android.jar')
+    api files('libs/BaiduTraceSDK_v3_1_4.jar')
+    api files('libs/BaiduLBS_Android.jar')
 
     api 'com.github.bumptech.glide:glide:4.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
