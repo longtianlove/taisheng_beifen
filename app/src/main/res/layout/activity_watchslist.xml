@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_shangchengtitle"
     android:orientation="vertical">
 
     <ImageView style="@style/iv_title" />
@@ -14,56 +13,50 @@
     <com.taisheng.now.view.WithListViewScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff">
+        android:background="@color/colorWhite">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#fff"
-            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <com.taisheng.now.view.WithScrolleViewListView
                 android:id="@+id/lv_watchslist"
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginBottom="12dp"
-                android:background="#fff"
-                android:divider="#fff"
-                android:dividerHeight="1dp"
+                android:divider="@null"
                 android:footerDividersEnabled="false"
                 android:headerDividersEnabled="false"
                 android:listSelector="@android:color/transparent"
                 android:scrollbars="none" />
 
             <LinearLayout
+                android:id="@+id/tv_adddevice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_110"
+                android:gravity="center"
+                android:background="@drawable/bg_device_add"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:layout_marginTop="@dimen/magin_15"
+                android:layout_marginBottom="@dimen/magin_15"
                 android:layout_gravity="bottom|center_horizontal"
-                android:background="#fff"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_adddevice"
-                    android:layout_width="351dp"
-                    android:layout_height="42dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/bingdingshebei_button"
-                    android:gravity="center"
-                    android:text="+ 绑定设备"
-                    android:textColor="#ffffffff"
-                    android:textSize="15sp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/add"
+                    android:drawablePadding="@dimen/magin_12"
+                    android:layout_marginBottom="@dimen/magin_20"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/magin_10"
+                    android:layout_marginTop="@dimen/magin_20"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font25"
+                    android:text="添加设备" />
             </LinearLayout>
         </LinearLayout>
-
 
     </com.taisheng.now.view.WithListViewScrollView>
 

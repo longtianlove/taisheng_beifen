@@ -1,486 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ImageView
+        style="@style/iv_title"
+        android:background="@color/colorWhite" />
 
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginTop="25dp"
-            android:weightSum="1">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_back" />
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="个人中心"
-                android:textColor="#ff333333"
-                android:textSize="20sp" />
-
-
-            <TextView
-                android:id="@+id/tv_change_device"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="切换设备"
-                android:textColor="#ff666666"
-                android:textSize="13sp" />
-
-        </LinearLayout>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/ll_togerenxinxi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/background_watchmeback"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingTop="40dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:weightSum="1">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdv_header"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="13dp"
-                android:gravity="center"
-                android:scaleType="fitXY"
-                fresco:actualImageScaleType="focusCrop"
-                fresco:fadeDuration="300"
-                fresco:failureImage="@drawable/doctor_default"
-                fresco:failureImageScaleType="centerInside"
-                fresco:placeholderImage="@drawable/doctor_default"
-                fresco:placeholderImageScaleType="fitCenter"
-                fresco:roundedCornerRadius="30dp" />
+            <RelativeLayout
+                android:id="@+id/ll_togerenxinxi"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_140"
+                android:layout_margin="@dimen/magin_12"
+                android:background="@drawable/background_watchmeback">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:orientation="vertical"
-
-                >
+                <com.th.j.commonlibrary.wight.CircleImageView
+                    android:id="@+id/sdv_header"
+                    android:layout_width="@dimen/size_70"
+                    android:layout_height="@dimen/size_70"
+                    android:layout_marginBottom="@dimen/magin_35"
+                    android:layout_marginLeft="@dimen/magin_25"
+                    android:layout_marginRight="@dimen/magin_12"
+                    android:layout_marginTop="@dimen/magin_35"
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:id="@+id/tv_nickname"
                     android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:ellipsize="end"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/magin_47"
+                    android:layout_toRightOf="@+id/sdv_header"
                     android:maxLength="10"
                     android:text="沉浸深海の鱼"
-                    android:textColor="#ffffffff"
-                    android:textSize="16sp" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font16" />
 
                 <TextView
                     android:id="@+id/tv_zhanghao"
-                    android:layout_width="115dp"
-                    android:layout_height="17dp"
-                    android:layout_marginTop="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_nickname"
+                    android:layout_marginTop="@dimen/magin_10"
+                    android:layout_toRightOf="@+id/sdv_header"
                     android:text="账号：13424940234"
-                    android:textColor="#ffffffff"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font12" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/iv_jiantou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/magin_15"
+                    android:drawableRight="@drawable/jiantou_white" />
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_qiandao"
-                android:layout_width="wrap_content"
+                android:id="@+id/ll_tongxunlu"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/quqiandao_background"
-                android:padding="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="・去签到"
-                android:textColor="#fff"
-                android:visibility="gone"
-
-                />
-
-            <ImageView
-                android:id="@+id/iv_jiantou"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="12dp"
-                android:padding="10dp"
-                android:src="@drawable/jiantou_white" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_tongxunlu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_tongxunlu" />
+                android:drawableLeft="@drawable/icon_tongxunlu"
+                android:drawablePadding="@dimen/magin_15"
+                android:drawableRight="@drawable/jiantou_hui"
+                android:paddingBottom="@dimen/magin_15"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12"
+                android:paddingTop="@dimen/magin_15"
+                android:text="@string/watch_msg01"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginLeft="9dp"
-                android:gravity="center"
-                android:text="通讯录设置"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="8dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/jiantou_hui" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="11dp"
-            android:background="#EEEEEE" />
-
-        <LinearLayout
-            android:id="@+id/ll_naozhong"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            android:weightSum="1">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_naozhong" />
+                style="@style/my_line_h"
+                android:layout_height="@dimen/magin_12"
+                android:background="@color/coloreeeeee" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginLeft="9dp"
+                android:id="@+id/ll_naozhong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_naozhong"
+                android:drawableRight="@drawable/jiantou_hui"
                 android:gravity="center"
+                android:paddingBottom="@dimen/magin_15"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12"
+                android:paddingTop="@dimen/magin_15"
                 android:text="闹钟设置"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="8dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/jiantou_hui" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="11dp"
-            android:visibility="gone"
-            android:background="#EEEEEE" />
-
-
-        <LinearLayout
-            android:id="@+id/ll_chiyao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_chiyao" />
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14"
+                android:visibility="gone" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginLeft="9dp"
-                android:gravity="center"
-                android:text="吃药提醒"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="8dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/jiantou_hui" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="11dp"
-            android:background="#EEEEEE" />
-
-        <LinearLayout
-            android:id="@+id/ll_xinlv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_xinlv" />
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee"
+                android:visibility="gone" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginLeft="9dp"
-                android:gravity="center"
-                android:text="心率预警设置"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="8dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/jiantou_hui" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="11dp"
-            android:background="#EEEEEE" />
-
-
-
-        <LinearLayout
-            android:id="@+id/ll_xueya"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="11dp"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_xinlv" />
+                android:id="@+id/ll_chiyao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_chiyao"
+                android:drawablePadding="@dimen/magin_15"
+                android:drawableRight="@drawable/jiantou_hui"
+                android:paddingBottom="@dimen/magin_15"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_15"
+                android:paddingTop="@dimen/magin_10"
+                android:text="@string/watch_msg02"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginLeft="9dp"
-                android:gravity="center"
-                android:text="血压预警设置"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="8dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/jiantou_hui" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#fff6f6f6" />
-        <LinearLayout
-            android:id="@+id/ll_kaiguan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:gravity="center_vertical"
-            android:layout_marginTop="11dp"
-            android:layout_marginBottom="11dp"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_kaiguan" />
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginLeft="9dp"
-                android:gravity="center"
-                android:text="开关设置"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="8dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/jiantou_hui" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#fff6f6f6" />
-
-
-
-
-        <LinearLayout
-            android:id="@+id/ll_chongqi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="11dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_chongqi" />
+                android:id="@+id/ll_sos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_sos"
+                android:drawablePadding="@dimen/magin_15"
+                android:drawableRight="@drawable/jiantou_hui"
+                android:paddingBottom="@dimen/magin_15"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12"
+                android:paddingTop="@dimen/magin_15"
+                android:text="@string/watch_msg03"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginLeft="9dp"
-                android:gravity="center"
-                android:text="重启手环"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-<!--            <ImageView-->
-<!--                android:layout_width="8dp"-->
-<!--                android:layout_height="12dp"-->
-<!--                android:layout_marginRight="12dp"-->
-<!--                android:src="@drawable/jiantou_hui" />-->
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="11dp"
-            android:background="#EEEEEE" />
-
-
-
-
-        <LinearLayout
-            android:id="@+id/ll_huifuchuchang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            android:weightSum="1">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_huifuchuchang" />
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginLeft="9dp"
-                android:gravity="center"
-                android:text="恢复出厂设置"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
+                android:id="@+id/ll_xueya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_xuya"
+                android:drawablePadding="@dimen/magin_15"
+                android:drawableRight="@drawable/jiantou_hui"
+                android:paddingBottom="@dimen/magin_15"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12"
+                android:paddingTop="@dimen/magin_15"
+                android:text="@string/watch_msg04"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
 
-<!--            <ImageView-->
-<!--                android:layout_width="8dp"-->
-<!--                android:layout_height="12dp"-->
-<!--                android:layout_marginRight="12dp"-->
-<!--                android:src="@drawable/jiantou_hui" />-->
+            <TextView
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee" />
+
+            <TextView
+                android:id="@+id/ll_xinlv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_xinlv"
+                android:drawablePadding="@dimen/magin_15"
+                android:drawableRight="@drawable/jiantou_hui"
+                android:paddingBottom="@dimen/magin_15"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12"
+                android:paddingTop="@dimen/magin_15"
+                android:text="@string/watch_msg05"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14" />
+
+
+            <TextView
+                style="@style/my_line_h"
+                android:layout_height="@dimen/size_12"
+                android:background="@color/coloreeeeee" />
+
+            <TextView
+                android:id="@+id/ll_kaiguan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_kaiguan"
+                android:drawablePadding="@dimen/magin_15"
+                android:drawableRight="@drawable/jiantou_hui"
+                android:paddingBottom="@dimen/magin_15"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12"
+                android:paddingTop="@dimen/magin_15"
+                android:text="@string/watch_msg06"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14" />
+
+            <TextView
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee" />
+
+            <TextView
+                android:id="@+id/ll_chongqi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_chongqi"
+                android:drawablePadding="@dimen/magin_15"
+                android:drawableRight="@drawable/jiantou_hui"
+                android:paddingBottom="@dimen/magin_10"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12"
+                android:paddingTop="@dimen/magin_10"
+                android:text="@string/watch_msg07"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14" />
+
+            <TextView
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee" />
+
+            <TextView
+                android:id="@+id/ll_huifuchuchang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_huifuchuchang"
+                android:drawablePadding="@dimen/magin_15"
+                android:drawableRight="@drawable/jiantou_hui"
+                android:paddingBottom="@dimen/magin_10"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12"
+                android:paddingTop="@dimen/magin_10"
+                android:text="@string/watch_msg08"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14"
+                android:visibility="gone" />
+
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:visibility="gone" />
+
         </LinearLayout>
-
-        <View
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="11dp"
-            android:background="#EEEEEE" />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

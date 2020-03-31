@@ -8,8 +8,8 @@
     <ImageView style="@style/iv_title" />
 
     <ImageView
-        android:layout_width="@dimen/size_170"
-        android:layout_height="@dimen/size_195"
+        android:layout_width="@dimen/size_108"
+        android:layout_height="@dimen/size_130"
         android:layout_marginTop="@dimen/magin_80"
         android:src="@drawable/icon_shouhuan"></ImageView>
 
@@ -17,9 +17,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginTop="@dimen/margin_10"
         android:lineSpacingExtra="6dp"
         android:text="@string/binding_device"
-        android:textColor="@color/color999999"
+        android:textColor="@color/colord7d7d7"
         android:textSize="@dimen/font12" />
 
     <TextView

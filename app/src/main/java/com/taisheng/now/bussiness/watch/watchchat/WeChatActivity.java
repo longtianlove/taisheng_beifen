@@ -10,9 +10,12 @@ import android.widget.TextView;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.evbusbean.WeChatMsg;
 import com.taisheng.now.view.biaoqing.Watch_EmotionMainFragment;
 import com.taisheng.now.view.chenjinshi.StatusBarUtil;
 import com.taisheng.now.yuyin.manager.MediaManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,7 +28,7 @@ public class WeChatActivity extends BaseHActivity implements ActivityCompat.OnRe
     TextView tvInputContent;
     @BindView(R.id.fl_emotion_view_main)
     FrameLayout flEmotionViewMain;
-    Watch_EmotionMainFragment emotionMainFragment;
+    private Watch_EmotionMainFragment emotionMainFragment;
 
     @Override
     public void initView() {
@@ -46,7 +49,16 @@ public class WeChatActivity extends BaseHActivity implements ActivityCompat.OnRe
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
         tvTitle.setText(getString(R.string.chat_news));
+        tvLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new WeChatMsg(0));
+                finish();
+            }
+        });
     }
+
+
 
     void initBiaoqinng() {
         emotionMainFragment = Watch_EmotionMainFragment.newInstance(Watch_EmotionMainFragment.class, null);
@@ -61,16 +73,6 @@ public class WeChatActivity extends BaseHActivity implements ActivityCompat.OnRe
     protected void onPause() {
         MediaManager.release();//保证在退出该页面时，终止语音播放
         super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override

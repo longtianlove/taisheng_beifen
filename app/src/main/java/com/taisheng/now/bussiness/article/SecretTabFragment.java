@@ -152,15 +152,11 @@ public class SecretTabFragment extends BaseFragment {
         }else if (typeName.equals(Constants.MUYINGYUNYU)){
             bean.type = 5;
         }
-        Gson gson = new Gson();
-        String jsonBDID = gson.toJson(bean);
-        LogUtilH.e(jsonBDID+"----");
         ApiUtils.getApiService().getDoctorTypeList(bean).enqueue(new TaiShengCallback<BaseBean<DoctorsResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DoctorsResultBean>> response, BaseBean<DoctorsResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        LogUtilH.e(message.toString()+"----");
                         if (message.result.records != null && message.result.records.size() > 0) {
 
                             DoctorBean bean = message.result.records.get(0);

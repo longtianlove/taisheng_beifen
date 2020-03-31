@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_marginTop="18dp"
-            android:text="泰晟健康"
+            android:text="全民健康"
             android:textColor="#ff333333"
             android:textSize="17sp" />
 

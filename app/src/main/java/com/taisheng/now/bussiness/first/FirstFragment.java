@@ -342,7 +342,6 @@ public class FirstFragment extends BaseFragment {
                                     SPUtil.putDeviced(bean1.deviceId);
                                     WatchInstance.getInstance().deviceNickName = bean1.nickName;
                                     WatchInstance.getInstance().relationShip = bean1.terminalRelationship;
-                                    //todo 数据给全
                                     WatchInstance.getInstance().realName = bean1.realName;
                                     WatchInstance.getInstance().idcard = bean1.idcard;
                                     WatchInstance.getInstance().phoneNumber = bean1.phoneNumber;

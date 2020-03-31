@@ -4,6 +4,7 @@ public class WatchListBean {
 
     public String id;
     public String appId;
+    public String url;
     public String deviceId;
     public String isDefault;
     public String createTime;
@@ -11,7 +12,6 @@ public class WatchListBean {
     public String terminalRelationship;
     public String remarks;
     public String nickName;
-
 
     public String realName;
     public String idcard;

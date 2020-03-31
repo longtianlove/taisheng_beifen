@@ -95,6 +95,7 @@ public class MainActivity extends BaseIvActivity implements BottomBar.OnItemList
         switch (i) {
             case 0:
                 llTop.setVisibility(View.GONE);
+                ivRight.setVisibility(View.GONE);
                 break;
             case 1:
                 llTop.setVisibility(View.VISIBLE);
@@ -129,6 +130,7 @@ public class MainActivity extends BaseIvActivity implements BottomBar.OnItemList
                 llTop.setVisibility(View.VISIBLE);
                 ivRight.setVisibility(View.VISIBLE);
                 tvTitle.setText(getString(R.string.personal_center));
+                ivRight.setVisibility(View.GONE);
                 ivRight.setBackgroundResource(R.drawable.icon_set);
                 tvLeft.setVisibility(View.INVISIBLE);
                 tvRight.setVisibility(View.GONE);

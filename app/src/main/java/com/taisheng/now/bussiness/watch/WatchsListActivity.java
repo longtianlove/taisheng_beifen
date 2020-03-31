@@ -8,13 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.ZXing.ZXingActivity;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.BaseListPostBean;
@@ -24,6 +26,8 @@ import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
+import com.taisheng.now.view.WithScrolleViewListView;
+import com.th.j.commonlibrary.wight.CircleImageView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.ArrayList;
@@ -31,6 +35,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -40,73 +47,43 @@ import retrofit2.Response;
 
 public class WatchsListActivity extends BaseIvActivity {
 
-    com.taisheng.now.view.WithScrolleViewListView lv_watchslist;
-    MyPingjiaAdapter madapter;
-    View tv_adddevice;
+
+    @BindView(R.id.lv_watchslist)
+    WithScrolleViewListView lvWatchslist;
+    @BindView(R.id.tv_adddevice)
+    LinearLayout tvAdddevice;
+    private MyPingjiaAdapter madapter;
+    private int PAGE_NO = 1;
+    private int PAGE_SIZE = 10;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_watchslist);
-        initViews();
+        ButterKnife.bind(this);
     }
 
     @Override
     public void initData() {
-
+        madapter = new MyPingjiaAdapter(this);
+        lvWatchslist.setAdapter(madapter);
     }
 
     @Override
     public void addData() {
-
+        getMyPingjias();
     }
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("设备绑定");
+        tvTitle.setText(getString(R.string.device_binding));
     }
 
-    void initViews() {
-
-        lv_watchslist = findViewById(R.id.lv_watchslist);
-        madapter = new MyPingjiaAdapter(this);
-        lv_watchslist.setAdapter(madapter);
-//        lv_watchslist.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
-//            @Override
-//            public void onUpLoad() {
-//                getMyPingjias();
-//            }
-//        });
-        tv_adddevice = findViewById(R.id.tv_adddevice);
-        tv_adddevice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ZXingActivity.skipToAsResult(WatchsListActivity.this, REQUEST_SWEEP_CODE);
-
-            }
-        });
-
-
+    @OnClick(R.id.tv_adddevice)
+    public void onViewClicked() {
+        ZXingActivity.skipToAsResult(WatchsListActivity.this, REQUEST_SWEEP_CODE);
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        initDatas();
-    }
-
-    int PAGE_NO = 1;
-    int PAGE_SIZE = 10;
-
-
-    void initDatas() {
-        PAGE_NO = 1;
-        PAGE_SIZE = 10;
-        getMyPingjias();
-    }
-
-
-    void getMyPingjias() {
+    private void getMyPingjias() {
         BaseListPostBean bean = new BaseListPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
@@ -174,16 +151,7 @@ public class WatchsListActivity extends BaseIvActivity {
             return;
         }
         if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-            //解析成功
             String Imei = bundle.getString(CodeUtils.RESULT_STRING);
-//            inputImei.setText(Imei);
-//            if (isZXresultCorrect(Imei)) {
-//                DeviceInfoInstance.getInstance().bindDevice(InitBindDeviceActivity.this,Imei);
-//            } else {
-//                showToast("IMEI码错误，请正确扫码！");
-//            }
-
-
             WatchInstance.getInstance().preDeviceNumber = Imei;
             Intent intent = new Intent(WatchsListActivity.this, BindMessageActivity.class);
             startActivity(intent);
@@ -191,20 +159,6 @@ public class WatchsListActivity extends BaseIvActivity {
 
         }
     }
-
-    /**
-     * 检查IMEI是否符合规范
-     *
-     * @param result
-     * @return
-     */
-    private boolean isZXresultCorrect(String result) {
-        String regex = "([a-zA-Z0-9]{15})";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(result);
-        return m.matches();
-    }
-
 
     class MyPingjiaAdapter extends BaseAdapter {
 
@@ -238,20 +192,20 @@ public class WatchsListActivity extends BaseIvActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // 声明内部类
-            MyPingjiaAdapter.Util util = null;
+            Util util = null;
             // 中间变量
             final int flag = position;
             if (convertView == null) {
-                util = new MyPingjiaAdapter.Util();
+                util = new Util();
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_watchslist, null);
                 util.ll_all = convertView.findViewById(R.id.ll_all);
-                util.sdv_header = (SimpleDraweeView) convertView.findViewById(R.id.sdv_header);
+                util.sdv_header = convertView.findViewById(R.id.sdv_header);
                 util.tv_nickname = convertView.findViewById(R.id.tv_nickname);
                 util.tv_zhanghao = convertView.findViewById(R.id.tv_zhanghao);
                 convertView.setTag(util);
             } else {
-                util = (MyPingjiaAdapter.Util) convertView.getTag();
+                util = (Util) convertView.getTag();
             }
             WatchListBean bean = mData.get(position);
             util.ll_all.setOnClickListener(new View.OnClickListener() {
@@ -261,7 +215,6 @@ public class WatchsListActivity extends BaseIvActivity {
                     SPUtil.putDeviced(WatchInstance.getInstance().deviceId);
                     WatchInstance.getInstance().deviceNickName = bean.nickName;
                     WatchInstance.getInstance().relationShip = bean.terminalRelationship;
-                    //todo 数据给全
                     WatchInstance.getInstance().realName = bean.realName;
                     WatchInstance.getInstance().idcard = bean.idcard;
                     WatchInstance.getInstance().phoneNumber = bean.phoneNumber;
@@ -277,6 +230,12 @@ public class WatchsListActivity extends BaseIvActivity {
 //                Uri uri = Uri.parse(bean.avatar);
 //                util.sdv_header.setImageURI(uri);
 //            }
+            Glide.with(mcontext)
+                    .load(bean.url)
+                    .placeholder(R.drawable.article_default)
+                    .error(R.drawable.article_default)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(util.sdv_header);
             util.tv_nickname.setText(bean.nickName);
             util.tv_zhanghao.setText("我是TA的" + bean.terminalRelationship);
 
@@ -286,8 +245,7 @@ public class WatchsListActivity extends BaseIvActivity {
 
         class Util {
             View ll_all;
-
-            SimpleDraweeView sdv_header;
+            CircleImageView sdv_header;
             TextView tv_nickname;
             TextView tv_zhanghao;
 

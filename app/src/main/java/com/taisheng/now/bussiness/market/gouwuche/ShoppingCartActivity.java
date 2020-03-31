@@ -256,10 +256,8 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
                 flag = !flag;
                 if (flag) {
                     btnEdit.setText("完成");
-                    shoppingCartAdapter.isShow(false);
                 } else {
                     btnEdit.setText("管理");
-                    shoppingCartAdapter.isShow(true);
                 }
                 break;
             case R.id.tv_settlement: //结算
@@ -290,7 +288,6 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
                 int size = bean.getDressSize();
                 String attribute = bean.getAttribute();
                 String id = bean.getId();
-                Log.d(TAG, id + "----id---" + shoppingName + "---" + count + "---" + price + "--size----" + size + "--attr---" + attribute);
             }
         }
 //        ToastUtil.showAtCenter("总价：" + totalPrice);

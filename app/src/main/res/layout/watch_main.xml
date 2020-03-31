@@ -1,223 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-
-    <LinearLayout
-        android:id="@+id/mainView"
+    <FrameLayout
+        android:id="@+id/fl_mains_watch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f1f1f1"
-        android:orientation="vertical">
+        android:layout_weight="1">
+    </FrameLayout>
+    <TextView
+        style="@style/my_line_h" />
+    <com.th.j.commonlibrary.wight.BottomBar
+        android:id="@+id/bottom_watch"
+        android:layout_width="match_parent"
+        android:background="@color/colorWhite"
+        app:text_size="@dimen/font10"
+        android:layout_height="@dimen/size_50">
+    </com.th.j.commonlibrary.wight.BottomBar>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <View
-                android:id="@+id/toolBar"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:background="#fff" />
-
-            <LinearLayout
-                android:id="@+id/fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" />
-
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#eeeeee"
-            ></View>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:background="#fff"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/tab_first"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/iv_tab_first"
-                    android:layout_width="26dp"
-                    android:layout_height="23dp"
-
-                    android:src="@drawable/watch_main_jiankangjiance" />
-
-                <TextView
-                    android:id="@+id/tv_tab_first"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="健康监测"
-                    android:textColor="#ff999999"
-                    android:textSize="11sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/tab_loaction"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/iv_tab_location"
-                    android:layout_width="26dp"
-                    android:layout_height="23dp"
-
-                    android:src="@drawable/watch_main_weizhi" />
-
-                <TextView
-                    android:id="@+id/tv_tab_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="位置信息"
-                    android:textColor="#ff999999"
-                    android:textSize="11sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/tab_wechat"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/iv_tab_wechat"
-                    android:layout_width="26dp"
-                    android:layout_height="23dp"
-
-                    android:src="@drawable/watch_main_weiliaoi" />
-
-                <TextView
-                    android:id="@+id/tv_tab_wechat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="微聊消息"
-                    android:textColor="#ff999999"
-                    android:textSize="11sp" />
-            </LinearLayout>
-
-            <!--<View-->
-            <!--android:layout_width="1dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="#fff" />-->
-
-            <LinearLayout
-                android:id="@+id/tab_doctor"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right">
-
-
-                        <ImageView
-                            android:id="@+id/iv_weidu"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:src="@drawable/icon_weidu"
-                            android:visibility="invisible"></ImageView>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/iv_tab_doctor"
-                            android:layout_width="26dp"
-                            android:layout_height="23dp"
-
-                            android:src="@drawable/watch_main_yujingxinxi" />
-
-                        <TextView
-                            android:id="@+id/tv_tab_doctor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="预警信息"
-                            android:textColor="#ff999999"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-                </FrameLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/tab_message"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/iv_tab_message"
-                    android:layout_width="26dp"
-                    android:layout_height="23dp"
-
-                    android:src="@drawable/watch_main_gerenzhongxin" />
-
-                <TextView
-                    android:id="@+id/tv_tab_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="个人中心"
-                    android:textColor="#ff999999"
-                    android:textSize="11sp" />
-            </LinearLayout>
-
-            =
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-</FrameLayout>
+</LinearLayout>

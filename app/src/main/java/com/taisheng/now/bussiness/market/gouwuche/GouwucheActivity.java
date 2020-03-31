@@ -14,6 +14,8 @@ import com.taisheng.now.bussiness.doctor.DoctorsFenleiFragment;
 import com.taisheng.now.bussiness.market.DingdanInstance;
 import com.taisheng.now.util.DensityUtil;
 import com.th.j.commonlibrary.utils.IndicatorLineUtil;
+import com.th.j.commonlibrary.utils.LogUtilH;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -29,7 +31,6 @@ import butterknife.ButterKnife;
 
 public class GouwucheActivity extends BaseIvActivity {
 
-
     @BindView(R.id.tl_tab)
     TabLayout tlTab;
     @BindView(R.id.vp_content)
@@ -37,6 +38,8 @@ public class GouwucheActivity extends BaseIvActivity {
     private DoctorTabAdapter adapter;
     private GouwucheFragment putongFragment;
     private GouwucheFragment jifenFragment;
+    private boolean isCheck = true;
+
     @Override
     public void initView() {
         setContentView(R.layout.activity_gouwuchefinal);
@@ -56,7 +59,30 @@ public class GouwucheActivity extends BaseIvActivity {
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
         tvTitle.setText(getString(R.string.Shopping_cart));
+        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setText(getString(R.string.manage));
+        tvRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getString(R.string.manage).equals(TextsUtils.getTexts(tvRight))) {
+                    tvRight.setText(getString(R.string.complete));
+                    if (vpContent.getCurrentItem() == 0) {
+                        putongFragment.changManager(true);
+                    } else {
+                        jifenFragment.changManager(true);
+                    }
+                } else {
+                    tvRight.setText(getString(R.string.manage));
+                    if (vpContent.getCurrentItem() == 0) {
+                        putongFragment.changManager(false);
+                    } else {
+                        jifenFragment.changManager(false);
+                    }
+                }
+            }
+        });
     }
+
     /**
      * 设置tab控件添加tab数据页面
      */
@@ -91,7 +117,6 @@ public class GouwucheActivity extends BaseIvActivity {
                     DingdanInstance.getInstance().scoreGoods = 1;
                 } else {
                     DingdanInstance.getInstance().scoreGoods = 0;
-
                 }
             }
 
@@ -106,8 +131,6 @@ public class GouwucheActivity extends BaseIvActivity {
         IndicatorLineUtil.changeTabIndicatorWidth(tlTab, 15);
 
     }
-
-
 
 
 }

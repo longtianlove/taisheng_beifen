@@ -7,9 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseFragmentActivity;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.util.ImageUtil;
 import com.taisheng.now.util.ToastUtil;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
@@ -20,28 +23,35 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
  * Created by Administrator on 2017/1/1.
  */
 
-public class ZXingActivity extends BaseFragmentActivity {
+public class ZXingActivity extends BaseIvActivity {
 
     private static final String IMAGE_UNSPECIFIED = "image/*";
     private static final int REQ_ANALYZE_BITMAP=1;
 
     private CaptureFragment captureFragment;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitle("扫一扫");
+    public void initView() {
         setContentView(R.layout.activity_zxing);
-//        setNextView("相册", new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               openPhotoAlbum();
-//            }
-//        });
         captureFragment = new CaptureFragment();
         // 为二维码扫描界面设置定制化界面
         CodeUtils.setFragmentArgs(captureFragment, R.layout.activity_zxing_findview);
         captureFragment.setAnalyzeCallback(analyzeCallback);
         getSupportFragmentManager().beginTransaction().replace(R.id.activity_zxing_container, captureFragment).commit();
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addData() {
+
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+
     }
 
     /**

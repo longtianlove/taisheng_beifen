@@ -225,6 +225,7 @@ public class DoctorCollectActivity extends BaseHActivity {
                 util.sdv_header.setImageURI(uri);
             }
             util.tv_doctor_name.setText(bean.nickName);
+            util.tv_onlineStatus.setVisibility(View.GONE);
             if ("1".equals(bean.onlineStatus)) {
                 util.tv_onlineStatus.setText("在线");
                 util.tv_onlineStatus.setBackgroundResource(R.drawable.bg_online);

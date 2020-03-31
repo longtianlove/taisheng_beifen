@@ -36,7 +36,6 @@ import retrofit2.Response;
 @SuppressLint("WrongConstant")
 public class MeFragment extends BaseFragment {
 
-
     SimpleDraweeView sdv_header;
     TextView tv_nickname;
     TextView tv_zhanghao;

@@ -68,7 +68,7 @@ public class DoctorFragment extends BaseFragment {
         initView(rootView);
 
 //        EventBus.getDefault().register(this);
-        initData();
+        getDoctors();
 
         return rootView;
     }
@@ -143,10 +143,6 @@ public class DoctorFragment extends BaseFragment {
                 getDoctors();
             }
         });
-    }
-
-    void initData() {
-        getDoctors();
     }
 
     int PAGE_NO = 1;

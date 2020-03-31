@@ -1,78 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#fff"
+    android:background="@color/colorf6f6f6"
     android:orientation="vertical">
 
-
-    <FrameLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#f6f6f6"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.viewpager.widget.ViewPager>
-
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:visibility="gone">
 
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/icon_back_new" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center_horizontal"
-                    android:text="运动"
-                    android:textColor="#ffffffff"
-                    android:textSize="20sp" />
-
-            </RelativeLayout>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl_tab"
+            <ImageView
+                android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
-                android:layout_height="44dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/icon_back_new" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_gravity="center_horizontal"
-                android:background="@null"
-                android:textSize="16sp"
-                app:tabIndicatorColor="#fff"
-                app:tabIndicatorHeight="2dp"
-                app:tabSelectedTextColor="#fff"
-                app:tabTextColor="#fff">
+                android:text="运动"
+                android:textColor="#ffffffff"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_tab"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/magin_80"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@null"
+            android:textSize="16sp"
+            app:tabIndicatorColor="#fff"
+            app:tabIndicatorHeight="2dp"
+            app:tabSelectedTextColor="#fff"
+            app:tabTextColor="#fff">
 
 
-            </com.google.android.material.tabs.TabLayout>
-        </LinearLayout>
-    </FrameLayout>
+        </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

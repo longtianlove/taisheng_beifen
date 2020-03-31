@@ -17,6 +17,7 @@ import com.taisheng.now.R;
 import com.taisheng.now.bussiness.bean.result.xiadanshangpinBean;
 import com.taisheng.now.bussiness.market.DingdanInstance;
 import com.taisheng.now.bussiness.market.ShangPinxiangqingActivity;
+import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.wight.RoundImgView;
 
 import java.math.BigDecimal;
@@ -35,11 +36,11 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
     public int scoreGoods;
 
-    private boolean isShow = true;//是否显示编辑/完成
     public List<ShoppingCartBean> shoppingCartBeanList=new ArrayList<>();
     private CheckInterface checkInterface;
     private ModifyCountInterface modifyCountInterface;
     private Context context;
+    private boolean isTure;
 
     public ShoppingCartAdapter(Context context) {
         this.context = context;
@@ -48,6 +49,18 @@ public class ShoppingCartAdapter extends BaseAdapter {
     public void setShoppingCartBeanList(List<ShoppingCartBean> shoppingCartBeanList) {
         this.shoppingCartBeanList = shoppingCartBeanList;
         this.notifyDataSetChanged();
+    }
+
+    public void setTure(boolean ture) {
+        isTure = ture;
+    }
+
+    public boolean isTure() {
+        return isTure;
+    }
+
+    public List<ShoppingCartBean> getShoppingCartBeanList() {
+        return shoppingCartBeanList;
     }
 
     /**
@@ -84,15 +97,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
     }
 
 
-    /**
-     * 是否显示可编辑
-     *
-     * @param flag
-     */
-    public void isShow(boolean flag) {
-        isShow = flag;
-        this.notifyDataSetChanged();
-    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
@@ -125,6 +130,11 @@ public class ShoppingCartAdapter extends BaseAdapter {
             }
         });
 
+        if (isTure){
+            holder.ckOneChose.setButtonDrawable(R.drawable.check_box_style2);
+        }else {
+            holder.ckOneChose.setButtonDrawable(R.drawable.check_box_style);
+        }
         boolean choosed = shoppingCartBean.isChoosed();
         if (choosed){
             holder.ckOneChose.setChecked(true);

@@ -78,7 +78,10 @@
     <dimen name="magin_85">85dp</dimen>
     <dimen name="magin_90">90dp</dimen>
     <dimen name="magin_100">100dp</dimen>
+    <dimen name="magin_120">120dp</dimen>
+    <dimen name="magin_130">130dp</dimen>
     <dimen name="magin_150">150dp</dimen>
+    <dimen name="magin_180">180dp</dimen>
 
     <dimen name="size_title48">73dp</dimen>
     <dimen name="size_title78">78dp</dimen>
@@ -99,6 +102,7 @@
     <dimen name="size_7">7dp</dimen>
     <dimen name="size_10">10dp</dimen>
     <dimen name="size_11">11dp</dimen>
+    <dimen name="size_12">12dp</dimen>
     <dimen name="size_14">14dp</dimen>
     <dimen name="size_16">16dp</dimen>
     <dimen name="size_15">15dp</dimen>
@@ -114,6 +118,7 @@
     <dimen name="size_40">40dp</dimen>
     <dimen name="size_44">44dp</dimen>
     <dimen name="size_45">45dp</dimen>
+    <dimen name="size_46">46dp</dimen>
     <dimen name="size_47">47dp</dimen>
     <dimen name="size_48">48dp</dimen>
     <dimen name="size_73">73dp</dimen>
@@ -129,6 +134,7 @@
     <dimen name="size_95">95dp</dimen>
     <dimen name="size_100">100dp</dimen>
     <dimen name="size_102">102dp</dimen>
+    <dimen name="size_108">108dp</dimen>
     <dimen name="size_110">110dp</dimen>
     <dimen name="size_105">105dp</dimen>
     <dimen name="size_120">120dp</dimen>

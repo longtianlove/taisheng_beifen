@@ -160,17 +160,13 @@ public class ArticleContentActivity extends BaseIvActivity {
                 break;
             case R.id.ll_collect:
                 if (DoubleClickUtil.isFastMiniDoubleClick()) {
-                    LogUtilH.e("------1--------");
                     return;
                 }
-                LogUtilH.e("--------2------");
                 ArticleCollectionBean bean = new ArticleCollectionBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.label = "app";
+                bean.dataSource = "0";
                 bean.dataId = articleId;
-                Gson gson = new Gson();
-                String jsonBDID = gson.toJson(bean);
                 ApiUtils.getApiService().saveCollectionArticleLog(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {

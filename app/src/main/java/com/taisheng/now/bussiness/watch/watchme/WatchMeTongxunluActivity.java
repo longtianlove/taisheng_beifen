@@ -6,30 +6,33 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
-import com.taisheng.now.bussiness.watch.bean.post.TongxunluDeletePostBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluliistBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.util.ToastUtil;
+import com.taisheng.now.view.WithListViewScrollView;
 import com.taisheng.now.view.WithScrolleViewListView;
+import com.th.j.commonlibrary.utils.LogUtilH;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import androidx.core.app.ActivityCompat;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -37,22 +40,30 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/29.
  */
 
-public class WatchMeTongxunluActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class WatchMeTongxunluActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback, AdapterView.OnItemClickListener {
 
-    View iv_addnaozhong;
 
-    WithScrolleViewListView lv_articles;
-    ArticleAdapter madapter;
+    @BindView(R.id.lv_naozhongs)
+    WithScrolleViewListView lvNaozhongs;
+    @BindView(R.id.tv_addnaozhong)
+    TextView tvAddnaozhong;
+    private ArticleAdapter madapter;
+    private boolean bianji = false;
+    public int nowphxName = 0;
+    private List<TongxunluliistBean> data;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_watchme_tongxunlu);
-        initViews();
+        ButterKnife.bind(this);
     }
 
     @Override
     public void initData() {
-
+        data = new ArrayList<>();
+        madapter = new ArticleAdapter(this);
+        lvNaozhongs.setAdapter(madapter);
+        lvNaozhongs.setOnItemClickListener(this);
     }
 
     @Override
@@ -64,7 +75,7 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
         tvTitle.setText("通讯录设置");
         tvRight.setText(getString(R.string.edit));
-        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setVisibility(View.GONE);
         tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,35 +91,37 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
         });
     }
 
-    boolean bianji = false;
-
-    void initViews() {
-        iv_addnaozhong = findViewById(R.id.iv_addnaozhong);
-        iv_addnaozhong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
-                intent.putExtra("nowphxNum", nowphxName + 1);
-                startActivity(intent);
-            }
-        });
-
-        lv_articles = (WithScrolleViewListView) findViewById(R.id.lv_naozhongs);
-        madapter = new ArticleAdapter(this);
-        lv_articles.setAdapter(madapter);
-
-
+    @OnClick(R.id.tv_addnaozhong)
+    public void onViewClicked() {
+        Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
+        intent.putExtra("nowphxNum", nowphxName + 1);
+        startActivity(intent);
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        LogUtilH.e(position + "-----");
+        if (data != null && data.size() > 0) {
+            TongxunluliistBean bean = data.get(position);
+            Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
+
+            intent.putExtra("nowphxNum", position + 1);
+            intent.putExtra("phbxName", bean.phbxName);
+            intent.putExtra("phbxTelephone", bean.phbxTelephone);
+
+            startActivity(intent);
+        }
+    }
+
 
     @Override
     protected void onStart() {
         super.onStart();
-        initDatas();
+        getData();
     }
 
-    public int nowphxName = 0;
 
-    void initDatas() {
+    private void getData() {
         DianhuabenPostbean bean = new DianhuabenPostbean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
@@ -120,18 +133,18 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
             public void onSuccess(Response<BaseBean<TongxunluResultBean>> response, BaseBean<TongxunluResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result != null && message.result.records.size() >=0) {
+                        if (message.result != null && message.result.records.size() >= 0) {
+
                             if (message.result.records.size() >= 10) {
-                                iv_addnaozhong.setVisibility(View.GONE);
+                                tvAddnaozhong.setVisibility(View.GONE);
                             } else {
                                 nowphxName = (message.result.records.size());
-                                iv_addnaozhong.setVisibility(View.VISIBLE);
+                                tvAddnaozhong.setVisibility(View.VISIBLE);
                             }
                             //有消息
 //                            PAGE_NO++;
-                            madapter.mData.clear();
-                            madapter.mData.addAll(message.result.records);
-
+                            data.addAll(message.result.records);
+                            madapter.setmData(data);
 
 //                            if(message.result.size()<10){
 //                                lv_articles.setHasLoadMore(false);
@@ -140,7 +153,6 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
 //                            }else{
 //                                lv_articles.setHasLoadMore(true);
 //                            }
-                            madapter.notifyDataSetChanged();
                         } else {
 //                            //没有消息
 //                            lv_articles.setHasLoadMore(false);
@@ -158,11 +170,17 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
         });
     }
 
+
     class ArticleAdapter extends BaseAdapter {
 
-        public Context mcontext;
+        private Context mcontext;
 
-        ArrayList<TongxunluliistBean> mData = new ArrayList<TongxunluliistBean>();
+        private List<TongxunluliistBean> mData;
+
+        public void setmData(List<TongxunluliistBean> mData) {
+            this.mData = mData;
+            this.notifyDataSetChanged();
+        }
 
         public ArticleAdapter(Context context) {
             this.mcontext = context;
@@ -170,7 +188,7 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
 
         @Override
         public int getCount() {
-            return mData.size();
+            return mData == null ? 0 : mData.size();
         }
 
         @Override
@@ -185,47 +203,22 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            // 声明内部类
-            ArticleAdapter.Util util = null;
-            // 中间变量
-            final int flag = position;
+            Util util = null;
             if (convertView == null) {
-                util = new ArticleAdapter.Util();
+                util = new Util();
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_tongxunlu, null);
-                util.ll_all = convertView.findViewById(R.id.ll_all);
-                util.iv_delete = convertView.findViewById(R.id.iv_delete);
                 util.tv_name = convertView.findViewById(R.id.tv_name);
                 util.tv_phone = convertView.findViewById(R.id.tv_phone);
                 convertView.setTag(util);
             } else {
-                util = (ArticleAdapter.Util) convertView.getTag();
+                util = (Util) convertView.getTag();
             }
             TongxunluliistBean bean = mData.get(position);
-            Util finalUtil = util;
-            util.ll_all.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
 
-                    intent.putExtra("nowphxNum", position + 1);
-                    intent.putExtra("phbxName", bean.phbxName);
-                    intent.putExtra("phbxTelephone", bean.phbxTelephone);
 
-                    startActivity(intent);
-                }
-            });
-            if (bianji) {
-                util.iv_delete.setVisibility(View.VISIBLE);
-            } else {
-                util.iv_delete.setVisibility(View.GONE);
-            }
-
-            util.iv_delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TongxunluDeletePostBean tongxunluDeletePostBean = new TongxunluDeletePostBean();
+                    /*TongxunluDeletePostBean tongxunluDeletePostBean = new TongxunluDeletePostBean();
                     tongxunluDeletePostBean.userId = UserInstance.getInstance().getUid();
                     tongxunluDeletePostBean.token = UserInstance.getInstance().getToken();
                     tongxunluDeletePostBean.deviceId = WatchInstance.getInstance().deviceId;
@@ -245,9 +238,7 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
                         public void onFail(Call<BaseBean> call, Throwable t) {
 
                         }
-                    });
-                }
-            });
+                    });*/
 
             util.tv_name.setText(bean.phbxName);
             util.tv_phone.setText(bean.phbxTelephone);
@@ -257,8 +248,6 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
 
 
         class Util {
-            View ll_all;
-            View iv_delete;
             TextView tv_name;
             TextView tv_phone;
 
@@ -267,9 +256,4 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
-    }
 }

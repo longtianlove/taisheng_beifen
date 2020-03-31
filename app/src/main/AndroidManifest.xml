@@ -221,6 +221,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.market.gouwuche.GouwucheActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.market.gouwuche.ShoppingCartActivity"
@@ -233,15 +234,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.WatchsListActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.market.dingdan.DingdanjiesuanActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.market.dizhi.DizhiActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.market.dizhi.DizhiBianjiActivity"
             android:screenOrientation="portrait" />
@@ -253,26 +252,23 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.doctor.DoctorsFenleiActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.me.MyDingdanActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.market.ShangPinxiangqingActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchme.WatchNaoZhongXinzengActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchme.WatchMeTongxunluActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.BindMessageActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchfirst.WatchFirstGuijiActivity"
             android:screenOrientation="portrait" />
@@ -288,11 +284,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.WatchMainActivity"
-            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
-            android:hardwareAccelerated="true"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchme.UpdateNickActivity"
             android:screenOrientation="portrait" />
@@ -314,9 +307,7 @@
         <activity
             android:name=".bussiness.first.MoreShipinActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".chat.C2CActivity"
-             />
+        <activity android:name=".chat.C2CActivity" />
         <activity
             android:name=".bussiness.me.MyPingjiaActivity"
             android:screenOrientation="portrait" />
@@ -346,8 +337,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchme.WatchMianDaraoSettingliActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchme.WatchMejinjilianxirenActivity"
 
@@ -363,8 +353,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.me.AboutUsActivity"
-            android:screenOrientation="portrait"
-           />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.me.RecommendShareActivity"
             android:screenOrientation="portrait" />
@@ -462,9 +451,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ZXing.ZXingActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.market.FenleiMarketActivity"
             android:screenOrientation="portrait" />
@@ -505,8 +492,6 @@
 
         <activity
             android:name=".bussiness.article.SecretActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.market.youhuijuan.MoreYouhuijuanActivity"

@@ -113,10 +113,12 @@ public class WatchLocationFragment extends BaseFragment {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
                                 NewLocationBean newLocationBean = message.result;
-                                LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
-                                NewMapInstance.shebeiLatLng=NewMapInstance.converterLatLng(latLng);
-                                NewMapInstance.getInstance().refreshMap();
-                                NewMapInstance.getInstance().setWatchCenter();
+                                if (TextsUtils.isInteger(newLocationBean.latitude) && TextsUtils.isInteger(newLocationBean.latitude)) {
+                                    LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
+                                    NewMapInstance.shebeiLatLng = NewMapInstance.converterLatLng(latLng);
+                                    NewMapInstance.getInstance().refreshMap();
+                                    NewMapInstance.getInstance().setWatchCenter();
+                                }
                                 break;
                         }
                     }
@@ -139,9 +141,9 @@ public class WatchLocationFragment extends BaseFragment {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         NewLocationBean newLocationBean = message.result;
-                        if (TextsUtils.isInteger(newLocationBean.latitude)&&TextsUtils.isInteger(newLocationBean.latitude)) {
+                        if (TextsUtils.isInteger(newLocationBean.latitude) && TextsUtils.isInteger(newLocationBean.latitude)) {
                             LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
-                            NewMapInstance.shebeiLatLng=NewMapInstance.converterLatLng(latLng);
+                            NewMapInstance.shebeiLatLng = NewMapInstance.converterLatLng(latLng);
                             NewMapInstance.getInstance().refreshMap();
                         }
                         break;

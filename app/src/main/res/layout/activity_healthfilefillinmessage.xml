@@ -62,7 +62,7 @@
 
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="欢迎来到泰晟健康"
+                android:text="欢迎来到全民健康"
                 android:textColor="#ff333333"
                 android:textSize="25sp" />
 

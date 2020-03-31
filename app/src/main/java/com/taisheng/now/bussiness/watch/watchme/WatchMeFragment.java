@@ -8,21 +8,27 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
-import com.taisheng.now.bussiness.watch.WatchsListActivity;
 import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
+import com.taisheng.now.util.Uiutils;
+import com.th.j.commonlibrary.wight.CircleImageView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -33,26 +39,34 @@ import retrofit2.Response;
 
 @SuppressLint("WrongConstant")
 public class WatchMeFragment extends BaseFragment {
-    View iv_back;
-    View tv_change_device;
-    View ll_togerenxinxi;
-    SimpleDraweeView sdv_header;
-    TextView tv_nickname;
-    TextView tv_zhanghao;
-    View tv_qiandao;
-
-
-    View ll_tongxunlu;
-    View ll_naozhong;
-    View ll_chiyao;
-
-    View ll_xinlv;
-    View ll_xueya;
-    View ll_kaiguan;
-
-
-    View ll_chongqi;
-    View ll_huifuchuchang;
+    @BindView(R.id.sdv_header)
+    CircleImageView sdvHeader;
+    @BindView(R.id.tv_nickname)
+    TextView tvNickname;
+    @BindView(R.id.tv_zhanghao)
+    TextView tvZhanghao;
+    @BindView(R.id.iv_jiantou)
+    TextView ivJiantou;
+    @BindView(R.id.ll_togerenxinxi)
+    RelativeLayout llTogerenxinxi;
+    @BindView(R.id.ll_tongxunlu)
+    TextView llTongxunlu;
+    @BindView(R.id.ll_naozhong)
+    TextView llNaozhong;
+    @BindView(R.id.ll_chiyao)
+    TextView llChiyao;
+    @BindView(R.id.ll_sos)
+    TextView llSos;
+    @BindView(R.id.ll_xueya)
+    TextView llXueya;
+    @BindView(R.id.ll_xinlv)
+    TextView llXinlv;
+    @BindView(R.id.ll_kaiguan)
+    TextView llKaiguan;
+    @BindView(R.id.ll_chongqi)
+    TextView llChongqi;
+    @BindView(R.id.ll_huifuchuchang)
+    TextView llHuifuchuchang;
 
 
     @Override
@@ -60,184 +74,125 @@ public class WatchMeFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_watchme, container, false);
-
-        initView(rootView);
-
-
-//        EventBus.getDefault().register(this);
+        ButterKnife.bind(this, rootView);
         initData();
-
         return rootView;
     }
 
-    View.OnClickListener toMeMessageActivityListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), WatchMeMessageActivity.class);
+
+    @OnClick({R.id.ll_togerenxinxi, R.id.ll_tongxunlu, R.id.ll_naozhong, R.id.ll_chiyao, R.id.ll_sos, R.id.ll_xueya, R.id.ll_xinlv, R.id.ll_kaiguan, R.id.ll_chongqi, R.id.ll_huifuchuchang})
+    public void onViewClicked(View view) {
+        Intent intent = null;
+        switch (view.getId()) {
+            case R.id.ll_togerenxinxi:
+                if (intent == null) {
+                    intent = new Intent(getActivity(), WatchMeMessageActivity.class);
+                }
+                break;
+            case R.id.ll_tongxunlu:
+                if (intent == null) {
+                    intent = new Intent(getActivity(), WatchMeTongxunluActivity.class);
+                }
+                break;
+            case R.id.ll_naozhong:
+                if (intent == null) {
+                    intent = new Intent(getActivity(), WatchMeNaozhongListActivity.class);
+                }
+                break;
+            case R.id.ll_chiyao:
+                if (intent == null) {
+                    intent = new Intent(getActivity(), WatchChiYaoListActivity.class);
+                }
+                break;
+            case R.id.ll_sos:
+                break;
+            case R.id.ll_xueya:
+                if (intent == null) {
+                    intent = new Intent(getActivity(), WatchMeXueyajingActivity.class);
+                }
+                break;
+            case R.id.ll_xinlv:
+                if (intent == null) {
+                    intent = new Intent(getActivity(), WatchMeXinlvyujingActivity.class);
+                }
+                break;
+            case R.id.ll_kaiguan:
+                if (intent == null) {
+                    intent = new Intent(getActivity(), WatchMeKaiGuanActivity.class);
+                }
+                break;
+            case R.id.ll_chongqi:
+                reStart();
+                break;
+            case R.id.ll_huifuchuchang:
+                resumeFactory();
+                break;
+        }
+        if (intent != null) {
             startActivity(intent);
         }
-    };
-
-    void initView(View rootView) {
-        iv_back = rootView.findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
-        tv_change_device = rootView.findViewById(R.id.tv_change_device);
-        tv_change_device.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WatchsListActivity.class);
-                startActivity(intent);
-            }
-        });
-        ll_togerenxinxi = rootView.findViewById(R.id.ll_togerenxinxi);
-        ll_togerenxinxi.setOnClickListener(toMeMessageActivityListener);
-        sdv_header = (SimpleDraweeView) rootView.findViewById(R.id.sdv_header);
-        sdv_header.setOnClickListener(toMeMessageActivityListener);
-        tv_zhanghao = rootView.findViewById(R.id.tv_zhanghao);
-        tv_nickname = (TextView) rootView.findViewById(R.id.tv_nickname);
-        tv_nickname.setOnClickListener(toMeMessageActivityListener);
-        tv_qiandao = rootView.findViewById(R.id.tv_qiandao);
-        tv_qiandao.setOnClickListener(toMeMessageActivityListener);
-
-        ll_tongxunlu=rootView.findViewById(R.id.ll_tongxunlu);
-        ll_tongxunlu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WatchMeTongxunluActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        ll_naozhong = rootView.findViewById(R.id.ll_naozhong);
-        ll_naozhong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WatchMeNaozhongListActivity.class);
-                startActivity(intent);
-            }
-        });
-        ll_chiyao = rootView.findViewById(R.id.ll_chiyao);
-        ll_chiyao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WatchChiYaoListActivity.class);
-                startActivity(intent);
-            }
-        });
-        ll_xinlv = rootView.findViewById(R.id.ll_xinlv);
-        ll_xinlv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WatchMeXinlvyujingActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ll_xueya = rootView.findViewById(R.id.ll_xueya);
-        ll_xueya.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WatchMeXueyajingActivity.class);
-                startActivity(intent);
-            }
-        });
-        ll_kaiguan = rootView.findViewById(R.id.ll_kaiguan);
-        ll_kaiguan.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WatchMeKaiGuanActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ll_chongqi = rootView.findViewById(R.id.ll_chongqi);
-        ll_chongqi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RebootPostBean bean=new RebootPostBean();
-                bean.userId=UserInstance.getInstance().getUid();
-                bean.token=UserInstance.getInstance().getToken();
-                bean.deviceId =WatchInstance.getInstance().deviceId;
-                ApiUtils.getApiService().reboot(bean).enqueue(new TaiShengCallback<BaseBean>() {
-                    @Override
-                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
-
-                        switch (message.code) {
-                            case Constants.HTTP_SUCCESS:
-                                ToastUtil.showAtCenter("正在重启！");
-                                break;
-                        }
-
-                    }
-
-                    @Override
-                    public void onFail(Call<BaseBean> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-        ll_huifuchuchang = rootView.findViewById(R.id.ll_huifuchuchang);
-        ll_huifuchuchang.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                RebootPostBean bean=new RebootPostBean();
-                bean.userId=UserInstance.getInstance().getUid();
-                bean.token=UserInstance.getInstance().getToken();
-                bean.deviceId =WatchInstance.getInstance().deviceId;
-                ApiUtils.getApiService().restoreFactorySettings(bean).enqueue(new TaiShengCallback<BaseBean>() {
-                    @Override
-                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
-
-                        switch (message.code) {
-                            case Constants.HTTP_SUCCESS:
-                                ToastUtil.showAtCenter("正在恢复出厂设置！");
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFail(Call<BaseBean> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-
     }
 
-    void initData() {
+    private void resumeFactory() {
+        RebootPostBean bean = new RebootPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.deviceId = WatchInstance.getInstance().deviceId;
+        ApiUtils.getApiService().restoreFactorySettings(bean).enqueue(new TaiShengCallback<BaseBean>() {
+            @Override
+            public void onSuccess(Response<BaseBean> response, BaseBean message) {
 
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        Uiutils.showToast("正在恢复出厂设置");
+                        break;
+                }
+            }
 
+            @Override
+            public void onFail(Call<BaseBean> call, Throwable t) {
+
+            }
+        });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (WatchInstance.getInstance().headUrl != null) {
-            Uri uri = Uri.parse(Constants.Url.File_Host + WatchInstance.getInstance().headUrl);
-            sdv_header.setImageURI(uri);
-        }
+
+    private void reStart() {
+        RebootPostBean bean = new RebootPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.deviceId = WatchInstance.getInstance().deviceId;
+        ApiUtils.getApiService().reboot(bean).enqueue(new TaiShengCallback<BaseBean>() {
+            @Override
+            public void onSuccess(Response<BaseBean> response, BaseBean message) {
+
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        Uiutils.showToast("正在重启！");
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onFail(Call<BaseBean> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void initData() {
+        Glide.with(getActivity())
+                .load(Constants.Url.File_Host + WatchInstance.getInstance().headUrl)
+                .placeholder(R.drawable.article_default)
+                .error(R.drawable.article_default)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(sdvHeader);
         if (!TextUtils.isEmpty(WatchInstance.getInstance().deviceNickName)) {
-            tv_nickname.setText(WatchInstance.getInstance().deviceNickName);
+            tvNickname.setText(WatchInstance.getInstance().deviceNickName);
         }
         if (!TextUtils.isEmpty(WatchInstance.getInstance().deviceId)) {
-            tv_zhanghao.setText(WatchInstance.getInstance().deviceId);
+            tvZhanghao.setText(WatchInstance.getInstance().deviceId);
         }
-    }
-
-    public void onDestroy() {
-        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
-
     }
 }
