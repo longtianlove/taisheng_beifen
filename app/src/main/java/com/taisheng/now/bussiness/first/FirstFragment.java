@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
@@ -57,7 +58,7 @@ import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.GlideImageLoader;
 import com.taisheng.now.util.GlideImageLoader2;
-import com.taisheng.now.util.GlideRoundUtils;
+
 import com.taisheng.now.util.SPUtil;
 import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.GuideView;
@@ -774,9 +775,8 @@ public class FirstFragment extends BaseFragment {
                             videoPlayer.setUp(bean.videoUrl, true, "测试视频");
                             Glide.with(getActivity())
                                     .load(bean.videoBanner)
-                                    .bitmapTransform(new GlideRoundUtils(getActivity(), Uiutils.dp2px(getActivity(), 10f), GlideRoundUtils.CornerType.ALL))
-                                    .error(R.mipmap.health01)
-                                    .placeholder(R.mipmap.health01)
+//                                    .bitmapTransform(new GlideRoundUtils(getActivity(), Uiutils.dp2px(getActivity(), 10f), GlideRoundUtils.CornerType.ALL))
+                                    .apply(new RequestOptions().error(R.mipmap.health01).placeholder(R.mipmap.health01))
                                     .into(imageView);
 
                             tv_shipintitle.setText(bean.videoTitle);

@@ -99,7 +99,7 @@ public class XinlvFragment extends BaseFragment {
         Date date2 = new Date();
         try {
             date2 = sdf.parse(WatchInstance.getInstance().createTime);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         cal.setTime(date2);

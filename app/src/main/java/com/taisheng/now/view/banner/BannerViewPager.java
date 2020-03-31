@@ -14,11 +14,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.R;
 import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.util.DensityUtil;
-import com.taisheng.now.util.GlideRoundUtils;
+
 import com.taisheng.now.util.ScreenUtil;
 import com.taisheng.now.util.Uiutils;
 
@@ -135,10 +136,8 @@ public class BannerViewPager {
 
             Glide.with(mcontext)
                     .load(mpictureUrls.get(i))
-                    .bitmapTransform(new GlideRoundUtils(mcontext,10,GlideRoundUtils.CornerType.ALL))
-                    .placeholder(R.drawable.article_default)
-                    .error(R.drawable.article_default)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .bitmapTransform(new GlideRoundUtils(mcontext,10,GlideRoundUtils.CornerType.ALL))
+                    .apply(new RequestOptions().error(R.drawable.article_default).placeholder(R.drawable.article_default))
                     .into( mbannerItems[i]);
         }
         madapter = new ViewPagerAdapter(mbannerItems, mpictureUrls, mcontext, mviewPager, mviewPagerItemListener);

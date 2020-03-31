@@ -120,8 +120,8 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
         bean.sysUser.phone = UserInstance.getInstance().userInfo.phone;
         bean.sysUser.realName = UserInstance.getInstance().userInfo.realName;
         bean.sysUser.sex = UserInstance.getInstance().userInfo.sex;
-        bean.sysUser.nickName=UserInstance.getInstance().userInfo.nickName;
-        bean.sysUser.userName=UserInstance.getInstance().userInfo.userName;
+        bean.sysUser.nickName = UserInstance.getInstance().userInfo.nickName;
+        bean.sysUser.userName = UserInstance.getInstance().userInfo.userName;
         bean.sysUser.avatar = event.path;
 
         ApiUtils.getApiService().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
@@ -139,7 +139,7 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
                         SPUtil.putSex(UserInstance.getInstance().userInfo.sex);
                         UserInstance.getInstance().userInfo.avatar = bean.sysUser.avatar;
                         SPUtil.putAVATAR(bean.sysUser.avatar);
-                        UserInstance.getInstance().userInfo.nickName=bean.sysUser.nickName;
+                        UserInstance.getInstance().userInfo.nickName = bean.sysUser.nickName;
                         SPUtil.putNickname(bean.sysUser.nickName);
                         finish();
                         break;
@@ -155,8 +155,6 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
 
 
     }
-
-
 
 
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
@@ -176,6 +174,9 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         WatchInstance.getInstance().headUrl = bean.headUrl;
+                        finish();
+                        break;
+                    default:
                         finish();
                         break;
                 }
@@ -443,9 +444,9 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
 
         DialogUtil.showProgress(this, "");
 
-        if(WatchInstance.getInstance().isWtch){
+        if (WatchInstance.getInstance().isWtch) {
             WatchInstance.getInstance().uploadImage(clipImagePath);
-        }else{
+        } else {
             // 上传头像
             UserInstance.getInstance().uploadImage(clipImagePath);
         }

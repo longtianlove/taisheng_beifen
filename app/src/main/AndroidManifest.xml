@@ -177,11 +177,7 @@
         <activity
             android:name=".bussiness.SplashActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".test.TestActivity"
@@ -286,6 +282,8 @@
             android:name=".bussiness.watch.WatchMainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+
         <activity
             android:name=".bussiness.watch.watchme.UpdateNickActivity"
             android:screenOrientation="portrait" />

@@ -1,7 +1,11 @@
-<<<<<<< HEAD
+
 *.iml
 .gradle
 /local.properties
+/build.gradle
+/gradle.properties
+/gradle/wrapper/gradle-wrapper.properties
+/app/build.gradle
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
@@ -9,8 +13,6 @@
 /captures
 .externalNativeBuild
 
-=======
->>>>>>> d3b2ddae9d9c6c47c58f2067d24daba355868c9b
 # Built application files
 *.apk
 *.ap_
@@ -26,10 +28,9 @@
 bin/
 gen/
 out/
-<<<<<<< HEAD
+
 release/
-=======
->>>>>>> d3b2ddae9d9c6c47c58f2067d24daba355868c9b
+
 
 # Gradle files
 .gradle/
@@ -58,15 +59,13 @@ captures/
 .idea/assetWizardSettings.xml
 .idea/dictionaries
 .idea/libraries
-<<<<<<< HEAD
+
 # Android Studio 3 in .gitignore file.
 .idea/caches
 .idea/modules.xml
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
-=======
-.idea/caches
->>>>>>> d3b2ddae9d9c6c47c58f2067d24daba355868c9b
+
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
@@ -100,7 +99,5 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
-<<<<<<< HEAD
 
-=======
->>>>>>> d3b2ddae9d9c6c47c58f2067d24daba355868c9b
+

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
@@ -55,6 +56,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
@@ -200,7 +202,7 @@ public class MarketFragment extends BaseFragment {
         });
 //
 
-        bannerContaner =  rootView.findViewById(R.id.bannerContaner);
+        bannerContaner = rootView.findViewById(R.id.bannerContaner);
 
 
         tvMoreyouhuijuan.setOnClickListener(new View.OnClickListener() {
@@ -450,9 +452,7 @@ public class MarketFragment extends BaseFragment {
             if (hotGoodsBean != null) {
                 Glide.with(mContext)
                         .load(hotGoodsBean.picUrl)
-                        .placeholder(R.drawable.article_default)
-                        .error(R.drawable.article_default)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .apply(new RequestOptions().error(R.drawable.article_default).placeholder(R.drawable.article_default))
                         .into(holder2.sdv_header);
                 holder2.tv_goods_name.setText(hotGoodsBean.name);
                 holder2.tv_goods_jiage.setText("¥" + hotGoodsBean.retailPrice + "");
@@ -575,9 +575,7 @@ public class MarketFragment extends BaseFragment {
             });
             Glide.with(mcontext)
                     .load(bean.picUrl)
-                    .placeholder(R.drawable.article_default)
-                    .error(R.drawable.article_default)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .apply(new RequestOptions().error(R.drawable.article_default).placeholder(R.drawable.article_default))
                     .into(util.sdv_article);
 
             util.tv_name.setText(bean.name);

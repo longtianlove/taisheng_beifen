@@ -41,6 +41,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import com.liji.imagezoom.util.ImageZoom;
 import com.previewlibrary.GPreviewBuilder;
 import com.previewlibrary.enitity.ThumbViewInfo;
 import com.taisheng.now.Constants;
@@ -753,29 +755,33 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                         @Override
                         public void onClick(View view) {
 
-                            //组织数据
-                            ArrayList<ThumbViewInfo> mThumbViewInfoList = new ArrayList<>(); // 这个最好定义成成员变量
-                            ThumbViewInfo item;
-                            mThumbViewInfoList.clear();
-//                            for (int i = 0;i < resultList.size(); i++) {
-                            Rect bounds = new Rect();
-                            //new ThumbViewInfo(图片地址);
-                            item = new ThumbViewInfo(Constants.Url.File_Host + finalRawmessage);
-                            item.setBounds(bounds);
-                            mThumbViewInfoList.add(item);
-//                            }
-
-//打开预览界面
-                            GPreviewBuilder.from(getActivity())
-                                    //是否使用自定义预览界面，当然8.0之后因为配置问题，必须要使用
-                                    .to(ImageLookActivity.class)
-                                    .setData(mThumbViewInfoList)
-                                    .setCurrentIndex(0)
-                                    .setSingleFling(true)
-                                    .setType(GPreviewBuilder.IndicatorType.Number)
-                                    // 小圆点
-//  .setType(GPreviewBuilder.IndicatorType.Dot)
-                                    .start();//启动
+//                            //组织数据
+//                            ArrayList<ThumbViewInfo> mThumbViewInfoList = new ArrayList<>(); // 这个最好定义成成员变量
+//                            ThumbViewInfo item;
+//                            mThumbViewInfoList.clear();
+////                            for (int i = 0;i < resultList.size(); i++) {
+//                            Rect bounds = new Rect();
+//                            //new ThumbViewInfo(图片地址);
+//                            item = new ThumbViewInfo(Constants.Url.File_Host + finalRawmessage);
+//                            item.setBounds(bounds);
+//                            mThumbViewInfoList.add(item);
+////                            }
+//
+////打开预览界面
+//                            GPreviewBuilder.from(getActivity())
+//                                    //是否使用自定义预览界面，当然8.0之后因为配置问题，必须要使用
+//                                    .to(ImageLookActivity.class)
+//                                    .setData(mThumbViewInfoList)
+//                                    .setCurrentIndex(0)
+//                                    .setSingleFling(true)
+//                                    .setType(GPreviewBuilder.IndicatorType.Number)
+//                                    // 小圆点
+////  .setType(GPreviewBuilder.IndicatorType.Dot)
+//                                    .start();//启动
+                            String url= Constants.Url.File_Host + finalRawmessage;
+                            ArrayList<String> urls=new ArrayList<>();
+                            urls.add(url);
+                            ImageZoom.show(getActivity(), url,urls);
 
                         }
                     });

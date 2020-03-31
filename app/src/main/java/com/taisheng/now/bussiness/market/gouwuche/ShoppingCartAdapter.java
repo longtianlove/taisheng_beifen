@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.taisheng.now.R;
 import com.taisheng.now.bussiness.bean.result.xiadanshangpinBean;
 import com.taisheng.now.bussiness.market.DingdanInstance;
@@ -144,9 +145,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
         Glide.with(context)
                 .load(shoppingCartBean.imageUrl)
-                .placeholder(R.drawable.article_default)
-                .error(R.drawable.article_default)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .apply(new RequestOptions().error(R.drawable.article_default).placeholder(R.drawable.article_default))
                 .into(holder.sdv_article);
 
         String attribute = shoppingCartBean.getAttribute();

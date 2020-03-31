@@ -44,14 +44,14 @@ public class AudioRecordButton extends AppCompatButton
     //标记是否强制终止
     private boolean isOverTime = false;
     //最大录音时长（单位:s）。def:60s
-    private int mMaxRecordTime = 60;
+    private int mMaxRecordTime = 10;
 
     //上下文
     Context mContext;
     //震动类
     private Vibrator vibrator;
     //提醒倒计时
-    private int mRemainedTime = 10;
+    private int mRemainedTime = 3;
     //设置是否允许录音,这个是是否有录音权限
     private boolean mHasRecordPromission = true;
 
