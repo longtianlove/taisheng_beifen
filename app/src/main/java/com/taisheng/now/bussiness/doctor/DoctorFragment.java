@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,6 +141,7 @@ public class DoctorFragment extends BaseFragment {
         lv_doctors.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
             @Override
             public void onUpLoad() {
+                PAGE_NO++;
                 getDoctors();
             }
         });
@@ -164,14 +166,12 @@ public class DoctorFragment extends BaseFragment {
                 DialogUtil.closeProgress();
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        synchronized (DoctorFragment.class) {
                             if (message.result.records != null && message.result.records.size() > 0) {
                                 lv_doctors.setLoading(false);
                                 if (PAGE_NO == 1) {
                                     madapter.mData.clear();
                                 }
                                 //有消息
-                                PAGE_NO++;
                                 madapter.mData.addAll(message.result.records);
                                 if (message.result.records.size() < 10) {
                                     lv_doctors.setHasLoadMore(false);
@@ -187,7 +187,7 @@ public class DoctorFragment extends BaseFragment {
                                 lv_doctors.setLoadAllViewText("暂时只有这么多医生");
                                 lv_doctors.setLoadAllFooterVisible(true);
                             }
-                        }
+
                         break;
                 }
             }
