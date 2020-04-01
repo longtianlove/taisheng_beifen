@@ -36,9 +36,9 @@
                     android:scaleType="fitXY"
                     fresco:actualImageScaleType="focusCrop"
                     fresco:fadeDuration="300"
-                    fresco:failureImage="@drawable/doctor_default"
+                    fresco:failureImage="@drawable/article_default"
                     fresco:failureImageScaleType="centerInside"
-                    fresco:placeholderImage="@drawable/doctor_default"
+                    fresco:placeholderImage="@drawable/article_default"
                     fresco:placeholderImageScaleType="fitCenter"
                     fresco:roundedCornerRadius="25dp" />
 

@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.core.app.ActivityCompat;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.KaiguanSettingPostBean;
@@ -21,7 +19,10 @@ import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 
+import androidx.core.app.ActivityCompat;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -31,41 +32,50 @@ import retrofit2.Response;
 
 public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    View ll_kaiguan_gps;
-    ImageView iv_kaiguan_gps;
-
-    View ll_kaiguan_sos;
-    ImageView iv_kaiguan_sos;
-
-    View ll_kaiguan_jinjilianxiren;
-
-    View ll_kaiguan_didianduanxin;
-    ImageView iv_kaiguan_didianduanxin;
-
-    View ll_kaiguan_quxiashouhuan;
-    ImageView iv_kaiguan_quxiashouhuan;
-
-    View ll_kaiguan_jibu;
-    ImageView iv_kaiguan_jibu;
-
-    View ll_kaiguan_fanzhuan;
-    ImageView iv_kaiguan_fanzhuan;
-
-    View ll_kaiguan_miandarao;
-
+    @BindView(R.id.iv_kaiguan_gps)
+    ImageView ivKaiguanGps;
+    @BindView(R.id.ll_kaiguan_gps)
+    LinearLayout llKaiguanGps;
+    @BindView(R.id.iv_kaiguan_sos)
+    ImageView ivKaiguanSos;
+    @BindView(R.id.ll_kaiguan_sos)
+    LinearLayout llKaiguanSos;
+    @BindView(R.id.ll_kaiguan_jinjilianxiren)
+    LinearLayout llKaiguanJinjilianxiren;
+    @BindView(R.id.iv_kaiguan_didianduanxin)
+    ImageView ivKaiguanDidianduanxin;
+    @BindView(R.id.ll_kaiguan_didianduanxin)
+    LinearLayout llKaiguanDidianduanxin;
+    @BindView(R.id.iv_kaiguan_quxiashouhuan)
+    ImageView ivKaiguanQuxiashouhuan;
+    @BindView(R.id.ll_kaiguan_quxiashouhuan)
+    LinearLayout llKaiguanQuxiashouhuan;
+    @BindView(R.id.iv_kaiguan_jibu)
+    ImageView ivKaiguanJibu;
+    @BindView(R.id.ll_kaiguan_jibu)
+    LinearLayout llKaiguanJibu;
+    @BindView(R.id.iv_kaiguan_fanzhuan)
+    ImageView ivKaiguanFanzhuan;
+    @BindView(R.id.ll_kaiguan_fanzhuan)
+    LinearLayout llKaiguanFanzhuan;
+    @BindView(R.id.ll_kaiguan_miandarao)
+    LinearLayout llKaiguanMiandarao;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_watchme_kaiguan);
         ButterKnife.bind(this);
-        initViews();
-//        EventBus.getDefault().register(this);
         initDatas();
     }
 
     @Override
     public void initData() {
-
+        ivKaiguanGps.setSelected(false);
+        ivKaiguanSos.setSelected(false);
+        ivKaiguanDidianduanxin.setSelected(false);
+        ivKaiguanQuxiashouhuan.setSelected(false);
+        ivKaiguanJibu.setSelected(false);
+        ivKaiguanFanzhuan.setSelected(false);
     }
 
     @Override
@@ -75,30 +85,83 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("开关设置");
+        tvTitle.setText(getString(R.string.watch_msg06));
     }
 
-    void initViews() {
-
-        ll_kaiguan_gps = findViewById(R.id.ll_kaiguan_gps);
-        ll_kaiguan_gps.setOnClickListener(new View.OnClickListener() {
+    void initDatas() {
+        AllSettingPostBean bean = new AllSettingPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.deviceId = WatchInstance.getInstance().deviceId;
+        ApiUtils.getApiService().allSetting(bean).enqueue(new TaiShengCallback<BaseBean<AllSettingResultBean>>() {
             @Override
-            public void onClick(View v) {
+            public void onSuccess(Response<BaseBean<AllSettingResultBean>> response, BaseBean<AllSettingResultBean> message) {
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if ("1".equals(message.result.watchGpsSwitch)) {
+                            ivKaiguanGps.setSelected(true);
+                        } else {
+                            ivKaiguanGps.setSelected(false);
+                        }
+                        if ("1".equals(message.result.watchSossms)) {
+                            ivKaiguanSos.setSelected(true);
+                        } else {
+                            ivKaiguanSos.setSelected(false);
+                        }
+                        if ("1".equals(message.result.watchLowbat)) {
+                            ivKaiguanDidianduanxin.setSelected(true);
+                        } else {
+                            ivKaiguanDidianduanxin.setSelected(false);
+                        }
+                        if ("1".equals(message.result.watchRemove)) {
+                            ivKaiguanQuxiashouhuan.setSelected(true);
+                        } else {
+                            ivKaiguanQuxiashouhuan.setSelected(false);
+                        }
+                        if ("1".equals(message.result.watchPedo)) {
+                            ivKaiguanJibu.setSelected(true);
+                        } else {
+                            ivKaiguanJibu.setSelected(false);
+                        }
+
+                        if ("1".equals(message.result.watchSleeptimeSwitch)) {
+                            ivKaiguanFanzhuan.setSelected(true);
+                        } else {
+                            ivKaiguanFanzhuan.setSelected(false);
+                        }
+                        // 免打扰
+                        WatchInstance.getInstance().watchSilencetimeSwitch = message.result.watchSliencetimeSwitch;
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<AllSettingResultBean>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    @OnClick({R.id.ll_kaiguan_gps, R.id.ll_kaiguan_sos, R.id.ll_kaiguan_jinjilianxiren, R.id.ll_kaiguan_didianduanxin, R.id.ll_kaiguan_quxiashouhuan, R.id.ll_kaiguan_jibu, R.id.ll_kaiguan_fanzhuan, R.id.ll_kaiguan_miandarao})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_kaiguan_gps:
                 KaiguanSettingPostBean bean = new KaiguanSettingPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.deviceId = WatchInstance.getInstance().deviceId;
                 bean.switchType = "APPLOCK";
-                bean.switchValue = iv_kaiguan_gps.isSelected() ? "0" : "1";
+                bean.switchValue = ivKaiguanGps.isSelected() ? "0" : "1";
                 ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                if (iv_kaiguan_gps.isSelected()) {
-                                    iv_kaiguan_gps.setSelected(false);
+                                if (ivKaiguanGps.isSelected()) {
+                                    ivKaiguanGps.setSelected(false);
                                 } else {
-                                    iv_kaiguan_gps.setSelected(true);
+                                    ivKaiguanGps.setSelected(true);
                                 }
                                 break;
                         }
@@ -134,33 +197,25 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
 //
 //                    }
 //                });
-            }
-        });
-        iv_kaiguan_gps = findViewById(R.id.iv_kaiguan_gps);
-        iv_kaiguan_gps.setSelected(false);
-
-        ll_kaiguan_sos = findViewById(R.id.ll_kaiguan_sos);
-        ll_kaiguan_sos.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.ll_kaiguan_sos:
 
 
-                KaiguanSettingPostBean bean = new KaiguanSettingPostBean();
-                bean.userId = UserInstance.getInstance().getUid();
-                bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.switchType = "SOSSMS";
-                bean.switchValue = iv_kaiguan_sos.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                KaiguanSettingPostBean bean2 = new KaiguanSettingPostBean();
+                bean2.userId = UserInstance.getInstance().getUid();
+                bean2.token = UserInstance.getInstance().getToken();
+                bean2.deviceId = WatchInstance.getInstance().deviceId;
+                bean2.switchType = "SOSSMS";
+                bean2.switchValue = ivKaiguanSos.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean2).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                if (iv_kaiguan_sos.isSelected()) {
-                                    iv_kaiguan_sos.setSelected(false);
+                                if (ivKaiguanSos.isSelected()) {
+                                    ivKaiguanSos.setSelected(false);
                                 } else {
-                                    iv_kaiguan_sos.setSelected(true);
+                                    ivKaiguanSos.setSelected(true);
                                 }
                                 break;
                         }
@@ -197,41 +252,27 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
 //
 //                    }
 //                });
-            }
-        });
-
-        ll_kaiguan_jinjilianxiren = findViewById(R.id.ll_kaiguan_jinjilianxiren);
-        ll_kaiguan_jinjilianxiren.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.ll_kaiguan_jinjilianxiren:
                 Intent intent = new Intent(WatchMeKaiGuanActivity.this, WatchMejinjilianxirenActivity.class);
                 startActivity(intent);
-            }
-        });
-        iv_kaiguan_sos = findViewById(R.id.iv_kaiguan_sos);
-        iv_kaiguan_sos.setSelected(false);
-
-        ll_kaiguan_didianduanxin = findViewById(R.id.ll_kaiguan_didianduanxin);
-        ll_kaiguan_didianduanxin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                KaiguanSettingPostBean bean = new KaiguanSettingPostBean();
-                bean.userId = UserInstance.getInstance().getUid();
-                bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.switchType = "LOWBAT";
-                bean.switchValue = iv_kaiguan_didianduanxin.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                break;
+            case R.id.ll_kaiguan_didianduanxin:
+                KaiguanSettingPostBean bean3 = new KaiguanSettingPostBean();
+                bean3.userId = UserInstance.getInstance().getUid();
+                bean3.token = UserInstance.getInstance().getToken();
+                bean3.deviceId = WatchInstance.getInstance().deviceId;
+                bean3.switchType = "LOWBAT";
+                bean3.switchValue = ivKaiguanDidianduanxin.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean3).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                if (iv_kaiguan_didianduanxin.isSelected()) {
-                                    iv_kaiguan_didianduanxin.setSelected(false);
+                                if (ivKaiguanDidianduanxin.isSelected()) {
+                                    ivKaiguanDidianduanxin.setSelected(false);
                                 } else {
-                                    iv_kaiguan_didianduanxin.setSelected(true);
+                                    ivKaiguanDidianduanxin.setSelected(true);
                                 }
                                 break;
                         }
@@ -268,31 +309,23 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
 //
 //                    }
 //                });
-
-            }
-        });
-        iv_kaiguan_didianduanxin = findViewById(R.id.iv_kaiguan_didianduanxin);
-        iv_kaiguan_didianduanxin.setSelected(false);
-
-        ll_kaiguan_quxiashouhuan = findViewById(R.id.ll_kaiguan_quxiashouhuan);
-        ll_kaiguan_quxiashouhuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                KaiguanSettingPostBean bean = new KaiguanSettingPostBean();
-                bean.userId = UserInstance.getInstance().getUid();
-                bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.switchType = "REMOVE";
-                bean.switchValue = iv_kaiguan_quxiashouhuan.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                break;
+            case R.id.ll_kaiguan_quxiashouhuan:
+                KaiguanSettingPostBean bean4 = new KaiguanSettingPostBean();
+                bean4.userId = UserInstance.getInstance().getUid();
+                bean4.token = UserInstance.getInstance().getToken();
+                bean4.deviceId = WatchInstance.getInstance().deviceId;
+                bean4.switchType = "REMOVE";
+                bean4.switchValue = ivKaiguanQuxiashouhuan.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean4).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                if (iv_kaiguan_quxiashouhuan.isSelected()) {
-                                    iv_kaiguan_quxiashouhuan.setSelected(false);
+                                if (ivKaiguanQuxiashouhuan.isSelected()) {
+                                    ivKaiguanQuxiashouhuan.setSelected(false);
                                 } else {
-                                    iv_kaiguan_quxiashouhuan.setSelected(true);
+                                    ivKaiguanQuxiashouhuan.setSelected(true);
                                 }
                                 break;
                         }
@@ -327,31 +360,23 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
 //
 //                    }
 //                });
-            }
-        });
-        iv_kaiguan_quxiashouhuan = findViewById(R.id.iv_kaiguan_quxiashouhuan);
-        iv_kaiguan_quxiashouhuan.setSelected(false);
-
-
-        ll_kaiguan_jibu = findViewById(R.id.ll_kaiguan_jibu);
-        ll_kaiguan_jibu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                KaiguanSettingPostBean bean = new KaiguanSettingPostBean();
-                bean.userId = UserInstance.getInstance().getUid();
-                bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.switchType = " PEDO";
-                bean.switchValue = iv_kaiguan_jibu.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                break;
+            case R.id.ll_kaiguan_jibu:
+                KaiguanSettingPostBean bean5 = new KaiguanSettingPostBean();
+                bean5.userId = UserInstance.getInstance().getUid();
+                bean5.token = UserInstance.getInstance().getToken();
+                bean5.deviceId = WatchInstance.getInstance().deviceId;
+                bean5.switchType = " PEDO";
+                bean5.switchValue = ivKaiguanJibu.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean5).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                if (iv_kaiguan_jibu.isSelected()) {
-                                    iv_kaiguan_jibu.setSelected(false);
+                                if (ivKaiguanJibu.isSelected()) {
+                                    ivKaiguanJibu.setSelected(false);
                                 } else {
-                                    iv_kaiguan_jibu.setSelected(true);
+                                    ivKaiguanJibu.setSelected(true);
                                 }
                                 break;
                         }
@@ -387,34 +412,23 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
 //
 //                    }
 //                });
-
-            }
-        });
-        iv_kaiguan_jibu = findViewById(R.id.iv_kaiguan_jibu);
-        iv_kaiguan_jibu.setSelected(false);
-
-
-        ll_kaiguan_fanzhuan = findViewById(R.id.ll_kaiguan_fanzhuan);
-        ll_kaiguan_fanzhuan.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                KaiguanSettingPostBean bean = new KaiguanSettingPostBean();
-                bean.userId = UserInstance.getInstance().getUid();
-                bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.switchType = " SLEEPTIME";
-                bean.switchValue = iv_kaiguan_fanzhuan.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                break;
+            case R.id.ll_kaiguan_fanzhuan:
+                KaiguanSettingPostBean bean6 = new KaiguanSettingPostBean();
+                bean6.userId = UserInstance.getInstance().getUid();
+                bean6.token = UserInstance.getInstance().getToken();
+                bean6.deviceId = WatchInstance.getInstance().deviceId;
+                bean6.switchType = " SLEEPTIME";
+                bean6.switchValue = ivKaiguanFanzhuan.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().watchSwitchConfig(bean6).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                if (iv_kaiguan_fanzhuan.isSelected()) {
-                                    iv_kaiguan_fanzhuan.setSelected(false);
+                                if (ivKaiguanFanzhuan.isSelected()) {
+                                    ivKaiguanFanzhuan.setSelected(false);
                                 } else {
-                                    iv_kaiguan_fanzhuan.setSelected(true);
+                                    ivKaiguanFanzhuan.setSelected(true);
                                 }
                                 break;
                         }
@@ -449,81 +463,11 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
 //
 //                    }
 //                });
-            }
-        });
-        iv_kaiguan_fanzhuan = findViewById(R.id.iv_kaiguan_fanzhuan);
-        iv_kaiguan_fanzhuan.setSelected(false);
-
-
-        ll_kaiguan_miandarao = findViewById(R.id.ll_kaiguan_miandarao);
-        ll_kaiguan_miandarao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WatchMeKaiGuanActivity.this, WatchMeMiandaraoActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    void initDatas() {
-        AllSettingPostBean bean = new AllSettingPostBean();
-        bean.userId = UserInstance.getInstance().getUid();
-        bean.token = UserInstance.getInstance().getToken();
-        bean.deviceId = WatchInstance.getInstance().deviceId;
-        ApiUtils.getApiService().allSetting(bean).enqueue(new TaiShengCallback<BaseBean<AllSettingResultBean>>() {
-            @Override
-            public void onSuccess(Response<BaseBean<AllSettingResultBean>> response, BaseBean<AllSettingResultBean> message) {
-                switch (message.code) {
-                    case Constants.HTTP_SUCCESS:
-                        if ("1".equals(message.result.watchGpsSwitch)) {
-                            iv_kaiguan_gps.setSelected(true);
-                        } else {
-                            iv_kaiguan_gps.setSelected(false);
-                        }
-                        if ("1".equals(message.result.watchSossms)) {
-                            iv_kaiguan_sos.setSelected(true);
-                        } else {
-                            iv_kaiguan_sos.setSelected(false);
-                        }
-                        if ("1".equals(message.result.watchLowbat)) {
-                            iv_kaiguan_didianduanxin.setSelected(true);
-                        } else {
-                            iv_kaiguan_didianduanxin.setSelected(false);
-                        }
-                        if ("1".equals(message.result.watchRemove)) {
-                            iv_kaiguan_quxiashouhuan.setSelected(true);
-                        } else {
-                            iv_kaiguan_quxiashouhuan.setSelected(false);
-                        }
-                        if ("1".equals(message.result.watchPedo)) {
-                            iv_kaiguan_jibu.setSelected(true);
-                        } else {
-                            iv_kaiguan_jibu.setSelected(false);
-                        }
-
-                        if ("1".equals(message.result.watchSleeptimeSwitch)) {
-                            iv_kaiguan_fanzhuan.setSelected(true);
-                        } else {
-                            iv_kaiguan_fanzhuan.setSelected(false);
-                        }
-
-                        // 免打扰
-                        WatchInstance.getInstance().watchSilencetimeSwitch = message.result.watchSliencetimeSwitch;
-                        break;
-                }
-            }
-
-            @Override
-            public void onFail(Call<BaseBean<AllSettingResultBean>> call, Throwable t) {
-
-            }
-        });
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
+                break;
+            case R.id.ll_kaiguan_miandarao:
+                Intent intent2 = new Intent(WatchMeKaiGuanActivity.this, WatchMeMiandaraoActivity.class);
+                startActivity(intent2);
+                break;
+        }
     }
 }

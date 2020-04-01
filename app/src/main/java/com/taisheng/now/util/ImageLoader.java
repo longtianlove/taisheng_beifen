@@ -26,8 +26,8 @@ public class ImageLoader implements IZoomMediaLoader {
     {
         options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.drawable.doctor_default)
-                .error(R.drawable.doctor_default)
+                .placeholder(R.drawable.article_default)
+                .error(R.drawable.article_default)
                 .priority(Priority.HIGH);
     }
 

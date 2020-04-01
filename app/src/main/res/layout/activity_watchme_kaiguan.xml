@@ -1,362 +1,341 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_shangchengtitle"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <ImageView style="@style/iv_title" />
 
+
+    <LinearLayout
+        android:id="@+id/ll_kaiguan_gps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginTop="@dimen/magin_15"
+            android:layout_marginBottom="@dimen/magin_15"
+            android:text="@string/watch_msg25"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
+
+
+
+        <ImageView
+            android:id="@+id/iv_kaiguan_gps"
+            android:layout_width="@dimen/size_45"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginRight="@dimen/magin_12"
+            android:src="@drawable/dizhi_default" />
+
+
+    </LinearLayout>
+
+
     <TextView
         style="@style/my_line_h"
-        android:background="@color/colorf8f8f8" />
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:background="@color/coloreeeeee"></TextView>
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/ll_kaiguan_sos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#fff"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:id="@+id/ll_kaiguan_gps"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center|left"
-                    android:text="GPS定位"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_kaiguan_gps"
-                    android:layout_width="45dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/dizhi_default" />
-
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE"></View>
-
-            <LinearLayout
-                android:id="@+id/ll_kaiguan_sos"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center|left"
-                    android:text="SOS报警"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_kaiguan_sos"
-                    android:layout_width="45dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/dizhi_default" />
-
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE"></View>
-
-
-            <LinearLayout
-                android:id="@+id/ll_kaiguan_jinjilianxiren"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center|left"
-                    android:text="紧急联系人"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="12dp"
-                    android:layout_marginRight="12dp"
-                    android:src="@drawable/jiantou_hui" />
-
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE"></View>
-
-            <LinearLayout
-                android:id="@+id/ll_kaiguan_didianduanxin"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center|left"
-                    android:text="低电短信报警"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_kaiguan_didianduanxin"
-                    android:layout_width="45dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/dizhi_default" />
-
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE"
-                android:visibility="gone"></View>
-
-
-            <LinearLayout
-                android:id="@+id/ll_kaiguan_quxiashouhuan"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center|left"
-                    android:text="取下手环报警"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_kaiguan_quxiashouhuan"
-                    android:layout_width="45dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/dizhi_default" />
-
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE"
-                android:visibility="gone"></View>
-
-
-            <LinearLayout
-                android:id="@+id/ll_kaiguan_jibu"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center|left"
-                    android:text="计步开关"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_kaiguan_jibu"
-                    android:layout_width="45dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/dizhi_default" />
-
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE"></View>
-
-
-            <LinearLayout
-                android:id="@+id/ll_kaiguan_fanzhuan"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center|left"
-                    android:text="翻转检测开关"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_kaiguan_fanzhuan"
-                    android:layout_width="45dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/dizhi_default" />
-
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE"></View>
-
-
-            <LinearLayout
-                android:id="@+id/ll_kaiguan_miandarao"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center|left"
-                    android:text="免打扰设置"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="12dp"
-                    android:layout_marginRight="12dp"
-                    android:src="@drawable/jiantou_hui" />
-
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE"
-                android:visibility="gone"></View>
-        </LinearLayout>
-
-
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginTop="@dimen/magin_15"
+            android:layout_marginBottom="@dimen/magin_15"
+            android:text="SOS报警"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_kaiguan_sos"
+            android:layout_width="@dimen/size_45"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginRight="@dimen/magin_12"
+            android:src="@drawable/dizhi_default" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/my_line_h"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:background="@color/coloreeeeee"></TextView>
+
+
+    <LinearLayout
+        android:id="@+id/ll_kaiguan_jinjilianxiren"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginTop="@dimen/magin_15"
+            android:layout_marginBottom="@dimen/magin_15"
+            android:text="紧急联系人"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/magin_12"
+            android:src="@drawable/icon_right_jiantou" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:visibility="gone"
+       style="@style/my_line_h"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:background="@color/coloreeeeee"></TextView>
+
+    <LinearLayout
+        android:id="@+id/ll_kaiguan_didianduanxin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center|left"
+            android:text="低电短信报警"
+            android:textColor="#ff333333"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_kaiguan_didianduanxin"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/dizhi_default" />
+
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="#EEEEEE"
+        android:visibility="gone"></View>
+
+
+    <LinearLayout
+        android:id="@+id/ll_kaiguan_quxiashouhuan"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center|left"
+            android:text="取下手环报警"
+            android:textColor="#ff333333"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_kaiguan_quxiashouhuan"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/dizhi_default" />
+
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="#EEEEEE"
+        android:visibility="gone"></View>
+
+
+    <LinearLayout
+        android:id="@+id/ll_kaiguan_jibu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginTop="@dimen/magin_15"
+            android:layout_marginBottom="@dimen/magin_15"
+            android:text="@string/watch_msg26"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_kaiguan_jibu"
+            android:layout_width="@dimen/size_45"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginRight="@dimen/magin_12"
+            android:src="@drawable/dizhi_default" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/my_line_h"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:background="@color/coloreeeeee"></TextView>
+
+
+    <LinearLayout
+        android:id="@+id/ll_kaiguan_fanzhuan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/magin_12"
+            android:layout_marginTop="@dimen/magin_15"
+            android:layout_marginBottom="@dimen/magin_15"
+            android:text="@string/watch_msg27"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
+
+
+        <ImageView
+            android:id="@+id/iv_kaiguan_fanzhuan"
+            android:layout_width="@dimen/size_45"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginRight="@dimen/magin_12"
+            android:src="@drawable/dizhi_default" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/my_line_h"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:background="@color/coloreeeeee"></TextView>
+
+
+    <LinearLayout
+        android:id="@+id/ll_kaiguan_miandarao"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center|left"
+            android:text="免打扰设置"
+            android:textColor="#ff333333"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="12dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/jiantou_hui" />
+
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="#EEEEEE"
+        android:visibility="gone"></View>
 
 </LinearLayout>

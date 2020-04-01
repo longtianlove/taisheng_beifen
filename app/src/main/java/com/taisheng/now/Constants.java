@@ -54,7 +54,12 @@ public class Constants {
         public static String Host = "https://taishenghealth.com/";
         public static String File_Host = "https://taishenghealth.com/image-video/";
         public static String File_Host_head = "https://taishenghealth.com/image-video/";
-        public static String WEB_SOCKET_URL = "ws://49.233.76.254:8879";
+        public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";
+        //测试
+       /* public static String Host = "https://test.taishenghealth.com/";
+        public static String File_Host = "https://test.taishenghealth.com/image-video/";
+        public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
+        public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";*/
         //测试服务器
        /* public static String Host = "http://49.234.71.11:8080/";//有视频的
 //        public static String File_Host = "http://49.234.71.11:8888/";
@@ -78,7 +83,6 @@ public class Constants {
         public static class Watch {
             //上传语音
             public static final String microcharVoice = "jeecg-boot/app/microchar/getvoice";
-
 
 
             //            绑定设备  deviceBinding

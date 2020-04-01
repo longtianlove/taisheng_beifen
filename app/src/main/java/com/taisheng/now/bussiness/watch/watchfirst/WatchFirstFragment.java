@@ -27,7 +27,6 @@ import java.util.List;
 public class WatchFirstFragment extends BaseFragment {
 
 
-    View iv_back;
     public static TabLayout tl_tab;
     ViewPager vp_content;
     private List<String> tabIndicators;
@@ -53,13 +52,6 @@ public class WatchFirstFragment extends BaseFragment {
 
 
     void initView(View rootView) {
-        iv_back = rootView.findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
         tl_tab = (TabLayout) rootView.findViewById(R.id.tl_tab);
         vp_content = (ViewPager) rootView.findViewById(R.id.vp_content);
         initContent();

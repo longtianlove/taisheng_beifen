@@ -35,7 +35,7 @@
     <permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
-
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- 腾讯云视频 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -96,8 +96,11 @@
         android:testOnly="false"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <!--android:appComponentFactory="."
-        tools:replace="android:appComponentFactory"-->
+
+        <!--
+        android:appComponentFactory="."
+        tools:replace="android:appComponentFactory"
+        -->
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />
@@ -195,7 +198,9 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="wxa371cf7bae0024bf" />
             </intent-filter>
         </activity>
@@ -221,9 +226,7 @@
             android:name=".bussiness.market.gouwuche.GouwucheActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".bussiness.market.gouwuche.ShoppingCartActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".bussiness.market.youhuijuan.MyYouhuijuanActivity"
             android:screenOrientation="portrait" />
@@ -283,8 +286,6 @@
         <activity
             android:name=".bussiness.watch.WatchMainActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".bussiness.watch.watchme.UpdateNickActivity"
             android:screenOrientation="portrait" />
@@ -339,7 +340,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchme.WatchMejinjilianxirenActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchme.WatchMeJinjilianxirenXinzengActivity"
@@ -370,13 +370,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchme.WatchMeMessageActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.me.UpdateNickActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".bussiness.me.UpdatePasswordFirstActivity"
             android:screenOrientation="portrait" />
@@ -495,7 +492,10 @@
         <activity
             android:name=".bussiness.market.youhuijuan.MoreYouhuijuanActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".bussiness.watch.watchme.WatchSosSetActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".bussiness.watch.watchme.WatchSosUpdataActivity"
+            android:screenOrientation="portrait" ></activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.taisheng.now.fileprovider"
@@ -505,6 +505,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
 
     </application>
 

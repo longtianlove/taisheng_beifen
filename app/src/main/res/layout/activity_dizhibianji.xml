@@ -30,7 +30,7 @@
 
             <EditText
                 android:id="@+id/et_xingming"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="21dp"
                 android:layout_marginLeft="60dp"
                 android:background="@null"
@@ -69,13 +69,13 @@
 
             <EditText
                 android:id="@+id/et_phone"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="21dp"
                 android:layout_marginLeft="60dp"
                 android:background="@null"
                 android:hint="收货人联系方式"
-                android:inputType="phone"
-                android:maxLength="15"
+                android:inputType="number"
+                android:maxLength="11"
                 android:textColor="#ff333333"
                 android:textColorHint="#ff999999"
                 android:textSize="15sp" />
@@ -108,7 +108,7 @@
 
             <TextView
                 android:id="@+id/et_dizhi"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="21dp"
                 android:layout_marginLeft="60dp"
                 android:background="@null"
@@ -145,7 +145,7 @@
 
             <EditText
                 android:id="@+id/et_xiangxidizhi"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="21dp"
                 android:layout_marginLeft="40dp"
                 android:background="@null"

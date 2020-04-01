@@ -29,6 +29,9 @@ import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
+import com.taisheng.now.util.Uiutils;
+import com.th.j.commonlibrary.utils.PhoneUtil;
+import com.th.j.commonlibrary.utils.TextsUtils;
 import com.th.j.commonlibrary.wight.AddressPickerView;
 
 import retrofit2.Call;
@@ -70,7 +73,7 @@ public class DizhiBianjiActivity extends BaseIvActivity {
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-               tvTitle.setText(getString(R.string.edit_address));
+        tvTitle.setText(getString(R.string.edit_address));
     }
 
     void initViews() {
@@ -117,8 +120,6 @@ public class DizhiBianjiActivity extends BaseIvActivity {
             @Override
             public void onClick(View v) {
                 if (StringUtil.isEmpty(dizhiid)) {
-
-
                     AddDizhiPostBean bean = new AddDizhiPostBean();
                     bean.userId = UserInstance.getInstance().getUid();
                     bean.token = UserInstance.getInstance().getToken();
@@ -130,13 +131,17 @@ public class DizhiBianjiActivity extends BaseIvActivity {
                     bean.phone = et_phone.getText().toString();
                     bean.name = et_xingming.getText().toString();
 
+                    if (!PhoneUtil.isMobileNO(TextsUtils.getTexts(et_phone))) {
+                        Uiutils.showToast(getString(R.string.tips01));
+                        return;
+                    }
 
                     ApiUtils.getApiService().addressAdd(bean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
                                 case Constants.HTTP_SUCCESS:
-                                    ToastUtil.showAtCenter("添加成功");
+                                    Uiutils.showToast(getString(R.string.add_success));
                                     DingdanInstance.getInstance().addressId = message.message;
                                     DingdanInstance.getInstance().name = bean.name;
                                     DingdanInstance.getInstance().phone = bean.phone;
@@ -173,14 +178,17 @@ public class DizhiBianjiActivity extends BaseIvActivity {
                     bean.defaultAddress = (iv_dizhidefault.isSelected() ? "1" : "0");
                     bean.phone = et_phone.getText().toString();
                     bean.name = et_xingming.getText().toString();
-
+                    if (!PhoneUtil.isMobileNO(TextsUtils.getTexts(et_phone))) {
+                        Uiutils.showToast(getString(R.string.tips01));
+                        return;
+                    }
 
                     ApiUtils.getApiService().updateAddressById(bean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
                                 case Constants.HTTP_SUCCESS:
-                                    ToastUtil.showAtCenter("更新成功");
+                                    Uiutils.showToast(getString(R.string.updata_success));
                                     DingdanInstance.getInstance().addressId = dizhiid;
                                     finish();
                                     break;
@@ -301,7 +309,6 @@ public class DizhiBianjiActivity extends BaseIvActivity {
     };
 
 
-
     public String province;
     public String city;
     public String district;
@@ -318,7 +325,7 @@ public class DizhiBianjiActivity extends BaseIvActivity {
             return;
         }
         popupWindow = new PopupWindow(this);
-        View rootView = View.inflate(this,R.layout.pop_address_picker, null);
+        View rootView = View.inflate(this, R.layout.pop_address_picker, null);
         AddressPickerView addressView = rootView.findViewById(R.id.apvAddress);
         LinearLayout llPop = rootView.findViewById(R.id.ll_pop);
         addressView.setOnAddressPickerSure(new AddressPickerView.OnAddressPickerSureListener() {
@@ -337,7 +344,7 @@ public class DizhiBianjiActivity extends BaseIvActivity {
         popupWindow.setContentView(rootView);
         popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
 //        popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.showAtLocation(llPop, Gravity.BOTTOM , 0, 0);
+        popupWindow.showAtLocation(llPop, Gravity.BOTTOM, 0, 0);
 //        popupWindow.showAtLocation(view, Gravity.TOP, 0, y);
 
     }

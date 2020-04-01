@@ -38,7 +38,8 @@ public class GouwucheActivity extends BaseIvActivity {
     private DoctorTabAdapter adapter;
     private GouwucheFragment putongFragment;
     private GouwucheFragment jifenFragment;
-    private boolean isCheck = true;
+    private boolean isCheckLeft = false;
+    private boolean isCheckRight = false;
 
     @Override
     public void initView() {
@@ -60,7 +61,19 @@ public class GouwucheActivity extends BaseIvActivity {
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
         tvTitle.setText(getString(R.string.Shopping_cart));
         tvRight.setVisibility(View.VISIBLE);
-        tvRight.setText(getString(R.string.manage));
+        if (vpContent.getCurrentItem() == 0) {
+            if (isCheckLeft) {
+                tvRight.setText(getString(R.string.complete));
+            } else {
+                tvRight.setText(getString(R.string.manage));
+            }
+        } else {
+            if (isCheckRight) {
+                tvRight.setText(getString(R.string.complete));
+            } else {
+                tvRight.setText(getString(R.string.manage));
+            }
+        }
         tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,17 +81,22 @@ public class GouwucheActivity extends BaseIvActivity {
                     tvRight.setText(getString(R.string.complete));
                     if (vpContent.getCurrentItem() == 0) {
                         putongFragment.changManager(true);
+                        isCheckLeft = true;
                     } else {
                         jifenFragment.changManager(true);
+                        isCheckRight = true;
                     }
                 } else {
                     tvRight.setText(getString(R.string.manage));
                     if (vpContent.getCurrentItem() == 0) {
                         putongFragment.changManager(false);
+                        isCheckLeft = false;
                     } else {
+                        isCheckRight = false;
                         jifenFragment.changManager(false);
                     }
                 }
+
             }
         });
     }
@@ -114,8 +132,18 @@ public class GouwucheActivity extends BaseIvActivity {
                 vpContent.setCurrentItem(tab.getPosition(), false);
                 int position = tab.getPosition();
                 if (position == 0) {
+                    if (isCheckLeft) {
+                        tvRight.setText(getString(R.string.complete));
+                    } else {
+                        tvRight.setText(getString(R.string.manage));
+                    }
                     DingdanInstance.getInstance().scoreGoods = 1;
                 } else {
+                    if (isCheckRight) {
+                        tvRight.setText(getString(R.string.complete));
+                    } else {
+                        tvRight.setText(getString(R.string.manage));
+                    }
                     DingdanInstance.getInstance().scoreGoods = 0;
                 }
             }

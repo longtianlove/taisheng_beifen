@@ -6,11 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
@@ -20,6 +17,9 @@ import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 
+import androidx.core.app.ActivityCompat;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -29,17 +29,21 @@ import retrofit2.Response;
 
 public class WatchMeXueyajingActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    TextView tv_gaoyazuida;
-    TextView tv_gaoyazuixiao;
-    TextView tv_diyazuida;
-    TextView tv_diyazuixiao;
-
-    TextView tv_maiyaca;
+    @BindView(R.id.tv_gaoyazuida)
+    TextView tvGaoyazuida;
+    @BindView(R.id.tv_gaoyazuixiao)
+    TextView tvGaoyazuixiao;
+    @BindView(R.id.tv_diyazuida)
+    TextView tvDiyazuida;
+    @BindView(R.id.tv_diyazuixiao)
+    TextView tvDiyazuixiao;
+    @BindView(R.id.tv_maiyaca)
+    TextView tvMaiyaca;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_watchme_xueyayujing);
-        initViews();
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -49,15 +53,15 @@ public class WatchMeXueyajingActivity extends BaseIvActivity implements Activity
 
     @Override
     public void addData() {
-
+        getData();
     }
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("血压预警");
-        tvRight.setVisibility(View.VISIBLE);
-        tvRight.setText(getString(R.string.edit));
-        tvRight.setOnClickListener(new View.OnClickListener() {
+        tvTitle.setText(getString(R.string.watch_msg18));
+        ivRight.setVisibility(View.VISIBLE);
+        ivRight.setBackgroundResource(R.drawable.icon_edit);
+        ivRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WatchMeXueyajingActivity.this, WatchMeXueyajingBianjiActivity.class);
@@ -66,23 +70,8 @@ public class WatchMeXueyajingActivity extends BaseIvActivity implements Activity
         });
     }
 
-    void initViews() {
 
-        tv_gaoyazuida = findViewById(R.id.tv_gaoyazuida);
-        tv_gaoyazuixiao = findViewById(R.id.tv_gaoyazuixiao);
-        tv_diyazuida=findViewById(R.id.tv_diyazuida);
-        tv_diyazuixiao=findViewById(R.id.tv_diyazuixiao);
-        tv_maiyaca=findViewById(R.id.tv_maiyaca);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        initDatas();
-    }
-
-    void initDatas() {
+   private void getData() {
         XinlvXueyaYujingPostBean bean = new XinlvXueyaYujingPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
@@ -104,11 +93,11 @@ public class WatchMeXueyajingActivity extends BaseIvActivity implements Activity
                         WatchInstance.getInstance().temp_heartNumMax = message.result.heartNumMax;
                         WatchInstance.getInstance().temp_heartNumMin = message.result.heartNumMin;
 
-                        tv_gaoyazuida.setText(message.result.bpxyHighMax + "");
-                        tv_gaoyazuixiao.setText(message.result.bpxyHighMin+"");
-                        tv_diyazuida.setText(message.result.bpxyLowMax+"");
-                        tv_diyazuixiao.setText(message.result.bpxyHighMin+"");
-                        tv_maiyaca.setText(message.result.bpxyPressureDifferenceMax+"");
+                        tvGaoyazuida.setText(message.result.bpxyHighMax + "");
+                        tvGaoyazuixiao.setText(message.result.bpxyHighMin + "");
+                        tvDiyazuida.setText(message.result.bpxyLowMax + "");
+                        tvDiyazuixiao.setText(message.result.bpxyHighMin + "");
+                        tvMaiyaca.setText(message.result.bpxyPressureDifferenceMax + "");
                         break;
                 }
             }
@@ -119,6 +108,5 @@ public class WatchMeXueyajingActivity extends BaseIvActivity implements Activity
             }
         });
     }
-
 
 }

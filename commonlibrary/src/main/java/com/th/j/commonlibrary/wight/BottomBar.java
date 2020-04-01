@@ -82,7 +82,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener {
         if (array != null) {
             text_select = array.getColor(R.styleable.bottom_bars_text_select, ContextCompat.getColor(context, R.color.color28b28b));
             text_no_select = array.getColor(R.styleable.bottom_bars_text_no_select, ContextCompat.getColor(context, R.color.color999999));
-            circle_color = array.getColor(R.styleable.bottom_bars_circle_color, ContextCompat.getColor(context, R.color.color28b28b));
+            circle_color = array.getColor(R.styleable.bottom_bars_circle_color, ContextCompat.getColor(context, R.color.colorff2c58));
 //            float font_size = array.getDimension(R.styleable.bottom_bars_text_size, 20);
             float red_size = array.getInteger(R.styleable.bottom_bars_circle_size, 25);
 //            text_size = px2sp(context, font_size);
@@ -203,7 +203,8 @@ public class BottomBar extends LinearLayout implements View.OnClickListener {
             }
         }
         if (fragmentTransaction != null) {
-            fragmentTransaction.commit();
+//            fragmentTransaction.commit();
+            fragmentTransaction.commitAllowingStateLoss();
         }
 
     }

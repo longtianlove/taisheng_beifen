@@ -59,7 +59,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
     TextView tvShowPrice;
     @BindView(R.id.tv_settlement)
     TextView tvSettlement;
-    private ShoppingCartAdapter shoppingCartAdapter;
+    public  ShoppingCartAdapter shoppingCartAdapter;
     private List<ShoppingCartBean> shoppingCartBeanList = new ArrayList<>();
     private BigDecimal totalPrice = new BigDecimal(0.00);// 购买的商品总价
     private int totalCount = 0;// 购买的商品总数量
@@ -442,7 +442,6 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                     }
 
                     if (ckAll.isChecked()) {
-
                         for (int i = 0; i < shoppingCartBeanList.size(); i++) {
                             shoppingCartBeanList.get(i).setChoosed(true);
                             ShoppingCartBean beanA = shoppingCartBeanList.get(i);
@@ -498,12 +497,13 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                                 case Constants.HTTP_SUCCESS:
                                     statistics(shoppingCartAdapter.isTure());
                                     if (indext.size() > 0) {
-                                        for (int i = 0; i < indext.size(); i++) {
+                                        for (int i = indext.size() - 1; i >= 0 ; i--) {
                                             shoppingCartBeanList.remove((int) indext.get(i));
                                         }
                                     }
                                     shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
                                     ckAll.setChecked(false);
+                                    statistics(shoppingCartAdapter.isTure());
                                     break;
                             }
                         }

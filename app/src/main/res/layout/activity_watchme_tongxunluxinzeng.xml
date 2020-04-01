@@ -11,9 +11,6 @@
 
         <ImageView style="@style/iv_title" />
 
-        <TextView
-            style="@style/my_line_h"
-            android:background="@color/colorf8f8f8" />
 
         <com.th.j.commonlibrary.wight.CircleImageView
             android:id="@+id/sdv_header"
@@ -38,8 +35,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/magin_30"
-                android:layout_height="@dimen/magin_30"
+                android:layout_width="@dimen/magin_25"
+                android:layout_height="@dimen/magin_25"
                 android:layout_marginLeft="@dimen/magin_15"
                 android:src="@drawable/icon_phone" />
 
@@ -88,8 +85,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/magin_30"
-                android:layout_height="@dimen/magin_30"
+                android:layout_width="@dimen/magin_25"
+                android:layout_height="@dimen/magin_25"
                 android:layout_marginLeft="@dimen/magin_15"
                 android:src="@drawable/icon_people" />
 

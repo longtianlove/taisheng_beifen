@@ -13,55 +13,23 @@
 
     </androidx.viewpager.widget.ViewPager>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/icon_back_new" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center_horizontal"
-                android:text="运动"
-                android:textColor="#ffffffff"
-                android:textSize="20sp" />
-
-        </RelativeLayout>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_tab"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/magin_80"
-            android:layout_height="44dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@null"
-            android:textSize="16sp"
-            app:tabIndicatorColor="#fff"
-            app:tabIndicatorHeight="2dp"
-            app:tabSelectedTextColor="#fff"
-            app:tabTextColor="#fff">
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_tab"
+        style="@style/MyTablayoutstyle2"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_44"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/magin_55"
+        android:background="@null"
+        app:tabBackground="@null"
+        android:textSize="@dimen/font14"
+        app:tabIndicatorColor="@color/colorWhite"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="@dimen/size_2"
+        app:tabSelectedTextColor="@color/colorWhite"
+        app:tabTextColor="@color/colorWhite">
 
 
-        </com.google.android.material.tabs.TabLayout>
-    </LinearLayout>
+    </com.google.android.material.tabs.TabLayout>
 
 </FrameLayout>

@@ -40,7 +40,7 @@ public class WatchMeYujingxinxiXiangqingActivity extends BaseIvActivity implemen
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("监测信息通知");
+        tvTitle.setText(getString(R.string.watch_msg37));
     }
 
     void initViews() {

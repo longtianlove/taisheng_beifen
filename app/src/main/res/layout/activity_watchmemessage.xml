@@ -1,343 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:round="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_shangchengtitle"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <ImageView style="@style/iv_title" />
 
-    <TextView
-        style="@style/my_line_h"
-        android:background="@color/colorf8f8f8" />
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:orientation="vertical"
-            android:background="#fff"
-            >
+            android:paddingLeft="@dimen/magin_12"
+            android:paddingRight="@dimen/magin_12">
 
             <LinearLayout
                 android:id="@+id/ll_guanxi"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:weightSum="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_15"
+                    android:layout_marginTop="@dimen/magin_15"
                     android:gravity="center"
-                    android:text="我是TA的"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    android:text="@string/watch_msg28"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
 
                 <TextView
                     android:id="@+id/tv_relative"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text=""
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/font14" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee" />
 
 
             <LinearLayout
                 android:id="@+id/ll_bangdingshijian"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:weightSum="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_15"
+                    android:layout_marginTop="@dimen/magin_15"
                     android:gravity="center"
-                    android:text="设备编号"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:text="@string/watch_msg29"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/tv_device_bianhao"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text=""
-                    android:textColor="#ff999999"
-                    android:textSize="14sp" />
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/font14" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee" />
 
             <LinearLayout
                 android:id="@+id/ll_avatar"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:weightSum="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="头像"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:layout_weight="1"
+                    android:text="@string/watch_msg30"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/sdv_header"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:gravity="center"
+                <com.th.j.commonlibrary.wight.RoundImgView
+                    android:id="@+id/sdv_article2"
+                    android:layout_width="@dimen/size_30"
+                    android:layout_height="@dimen/size_30"
+                    android:layout_marginBottom="@dimen/magin_15"
+                    android:layout_marginTop="@dimen/magin_15"
                     android:scaleType="fitXY"
-                    fresco:actualImageScaleType="focusCrop"
-                    fresco:fadeDuration="300"
-                    fresco:failureImage="@drawable/doctor_default"
-                    fresco:failureImageScaleType="centerInside"
-                    fresco:placeholderImage="@drawable/doctor_default"
-                    fresco:placeholderImageScaleType="fitCenter" />
+                    round:roundHeight2="@dimen/radius_5"
+                    round:roundWidth2="@dimen/radius_5" />
+                <!--@drawable/article_default-->
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="9dp"
-                    android:src="@drawable/icon_youjiantou" />
+                    android:layout_marginLeft="@dimen/magin_10"
+                    android:src="@drawable/icon_right_jiantou" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
-
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee" />
 
             <LinearLayout
                 android:id="@+id/ll_nickname"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:weightSum="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_15"
+                    android:layout_marginTop="@dimen/magin_15"
                     android:gravity="center"
-                    android:text="设备昵称"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    android:text="@string/watch_msg31"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
 
                 <TextView
                     android:id="@+id/tv_nickname"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@null"
-                    android:gravity="right"
+                    android:gravity="right|center_vertical"
                     android:text=""
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/font14" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee" />
 
             <LinearLayout
                 android:id="@+id/ll_realname"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:weightSum="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_15"
+                    android:layout_marginTop="@dimen/magin_15"
                     android:gravity="center"
-                    android:text="设备使用人姓名"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    android:text="@string/watch_msg32"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
 
                 <TextView
                     android:id="@+id/tv_realname"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text=""
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/font14" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee" />
 
             <LinearLayout
                 android:id="@+id/ll_idcard"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:weightSum="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_15"
+                    android:layout_marginTop="@dimen/magin_15"
                     android:gravity="center"
-                    android:text="身份证号"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:text="@string/watch_msg33"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/tv_idcard"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text=""
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/font14" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee" />
 
 
             <LinearLayout
                 android:id="@+id/ll_phonenumber"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:weightSum="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_15"
+                    android:layout_marginTop="@dimen/magin_15"
                     android:gravity="center"
-                    android:text="设备使用人手机号"
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    android:text="@string/watch_msg34"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
 
                 <TextView
                     android:id="@+id/tv_phonenumber"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text=""
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/font14" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="#EEEEEE" />
+            <TextView
+                style="@style/my_line_h"
+                android:background="@color/coloreeeeee" />
 
 
-        <TextView
-            android:id="@+id/btn_post"
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:layout_marginLeft="36dp"
-            android:layout_marginRight="36dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/jiechubangding_background"
-            android:enabled="true"
-            android:gravity="center"
-            android:text="解除绑定"
-            android:textColor="@color/white"
-            android:textSize="14sp"></TextView>
+            <TextView
+                android:id="@+id/btn_post"
+                style="@style/my_bt"
+                android:layout_marginBottom="@dimen/magin_30"
+                android:layout_marginLeft="@dimen/magin_35"
+                android:layout_marginRight="@dimen/magin_35"
+                android:layout_marginTop="@dimen/magin_30"
+                android:background="@drawable/xinzhengdizhi_button"
+                android:enabled="true"
+                android:text="解除绑定"></TextView>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

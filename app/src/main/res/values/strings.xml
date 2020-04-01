@@ -280,6 +280,7 @@
     <string name="goupdata">去修改</string>
     <string name="updatapsw">修改密码</string>
     <string name="phonenum">手机号</string>
+    <string name="activation_time">激活时间</string>
     <string name="mynum">我的账号</string>
     <string name="mynickname">我的昵称</string>
     <string name="my_order">我的订单</string>
@@ -425,14 +426,42 @@
     <string name="watch_msg11">输入联系人姓名</string>
     <string name="watch_msg12">新增联系人</string>
     <string name="watch_msg13">修改联系人</string>
+    <string name="watch_msg14">心率最大值</string>
+    <string name="watch_msg15">次/分</string>
+    <string name="watch_msg16">心率最小值</string>
+    <string name="watch_msg17">心率预警</string>
+    <string name="watch_msg18">血压预警</string>
+    <string name="watch_msg19">mmhg</string>
+
 
     <string name="manage">管理</string>
+    <string name="please_input">请输入</string>
     <string name="save">保存</string>
     <string name="add_contact">添加联系人</string>
     <string name="add_alarm_clock">添加闹钟</string>
     <string name="ad_sculpture">编辑头像</string>
     <string name="add_success">添加成功</string>
     <string name="delete_success">删除成功</string>
+    <string name="watch_msg20">高压最大值</string>
+    <string name="watch_msg21">高压最小值</string>
+    <string name="watch_msg22">低压最大值</string>
+    <string name="watch_msg23">低压最小值</string>
+    <string name="watch_msg24">脉压差</string>
+    <string name="watch_msg25">GPS定位</string>
+    <string name="watch_msg26">计步开关</string>
+    <string name="watch_msg27">翻转检测开关</string>
+    <string name="watch_msg28">我是TA的</string>
+    <string name="watch_msg29">设备编号</string>
+    <string name="watch_msg30">头像</string>
+    <string name="watch_msg31">设备昵称</string>
+    <string name="watch_msg32">设备使用人姓名</string>
+    <string name="watch_msg33">身份证号</string>
+    <string name="watch_msg34">设备使用人手机号</string>
+    <string name="watch_msg35">设备信息</string>
+    <string name="watch_msg36">SOS设置</string>
+    <string name="watch_msg37">监测信息通知</string>
+    <string name="updata_success">更新成功</string>
+    <string name="tips01">请输入正确手机号</string>
 
 
 </resources>

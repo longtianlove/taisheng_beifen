@@ -2,18 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorf6f6f6"
     android:orientation="vertical">
 
     <ImageView style="@style/iv_title" />
 
-    <TextView
-        style="@style/my_line_h"
-        android:background="@color/colorf8f8f8" />
-
     <com.taisheng.now.view.WithListViewScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorWhite">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,27 +30,27 @@
                 android:id="@+id/tv_adddevice"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
-                android:gravity="center"
-                android:background="@drawable/bg_device_add"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="@dimen/magin_15"
                 android:layout_marginLeft="@dimen/magin_12"
                 android:layout_marginRight="@dimen/magin_12"
                 android:layout_marginTop="@dimen/magin_15"
-                android:layout_marginBottom="@dimen/magin_15"
-                android:layout_gravity="bottom|center_horizontal"
-                android:orientation="vertical">
+                android:background="@drawable/bg_device_add"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/add"
-                    android:drawablePadding="@dimen/magin_12"
                     android:layout_marginBottom="@dimen/magin_20"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_marginRight="@dimen/magin_10"
                     android:layout_marginTop="@dimen/magin_20"
+                    android:drawablePadding="@dimen/magin_12"
+                    android:text="添加设备"
                     android:textColor="@color/color333333"
-                    android:textSize="@dimen/font25"
-                    android:text="添加设备" />
+                    android:textSize="@dimen/font25" />
             </LinearLayout>
         </LinearLayout>
 

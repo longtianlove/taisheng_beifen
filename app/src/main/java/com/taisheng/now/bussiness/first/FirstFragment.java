@@ -60,17 +60,12 @@ import com.taisheng.now.util.GlideImageLoader;
 import com.taisheng.now.util.GlideImageLoader2;
 
 import com.taisheng.now.util.SPUtil;
-import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.GuideView;
 import com.taisheng.now.view.TaishengListView;
-import com.taisheng.now.view.banner.BannerViewPager;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
 import com.th.j.commonlibrary.utils.DateUtil;
-import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.TextsUtils;
 import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -96,7 +91,6 @@ public class FirstFragment extends BaseFragment {
     MaterialDesignPtrFrameLayout ptr_refresh;
 
     private Banner bannerContaner;
-    BannerViewPager bannerViewPager;
     private View bannerView;
 
 

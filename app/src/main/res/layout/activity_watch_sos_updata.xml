@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <ImageView style="@style/iv_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/magin_15"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:layout_marginTop="@dimen/magin_15"
+        android:background="@drawable/bg_sos_set"
+        android:orientation="vertical"
+        android:padding="@dimen/magin_12">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="温馨提示："
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/font14" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/magin_3"
+            android:layout_marginTop="@dimen/magin_10"
+            android:lineSpacingExtra="1.5dp"
+            android:text="需要拨打紧急联系人电话或者发送短信时，我们会按着紧急联系人的顺序依次拨打电话或发送短信。"
+            android:textColor="@color/color666666"
+            android:textSize="@dimen/font12" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/magin_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/magin_25"
+            android:layout_height="@dimen/magin_25"
+            android:layout_marginLeft="@dimen/magin_15"
+            android:src="@drawable/icon_phone" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/magin_38"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/watch_msg10"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:textColor="@color/colorbbbbbb"
+            android:textColorHint="@color/colorbbbbbb"
+            android:textSize="@dimen/font14" />
+
+        <TextView
+            style="@style/my_line_v"
+            android:layout_height="@dimen/size_10"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:layout_marginRight="@dimen/margin_5"
+            android:background="@color/colorbbbbbb" />
+
+        <TextView
+            android:id="@+id/tv_mail_list"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/magin_12"
+            android:drawablePadding="@dimen/margin_5"
+            android:drawableRight="@drawable/icon_right_jiantou"
+            android:gravity="center"
+            android:text="@string/watch_msg09"
+            android:textColor="@color/color00c8aa" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/my_line_h"
+        android:layout_margin="@dimen/magin_12"
+        android:background="@color/colorbbbbbb" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/magin_25"
+            android:layout_height="@dimen/magin_25"
+            android:layout_marginLeft="@dimen/magin_15"
+            android:src="@drawable/icon_people" />
+
+        <EditText
+            android:id="@+id/et_tongxunlu_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/magin_38"
+            android:layout_marginRight="@dimen/magin_12"
+            android:background="@null"
+            android:hint="@string/watch_msg11"
+            android:textColor="@color/colorbbbbbb"
+            android:textColorHint="@color/colorbbbbbb"
+            android:textSize="@dimen/font14" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/my_line_h"
+        android:layout_margin="@dimen/magin_12"
+        android:background="@color/colorbbbbbb" />
+
+    <TextView
+        android:id="@+id/tv_save"
+        style="@style/my_bt"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:layout_marginTop="@dimen/magin_35"
+        android:background="@drawable/xinzhengdizhi_button"
+        android:text="@string/save" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        style="@style/my_bt"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:layout_marginTop="@dimen/magin_15"
+        android:background="@drawable/naozhongcancel_button"
+        android:text="@string/cancal"
+        android:textColor="@color/color999999" />
+</LinearLayout>

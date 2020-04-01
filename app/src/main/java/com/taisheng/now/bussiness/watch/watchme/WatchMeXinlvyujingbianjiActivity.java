@@ -6,11 +6,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
@@ -19,7 +16,13 @@ import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
+import com.taisheng.now.util.Uiutils;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
+import androidx.core.app.ActivityCompat;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -29,15 +32,19 @@ import retrofit2.Response;
 
 public class WatchMeXinlvyujingbianjiActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    EditText tv_xinlvpingzuidazhi;
-    EditText tv_xinlvpingzuixiaozhi;
-    View tv_save;
-    View tv_cancel;
+    @BindView(R.id.tv_xinlvpingzuidazhi)
+    EditText tvXinlvpingzuidazhi;
+    @BindView(R.id.tv_xinlvpingzuixiaozhi)
+    EditText tvXinlvpingzuixiaozhi;
+    @BindView(R.id.tv_save)
+    TextView tvSave;
+    @BindView(R.id.tv_cancel)
+    TextView tvCancel;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_watchme_xinlvyujingbianji);
-        initViews();
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -52,21 +59,15 @@ public class WatchMeXinlvyujingbianjiActivity extends BaseIvActivity implements 
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("心率预警");
+        tvTitle.setText(getString(R.string.watch_msg17));
     }
 
-    void initViews() {
-
-        tv_xinlvpingzuidazhi = findViewById(R.id.tv_xinlvpingzuidazhi);
-        tv_xinlvpingzuixiaozhi = findViewById(R.id.tv_xinlvpingzuixiaozhi);
-
-        tv_save = findViewById(R.id.tv_save);
-        tv_save.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if ("".equals(tv_xinlvpingzuidazhi.getText().toString()) || "".equals(tv_xinlvpingzuixiaozhi.getText().toString())) {
-                    ToastUtil.showAtCenter("请输入值");
+    @OnClick({R.id.tv_save, R.id.tv_cancel})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_save:
+                if (TextsUtils.isEmpty(TextsUtils.getTexts(tvXinlvpingzuidazhi)) || TextsUtils.isEmpty(TextsUtils.getTexts(tvXinlvpingzuixiaozhi))) {
+                    Uiutils.showToast(getString(R.string.please_input));
                     return;
                 }
                 XinlvXueyaYujingBean bean = new XinlvXueyaYujingBean();
@@ -83,8 +84,8 @@ public class WatchMeXinlvyujingbianjiActivity extends BaseIvActivity implements 
 
                 bean.bpxyPressureDifferenceMax = WatchInstance.getInstance().temp_bpxyPressureDifferenceMax;
                 bean.bpxyPressureDifferenceMin = WatchInstance.getInstance().temp_bpxyPressureDifferenceMin;
-                bean.heartNumMax = Integer.parseInt(tv_xinlvpingzuidazhi.getText().toString());
-                bean.heartNumMin = Integer.parseInt(tv_xinlvpingzuixiaozhi.getText().toString());
+                bean.heartNumMax = Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuidazhi));
+                bean.heartNumMin = Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuixiaozhi));
 
                 ApiUtils.getApiService().setWatchWarning(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
@@ -93,7 +94,7 @@ public class WatchMeXinlvyujingbianjiActivity extends BaseIvActivity implements 
                             case Constants.HTTP_SUCCESS:
                                 WatchInstance.getInstance().temp_heartNumMax = bean.heartNumMax;
                                 WatchInstance.getInstance().temp_heartNumMin = bean.heartNumMin;
-                                finish();
+                                WatchMeXinlvyujingbianjiActivity.this.finish();
                                 break;
                         }
                     }
@@ -103,20 +104,10 @@ public class WatchMeXinlvyujingbianjiActivity extends BaseIvActivity implements 
 
                     }
                 });
-//                WatchInstance.getInstance().temp_heartNumMax=message.result.heartNumMax;
-//                WatchInstance.getInstance().temp_heartNumMin=message.result.heartNumMin;
-
-            }
-        });
-
-        tv_cancel = findViewById(R.id.tv_cancel);
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+                break;
+            case R.id.tv_cancel:
+                this.finish();
+                break;
+        }
     }
-
-
 }

@@ -126,7 +126,6 @@ public class ShoppingCartAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, ShangPinxiangqingActivity.class);
                 intent.putExtra("goodsid", xbean.goodsId);
-
                 context.startActivity(intent);
             }
         });
@@ -244,12 +243,6 @@ public class ShoppingCartAdapter extends BaseAdapter {
         holder.ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
-
-
                 modifyCountInterface.doIncrease(position, holder.tvCommodityShowNum, holder.ckOneChose.isChecked());//暴露增加接口
             }
         });

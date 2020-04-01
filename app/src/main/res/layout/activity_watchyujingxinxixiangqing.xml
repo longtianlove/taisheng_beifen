@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_shangchengtitle"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <ImageView style="@style/iv_title" />
 
-    <TextView
-        style="@style/my_line_h"
-        android:background="@color/colorf8f8f8" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

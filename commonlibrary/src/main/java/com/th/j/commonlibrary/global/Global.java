@@ -11,6 +11,8 @@ public interface Global {
     String MAIL_UPDATA = "mail_updata";//跳转页面区别
     String MEDICINE_UPDATA = "medicine_updata";//跳转页面区别
     String MEDICINE_ADD = "medicine_add";//跳转页面区别
+    String SOS_ADD = "sos_add";//跳转页面区别
+    String SOS_UPDATA = "sos_updata";//跳转页面区别
 
 
     String ROUTEGOODSDETAILS="/activity/goodsdetails";

@@ -54,7 +54,7 @@ public class MapPetAtHomeView extends LinearLayout {
     public void setAvaterUrl1(String url) {
         if (url == null || "".equals(url)) {
 //            avater.setBackgroundResource(R.drawable.header_default_big);
-            avater.setImageDrawable(getResources().getDrawable(R.drawable.doctor_default));
+            avater.setImageDrawable(getResources().getDrawable(R.drawable.article_default));
 
             return;
         }

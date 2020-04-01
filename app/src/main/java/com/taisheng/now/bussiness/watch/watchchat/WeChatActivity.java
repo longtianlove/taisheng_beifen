@@ -53,7 +53,7 @@ public class WeChatActivity extends BaseHActivity implements ActivityCompat.OnRe
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new WeChatMsg(0));
-                finish();
+                WeChatActivity.this.finish();
             }
         });
     }

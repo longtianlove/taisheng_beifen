@@ -39,6 +39,7 @@ import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.map.TrackInstance;
 import com.taisheng.now.util.SPUtil;
+import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.wight.BottomBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -159,13 +160,13 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 0, sticky = true)
     public void getYujingxinxi(EventManage.tongzhiWeidu event) {
         if ("0".equals(event.weidu)) {
-            bottomWatch.setRedPoint(3);
-        } else {
             bottomWatch.setCancelRedPoint(3);
+        } else {
+            bottomWatch.setRedPoint(3);
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, priority = 0, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void finishClose(WeChatMsg weChatMsg) {
         bottomWatch.defaultIndext(0);
     }

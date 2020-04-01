@@ -98,10 +98,8 @@ public class MeMessageActivity extends BaseHActivity implements ActivityCompat.O
         tvTitle.setText(getString(R.string.personal_data));
     }
 
-    public void modifyAvatar() {
-
+    private void modifyAvatar() {
         WatchInstance.getInstance().isWtch = false;
-
         Intent intent = new Intent(this, SelectAvatarSourceDialog.class);
         startActivityForResult(intent, REQ_CODE_PHOTO_SOURCE);
     }
@@ -284,6 +282,7 @@ public class MeMessageActivity extends BaseHActivity implements ActivityCompat.O
 //                modifyBean.logo_url = PetInfoInstance.getInstance().getPackBean().logo_url;
                 Uri uri = Uri.parse(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar);
                 sdvHeader.setImageURI(uri);
+
                 break;
         }
     }

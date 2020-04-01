@@ -77,6 +77,14 @@ public class WatchsListActivity extends BaseIvActivity {
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
         tvTitle.setText(getString(R.string.device_binding));
+        ivRight.setVisibility(View.VISIBLE);
+        ivRight.setBackgroundResource(R.drawable.btn_add);
+        ivRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ZXingActivity.skipToAsResult(WatchsListActivity.this, REQUEST_SWEEP_CODE);
+            }
+        });
     }
 
     @OnClick(R.id.tv_adddevice)
@@ -204,6 +212,9 @@ public class WatchsListActivity extends BaseIvActivity {
                 util.sdv_header = convertView.findViewById(R.id.sdv_header);
                 util.tv_nickname = convertView.findViewById(R.id.tv_nickname);
                 util.tv_zhanghao = convertView.findViewById(R.id.tv_zhanghao);
+                util.tv_relationship = convertView.findViewById(R.id.tv_relationship);
+                util.tv_time = convertView.findViewById(R.id.tv_time);
+                util.tv_default = convertView.findViewById(R.id.tv_default);
                 convertView.setTag(util);
             } else {
                 util = (Util) convertView.getTag();
@@ -228,15 +239,24 @@ public class WatchsListActivity extends BaseIvActivity {
                 }
             });
             Glide.with(mcontext)
-                    .load(bean.url)
+                    .load(Constants.Url.File_Host + bean.url)
                     .apply(new RequestOptions()
                             .placeholder(R.drawable.article_default)
                             .error(R.drawable.article_default)
                             .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(util.sdv_header);
             util.tv_nickname.setText(bean.nickName);
-            util.tv_zhanghao.setText("我是TA的" + bean.terminalRelationship);
-
+            util.tv_relationship.setText("(我是TA的" + bean.terminalRelationship + ")");
+            StringBuffer stringBuffer = new StringBuffer(bean.phoneNumber);
+            stringBuffer.insert(3, " ");
+            stringBuffer.insert(8, " ");
+            util.tv_zhanghao.setText(getString(R.string.phonenum) + ":" + stringBuffer.toString());
+            util.tv_time.setText(getString(R.string.activation_time) + ":" + bean.createTime);
+            if (position == 0) {
+                util.tv_default.setVisibility(View.VISIBLE);
+            } else {
+                util.tv_default.setVisibility(View.GONE);
+            }
             return convertView;
         }
 
@@ -246,6 +266,10 @@ public class WatchsListActivity extends BaseIvActivity {
             CircleImageView sdv_header;
             TextView tv_nickname;
             TextView tv_zhanghao;
+            TextView tv_relationship;
+            TextView tv_time;
+            TextView tv_default;
+
 
         }
     }

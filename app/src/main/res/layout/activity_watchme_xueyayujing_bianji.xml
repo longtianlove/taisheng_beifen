@@ -1,272 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_shangchengtitle"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <ImageView style="@style/iv_title" />
 
-    <TextView
-        style="@style/my_line_h"
-        android:background="@color/colorf8f8f8" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff"
-
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="高压最大值"
-                android:textColor="#ff333333"
-                android:textSize="14sp" />
-
-
-            <EditText
-                android:id="@+id/tv_gaoyazuida"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right"
-                android:inputType="number"
-                android:text=""
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text=" mmhg"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#EEEEEE"></View>
+        android:layout_height="match_parent">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_12"
+                    android:layout_marginLeft="@dimen/magin_12"
+                    android:layout_marginTop="@dimen/magin_12"
+                    android:text="@string/watch_msg20"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
+
+
+                <EditText
+                    android:id="@+id/tv_gaoyazuida"
+                    android:layout_width="@dimen/weight_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:inputType="number"
+                    android:hint="@string/please_input"
+                    android:textColor="@color/color666666"
+                    android:textColorHint="@color/color999999"
+                    android:textSize="@dimen/font14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_marginRight="@dimen/magin_12"
+                    android:text="@string/watch_msg19"
+                    android:textColor="@color/color999999"
+                    android:textSize="@dimen/font14" />
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="高压最小值"
-                android:textColor="#ff333333"
-                android:textSize="14sp" />
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee"></TextView>
 
 
-            <EditText
-                android:id="@+id/tv_gaoyazuixiao"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right"
-                android:inputType="number"
-                android:text=""
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_12"
+                    android:layout_marginLeft="@dimen/magin_12"
+                    android:layout_marginTop="@dimen/magin_12"
+                    android:text="@string/watch_msg21"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
+
+
+                <EditText
+                    android:id="@+id/tv_gaoyazuixiao"
+                    android:layout_width="@dimen/weight_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:inputType="number"
+                    android:hint="@string/please_input"
+                    android:textColor="@color/color666666"
+                    android:textColorHint="@color/color999999"
+                    android:textSize="@dimen/font14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_marginRight="@dimen/magin_12"
+                    android:text="@string/watch_msg19"
+                    android:textColor="@color/color999999"
+                    android:textSize="@dimen/font14" />
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                style="@style/my_line_h"
+                android:layout_height="@dimen/size_10"
+                android:background="@color/coloreeeeee"></TextView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text=" mmhg"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_12"
+                    android:layout_marginLeft="@dimen/magin_12"
+                    android:layout_marginTop="@dimen/magin_12"
+                    android:text="@string/watch_msg22"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
+
+
+                <EditText
+                    android:id="@+id/tv_diyazuida"
+                    android:layout_width="@dimen/weight_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:inputType="number"
+                    android:hint="@string/please_input"
+                    android:textColor="@color/color666666"
+                    android:textColorHint="@color/color999999"
+                    android:textSize="@dimen/font14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_marginRight="@dimen/magin_12"
+                    android:text="@string/watch_msg19"
+                    android:textColor="@color/color999999"
+                    android:textSize="@dimen/font14" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee"></TextView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_12"
+                    android:layout_marginLeft="@dimen/magin_12"
+                    android:layout_marginTop="@dimen/magin_12"
+                    android:text="@string/watch_msg23"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
+
+
+                <EditText
+                    android:id="@+id/tv_diyazuixiao"
+                    android:layout_width="@dimen/weight_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:inputType="number"
+                    android:hint="@string/please_input"
+                    android:textColor="@color/color666666"
+                    android:textColorHint="@color/color999999"
+                    android:textSize="@dimen/font14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_marginRight="@dimen/magin_12"
+                    android:text="@string/watch_msg19"
+                    android:textColor="@color/color999999"
+                    android:textSize="@dimen/font14" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/my_line_h"
+                android:layout_height="@dimen/size_10"
+                android:background="@color/coloreeeeee"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_12"
+                    android:layout_marginLeft="@dimen/magin_12"
+                    android:layout_marginTop="@dimen/magin_12"
+                    android:text="@string/watch_msg24"
+                    android:textColor="@color/color333333"
+                    android:textSize="@dimen/font14" />
+
+
+                <EditText
+                    android:id="@+id/tv_maiyaca"
+                    android:layout_width="@dimen/weight_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:inputType="number"
+                    android:hint="@string/please_input"
+                    android:textColor="@color/color666666"
+                    android:textColorHint="@color/color999999"
+                    android:textSize="@dimen/font14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_marginRight="@dimen/magin_12"
+                    android:text="@string/watch_msg19"
+                    android:textColor="@color/color999999"
+                    android:textSize="@dimen/font14" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee"></TextView>
+
+
+            <TextView
+                android:id="@+id/tv_save"
+                style="@style/my_bt"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:layout_marginTop="@dimen/magin_20"
+                android:background="@drawable/xinzhengdizhi_button"
+                android:text="@string/sure2" />
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                style="@style/my_bt"
+                android:layout_marginBottom="@dimen/magin_20"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:layout_marginTop="@dimen/magin_20"
+                android:background="@drawable/naozhongcancel_button"
+                android:text="@string/cancal"
+                android:textColor="@color/color999999" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#fff6f6f6"></View>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="低压最大值"
-                android:textColor="#ff333333"
-                android:textSize="14sp" />
-
-
-            <EditText
-                android:id="@+id/tv_diyazuida"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right"
-                android:inputType="number"
-                android:text=""
-
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text=" mmhg"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#EEEEEE"></View>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="低压最小值"
-                android:textColor="#ff333333"
-                android:textSize="14sp" />
-
-
-            <EditText
-                android:id="@+id/tv_diyazuixiao"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right"
-                android:inputType="number"
-                android:text=""
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text=" mmhg"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#fff6f6f6"></View>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="脉压差"
-                android:textColor="#ff333333"
-                android:textSize="14sp" />
-
-
-            <EditText
-                android:id="@+id/tv_maiyaca"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right"
-                android:inputType="number"
-                android:text=""
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text=" mmhg"
-                android:textColor="#ff666666"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/tv_save"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="50dp"
-
-            android:background="@drawable/xinzhengdizhi_button"
-            android:gravity="center"
-            android:text="确认"
-            android:textColor="#ffffffff"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/tv_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/naozhongcancel_button"
-            android:gravity="center"
-            android:text="取消"
-            android:textColor="#ff999999"
-            android:textSize="13sp" />
-    </LinearLayout>
-
+    </ScrollView>
 </LinearLayout>

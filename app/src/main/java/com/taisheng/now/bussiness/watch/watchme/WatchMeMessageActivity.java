@@ -20,6 +20,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
@@ -39,6 +42,7 @@ import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.push.XMPushManagerInstance;
 import com.taisheng.now.view.AppDialog;
 import com.taisheng.now.view.crop.Crop;
+import com.th.j.commonlibrary.wight.RoundImgView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,7 +61,7 @@ import retrofit2.Response;
 public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     View ll_nickname;
     View ll_avatar;
-    SimpleDraweeView sdv_header;
+    RoundImgView sdv_header;
     View ll_guanxi;
     TextView tv_relative;
     TextView tv_device_bianhao;
@@ -93,7 +97,7 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("设备信息");
+        tvTitle.setText(getString(R.string.watch_msg35));
     }
 
     void initViews() {
@@ -116,7 +120,7 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
                 modifyAvatar();
             }
         });
-        sdv_header = (SimpleDraweeView) findViewById(R.id.sdv_header);
+        sdv_header = findViewById(R.id.sdv_header);
 
         tv_device_bianhao = findViewById(R.id.tv_device_bianhao);
         tv_device_bianhao.setText(WatchInstance.getInstance().deviceId);
@@ -285,8 +289,14 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
     protected void onStart() {
         super.onStart();
         if (WatchInstance.getInstance().headUrl != null) {
-            Uri uri = Uri.parse(Constants.Url.File_Host + WatchInstance.getInstance().headUrl);
-            sdv_header.setImageURI(uri);
+            Glide.with(this)
+                    .load(Constants.Url.File_Host + WatchInstance.getInstance().headUrl)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.article_default)
+                            .error(R.drawable.article_default)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(sdv_header);
+
         }
         tv_relative.setText(WatchInstance.getInstance().relationShip);
         tv_nickname.setText(WatchInstance.getInstance().deviceNickName);
@@ -362,11 +372,13 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
 
             case Crop.REQUEST_CROP:
 //                modifyBean.logo_url = PetInfoInstance.getInstance().getPackBean().logo_url;
-                Uri uri = Uri.parse(Constants.Url.File_Host + UserInstance.getInstance().userInfo.avatar);
-                if (sdv_header == null) {
-                    return;
-                }
-                sdv_header.setImageURI(uri);
+                Glide.with(this)
+                        .load(Constants.Url.File_Host + UserInstance.getInstance().userInfo.avatar)
+                        .apply(new RequestOptions()
+                                .placeholder(R.drawable.article_default)
+                                .error(R.drawable.article_default)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(sdv_header);
                 break;
         }
     }

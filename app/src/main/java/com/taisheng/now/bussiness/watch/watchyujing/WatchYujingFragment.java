@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.taisheng.now.Constants;
@@ -39,17 +40,9 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class WatchYujingFragment extends BaseFragment {
-
-
-    View iv_back;
-
-
     MaterialDesignPtrFrameLayout ptr_refresh;
-
     TaishengListView lv_doctors;
-    DoctorAdapter madapter;
-
-
+    private DoctorAdapter madapter;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -77,14 +70,6 @@ public class WatchYujingFragment extends BaseFragment {
 //    }
 
     void initView(View rootView) {
-        iv_back = rootView.findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
-
 
         ptr_refresh = (MaterialDesignPtrFrameLayout) rootView.findViewById(R.id.ptr_refresh);
         /**
@@ -181,12 +166,12 @@ public class WatchYujingFragment extends BaseFragment {
 
     class DoctorAdapter extends BaseAdapter {
 
-        public Context mcontext;
+        private Context mcontext;
 
-        List<Yujingbean> mData = new ArrayList<Yujingbean>();
+        private List<Yujingbean> mData=new ArrayList<>();
 
-        public DoctorAdapter(Context context) {
-            this.mcontext = context;
+        public DoctorAdapter(Context mcontext) {
+            this.mcontext = mcontext;
         }
 
         @Override
@@ -223,6 +208,7 @@ public class WatchYujingFragment extends BaseFragment {
                 util.tv_time = convertView.findViewById(R.id.tv_time);
                 util.tv_message = convertView.findViewById(R.id.tv_message);
                 util.iv_weidu = convertView.findViewById(R.id.iv_weidu);
+                util.iv_logo = convertView.findViewById(R.id.iv_logo);
                 convertView.setTag(util);
             } else {
                 util = (DoctorAdapter.Util) convertView.getTag();
@@ -300,6 +286,7 @@ public class WatchYujingFragment extends BaseFragment {
             TextView tv_time;
             TextView tv_message;
             View iv_weidu;
+            ImageView iv_logo;
 
         }
     }
