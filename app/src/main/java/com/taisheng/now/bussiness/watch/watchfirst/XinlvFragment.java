@@ -223,7 +223,7 @@ public class XinlvFragment extends BaseFragment {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        bean.deviceId = "359193978994051";
+
 
         ApiUtils.getApiService().getheartrate(bean).enqueue(new TaiShengCallback<BaseBean<GetheartrateResultBean>>() {
             @Override
@@ -254,7 +254,7 @@ public class XinlvFragment extends BaseFragment {
         });
 
 
-        anrizhihuoquueya();
+//        anrizhihuoquueya();
 
 //        ApiUtils.getApiService().querythedayheart(bean).enqueue(new TaiShengCallback<BaseBean<XinLvResultBean>>() {
 //            @Override

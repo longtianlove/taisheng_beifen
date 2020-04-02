@@ -120,7 +120,7 @@ public class JibuFragment extends BaseFragment {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        bean.deviceId = "359193978994051";
+
 
         ApiUtils.getApiService().getwatchstep(bean).enqueue(new TaiShengCallback<BaseBean<GetwatchstepResultBean>>() {
             @Override
@@ -155,51 +155,51 @@ public class JibuFragment extends BaseFragment {
             }
         });
 
-        ApiUtils.getApiService().querythisweekwalk(bean).enqueue(new TaiShengCallback<BaseBean<BushuResultBean>>() {
+//        ApiUtils.getApiService().querythisweekwalk(bean).enqueue(new TaiShengCallback<BaseBean<BushuResultBean>>() {
+//
+//            @Override
+//            public void onSuccess(Response<BaseBean<BushuResultBean>> response, BaseBean<BushuResultBean> message) {
+//                switch (message.code) {
+//                    case Constants.HTTP_SUCCESS:
+//
+//                        if (message.result.records != null && message.result.records.size() > 0) {
+//
+//                            list.clear();
+//                            ArrayList<String> days = new ArrayList<>();
+//                            for (int i = 0; i < message.result.records.size(); i++) {
+//                                list.add(new Entry(i, Integer.parseInt(message.result.records.get(i).stepNum)));
+//                                String[] temp = message.result.records.get(i).createTime.split(" ");
+//                                String[] temp1 = temp[0].split("-");
+//                                days.add(temp1[1] + "-" + temp1[2]);
+//
+//                            }
+//                            //自定义x轴显示
+//                            MyXFormatter formatter = new MyXFormatter();
+//                            formatter.days = days;
+//                            XAxis xAxis = mChart.getXAxis();
+//                            xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+//                            xAxis.setDrawAxisLine(false);
+//                            xAxis.setDrawGridLines(false);
+//                            //显示个数
+////                            xAxis.setLabelCount(days.size());
+//                            xAxis.setValueFormatter(formatter);
+//                            LineChartUtils lineChartUtils = new LineChartUtils(list, mChart, "#00C8AA", "步数");
+//
+//                        }
+//
+//
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(Call<BaseBean<BushuResultBean>> call, Throwable t) {
+//
+//            }
+//        });
 
-            @Override
-            public void onSuccess(Response<BaseBean<BushuResultBean>> response, BaseBean<BushuResultBean> message) {
-                switch (message.code) {
-                    case Constants.HTTP_SUCCESS:
 
-                        if (message.result.records != null && message.result.records.size() > 0) {
-
-                            list.clear();
-                            ArrayList<String> days = new ArrayList<>();
-                            for (int i = 0; i < message.result.records.size(); i++) {
-                                list.add(new Entry(i, Integer.parseInt(message.result.records.get(i).stepNum)));
-                                String[] temp = message.result.records.get(i).createTime.split(" ");
-                                String[] temp1 = temp[0].split("-");
-                                days.add(temp1[1] + "-" + temp1[2]);
-
-                            }
-                            //自定义x轴显示
-                            MyXFormatter formatter = new MyXFormatter();
-                            formatter.days = days;
-                            XAxis xAxis = mChart.getXAxis();
-                            xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-                            xAxis.setDrawAxisLine(false);
-                            xAxis.setDrawGridLines(false);
-                            //显示个数
-//                            xAxis.setLabelCount(days.size());
-                            xAxis.setValueFormatter(formatter);
-                            LineChartUtils lineChartUtils = new LineChartUtils(list, mChart, "#00C8AA", "步数");
-
-                        }
-
-
-                        break;
-                }
-            }
-
-            @Override
-            public void onFail(Call<BaseBean<BushuResultBean>> call, Throwable t) {
-
-            }
-        });
-
-
-        getMonth();
+//        getMonth();
 
 
     }

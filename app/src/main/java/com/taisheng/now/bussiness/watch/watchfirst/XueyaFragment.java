@@ -235,7 +235,7 @@ public class XueyaFragment extends BaseFragment {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        bean.deviceId = "359193978994051";
+
 
         ApiUtils.getApiService().getbloodpressure(bean).enqueue(new TaiShengCallback<BaseBean<GetbloodpressureResultBean>>() {
             @Override
@@ -270,7 +270,7 @@ public class XueyaFragment extends BaseFragment {
 
             }
         });
-        anrizhihuoquueya();
+//        anrizhihuoquueya();
 
 //        ApiUtils.getApiService().querythedaybpxy(bean).enqueue(new TaiShengCallback<BaseBean<XueYaDayResultBean>>() {
 //            @Override
