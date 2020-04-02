@@ -15,34 +15,35 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Projection;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.CityInfo;
+import com.baidu.mapapi.search.core.PoiDetailInfo;
 import com.baidu.mapapi.search.core.PoiInfo;
-import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiAddrInfo;
 import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiDetailSearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailSearchResult;
 import com.baidu.mapapi.search.poi.PoiIndoorResult;
-import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
+import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
@@ -53,18 +54,26 @@ import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.map.AddressAdapter;
 import com.taisheng.now.map.HomelocationInstance;
 import com.taisheng.now.map.MapLocationParser;
+import com.taisheng.now.map.MapPetAtHomeView;
 import com.taisheng.now.map.addressParseListener;
 import com.taisheng.now.util.DensityUtil;
 import com.taisheng.now.util.ToastUtil;
+import com.taisheng.now.util.Uiutils;
+import com.th.j.commonlibrary.utils.LogUtilH;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import me.jessyan.autosize.utils.LogUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -73,48 +82,35 @@ import retrofit2.Response;
  */
 
 public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    View iv_dingwei;
 
-    private MapView mMapView = null;
-
+    @BindView(R.id.bmapView)
+    MapView bmapView;
+    @BindView(R.id.iv_location)
+    MapPetAtHomeView ivLocation;
+    @BindView(R.id.btn_phone_center)
+    ImageView btnPhoneCenter;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    @BindView(R.id.btn_cancel)
+    TextView btnCancel;
+    @BindView(R.id.et_fanwei)
+    EditText etFanwei;
+    @BindView(R.id.rv_addresslist)
+    RecyclerView rvAddresslist;
 
     public static boolean isFirst = true;
-
-
-    View btn_go_back;
-    TextView tv_next;
-
-    EditText et_search;
-    View btn_cancel;
-
-    EditText et_fanwei;
-
-    //    private MapView mMapView;
-    private RecyclerView rv_addresslist;
-    private View ll_noname_address;
-    private TextView tv_location;
-    private View iv_selected;
     private BaiduMap mBaiduMap;
     private Projection projection;
-    private View btn_phone_center;
-    private View iv_location;
 
     public static double longitude;
     public static double latitude;
     public static double touch_longitude;
     public static double touch_latitude;
-
-    AddressAdapter adapter;
-    ArrayList<PoiInfo> poiInfos;
-
-
+    public static int wait_search = 0;
+    private AddressAdapter adapter;
     TranslateAnimation translateAnimation;
-
-    PoiSearch mPoiSearch;
-    PoiCitySearchOption citySearchOption;
-    PoiNearbySearchOption nearbySearchOption;
     SuggestionSearch mSuggestionSearch;
-
+    private GeoCoder mSearch;
 
     @Override
     public void initView() {
@@ -160,7 +156,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                ToastUtil.showAtCenter("设置成功");
+                                Uiutils.showToast("设置成功");
                                 finish();
                                 break;
                         }
@@ -175,37 +171,45 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         });
     }
 
-  private   void initViews() {
-        et_search = (EditText) findViewById(R.id.et_search);
-        et_search.addTextChangedListener(new TextWatcher() {
+    @OnClick({R.id.iv_location, R.id.btn_cancel, R.id.btn_phone_center})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_location:
+                break;
+            case R.id.btn_phone_center:
+                HomelocationInstance.getInstance().startPosition();
+                break;
+            case R.id.btn_cancel:
+                etSearch.setText("");
+                rvAddresslist.setVisibility(View.GONE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
+                }
+                break;
+        }
+    }
+
+    private void initViews() {
+        etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-
-//                    mPoiSearch.searchInCity((citySearchOption)
-//                            .city(HomelocationInstance.getInstance().city)
-//                            .keyword(searchString)
-//                            .pageNum(10));
-//                wait_search = 0;
-//                poiInfos.clear();
-//                if (HomelocationInstance.getInstance().city != null) {
-//                    mSuggestionSearch.requestSuggestion((new SuggestionSearchOption())
-//                            .keyword(searchString)
-//                            .city(HomelocationInstance.getInstance().city));
-//                }
             }
 
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String searchString = et_search.getText().toString();
+                String searchString = etSearch.getText().toString();
+                LogUtilH.e(HomelocationInstance.getInstance().city+"==HomelocationInstance.getInstance().city");
                 if ("".equals(searchString)) {
                     return;
                 }
-                mPoiSearch.searchInCity((citySearchOption)
+                mSuggestionSearch.requestSuggestion(new SuggestionSearchOption()
                         .city(HomelocationInstance.getInstance().city)
-                        .keyword(searchString)
-                        .pageNum(10));
+                        .citylimit(true)
+                        .keyword(searchString));
+
             }
 
             @Override
@@ -215,8 +219,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         });
 
 
-        et_fanwei = findViewById(R.id.et_fanwei);
-        et_fanwei.addTextChangedListener(new TextWatcher() {
+        etFanwei.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -231,7 +234,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 
             @Override
             public void afterTextChanged(Editable s) {
-                String fanweiString = et_fanwei.getText().toString();
+                String fanweiString = etFanwei.getText().toString();
                 if ("".equals(fanweiString)) {
                     HomelocationInstance.radius = 10;
                     return;
@@ -243,45 +246,12 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
             }
         });
 
-
-        btn_cancel = findViewById(R.id.btn_cancel);
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                et_search.setText("");
-                rv_addresslist.setVisibility(View.GONE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-
-            }
-        });
-
-        iv_location = findViewById(R.id.iv_location);
-        ll_noname_address = findViewById(R.id.ll_noname_address);
-        ll_noname_address.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                HomelocationInstance.getInstance().setCenter(new LatLng(touch_latitude, touch_longitude), 1000);
-                latitude = touch_latitude;
-                longitude = touch_longitude;
-                iv_selected.setVisibility(View.VISIBLE);
-                adapter.mposition = -1;
-                adapter.notifyDataSetChanged();
-            }
-        });
-        tv_location = (TextView) findViewById(R.id.tv_location);
-        iv_selected = findViewById(R.id.iv_selected);
-        rv_addresslist = (RecyclerView) findViewById(R.id.rv_addresslist);
-        rv_addresslist.setLayoutManager(new LinearLayoutManager(this));
-        poiInfos = new ArrayList<>();
-        adapter = new AddressAdapter(this, poiInfos);
+        rvAddresslist.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new AddressAdapter(this);
         adapter.setOnItemClickListener(new AddressAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, AddressAdapter.StateHolder holder, int position) {
-                HomelocationInstance.getInstance().setCenter(poiInfos.get(position).location, 1000);
+               /* HomelocationInstance.getInstance().setCenter(poiInfos.get(position).location, 1000);
                 HomelocationInstance.getInstance().refreshMap();
                 if (position != -1) {
                     iv_selected.setVisibility(View.GONE);
@@ -299,29 +269,15 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 //                    HomelocationInstance.getInstance().setCenter(poiInfos.get(0).location, 1000);
                     latitude = temp[0];
                     longitude = temp[1];
-                }
-
-
+                }*/
             }
         });
-        rv_addresslist.setAdapter(adapter);
+        rvAddresslist.setAdapter(adapter);
 
-
-        btn_phone_center = findViewById(R.id.btn_phone_center);
-        btn_phone_center.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                HomelocationInstance.getInstance().startPosition();
-                Log.e("longtianlove", "图标" + iv_location.getX() + ":" + iv_location.getY() + ":" + iv_location.getWidth() + ":" + iv_location.getHeight());
-
-            }
-        });
-        mMapView = (MapView) findViewById(R.id.bmapView);
 //        if(MIUIUtils.isMIUI()){
 //            mMapView. setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 //        }
-        mBaiduMap = mMapView.getMap();
+        mBaiduMap = bmapView.getMap();
 //        UiSettings UiSettings =mBaiduMap.getUiSettings();
 //        UiSettings.setRotateGesturesEnabled(true);//打开旋转
         mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
@@ -342,86 +298,38 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 
             @Override
             public void onMapStatusChangeFinish(MapStatus mapStatus) {
-                iv_location.startAnimation(translateAnimation);
+                ivLocation.startAnimation(translateAnimation);
 
                 projection = mBaiduMap.getProjection();
-                int indexy = (int) (iv_location.getHeight());
+                int indexy = (int) (ivLocation.getHeight());
                 Point aimPoint = new Point(mapStatus.targetScreen.x, mapStatus.targetScreen.y + DensityUtil.dip2px(WatchFirstAnQuanWeiLanActivity.this, 10));
                 if (projection == null) {
                     return;
                 }
                 final LatLng position = projection.fromScreenLocation(aimPoint);
-                Log.e("longtianlove", "地图" + mapStatus.targetScreen.x + ":" + mapStatus.targetScreen.y);
+                LogUtilH.e("地图" + mapStatus.targetScreen.x + ":" + mapStatus.targetScreen.y);
 
                 MapLocationParser.queryLocationDesc(position, new addressParseListener() {
                     @Override
                     public void onAddressparsed(String address, ReverseGeoCodeResult result) {
-//                        Log.e("longtianlove","位置"+address);
-                        tv_location.setText(address);
-                        poiInfos = (ArrayList<PoiInfo>) result.getPoiList();
-                        adapter.mdatas = poiInfos;
-                        adapter.notifyDataSetChanged();
-//                        if(nearbySearchOption==null||position==null){
-//                            return;
-//                        }
-//                        mPoiSearch.searchNearby((nearbySearchOption)
-//                                .location(position)
-//                                .keyword("")
-//                                .radius(2000)
-//                                .pageNum(10));
-
-//                        String[] tempStrings = address.split("市");
-//                        if (tempStrings.length < 2) {
-//                            return;
-//                        }
-//                        String temp = address.split("市")[1];
-//                        if (temp.length() > 2) {
-//                            temp = temp.substring(0, 2);
-//                        }
-
-//                        mPoiSearch.searchInCity((citySearchOption)
-//                                .city(HomelocationInstance.getInstance().city)
-//                                .keyword(temp)
-//                                .pageNum(10));
-//                        mGeoSearch. geocode(new GeoCodeOption()
-//                                .city(HomelocationInstance.getInstance().city)
-//                                .address(address));
+                        LogUtilH.e("位置=" + address);
 
                     }
                 });
-
-                Log.e("longtianlove", position.toString());
+                LogUtilH.e("longtianlove=" + position.toString());
                 HomelocationInstance.phoneLatitude = position.latitude;
                 HomelocationInstance.phoneLongitude = position.longitude;
                 touch_latitude = position.latitude;
                 touch_longitude = position.longitude;
                 HomelocationInstance.getInstance().refreshMap();
-                if (iv_selected.getVisibility() == View.VISIBLE) {
-                    double[] temp = HomelocationInstance.bd09_To_Gcj02(position.latitude, position.longitude);
-                    latitude = temp[0];
-                    longitude = temp[1];
-                }
             }
         });
-        HomelocationInstance.getInstance().init(mMapView);
+        HomelocationInstance.getInstance().init(bmapView);
 
         initAnim();
         initDatas();
 
         EventBus.getDefault().register(this);
-
-//        //获取地图控件引用
-//        mMapView = (MapView) findViewById(R.id.bmapView);
-//        NewMapInstance.getInstance().init(mMapView);
-//
-//        iv_dingwei = findViewById(R.id.iv_dingwei);
-//        iv_dingwei.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                NewMapInstance.getInstance().startLoc();
-//            }
-//        });
 
     }
 
@@ -430,77 +338,26 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         translateAnimation = new TranslateAnimation(0, 0, 0, -50);
         translateAnimation.setDuration(500);
         translateAnimation.setInterpolator(new AnticipateOvershootInterpolator());
-        iv_location.startAnimation(translateAnimation);
+        ivLocation.startAnimation(translateAnimation);
     }
 
     public void initDatas() {
-        mPoiSearch = PoiSearch.newInstance();
         wait_search = 0;
-
-        citySearchOption = new PoiCitySearchOption();
-        OnGetPoiSearchResultListener poiListener = new OnGetPoiSearchResultListener() {
-            public void onGetPoiResult(PoiResult result) {
-                //获取POI检索结果
-                poiInfos = (ArrayList<PoiInfo>) result.getAllPoi();
-                adapter.mdatas = poiInfos;
-                if (adapter.mdatas != null && adapter.mdatas.size() > 0) {
-                    rv_addresslist.setVisibility(View.VISIBLE);
-                    adapter.notifyDataSetChanged();
-                } else if (adapter.mdatas != null && adapter.mdatas.size() == 0) {
-                    adapter.notifyDataSetChanged();
-                    rv_addresslist.setVisibility(View.GONE);
-                }
-
-
-//                if(poiInfos!=null&&poiInfos.size()>1) {
-//                    PoiInfo bean = poiInfos.get(0);
-//                    double[] temp = HomelocationInstance.bd09_To_Gcj02(bean.location.latitude, bean.location.longitude);
-////                    HomelocationInstance.getInstance().setCenter(poiInfos.get(0).location, 1000);
-//                    latitude = temp[0];
-//                    longitude = temp[1];
-//                }
-
-            }
-
-            public void onGetPoiDetailResult(PoiDetailResult result) {
-                //获取Place详情页检索结果
-                wait_search--;
-                //获取Place详情页检索结果
-                if (result.error != SearchResult.ERRORNO.NO_ERROR) {
-                    //详情检索失败
-                    // result.error请参考SearchResult.ERRORNO
-                } else {
-                    //检索成功
-                    //获取Place详情页检索结果
-                    PoiInfo poiInfoBean = new PoiInfo();
-                    poiInfoBean.name = result.name;
-                    poiInfoBean.address = result.address;
-                    poiInfoBean.location = result.location;
-                    poiInfos.add(poiInfoBean);
-
-                }
-                if (wait_search == 0) {
-                    adapter.mdatas = poiInfos;
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onGetPoiDetailResult(PoiDetailSearchResult poiDetailSearchResult) {
-
-            }
-
-            @Override
-            public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
-            }
-        };
-        mPoiSearch.setOnGetPoiSearchResultListener(poiListener);
-
-
-//        nearbySearchOption = new PoiNearbySearchOption();
-
-
         mSuggestionSearch = SuggestionSearch.newInstance();
+        mSearch = GeoCoder.newInstance();
+        mSearch.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+            @Override
+            public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+
+            }
+
+            @Override
+            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+                LogUtilH.e("打印转换后的地址" + reverseGeoCodeResult.getAddress());
+            }
+        });
+        //下面是传入对应的经纬度
+
         OnGetSuggestionResultListener listener = new OnGetSuggestionResultListener() {
             public void onGetSuggestionResult(SuggestionResult res) {
                 if (res == null || res.getAllSuggestions() == null) {
@@ -508,44 +365,29 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                     //未找到相关结果
                 }
                 List<SuggestionResult.SuggestionInfo> lists = res.getAllSuggestions();
-                for (SuggestionResult.SuggestionInfo bean : lists) {
-                    if (bean.pt != null) {
-                        //uid是POI检索中获取的POI ID信息
-                        mPoiSearch.searchPoiDetail((new PoiDetailSearchOption()).poiUid(bean.uid));
-                        wait_search++;
-                    }
-
+                if (lists.size() > 0) {
+                    rvAddresslist.setVisibility(View.GONE);
+                } else {
+                    rvAddresslist.setVisibility(View.VISIBLE);
                 }
+                SuggestionResult.SuggestionInfo bean = lists.get(0);
+                LogUtilH.e(bean.key + "--"
+                        + bean.city + "--"
+                        + bean.district + "--"
+                        + bean.tag + "--"
+                        + bean.district + "--"
+                        + bean.uid + "-uid-"
+                        + bean.address + "--");
+                LatLng pt = bean.getPt();
+                mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(pt));
+                adapter.setMdatas(lists);
 
 
                 //获取在线建议检索结果
             }
         };
         mSuggestionSearch.setOnGetSuggestionResultListener(listener);
-
-//        mGeoSearch= GeoCoder.newInstance();
-//        OnGetGeoCoderResultListener listener = new OnGetGeoCoderResultListener() {
-//            public void onGetGeoCodeResult(GeoCodeResult result) {
-//                if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-//                    //没有检索到结果
-//                }
-//                //获取地理编码结果
-//
-//            }
-//
-//            @Override
-//            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
-//                if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-//                    //没有找到检索结果
-//                }
-//                //获取反向地理编码结果
-//            }
-//        };
-//        mGeoSearch.setOnGetGeoCodeResultListener(listener);
-
     }
-
-    public static int wait_search = 0;
 
 
     //宠物信息更新
@@ -555,35 +397,10 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         MapLocationParser.queryLocationDesc(position, new addressParseListener() {
             @Override
             public void onAddressparsed(String address, ReverseGeoCodeResult result) {
-//                        Log.e("longtianlove","位置"+address);
-                tv_location.setText(address);
-                poiInfos = (ArrayList<PoiInfo>) result.getPoiList();
-                adapter.mdatas = poiInfos;
+                /*poiInfos = (ArrayList<PoiInfo>) result.getPoiList();
+                adapter.mdatas = poiInfos;*/
                 adapter.notifyDataSetChanged();
-//                mGeoSearch. geocode(new GeoCodeOption()
-//                        .city(HomelocationInstance.getInstance().city)
-//                        .address(address));
-//                if(nearbySearchOption==null||position==null){
-//                    return;
-//                }
-//                mPoiSearch.searchNearby((nearbySearchOption)
-//                        .location(position)
-//                        .keyword("")
-//                        .radius(2000)
-//                        .pageNum(10));
-//                String[] tempStrings = address.split("市");
-//                if (tempStrings.length < 2) {
-//                    return;
-//                }
-//                String temp = address.split("市")[1];
-//                if (temp.length() > 2) {
-//                    temp = temp.substring(0, 2);
-//                }
 
-//                mPoiSearch.searchInCity((citySearchOption)
-//                        .city(HomelocationInstance.getInstance().city)
-//                        .keyword(temp)
-//                        .pageNum(10));
             }
         });
         double[] temp = HomelocationInstance.bd09_To_Gcj02(position.latitude, position.longitude);
@@ -594,7 +411,6 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-//        Log.e("longtianlove-point","width:"+(mMapView.getWidth() / 2)+"height:"+mMapView.getHeight() /2);
         if (isFirst) {
             HomelocationInstance.getInstance().setHomeCenter();
             isFirst = false;
@@ -645,11 +461,13 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         super.onDestroy();
         HomelocationInstance.getInstance().Destroy();
         mSuggestionSearch.destroy();
-        mPoiSearch.destroy();
+        mSearch.destroy();
         if (mBaiduMap != null) {
             mBaiduMap.clear();
             mBaiduMap = null;
         }
         EventBus.getDefault().unregister(this);
     }
+
+
 }

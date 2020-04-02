@@ -11,10 +11,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.taisheng.now.R;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by long on 2017/7/9.
@@ -22,15 +24,18 @@ import java.util.ArrayList;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.StateHolder> {
 
-
     private Context context;
-    public ArrayList<PoiInfo> mdatas;
+    public List<SuggestionResult.SuggestionInfo> mdatas;
 
     public int mposition = -1;
 
-    public AddressAdapter(Context context, ArrayList<PoiInfo> datas) {
+    public AddressAdapter(Context context) {
         this.context = context;
-        mdatas = datas;
+    }
+
+    public void setMdatas(List<SuggestionResult.SuggestionInfo> mdatas) {
+        this.mdatas = mdatas;
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -41,15 +46,15 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.StateHol
     @Override
     public void onBindViewHolder(final StateHolder holder, final int position) {
         if (null == mdatas || mdatas.size() == 0) return;
-        PoiInfo bean = mdatas.get(position);
+        SuggestionResult.SuggestionInfo suggestionInfo = mdatas.get(position);
 
 
-        if (bean.address != null && !"".equals(bean.address)) {
+       /* if (bean.address != null && !"".equals(bean.address)) {
             holder.tv_address.setText(bean.address);
         }
         if (bean.name != null && !"".equals(bean.name)) {
             holder.tv_name.setText(bean.name);
-        }
+        }*/
 
         if (mposition == position) {
             holder.iv_selected.setVisibility(View.VISIBLE);
