@@ -91,6 +91,13 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
         tvTitle.setText(getString(R.string.device06));
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setText(getString(R.string.device07));
+        tvRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WatchMainActivity.this, WatchsListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -101,6 +108,7 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
                 tvTitle.setText(getString(R.string.device06));
                 tvRight.setVisibility(View.VISIBLE);
                 tvRight.setText(getString(R.string.device07));
+
                 break;
             case 1:
                 setTopWhite();

@@ -106,6 +106,9 @@ public class WatchMeFragment extends BaseFragment {
                 }
                 break;
             case R.id.ll_sos:
+                if (intent == null) {
+                    intent = new Intent(getActivity(), WatchSosSetActivity.class);
+                }
                 break;
             case R.id.ll_xueya:
                 if (intent == null) {

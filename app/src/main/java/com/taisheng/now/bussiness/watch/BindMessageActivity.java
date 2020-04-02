@@ -265,7 +265,7 @@ public class BindMessageActivity extends BaseIvActivity implements ActivityCompa
                             case Constants.HTTP_SUCCESS:
 //                                String deviceId = bean.deviceId;
 //                                WatchInstance.getInstance().deviceId = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
-                                WatchInstance.getInstance().deviceId = message.result.clientNumber;
+                                WatchInstance.getInstance().deviceId = message.result.deviceId;
                                 SPUtil.putDeviced(WatchInstance.getInstance().deviceId);
                                 WatchInstance.getInstance().createTime = message.result.createTime;
                                 WatchInstance.getInstance().deviceNickName = bean.deviceNickName;

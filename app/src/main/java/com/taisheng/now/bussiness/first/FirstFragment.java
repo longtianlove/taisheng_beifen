@@ -336,11 +336,12 @@ public class FirstFragment extends BaseFragment {
                                     WatchInstance.getInstance().deviceId = bean1.deviceId;
                                     SPUtil.putDeviced(bean1.deviceId);
                                     WatchInstance.getInstance().deviceNickName = bean1.nickName;
-                                    WatchInstance.getInstance().relationShip = bean1.terminalRelationship;
-                                    WatchInstance.getInstance().realName = bean1.realName;
+                                    WatchInstance.getInstance().relationShip = bean1.deviceRelation;
+                                    WatchInstance.getInstance().realName = bean1.holderName;
                                     WatchInstance.getInstance().idcard = bean1.idcard;
                                     WatchInstance.getInstance().phoneNumber = bean1.phoneNumber;
                                     WatchInstance.getInstance().createTime = bean1.createTime;
+                                    WatchInstance.getInstance().headUrl = bean1.url;
                                     Intent intent = new Intent(getActivity(), WatchMainActivity.class);
                                     startActivity(intent);
                                 } else {

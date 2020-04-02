@@ -226,12 +226,13 @@ public class WatchsListActivity extends BaseIvActivity {
                     WatchInstance.getInstance().deviceId = bean.deviceId;
                     SPUtil.putDeviced(WatchInstance.getInstance().deviceId);
                     WatchInstance.getInstance().deviceNickName = bean.nickName;
-                    WatchInstance.getInstance().relationShip = bean.terminalRelationship;
-                    WatchInstance.getInstance().realName = bean.realName;
+                    WatchInstance.getInstance().relationShip = bean.deviceRelation;
+                    WatchInstance.getInstance().realName = bean.holderName;
                     WatchInstance.getInstance().idcard = bean.idcard;
                     WatchInstance.getInstance().phoneNumber = bean.phoneNumber;
 
                     WatchInstance.getInstance().createTime = bean.createTime;
+                    WatchInstance.getInstance().headUrl = bean.url;
 
                     Intent intent = new Intent(WatchsListActivity.this, WatchMainActivity.class);
                     startActivity(intent);
@@ -246,7 +247,7 @@ public class WatchsListActivity extends BaseIvActivity {
                             .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(util.sdv_header);
             util.tv_nickname.setText(bean.nickName);
-            util.tv_relationship.setText("(我是TA的" + bean.terminalRelationship + ")");
+            util.tv_relationship.setText("(我是TA的" + bean.deviceRelation + ")");
             StringBuffer stringBuffer = new StringBuffer(bean.phoneNumber);
             stringBuffer.insert(3, " ");
             stringBuffer.insert(8, " ");
