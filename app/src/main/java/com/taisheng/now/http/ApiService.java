@@ -95,6 +95,7 @@ import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.BindDevicePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ChiyaolistPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
+import com.taisheng.now.bussiness.watch.bean.post.GetWatchPhoneBookPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.GetbloodpressurePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.GetheartratePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.GetwatchstepPostBean;
@@ -107,6 +108,7 @@ import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetNaozhongPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetTongxunluPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.SetphonbookPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.post.SosListpostBean;
 import com.taisheng.now.bussiness.watch.bean.post.TongxunluDeletePostBean;
@@ -119,6 +121,7 @@ import com.taisheng.now.bussiness.watch.bean.post.YujingxinxiSetYiduPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ChiyaoLIstResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.GetWatchPhoneBookResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetbloodpressureResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetheartrateResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetwatchstepResultBean;
@@ -226,8 +229,11 @@ public interface ApiService {
     @POST(Constants.Url.Watch.addwatchElectronicFence)
     Call<BaseBean> addwatchElectronicFence(@Body AnquanweiilanPostBean bean);
 
-    @POST(Constants.Url.Watch.getWatchPhbxList)
-    Call<BaseBean<TongxunluResultBean>> getWatchPhbxList(@Body DianhuabenPostbean bean);
+//    @POST(Constants.Url.Watch.getWatchPhbxList)
+//    Call<BaseBean<TongxunluResultBean>> getWatchPhbxList(@Body DianhuabenPostbean bean);
+
+    @POST(Constants.Url.Watch.getWatchPhoneBook)
+    Call<BaseBean<GetWatchPhoneBookResultBean>> getWatchPhoneBook(@Body GetWatchPhoneBookPostBean bean);
 
 
     @POST(Constants.Url.Watch.setWatchDphbx)
@@ -260,8 +266,12 @@ public interface ApiService {
     @POST(Constants.Url.Watch.setWatchTakepills)
     Call<BaseBean> setWatchTakepills(@Body SetChiyaoPostBean bean);
 
-    @POST(Constants.Url.Watch.setWatchPhbx)
-    Call<BaseBean> setWatchPhbx(@Body SetTongxunluPostBean bean);
+//    @POST(Constants.Url.Watch.setWatchPhbx)
+//    Call<BaseBean> setWatchPhbx(@Body SetTongxunluPostBean bean);
+
+
+    @POST(Constants.Url.Watch.setphonbook)
+    Call<BaseBean> setphonbook(@Body SetphonbookPostBean bean);
 
 
     @POST(Constants.Url.Watch.setWatchREMIND)

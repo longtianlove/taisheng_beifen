@@ -28,7 +28,9 @@ import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.me.SelectAvatarSourceDialog;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.SetTongxunluPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.SetphonbookPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.TongxunluDeletePostBean;
+import com.taisheng.now.bussiness.watch.bean.result.TongxunluliistBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
@@ -44,6 +46,7 @@ import java.io.File;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,9 +73,9 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
     TextView tvSave;
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
-    public int nowphxNum = 1;
+
     private String intenType;
-    private String phbxNum;
+
     private final int REQ_CODE_PHOTO_SOURCE = 6;//选择方式
     private final int REQ_CODE_GET_PHOTO_FROM_GALLERY = 10;//从相册获取
     private final int REQ_CODE_GET_PHOTO_FROM_TAKEPHOTO = 11;//拍照完
@@ -85,12 +88,18 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
         ButterKnife.bind(this);
     }
 
+
+    int position;
+    public String avatarUrl;
+
     @Override
     public void initData() {
+        position = getIntent().getIntExtra("position", -1);
         intenType = getIntent().getStringExtra(Global.INTENT_TYPE);
-        nowphxNum = getIntent().getIntExtra("nowphxNum", 1);
+        avatarUrl = getIntent().getStringExtra("avatarUrl");
+
+
         String phbxName = getIntent().getStringExtra("phbxName");
-        phbxNum = getIntent().getStringExtra("phbxNum");
         if (!TextUtils.isEmpty(phbxName)) {
             etTongxunluName.setText(phbxName);
             etTongxunluName.setSelection(TextsUtils.getTexts(etTongxunluName).length());
@@ -103,13 +112,17 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
 
     @Override
     public void addData() {
-        Glide.with(this)
-                .load("")
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.ad_sculpture)
-                        .error(R.drawable.ad_sculpture)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL))
-                .into(sdvHeader);
+        if (!TextUtils.isEmpty(avatarUrl)) {
+            //todo 图片host是否正确
+            Glide.with(this)
+                    .load(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.ad_sculpture)
+                            .error(R.drawable.ad_sculpture)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(sdvHeader);
+        }
+
     }
 
     @Override
@@ -146,15 +159,29 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                     Uiutils.showToast(getString(R.string.watch_msg11));
                     return;
                 }
-                SetTongxunluPostBean bean = new SetTongxunluPostBean();
+                SetphonbookPostBean bean = new SetphonbookPostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
-                bean.clientId = WatchInstance.getInstance().deviceId;
                 bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.phbxNum = nowphxNum + "";
-                bean.phbxName = TextsUtils.getTexts(etTongxunluName);
-                bean.phbxTelephone = TextsUtils.getTexts(etPhone);
-                ApiUtils.getApiService().setWatchPhbx(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                bean.type = "1";
+
+                if (position == -1) {
+                    TongxunluliistBean tongxunluliistBean = new TongxunluliistBean();
+                    tongxunluliistBean.avatarUrl = avatarUrl;
+                    tongxunluliistBean.name = TextsUtils.getTexts(etTongxunluName);
+                    tongxunluliistBean.mobilePhone = TextsUtils.getTexts(etPhone);
+                    tongxunluliistBean.deviceId=WatchInstance.getInstance().deviceId;
+                    tongxunluliistBean.type="1";
+                    tongxunluliistBean.userId=UserInstance.getInstance().getUid();
+                    WatchMeTongxunluActivity.data.add(tongxunluliistBean);
+                } else {
+                    TongxunluliistBean tempBean = WatchMeTongxunluActivity.data.get(position);
+                    tempBean.avatarUrl = avatarUrl;
+                    tempBean.name = TextsUtils.getTexts(etTongxunluName);
+                    tempBean.mobilePhone = TextsUtils.getTexts(etPhone);
+                }
+                bean.list = WatchMeTongxunluActivity.data;
+                ApiUtils.getApiService().setphonbook(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -175,18 +202,44 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                 if (Global.MAIL_ADD.equals(intenType)) {
                     this.finish();
                 } else {
-                    TongxunluDeletePostBean tongxunluDeletePostBean = new TongxunluDeletePostBean();
-                    tongxunluDeletePostBean.userId = UserInstance.getInstance().getUid();
-                    tongxunluDeletePostBean.token = UserInstance.getInstance().getToken();
-                    tongxunluDeletePostBean.deviceId = WatchInstance.getInstance().deviceId;
-                    tongxunluDeletePostBean.phbxNum = phbxNum;
-                    ApiUtils.getApiService().setWatchDphbx(tongxunluDeletePostBean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    TongxunluDeletePostBean tongxunluDeletePostBean = new TongxunluDeletePostBean();
+//                    tongxunluDeletePostBean.userId = UserInstance.getInstance().getUid();
+//                    tongxunluDeletePostBean.token = UserInstance.getInstance().getToken();
+//                    tongxunluDeletePostBean.deviceId = WatchInstance.getInstance().deviceId;
+//
+//                    ApiUtils.getApiService().setWatchDphbx(tongxunluDeletePostBean).enqueue(new TaiShengCallback<BaseBean>() {
+//                        @Override
+//                        public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//                            switch (message.code) {
+//                                case Constants.HTTP_SUCCESS:
+//                                    Uiutils.showToast(getString(R.string.delete_success));
+//                                    initData();
+//                                    break;
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                        }
+//                    });
+
+
+
+                    SetphonbookPostBean setphonbookPostBean = new SetphonbookPostBean();
+                    setphonbookPostBean.userId = UserInstance.getInstance().getUid();
+                    setphonbookPostBean.token = UserInstance.getInstance().getToken();
+                    setphonbookPostBean.deviceId = WatchInstance.getInstance().deviceId;
+                    setphonbookPostBean.type = "1";
+                    WatchMeTongxunluActivity.data.remove(position);
+                    setphonbookPostBean.list = WatchMeTongxunluActivity.data;
+                    ApiUtils.getApiService().setphonbook(setphonbookPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
                                 case Constants.HTTP_SUCCESS:
-                                    Uiutils.showToast(getString(R.string.delete_success));
-                                    initData();
+                                    Uiutils.showToast(getString(R.string.add_success));
+                                    WatchMeTongxunluxinzengActivity.this.finish();
                                     break;
                             }
                         }
@@ -253,6 +306,7 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                 break;
 
             case Crop.REQUEST_CROP:
+                //todo 图片host是否正确
                 Glide.with(this)
                         .load(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar)
                         .apply(new RequestOptions()
@@ -260,6 +314,8 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                                 .error(R.drawable.article_default)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(sdvHeader);
+                //todo 也需要改返回结果
+                avatarUrl = UserInstance.getInstance().userInfo.avatar;
                 break;
         }
     }

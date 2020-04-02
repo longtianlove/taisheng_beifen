@@ -141,6 +141,7 @@ public class JibuFragment extends BaseFragment {
                             tv_label.setVisibility(View.VISIBLE);
                             tv_bushu.setText(WatchInstance.getInstance().stepNum);
                         } else {
+                            //todo 数据为空的时候修改UI
                             tv_label.setVisibility(View.GONE);
                             tv_bushu.setText("暂无数据");
 

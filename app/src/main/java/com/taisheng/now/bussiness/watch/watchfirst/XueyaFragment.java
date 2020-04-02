@@ -257,6 +257,7 @@ public class XueyaFragment extends BaseFragment {
                             tv_gaoya.setText(message.result.bloodPressureHigh+"");
                             tv_diya.setText(message.result.bloodPressureLow+"");
                         } else {
+                            //todo 数据为空的时候修改UI
                             tv_time.setVisibility(View.GONE);
                             tv_gaoya.setText("暂无数据");
                             tv_diya.setText("暂无数据");

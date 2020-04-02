@@ -133,7 +133,10 @@ public class Constants {
 
 
             //            获取手表老人电话本-批量获取
-            public static final String getWatchPhbxList = "jeecg-boot/app/watchPhbx/getWatchPhbxList";
+//            public static final String getWatchPhbxList = "jeecg-boot/app/watchPhbx/getWatchPhbxList";
+
+            //            电话本-分页列表查询
+            public static final String getWatchPhoneBook = "jeecg-boot/app/watchPhoneBook/list";
 
 //            老人版电话本删除
 
@@ -148,6 +151,7 @@ public class Constants {
 
             //            获取最新定位信息
 //            public static final String getNewPosition = "jeecg-boot/app/watchUd/getNewPosition";
+            //todo 后台还没修改好
             public static final String getNewPosition = "jeecg-boot/app/watchlocation/getNewPosition";
 
 
@@ -225,9 +229,10 @@ public class Constants {
             public static final String setWatchTakepills = "jeecg-boot/app/watchTakepills/setWatchTakepills";
 
 
-            //            设置老人版电话本
-            public static final String setWatchPhbx = "jeecg-boot/app/watchPhbx/setWatchPhbx";
-
+            //            //            设置老人版电话本
+//            public static final String setWatchPhbx = "jeecg-boot/app/watchPhbx/setWatchPhbx";
+//            设置手表电话本
+            public static final String setphonbook = "jeecg-boot/app/watchPhoneBook/setphonbook";
 
             //重启接口
             public static final String reboot = "jeecg-boot/app/watch/setting/reboot";

@@ -83,6 +83,11 @@ public abstract class BaseIvActivity extends BaseActivity {
         super.setContentView(title);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     /**
      * 改变状态蓝颜色
      */

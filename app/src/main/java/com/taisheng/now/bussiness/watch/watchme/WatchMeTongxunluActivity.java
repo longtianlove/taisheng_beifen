@@ -21,6 +21,8 @@ import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
+import com.taisheng.now.bussiness.watch.bean.post.GetWatchPhoneBookPostBean;
+import com.taisheng.now.bussiness.watch.bean.result.GetWatchPhoneBookResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluliistBean;
 import com.taisheng.now.http.ApiUtils;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.core.app.ActivityCompat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -54,7 +57,7 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
     private ArticleAdapter madapter;
     private boolean bianji = false;
     public int nowphxName = 0;
-    private List<TongxunluliistBean> data;
+    public static List<TongxunluliistBean> data;
 
     @Override
     public void initView() {
@@ -98,7 +101,8 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
     @OnClick(R.id.tv_addnaozhong)
     public void onViewClicked() {
         Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
-        intent.putExtra("nowphxNum", nowphxName + 1);
+        intent.putExtra("position", -1);
+
         intent.putExtra(Global.INTENT_TYPE, Global.MAIL_ADD);
         startActivity(intent);
     }
@@ -108,25 +112,86 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
         if (data != null && data.size() > 0) {
             TongxunluliistBean bean = data.get(position);
             Intent intent = new Intent(WatchMeTongxunluActivity.this, WatchMeTongxunluxinzengActivity.class);
-            intent.putExtra("nowphxNum", position + 1);
-            intent.putExtra("phbxName", bean.phbxName);
-            intent.putExtra("phbxNum", bean.phbxNum);
-            intent.putExtra("phbxTelephone", bean.phbxTelephone);
+            intent.putExtra("position", position);
+
+            intent.putExtra("avatarUrl", bean.avatarUrl);
+            intent.putExtra("phbxName", bean.name);
+            intent.putExtra("phbxTelephone", bean.mobilePhone);
             intent.putExtra(Global.INTENT_TYPE, Global.MAIL_UPDATA);
             startActivity(intent);
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
     private void getData() {
-        DianhuabenPostbean bean = new DianhuabenPostbean();
+//        DianhuabenPostbean bean = new DianhuabenPostbean();
+//        bean.userId = UserInstance.getInstance().getUid();
+//        bean.token = UserInstance.getInstance().getToken();
+//        bean.deviceId = WatchInstance.getInstance().deviceId;
+//        bean.pageNo = 1;
+//        bean.pageSize = 10;
+//        ApiUtils.getApiService().getWatchPhbxList(bean).enqueue(new TaiShengCallback<BaseBean<TongxunluResultBean>>() {
+//            @Override
+//            public void onSuccess(Response<BaseBean<TongxunluResultBean>> response, BaseBean<TongxunluResultBean> message) {
+//                switch (message.code) {
+//                    case Constants.HTTP_SUCCESS:
+//                        if (message.result != null && message.result.records.size() >= 0) {
+//
+//                            if (message.result.records.size() >= 10) {
+//                                tvAddnaozhong.setVisibility(View.GONE);
+//                            } else {
+//                                nowphxName = (message.result.records.size());
+//                                tvAddnaozhong.setVisibility(View.VISIBLE);
+//                            }
+//                            //有消息
+////                            PAGE_NO++;
+//                            data=message.result.records;
+//                            madapter.setmData(data);
+//
+////                            if(message.result.size()<10){
+////                                lv_articles.setHasLoadMore(false);
+////                                lv_articles.setLoadAllViewText("暂时只有这么多文章");
+////                                lv_articles.setLoadAllFooterVisible(false);
+////                            }else{
+////                                lv_articles.setHasLoadMore(true);
+////                            }
+//                        } else {
+////                            //没有消息
+////                            lv_articles.setHasLoadMore(false);
+////                            lv_articles.setLoadAllViewText("暂时只有这么多文章");
+////                            lv_articles.setLoadAllFooterVisible(false);
+//                        }
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(Call<BaseBean<TongxunluResultBean>> call, Throwable t) {
+//
+//            }
+//        });
+
+
+        GetWatchPhoneBookPostBean bean = new GetWatchPhoneBookPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
         bean.pageNo = 1;
         bean.pageSize = 10;
-        ApiUtils.getApiService().getWatchPhbxList(bean).enqueue(new TaiShengCallback<BaseBean<TongxunluResultBean>>() {
+        bean.type = "1";
+        ApiUtils.getApiService().getWatchPhoneBook(bean).enqueue(new TaiShengCallback<BaseBean<GetWatchPhoneBookResultBean>>() {
             @Override
-            public void onSuccess(Response<BaseBean<TongxunluResultBean>> response, BaseBean<TongxunluResultBean> message) {
+            public void onSuccess(Response<BaseBean<GetWatchPhoneBookResultBean>> response, BaseBean<GetWatchPhoneBookResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         if (message.result != null && message.result.records.size() >= 0) {
@@ -139,28 +204,22 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
                             }
                             //有消息
 //                            PAGE_NO++;
-                            data.addAll(message.result.records);
-                            madapter.setmData(data);
+                            if (message.result.records != null) {
+                                data = message.result.records;
+                                madapter.setmData(data);
+                            }
 
-//                            if(message.result.size()<10){
-//                                lv_articles.setHasLoadMore(false);
-//                                lv_articles.setLoadAllViewText("暂时只有这么多文章");
-//                                lv_articles.setLoadAllFooterVisible(false);
-//                            }else{
-//                                lv_articles.setHasLoadMore(true);
+
 //                            }
                         } else {
-//                            //没有消息
-//                            lv_articles.setHasLoadMore(false);
-//                            lv_articles.setLoadAllViewText("暂时只有这么多文章");
-//                            lv_articles.setLoadAllFooterVisible(false);
+
                         }
                         break;
                 }
             }
 
             @Override
-            public void onFail(Call<BaseBean<TongxunluResultBean>> call, Throwable t) {
+            public void onFail(Call<BaseBean<GetWatchPhoneBookResultBean>> call, Throwable t) {
 
             }
         });
@@ -212,15 +271,16 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
                 util = (Util) convertView.getTag();
             }
             TongxunluliistBean bean = mData.get(position);
+            //todo 图片路径前添加host
             Glide.with(mcontext)
-                    .load(bean.phbxDataImg)
+                    .load(Constants.Url.File_Host_head + bean.avatarUrl)
                     .apply(new RequestOptions()
                             .placeholder(R.drawable.ad_sculpture)
                             .error(R.drawable.ad_sculpture)
                             .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(util.sdv_header);
-            util.tv_name.setText(bean.phbxName);
-            util.tv_phone.setText(bean.phbxTelephone);
+            util.tv_name.setText(bean.name);
+            util.tv_phone.setText(bean.mobilePhone);
 
             return convertView;
         }
