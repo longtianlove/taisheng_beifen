@@ -1,139 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_shangchengtitle"
     android:orientation="vertical">
 
     <ImageView style="@style/iv_title" />
 
-    <TextView
-        style="@style/my_line_h"
-        android:background="@color/colorf8f8f8" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <EditText
-
-                    android:id="@+id/et_search"
-                    android:layout_width="0dp"
-                    android:layout_height="25dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/search_button"
-                    android:gravity="left|center_vertical"
-                    android:hint="围栏地址"
-                    android:imeOptions="actionSearch"
-                    android:paddingLeft="5dp"
-                    android:singleLine="true"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/btn_cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/search_button"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="10dp"
-                    android:text="取消"
-                    android:textColor="@color/common_body"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <EditText
-
-                    android:id="@+id/et_fanwei"
-                    android:layout_width="0dp"
-                    android:layout_height="25dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/search_button"
-                    android:gravity="left|center_vertical"
-                    android:hint="围栏半径"
-                    android:inputType="number"
-                    android:paddingLeft="5dp"
-                    android:singleLine="true"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="安全半径范围在10-3000米"></TextView>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_addresslist"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:divider="#ffff0000"
-            android:dividerHeight="10dp"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="请移动地图以确定安全范围中心位置"
-                android:textColor="@color/black_word_color"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="（地址文字由百度地图提供，仅供参考，请以小屋子图标对应的位置为准。）"
-                android:textColor="@color/gray_word_color"
-                android:textSize="12dp" />
-        </LinearLayout>
-
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -147,12 +23,6 @@
                 android:background="#fff" />
 
 
-            <!--<ImageView-->
-            <!--android:id="@+id/iv_location"-->
-            <!--android:layout_width="60dp"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:src="@drawable/pet_athome" />-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -165,17 +35,6 @@
                     android:layout_height="80dp"
                     android:layout_marginBottom="10dp"></com.taisheng.now.map.MapPetAtHomeView>
             </LinearLayout>
-
-            <!--        <ImageView-->
-            <!--            android:id="@+id/btn_phone_center"-->
-            <!--            android:layout_width="50dp"-->
-            <!--            android:layout_height="50dp"-->
-            <!--            android:layout_alignParentBottom="true"-->
-            <!--            android:layout_alignParentRight="true"-->
-            <!--            android:layout_marginBottom="20dp"-->
-            <!--            android:layout_marginRight="20dp"-->
-            <!--            android:src="@drawable/btn_location_phone_selector" />-->
-
 
             <ImageView
                 android:id="@+id/btn_phone_center"
@@ -191,38 +50,103 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/ll_noname_address"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/background_wifi_select"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/tv_location"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:maxEms="20"
-                android:singleLine="true"
-                android:text="name"
-                android:textSize="16sp" />
+                android:layout_margin="@dimen/magin_12"
+                android:background="@drawable/bg_white_r5"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_search"
+                        android:layout_width="@dimen/weight_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/magin_12"
+                        android:layout_marginRight="@dimen/magin_12"
+                        android:layout_weight="1"
+                        android:background="@drawable/search_button"
+                        android:gravity="left|center_vertical"
+                        android:hint="围栏地址"
+                        android:imeOptions="actionSearch"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/color333333"
+                        android:textColorHint="@color/color999999"
+                        android:textSize="@dimen/font14" />
+
+                    <TextView
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/magin_15"
+                        android:layout_marginRight="@dimen/magin_12"
+                        android:layout_marginTop="@dimen/magin_15"
+                        android:background="@drawable/search_button"
+                        android:gravity="center_vertical"
+                        android:text="@string/cancal"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/font14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_fanwei"
+                        android:layout_width="@dimen/weight_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/magin_12"
+                        android:layout_weight="1"
+                        android:background="@drawable/search_button"
+                        android:gravity="left|center_vertical"
+                        android:hint="围栏半径"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/color333333"
+                        android:textColorHint="@color/color999999"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/magin_15"
+                        android:layout_marginLeft="@dimen/magin_12"
+                        android:layout_marginRight="@dimen/magin_12"
+                        android:layout_marginTop="@dimen/magin_15"
+                        android:text="安全半径范围在10-3000米"
+                        android:textColor="@color/color999999"
+                        android:textSize="@dimen/font14" />
 
 
-            <ImageView
-                android:id="@+id/iv_selected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/wifi_selected" />
+                </LinearLayout>
 
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_addresslist"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:layout_height="250dp"
+               />
         </LinearLayout>
-    </LinearLayout>
+    </FrameLayout>
+
+
 </LinearLayout>
