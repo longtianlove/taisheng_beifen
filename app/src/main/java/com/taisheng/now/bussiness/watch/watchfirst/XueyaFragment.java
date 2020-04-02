@@ -16,8 +16,10 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
+import com.taisheng.now.bussiness.watch.bean.post.GetbloodpressurePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ObtainBpxyHeartStepListDTOPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
+import com.taisheng.now.bussiness.watch.bean.result.GetbloodpressureResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueyaResultBean;
 import com.taisheng.now.http.ApiUtils;
@@ -87,7 +89,7 @@ public class XueyaFragment extends BaseFragment {
 
         tv_date = (TextView) rootView.findViewById(R.id.tv_date);
         lv_data = rootView.findViewById(R.id.lv_data);
-        madapter=new DataAdapter(getActivity());
+        madapter = new DataAdapter(getActivity());
         lv_data.setAdapter(madapter);
 
     }
@@ -174,7 +176,7 @@ public class XueyaFragment extends BaseFragment {
             public void onSuccess(Response<BaseBean<ArrayList<XueyaResultBean>>> response, BaseBean<ArrayList<XueyaResultBean>> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        madapter.mData=message.result;
+                        madapter.mData = message.result;
                         madapter.notifyDataSetChanged();
                         break;
                 }
@@ -197,35 +199,74 @@ public class XueyaFragment extends BaseFragment {
 
     void initData() {
 
-        ShishiCollectionBean bean = new ShishiCollectionBean();
+//        ShishiCollectionBean bean = new ShishiCollectionBean();
+//        bean.userId = UserInstance.getInstance().getUid();
+//        bean.token = UserInstance.getInstance().getToken();
+//        bean.deviceId = WatchInstance.getInstance().deviceId;
+////        bean.deviceId = "9613050381";
+//
+//        ApiUtils.getApiService().getcollection(bean).enqueue(new TaiShengCallback<BaseBean<ShiShiCollecgtionResultBean>>() {
+//            @Override
+//            public void onSuccess(Response<BaseBean<ShiShiCollecgtionResultBean>> response, BaseBean<ShiShiCollecgtionResultBean> message) {
+//                switch (message.code) {
+//                    case Constants.HTTP_SUCCESS:
+////                        public String watchBpxyHigh;
+////                        public String watchBpxyLow;
+////                        public String stepNum;
+////                        public String watchHeart;
+//                        WatchInstance.getInstance().watchBpxyHigh = message.result.watchBpxyHigh;
+//                        WatchInstance.getInstance().watchBpxyLow = message.result.watchBpxyLow;
+//                        WatchInstance.getInstance().stepNum = message.result.stepNum;
+//                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
+//                        tv_time.setText(message.result.updateTime.toString());
+//                        tv_gaoya.setText(message.result.watchBpxyHigh);
+//                        tv_diya.setText(message.result.watchBpxyLow);
+//
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(Call<BaseBean<ShiShiCollecgtionResultBean>> call, Throwable t) {
+//
+//            }
+//        });
+        GetbloodpressurePostBean bean = new GetbloodpressurePostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-//        bean.deviceId = "9613050381";
+        bean.deviceId = "359193978994051";
 
-        ApiUtils.getApiService().getcollection(bean).enqueue(new TaiShengCallback<BaseBean<ShiShiCollecgtionResultBean>>() {
+        ApiUtils.getApiService().getbloodpressure(bean).enqueue(new TaiShengCallback<BaseBean<GetbloodpressureResultBean>>() {
             @Override
-            public void onSuccess(Response<BaseBean<ShiShiCollecgtionResultBean>> response, BaseBean<ShiShiCollecgtionResultBean> message) {
+            public void onSuccess(Response<BaseBean<GetbloodpressureResultBean>> response, BaseBean<GetbloodpressureResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-//                        public String watchBpxyHigh;
-//                        public String watchBpxyLow;
-//                        public String stepNum;
-//                        public String watchHeart;
-                        WatchInstance.getInstance().watchBpxyHigh = message.result.watchBpxyHigh;
-                        WatchInstance.getInstance().watchBpxyLow = message.result.watchBpxyLow;
-                        WatchInstance.getInstance().stepNum = message.result.stepNum;
-                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
-                        tv_time.setText(message.result.updateTime.toString());
-                        tv_gaoya.setText(message.result.watchBpxyHigh);
-                        tv_diya.setText(message.result.watchBpxyLow);
-
+//                        WatchInstance.getInstance().watchBpxyHigh = message.result.watchBpxyHigh;
+//                        WatchInstance.getInstance().watchBpxyLow = message.result.watchBpxyLow;
+//                        WatchInstance.getInstance().stepNum = message.result.stepNum;
+//                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
+//                        tv_time.setText(message.result.updateTime.toString());
+//                        tv_gaoya.setText(message.result.watchBpxyHigh);
+//                        tv_diya.setText(message.result.watchBpxyLow);
+                        if (message.result != null) {
+                            WatchInstance.getInstance().watchBpxyHigh = message.result.bloodPressureHigh + "";
+                            WatchInstance.getInstance().watchBpxyLow = message.result.bloodPressureLow + "";
+                            tv_time.setVisibility(View.VISIBLE);
+                            tv_time.setText(message.result.createTime.toString());
+                            tv_gaoya.setText(message.result.bloodPressureHigh+"");
+                            tv_diya.setText(message.result.bloodPressureLow+"");
+                        } else {
+                            tv_time.setVisibility(View.GONE);
+                            tv_gaoya.setText("暂无数据");
+                            tv_diya.setText("暂无数据");
+                        }
                         break;
                 }
             }
 
             @Override
-            public void onFail(Call<BaseBean<ShiShiCollecgtionResultBean>> call, Throwable t) {
+            public void onFail(Call<BaseBean<GetbloodpressureResultBean>> call, Throwable t) {
 
             }
         });
@@ -313,15 +354,15 @@ public class XueyaFragment extends BaseFragment {
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_xueya_data, null);
                 util.tvgaoya = convertView.findViewById(R.id.tv_gaoya);
-                util.tvdiya=convertView.findViewById(R.id.tv_diya);
+                util.tvdiya = convertView.findViewById(R.id.tv_diya);
                 util.tv_time = convertView.findViewById(R.id.tv_time);
                 convertView.setTag(util);
             } else {
                 util = (Util) convertView.getTag();
             }
-            XueyaResultBean bean=mData.get(position);
-            util.tvgaoya.setText(bean.bpxyHigh+"");
-            util.tvdiya.setText(bean.bpxyLow+"");
+            XueyaResultBean bean = mData.get(position);
+            util.tvgaoya.setText(bean.bpxyHigh + "");
+            util.tvdiya.setText(bean.bpxyLow + "");
             util.tv_time.setText(bean.createTime);
 
             return convertView;

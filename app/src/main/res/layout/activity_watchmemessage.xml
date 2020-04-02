@@ -106,7 +106,7 @@
                     android:textSize="@dimen/font14" />
 
                 <com.th.j.commonlibrary.wight.RoundImgView
-                    android:id="@+id/sdv_article2"
+                    android:id="@+id/sdv_header"
                     android:layout_width="@dimen/size_30"
                     android:layout_height="@dimen/size_30"
                     android:layout_marginBottom="@dimen/magin_15"

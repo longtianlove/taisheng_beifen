@@ -373,7 +373,7 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
             case Crop.REQUEST_CROP:
 //                modifyBean.logo_url = PetInfoInstance.getInstance().getPackBean().logo_url;
                 Glide.with(this)
-                        .load(Constants.Url.File_Host + UserInstance.getInstance().userInfo.avatar)
+                        .load(Constants.Url.File_Host + WatchInstance.getInstance().headUrl)
                         .apply(new RequestOptions()
                                 .placeholder(R.drawable.article_default)
                                 .error(R.drawable.article_default)

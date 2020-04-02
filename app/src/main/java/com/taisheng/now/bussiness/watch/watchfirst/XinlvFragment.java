@@ -15,8 +15,10 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
+import com.taisheng.now.bussiness.watch.bean.post.GetheartratePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ObtainBpxyHeartStepListDTOPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
+import com.taisheng.now.bussiness.watch.bean.result.GetheartrateResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvAnriqiResultBean;
 import com.taisheng.now.http.ApiUtils;
@@ -53,6 +55,7 @@ public class XinlvFragment extends BaseFragment {
 
 
     TextView tv_xinlv;
+    TextView tv_label;
     //    private LineChart mChart;
     View ll_health_left;
     View ll_health_right;
@@ -60,6 +63,7 @@ public class XinlvFragment extends BaseFragment {
 
     void initView(View rootView) {
         tv_xinlv = rootView.findViewById(R.id.tv_xinlv);
+        tv_label=rootView.findViewById(R.id.tv_label);
 //       mChart = (LineChart) rootView.findViewById(R.id.chart);
         ll_health_left = rootView.findViewById(R.id.ll_health_left);
         ll_health_left.setOnClickListener(new View.OnClickListener() {
@@ -190,28 +194,61 @@ public class XinlvFragment extends BaseFragment {
     }
 
     void initData() {
-        ShishiCollectionBean bean = new ShishiCollectionBean();
+//        ShishiCollectionBean bean = new ShishiCollectionBean();
+//        bean.userId = UserInstance.getInstance().getUid();
+//        bean.token = UserInstance.getInstance().getToken();
+//        bean.deviceId = WatchInstance.getInstance().deviceId;
+////        bean.deviceId = "9613050381";
+//
+//        ApiUtils.getApiService().getcollection(bean).enqueue(new TaiShengCallback<BaseBean<ShiShiCollecgtionResultBean>>() {
+//            @Override
+//            public void onSuccess(Response<BaseBean<ShiShiCollecgtionResultBean>> response, BaseBean<ShiShiCollecgtionResultBean> message) {
+//                switch (message.code) {
+//                    case Constants.HTTP_SUCCESS:
+//                        WatchInstance.getInstance().watchBpxyHigh = message.result.watchBpxyHigh;
+//                        WatchInstance.getInstance().watchBpxyLow = message.result.watchBpxyLow;
+//                        WatchInstance.getInstance().stepNum = message.result.stepNum;
+//                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
+//                        tv_xinlv.setText(WatchInstance.getInstance().watchHeart);
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(Call<BaseBean<ShiShiCollecgtionResultBean>> call, Throwable t) {
+//
+//            }
+//        });
+        GetheartratePostBean bean = new GetheartratePostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-//        bean.deviceId = "9613050381";
+        bean.deviceId = "359193978994051";
 
-        ApiUtils.getApiService().getcollection(bean).enqueue(new TaiShengCallback<BaseBean<ShiShiCollecgtionResultBean>>() {
+        ApiUtils.getApiService().getheartrate(bean).enqueue(new TaiShengCallback<BaseBean<GetheartrateResultBean>>() {
             @Override
-            public void onSuccess(Response<BaseBean<ShiShiCollecgtionResultBean>> response, BaseBean<ShiShiCollecgtionResultBean> message) {
+            public void onSuccess(Response<BaseBean<GetheartrateResultBean>> response, BaseBean<GetheartrateResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        WatchInstance.getInstance().watchBpxyHigh = message.result.watchBpxyHigh;
-                        WatchInstance.getInstance().watchBpxyLow = message.result.watchBpxyLow;
-                        WatchInstance.getInstance().stepNum = message.result.stepNum;
-                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
-                        tv_xinlv.setText(WatchInstance.getInstance().watchHeart);
+//                        WatchInstance.getInstance().watchBpxyHigh = message.result.watchBpxyHigh;
+//                        WatchInstance.getInstance().watchBpxyLow = message.result.watchBpxyLow;
+//                        WatchInstance.getInstance().stepNum = message.result.stepNum;
+//                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
+//                        tv_xinlv.setText(WatchInstance.getInstance().watchHeart);
+                        if(message.result!=null){
+                            WatchInstance.getInstance().watchHeart = message.result.heartNum+"";
+                            tv_label.setVisibility(View.VISIBLE);
+                            tv_xinlv.setText(WatchInstance.getInstance().watchHeart);
+                        }else{
+                            tv_xinlv.setText("暂无数据");
+                            tv_label.setVisibility(View.GONE);
+                        }
                         break;
                 }
             }
 
             @Override
-            public void onFail(Call<BaseBean<ShiShiCollecgtionResultBean>> call, Throwable t) {
+            public void onFail(Call<BaseBean<GetheartrateResultBean>> call, Throwable t) {
 
             }
         });

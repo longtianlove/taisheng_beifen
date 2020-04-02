@@ -16,8 +16,10 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
+import com.taisheng.now.bussiness.watch.bean.post.GetwatchstepPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.GetwatchstepResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
@@ -47,11 +49,13 @@ public class JibuFragment extends BaseFragment {
     private ArrayList<Entry> list_month = new ArrayList<>();
 
     TextView tv_bushu;
+    TextView tv_label;
     private LineChart mChart;
     LineChart chart_month;
 
     void initView(View rootView) {
         tv_bushu = rootView.findViewById(R.id.tv_bushu);
+        tv_label = rootView.findViewById(R.id.tv_label);
         ll_guijiditu = rootView.findViewById(R.id.ll_guijiditu);
         ll_guijiditu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,35 +85,76 @@ public class JibuFragment extends BaseFragment {
 
 
     void initData() {
-        ShishiCollectionBean bean = new ShishiCollectionBean();
+//        ShishiCollectionBean bean = new ShishiCollectionBean();
+//        bean.userId = UserInstance.getInstance().getUid();
+//        bean.token = UserInstance.getInstance().getToken();
+//        bean.deviceId = WatchInstance.getInstance().deviceId;
+////        bean.deviceId = "9613050381";
+//
+//        ApiUtils.getApiService().getcollection(bean).enqueue(new TaiShengCallback<BaseBean<ShiShiCollecgtionResultBean>>() {
+//            @Override
+//            public void onSuccess(Response<BaseBean<ShiShiCollecgtionResultBean>> response, BaseBean<ShiShiCollecgtionResultBean> message) {
+//                switch (message.code) {
+//                    case Constants.HTTP_SUCCESS:
+////                        public String watchBpxyHigh;
+////                        public String watchBpxyLow;
+////                        public String stepNum;
+////                        public String watchHeart;
+//                        WatchInstance.getInstance().watchBpxyHigh = message.result.watchBpxyHigh;
+//                        WatchInstance.getInstance().watchBpxyLow = message.result.watchBpxyLow;
+//                        WatchInstance.getInstance().stepNum = message.result.stepNum;
+//                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
+//                        tv_bushu.setText(WatchInstance.getInstance().stepNum);
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(Call<BaseBean<ShiShiCollecgtionResultBean>> call, Throwable t) {
+//
+//            }
+//        });
+
+
+        GetwatchstepPostBean bean = new GetwatchstepPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-//        bean.deviceId = "9613050381";
+        bean.deviceId = "359193978994051";
 
-        ApiUtils.getApiService().getcollection(bean).enqueue(new TaiShengCallback<BaseBean<ShiShiCollecgtionResultBean>>() {
+        ApiUtils.getApiService().getwatchstep(bean).enqueue(new TaiShengCallback<BaseBean<GetwatchstepResultBean>>() {
             @Override
-            public void onSuccess(Response<BaseBean<ShiShiCollecgtionResultBean>> response, BaseBean<ShiShiCollecgtionResultBean> message) {
+            public void onSuccess(Response<BaseBean<GetwatchstepResultBean>> response, BaseBean<GetwatchstepResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
 //                        public String watchBpxyHigh;
 //                        public String watchBpxyLow;
 //                        public String stepNum;
 //                        public String watchHeart;
-                        WatchInstance.getInstance().watchBpxyHigh = message.result.watchBpxyHigh;
-                        WatchInstance.getInstance().watchBpxyLow = message.result.watchBpxyLow;
-                        WatchInstance.getInstance().stepNum = message.result.stepNum;
-                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
-                        tv_bushu.setText(WatchInstance.getInstance().stepNum);
+//                        WatchInstance.getInstance().watchBpxyHigh = message.result.watchBpxyHigh;
+//                        WatchInstance.getInstance().watchBpxyLow = message.result.watchBpxyLow;
+//                        WatchInstance.getInstance().stepNum = message.result.stepNum;
+//                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
+//                        tv_bushu.setText(WatchInstance.getInstance().stepNum);
+                        if (message.result != null) {
+                            WatchInstance.getInstance().stepNum = message.result.stepNum + "";
+                            tv_label.setVisibility(View.VISIBLE);
+                            tv_bushu.setText(WatchInstance.getInstance().stepNum);
+                        } else {
+                            tv_label.setVisibility(View.GONE);
+                            tv_bushu.setText("暂无数据");
+
+                        }
                         break;
                 }
             }
 
             @Override
-            public void onFail(Call<BaseBean<ShiShiCollecgtionResultBean>> call, Throwable t) {
+            public void onFail(Call<BaseBean<GetwatchstepResultBean>> call, Throwable t) {
 
             }
         });
+
         ApiUtils.getApiService().querythisweekwalk(bean).enqueue(new TaiShengCallback<BaseBean<BushuResultBean>>() {
 
             @Override
@@ -124,8 +169,8 @@ public class JibuFragment extends BaseFragment {
                             for (int i = 0; i < message.result.records.size(); i++) {
                                 list.add(new Entry(i, Integer.parseInt(message.result.records.get(i).stepNum)));
                                 String[] temp = message.result.records.get(i).createTime.split(" ");
-                                String[] temp1=temp[0].split("-");
-                                days.add(temp1[1]+"-"+temp1[2]);
+                                String[] temp1 = temp[0].split("-");
+                                days.add(temp1[1] + "-" + temp1[2]);
 
                             }
                             //自定义x轴显示
@@ -179,8 +224,8 @@ public class JibuFragment extends BaseFragment {
                             for (int i = 0; i < message.result.records.size(); i++) {
                                 list_month.add(new Entry(i, Integer.parseInt(message.result.records.get(i).stepNum)));
                                 String[] temp = message.result.records.get(i).createTime.split(" ");
-                                String[] temp1=temp[0].split("-");
-                                days.add(temp1[1]+"-"+temp1[2]);
+                                String[] temp1 = temp[0].split("-");
+                                days.add(temp1[1] + "-" + temp1[2]);
 
                             }
 

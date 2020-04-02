@@ -95,6 +95,9 @@ import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.BindDevicePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ChiyaolistPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
+import com.taisheng.now.bussiness.watch.bean.post.GetbloodpressurePostBean;
+import com.taisheng.now.bussiness.watch.bean.post.GetheartratePostBean;
+import com.taisheng.now.bussiness.watch.bean.post.GetwatchstepPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.GuijiPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.KaiGuanPostBean;
@@ -116,6 +119,9 @@ import com.taisheng.now.bussiness.watch.bean.post.YujingxinxiSetYiduPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ChiyaoLIstResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.GetbloodpressureResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.GetheartrateResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.GetwatchstepResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GuijiResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.MiandaraoListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongListResultBean;
@@ -180,14 +186,22 @@ public interface ApiService {
     Call<BaseBean<ShiShiCollecgtionResultBean>> getcollection(@Body ShishiCollectionBean bean);
 
 
+    @POST(Constants.Url.Watch.getbloodpressure)
+    Call<BaseBean<GetbloodpressureResultBean>> getbloodpressure(@Body GetbloodpressurePostBean bean);
+
+
+    @POST(Constants.Url.Watch.getheartrate)
+    Call<BaseBean<GetheartrateResultBean>> getheartrate(@Body GetheartratePostBean bean);
+
+    @POST(Constants.Url.Watch.getwatchstep)
+    Call<BaseBean<GetwatchstepResultBean>> getwatchstep(@Body GetwatchstepPostBean bean);
+
     @POST(Constants.Url.Watch.querythedaybpxy)
     Call<BaseBean<XueYaDayResultBean>> querythedaybpxy(@Body ShishiCollectionBean bean);
 
 
     @POST(Constants.Url.Watch.obtainBpxyList)
     Call<BaseBean<ArrayList<XueyaResultBean>>> obtainBpxyList(@Body ObtainBpxyHeartStepListDTOPostBean bean);
-
-
 
 
     @POST(Constants.Url.Watch.obtainHeartList)
@@ -199,7 +213,7 @@ public interface ApiService {
 
     //    public static final String querythisweekwalk = "jeecg-boot/app/watch/querythisweekwalk";
     @POST(Constants.Url.Watch.querythisweekwalk)
-    Call<BaseBean<BushuResultBean>> querythisweekwalk(@Body ShishiCollectionBean bean);
+    Call<BaseBean<BushuResultBean>> querythisweekwalk(@Body GetwatchstepPostBean bean);
 
     @POST(Constants.Url.Watch.querythismonthwalk)
     Call<BaseBean<BushuResultBean>> querythismonthwalk(@Body ShishiCollectionBean bean);
