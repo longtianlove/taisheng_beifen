@@ -1,168 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_shangchengtitle"
+    android:background="@color/colorf6f6f6"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
-
 
     <ImageView style="@style/iv_title" />
 
-    <TextView
-        style="@style/my_line_h"
-        android:background="@color/colorf8f8f8" />
-
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:id="@+id/ll_first"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/tv_first_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"></View>
-
-                <TextView
-                    android:id="@+id/tv_first_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#ff666666"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#EEEEEE"></View>
-
-            <LinearLayout
-                android:id="@+id/ll_second"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/tv_second_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"></View>
-
-                <TextView
-                    android:id="@+id/tv_second_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#ff666666"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/view3"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#EEEEEE"></View>
-
-            <LinearLayout
-                android:id="@+id/ll_third"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/tv_third_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"></View>
-
-                <TextView
-                    android:id="@+id/tv_third_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#ff666666"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/background_jinjilianxiren_label"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/magin_15"
+                    android:layout_marginTop="@dimen/magin_15"
+                    android:background="@drawable/bg_sos_set"
+                    android:orientation="vertical"
+                    android:padding="@dimen/magin_12">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="温馨提示："
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/font14" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/magin_3"
+                        android:layout_marginTop="@dimen/magin_10"
+                        android:lineSpacingExtra="1.5dp"
+                        android:text="需要拨打紧急联系人电话或者发送短信时，我们会按着紧急联系人的顺序依次拨打电话或发送短信。"
+                        android:textColor="@color/color666666"
+                        android:textSize="@dimen/font12" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/magin_15">
+
+                    <TextView
+                        android:id="@+id/tv_first_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/magin_15"
+                        android:layout_marginTop="@dimen/magin_15"
+                        android:text="袁鹏素"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/font14" />
+
+                    <TextView
+                        android:id="@+id/tv_first_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="19351239364"
+                        android:textColor="@color/color666666"
+                        android:textSize="@dimen/font14" />
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="温馨提示："
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:id="@+id/tv_line_first"
+                    style="@style/my_line_h"
+                    android:background="@color/coloreeeeee" />
+
+                <LinearLayout
+                    android:id="@+id/ll_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/magin_15">
+
+                    <TextView
+                        android:id="@+id/tv_second_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/magin_15"
+                        android:layout_marginTop="@dimen/magin_15"
+                        android:text="袁鹏素"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/font14" />
+
+                    <TextView
+                        android:id="@+id/tv_second_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="19351239364"
+                        android:textColor="@color/color666666"
+                        android:textSize="@dimen/font14" />
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="需要拨打紧急联系人电话或者发送短信时，我们会按着紧急联系人的顺序依次拨打电话或发送短信。"
-                    android:textColor="#ff666666"
-                    android:textSize="12sp" />
+                    android:id="@+id/tv_line_second"
+                    style="@style/my_line_h"
+                    android:background="@color/coloreeeeee" />
+
+                <LinearLayout
+                    android:id="@+id/ll_third"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/magin_15">
+
+                    <TextView
+                        android:id="@+id/tv_third_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/magin_15"
+                        android:layout_marginTop="@dimen/magin_15"
+                        android:text="袁鹏素"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/font14" />
+
+                    <TextView
+                        android:id="@+id/tv_third_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="19351239364"
+                        android:textColor="@color/color666666"
+                        android:textSize="@dimen/font14" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_line_third"
+                    style="@style/my_line_h"
+                    android:background="@color/coloreeeeee" />
+
 
             </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_addsos"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_50"
+                android:layout_marginTop="@dimen/magin_25"
+                android:drawableLeft="@drawable/add_contact"
+                android:drawablePadding="@dimen/magin_10"
+                android:gravity="center"
+                android:text="@string/add_contact"
+                android:textColor="@color/color00c8aa"
+                android:textSize="@dimen/font14" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_addjinjilianxiren"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom|right"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="35dp"
-            android:src="@drawable/icon_addnaozhong"></ImageView>
-    </FrameLayout>
-
+    </ScrollView>
 
 </LinearLayout>

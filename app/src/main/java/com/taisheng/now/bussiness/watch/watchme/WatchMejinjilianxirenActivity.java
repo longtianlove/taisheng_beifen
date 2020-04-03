@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.core.app.ActivityCompat;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
@@ -21,7 +19,10 @@ import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResu
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 
+import androidx.core.app.ActivityCompat;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -31,36 +32,46 @@ import retrofit2.Response;
 
 public class WatchMejinjilianxirenActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-//    View iv_bianji;
+    @BindView(R.id.tv_first_name)
+    TextView tvFirstName;
+    @BindView(R.id.tv_first_phone)
+    TextView tvFirstPhone;
+    @BindView(R.id.ll_first)
+    LinearLayout llFirst;
+    @BindView(R.id.tv_second_name)
+    TextView tvSecondName;
+    @BindView(R.id.tv_second_phone)
+    TextView tvSecondPhone;
+    @BindView(R.id.ll_second)
+    LinearLayout llSecond;
+    @BindView(R.id.tv_third_name)
+    TextView tvThirdName;
+    @BindView(R.id.tv_third_phone)
+    TextView tvThirdPhone;
+    @BindView(R.id.ll_third)
+    LinearLayout llThird;
+    @BindView(R.id.tv_addsos)
+    TextView tvAddsos;
+    @BindView(R.id.tv_line_first)
+    TextView tvLineFirst;
+    @BindView(R.id.tv_line_second)
+    TextView tvLineSecond;
+    @BindView(R.id.tv_line_third)
+    TextView tvLineThird;
 
+    public String watchNameSos1;
+    public String watchSos1;
 
-    View ll_first;
-    TextView tv_first_name;
-    TextView tv_first_phone;
+    public String watchNameSos2;
+    public String watchSos2;
 
-    View view2;
-    View ll_second;
-    TextView tv_second_name;
-    TextView tv_second_phone;
-
-    View view3;
-    View ll_third;
-    TextView tv_third_name;
-    TextView tv_third_phone;
-
-    View iv_addjinjilianxiren;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    public String watchNameSos3;
+    public String watchSos3;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_watchme_jinjilianxiren);
         ButterKnife.bind(this);
-        initViews();
     }
 
     @Override
@@ -75,70 +86,48 @@ public class WatchMejinjilianxirenActivity extends BaseIvActivity implements Act
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("紧急联系人");
+        tvTitle.setText(getString(R.string.watch_msg36));
     }
 
-    void initViews() {
-
-        ll_first = findViewById(R.id.ll_first);
-        tv_first_name = findViewById(R.id.tv_first_name);
-        tv_first_phone = findViewById(R.id.tv_first_phone);
-        ll_first.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenUpdateActivity.class);
-                intent.putExtra("type", "SOS1");
-                intent.putExtra("name",watchNameSos1);
-                intent.putExtra("phone",watchSos1);
-                startActivity(intent);
-            }
-        });
-
-
-        view2 = findViewById(R.id.view2);
-        ll_second = findViewById(R.id.ll_second);
-        tv_second_name = findViewById(R.id.tv_second_name);
-        tv_second_phone = findViewById(R.id.tv_second_phone);
-        ll_second.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenUpdateActivity.class);
-                intent.putExtra("type", "SOS2");
-                intent.putExtra("name",watchNameSos2);
-                intent.putExtra("phone",watchSos2);
-                startActivity(intent);
-            }
-        });
-
-        view3 = findViewById(R.id.view3);
-        ll_third = findViewById(R.id.ll_third);
-        tv_third_name = findViewById(R.id.tv_third_name);
-        tv_third_phone = findViewById(R.id.tv_third_phone);
-        ll_third.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenUpdateActivity.class);
-                intent.putExtra("type", "SOS3");
-                intent.putExtra("name",watchNameSos3);
-                intent.putExtra("phone",watchSos3);
-                startActivity(intent);
-            }
-        });
-
-        iv_addjinjilianxiren = findViewById(R.id.iv_addjinjilianxiren);
-        iv_addjinjilianxiren.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenXinzengActivity.class);
-                startActivity(intent);
-            }
-        });
+    @OnClick({R.id.ll_first, R.id.ll_second, R.id.ll_third, R.id.tv_addsos})
+    public void onClick(View view) {
+        Intent intent = null;
+        switch (view.getId()) {
+            case R.id.ll_first:
+                if (intent == null) {
+                    intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenUpdateActivity.class);
+                    intent.putExtra("type", "SOS1");
+                    intent.putExtra("name", watchNameSos1);
+                    intent.putExtra("phone", watchSos1);
+                }
+                break;
+            case R.id.ll_second:
+                if (intent == null) {
+                    intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenUpdateActivity.class);
+                    intent.putExtra("type", "SOS2");
+                    intent.putExtra("name", watchNameSos2);
+                    intent.putExtra("phone", watchSos2);
+                }
+                break;
+            case R.id.ll_third:
+                if (intent == null) {
+                    intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenUpdateActivity.class);
+                    intent.putExtra("type", "SOS3");
+                    intent.putExtra("name", watchNameSos3);
+                    intent.putExtra("phone", watchSos3);
+                }
+                break;
+            case R.id.tv_addsos:
+                if (intent == null) {
+                    intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenXinzengActivity.class);
+                    startActivity(intent);
+                }
+                break;
+        }
+        if (intent != null) {
+            startActivity(intent);
+        }
     }
-
 
     @Override
     protected void onStart() {
@@ -146,15 +135,8 @@ public class WatchMejinjilianxirenActivity extends BaseIvActivity implements Act
         initDatas();
     }
 
-    public String watchNameSos1;
-    public String watchSos1;
 
-    public String watchNameSos2;
-    public String watchSos2;
-
-    public String watchNameSos3;
-    public String watchSos3;
-    void initDatas() {
+    private void initDatas() {
         SosListpostBean bean = new SosListpostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
@@ -165,42 +147,42 @@ public class WatchMejinjilianxirenActivity extends BaseIvActivity implements Act
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         if (TextUtils.isEmpty(message.result.watchNameSos1)) {
-                            ll_first.setVisibility(View.GONE);
+                            llFirst.setVisibility(View.GONE);
                         } else {
-                            ll_first.setVisibility(View.VISIBLE);
-                            watchNameSos1=message.result.watchNameSos1;
-                            watchSos1=message.result.watchSos1;
-                            tv_first_name.setText(message.result.watchNameSos1);
-                            tv_first_phone.setText(message.result.watchSos1);
+                            llFirst.setVisibility(View.VISIBLE);
+                            watchNameSos1 = message.result.watchNameSos1;
+                            watchSos1 = message.result.watchSos1;
+                            tvFirstName.setText(message.result.watchNameSos1);
+                            tvFirstPhone.setText(message.result.watchSos1);
                         }
 
                         if (TextUtils.isEmpty(message.result.watchNameSos2)) {
-                            ll_second.setVisibility(View.GONE);
-                            view2.setVisibility(View.GONE);
+                            llSecond.setVisibility(View.GONE);
+                            tvLineSecond.setVisibility(View.GONE);
                         } else {
-                            ll_second.setVisibility(View.VISIBLE);
-                            watchNameSos2=message.result.watchNameSos2;
-                            watchSos2=message.result.watchSos2;
-                            tv_second_name.setText(message.result.watchNameSos2);
-                            tv_second_phone.setText(message.result.watchSos2);
+                            llSecond.setVisibility(View.VISIBLE);
+                            watchNameSos2 = message.result.watchNameSos2;
+                            watchSos2 = message.result.watchSos2;
+                            tvSecondName.setText(message.result.watchNameSos2);
+                            tvSecondPhone.setText(message.result.watchSos2);
                         }
                         if (TextUtils.isEmpty(message.result.watchNameSos3)) {
-                            view3.setVisibility(View.GONE);
-                            ll_third.setVisibility(View.GONE);
+                            tvLineThird.setVisibility(View.GONE);
+                            llThird.setVisibility(View.GONE);
                         } else {
-                            ll_third.setVisibility(View.VISIBLE);
-                            watchNameSos3=message.result.watchNameSos3;
-                            watchSos3=message.result.watchSos3;
-                            tv_third_name.setText(message.result.watchNameSos3);
-                            tv_third_phone.setText(message.result.watchSos3);
+                            llThird.setVisibility(View.VISIBLE);
+                            watchNameSos3 = message.result.watchNameSos3;
+                            watchSos3 = message.result.watchSos3;
+                            tvThirdName.setText(message.result.watchNameSos3);
+                            tvThirdPhone.setText(message.result.watchSos3);
                         }
 
                         if (TextUtils.isEmpty(message.result.watchNameSos1)
                                 || TextUtils.isEmpty(message.result.watchNameSos2)
                                 || TextUtils.isEmpty(message.result.watchNameSos3)) {
-                            iv_addjinjilianxiren.setVisibility(View.VISIBLE);
+                            tvAddsos.setVisibility(View.VISIBLE);
                         } else {
-                            iv_addjinjilianxiren.setVisibility(View.GONE);
+                            tvAddsos.setVisibility(View.GONE);
                         }
                         break;
                 }
