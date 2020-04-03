@@ -113,7 +113,7 @@ public class WatchLocationFragment extends BaseFragment {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
                                 NewLocationBean newLocationBean = message.result;
-                                if (TextsUtils.isInteger(newLocationBean.latitude) && TextsUtils.isInteger(newLocationBean.latitude)) {
+                                if (!TextsUtils.isEmpty(newLocationBean.latitude) && !TextsUtils.isEmpty(newLocationBean.latitude)) {
                                     LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
                                     NewMapInstance.shebeiLatLng = NewMapInstance.converterLatLng(latLng);
                                     NewMapInstance.getInstance().refreshMap();

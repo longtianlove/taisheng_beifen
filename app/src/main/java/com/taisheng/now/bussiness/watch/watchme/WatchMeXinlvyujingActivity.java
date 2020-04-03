@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,6 +46,12 @@ public class WatchMeXinlvyujingActivity extends BaseIvActivity implements Activi
 
     @Override
     public void addData() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getData();
     }
 
@@ -74,20 +79,23 @@ public class WatchMeXinlvyujingActivity extends BaseIvActivity implements Activi
             public void onSuccess(Response<BaseBean<XinlvXueyaYujingBean>> response, BaseBean<XinlvXueyaYujingBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        WatchInstance.getInstance().temp_bpxyHighMax = message.result.bpxyHighMax;
-                        WatchInstance.getInstance().temp_bpxyHighMin = message.result.bpxyHighMin;
+                        if(message.result==null){
+                            return;
+                        }
+                        WatchInstance.getInstance().temp_bpxyHighMax = message.result.bloodPressureHighMax;
+                        WatchInstance.getInstance().temp_bpxyHighMin = message.result.bloodPressureHighMin;
 
-                        WatchInstance.getInstance().temp_bpxyLowMax = message.result.bpxyLowMax;
-                        WatchInstance.getInstance().temp_bpxyLowMin = message.result.bpxyLowMin;
+                        WatchInstance.getInstance().temp_bpxyLowMax = message.result.bloodPressureLowMax;
+                        WatchInstance.getInstance().temp_bpxyLowMin = message.result.bloodPressureLowMin;
 
-                        WatchInstance.getInstance().temp_bpxyPressureDifferenceMax = message.result.bpxyPressureDifferenceMax;
-                        WatchInstance.getInstance().temp_bpxyPressureDifferenceMin = message.result.bpxyPressureDifferenceMin;
+                        WatchInstance.getInstance().temp_bpxyPressureDifferenceMax = message.result.bloodPressureDiffMax;
+                        WatchInstance.getInstance().temp_bpxyPressureDifferenceMin = message.result.bloodPressureDiffMin;
 
-                        WatchInstance.getInstance().temp_heartNumMax = message.result.heartNumMax;
-                        WatchInstance.getInstance().temp_heartNumMin = message.result.heartNumMin;
+                        WatchInstance.getInstance().temp_heartNumMax = message.result.heartRateMax;
+                        WatchInstance.getInstance().temp_heartNumMin = message.result.heartRateMin;
 
-                        tvXinlvpingzuidazhi.setText(message.result.heartNumMax + "");
-                        tvXinlvpingzuixiaozhi.setText(message.result.heartNumMin + "");
+                        tvXinlvpingzuidazhi.setText(message.result.heartRateMax + "");
+                        tvXinlvpingzuixiaozhi.setText(message.result.heartRateMin + "");
                         break;
                 }
             }

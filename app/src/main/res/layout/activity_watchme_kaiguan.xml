@@ -260,6 +260,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_kaiguan_fanzhuan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -292,6 +293,7 @@
 
     <TextView
         style="@style/my_line_h"
+        android:visibility="gone"
         android:layout_marginLeft="@dimen/magin_12"
         android:layout_marginRight="@dimen/magin_12"
         android:background="@color/coloreeeeee"></TextView>

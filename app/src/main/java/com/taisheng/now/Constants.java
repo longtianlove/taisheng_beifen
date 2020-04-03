@@ -52,7 +52,7 @@ public class Constants {
 //      public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
         //正式服务器
 //        public static String Host = "https://taishenghealth.com/";
-        public static String Host = "http://192.168.1.19:8080/";
+        public static String Host = "http://192.168.1.18:8080/";
         public static String File_Host = "https://taishenghealth.com/image-video/";
         public static String File_Host_head = "https://taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";
@@ -129,7 +129,7 @@ public class Constants {
 
 //            手表电子围栏-添加
 
-            public static final String addwatchElectronicFence = "jeecg-boot/app/watchUd/WatchUdSetting";
+            public static final String addwatchElectronicFence = "jeecg-boot/app/watchlocation/locationSetting";
 
 
             //            获取手表老人电话本-批量获取
@@ -192,7 +192,7 @@ public class Constants {
 
 //            心率血压预警设置-修改
 
-            public static final String setWatchWarning = "jeecg-boot/app/watchWarning/setWatchWarning";
+            public static final String setWatchWarning = "jeecg-boot/app/watchWarning/warnParamConfig";
 
             //            手表预警记录-查询
             public static final String getWatchWarningAll = "jeecg-boot/app/watchWarning/getWatchWarningAll";

@@ -1,6 +1,6 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
-import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,7 +15,6 @@ import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
@@ -42,6 +41,8 @@ public class WatchMeXueyajingBianjiActivity extends BaseIvActivity implements Ac
     EditText tvDiyazuixiao;
     @BindView(R.id.tv_maiyaca)
     EditText tvMaiyaca;
+    @BindView(R.id.tv_maiyacazuixiaozhi)
+    EditText tvMaiyachazuixiaozhi;
     @BindView(R.id.tv_save)
     TextView tvSave;
     @BindView(R.id.tv_cancel)
@@ -75,7 +76,7 @@ public class WatchMeXueyajingBianjiActivity extends BaseIvActivity implements Ac
             case R.id.tv_save:
                 if (TextsUtils.isEmpty(TextsUtils.getTexts(tvGaoyazuida)) || TextsUtils.isEmpty(TextsUtils.getTexts(tvGaoyazuixiao)) ||
                         TextsUtils.isEmpty(TextsUtils.getTexts(tvDiyazuida)) || TextsUtils.isEmpty(TextsUtils.getTexts(tvDiyazuixiao))
-                        || TextsUtils.isEmpty(TextsUtils.getTexts(tvMaiyaca))) {
+                        || TextsUtils.isEmpty(TextsUtils.getTexts(tvMaiyaca))|| TextUtils.isEmpty(TextsUtils.getTexts(tvMaiyachazuixiaozhi))) {
                     Uiutils.showToast(getString(R.string.please_input));
                     return;
                 }
@@ -86,30 +87,30 @@ public class WatchMeXueyajingBianjiActivity extends BaseIvActivity implements Ac
                 bean.deviceId = WatchInstance.getInstance().deviceId;
 
 
-                bean.bpxyHighMax = Integer.parseInt(TextsUtils.getTexts(tvGaoyazuida));
-                bean.bpxyHighMin = Integer.parseInt(TextsUtils.getTexts(tvGaoyazuixiao));
+                bean.bloodPressureHighMax = Integer.parseInt(TextsUtils.getTexts(tvGaoyazuida));
+                bean.bloodPressureHighMin = Integer.parseInt(TextsUtils.getTexts(tvGaoyazuixiao));
 
-                bean.bpxyLowMax = Integer.parseInt(TextsUtils.getTexts(tvDiyazuida));
-                bean.bpxyLowMin = Integer.parseInt(TextsUtils.getTexts(tvDiyazuixiao));
+                bean.bloodPressureLowMax = Integer.parseInt(TextsUtils.getTexts(tvDiyazuida));
+                bean.bloodPressureLowMin = Integer.parseInt(TextsUtils.getTexts(tvDiyazuixiao));
 
-                bean.bpxyPressureDifferenceMax = Integer.parseInt(TextsUtils.getTexts(tvMaiyaca));
-                bean.bpxyPressureDifferenceMin = Integer.parseInt(TextsUtils.getTexts(tvMaiyaca));
-                bean.heartNumMax = WatchInstance.getInstance().temp_heartNumMax;
-                bean.heartNumMin = WatchInstance.getInstance().temp_heartNumMin;
+                bean.bloodPressureDiffMax = Integer.parseInt(TextsUtils.getTexts(tvMaiyaca));
+                bean.bloodPressureDiffMin = Integer.parseInt(TextsUtils.getTexts(tvMaiyachazuixiaozhi));
+                bean.heartRateMax = WatchInstance.getInstance().temp_heartNumMax;
+                bean.heartRateMin = WatchInstance.getInstance().temp_heartNumMin;
 
                 ApiUtils.getApiService().setWatchWarning(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                WatchInstance.getInstance().temp_bpxyHighMax = bean.bpxyHighMax;
-                                WatchInstance.getInstance().temp_bpxyHighMin = bean.bpxyHighMin;
+                                WatchInstance.getInstance().temp_bpxyHighMax = bean.bloodPressureHighMax;
+                                WatchInstance.getInstance().temp_bpxyHighMin = bean.bloodPressureHighMin;
 
-                                WatchInstance.getInstance().temp_bpxyLowMax = bean.bpxyLowMax;
-                                WatchInstance.getInstance().temp_bpxyLowMin = bean.bpxyLowMin;
+                                WatchInstance.getInstance().temp_bpxyLowMax = bean.bloodPressureLowMax;
+                                WatchInstance.getInstance().temp_bpxyLowMin = bean.bloodPressureLowMin;
 
-                                WatchInstance.getInstance().temp_bpxyPressureDifferenceMax = bean.bpxyPressureDifferenceMax;
-                                WatchInstance.getInstance().temp_bpxyPressureDifferenceMin = bean.bpxyPressureDifferenceMin;
+                                WatchInstance.getInstance().temp_bpxyPressureDifferenceMax = bean.bloodPressureDiffMax;
+                                WatchInstance.getInstance().temp_bpxyPressureDifferenceMin = bean.bloodPressureDiffMin;
                                 WatchMeXueyajingBianjiActivity.this.finish();
                                 break;
                         }
