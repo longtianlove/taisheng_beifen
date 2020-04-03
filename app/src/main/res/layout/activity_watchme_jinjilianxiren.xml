@@ -29,8 +29,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/magin_15"
                     android:layout_marginTop="@dimen/magin_15"
+                    android:layout_marginBottom="@dimen/magin_15"
                     android:background="@drawable/bg_sos_set"
                     android:orientation="vertical"
                     android:padding="@dimen/magin_12">
@@ -45,112 +45,135 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/magin_3"
                         android:layout_marginTop="@dimen/magin_10"
+                        android:layout_marginBottom="@dimen/magin_3"
                         android:lineSpacingExtra="1.5dp"
                         android:text="需要拨打紧急联系人电话或者发送短信时，我们会按着紧急联系人的顺序依次拨打电话或发送短信。"
                         android:textColor="@color/color666666"
                         android:textSize="@dimen/font12" />
                 </LinearLayout>
 
-
                 <LinearLayout
                     android:id="@+id/ll_first"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/magin_15">
+                    android:layout_marginTop="@dimen/magin_15"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/tv_first_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/magin_15"
-                        android:layout_marginTop="@dimen/magin_15"
-                        android:text="袁鹏素"
-                        android:textColor="@color/color333333"
-                        android:textSize="@dimen/font14" />
+                    <LinearLayout
 
-                    <TextView
-                        android:id="@+id/tv_first_phone"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical"
-                        android:text="19351239364"
-                        android:textColor="@color/color666666"
-                        android:textSize="@dimen/font14" />
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_first_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/magin_15"
+                            android:layout_marginBottom="@dimen/magin_15"
+                            android:text="袁鹏素"
+                            android:textColor="@color/color333333"
+                            android:textSize="@dimen/font14" />
+
+                        <TextView
+                            android:id="@+id/tv_first_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:text="19351239364"
+                            android:textColor="@color/color666666"
+                            android:textSize="@dimen/font14" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_line_first"
+                        style="@style/my_line_h"
+                        android:background="@color/coloreeeeee" />
+
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_line_first"
-                    style="@style/my_line_h"
-                    android:background="@color/coloreeeeee" />
 
                 <LinearLayout
                     android:id="@+id/ll_second"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/magin_15">
+                    android:layout_marginTop="@dimen/magin_15"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/tv_second_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/magin_15"
-                        android:layout_marginTop="@dimen/magin_15"
-                        android:text="袁鹏素"
-                        android:textColor="@color/color333333"
-                        android:textSize="@dimen/font14" />
-
-                    <TextView
-                        android:id="@+id/tv_second_phone"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical"
-                        android:text="19351239364"
-                        android:textColor="@color/color666666"
-                        android:textSize="@dimen/font14" />
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_second_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/magin_15"
+                            android:layout_marginBottom="@dimen/magin_15"
+                            android:text="袁鹏素"
+                            android:textColor="@color/color333333"
+                            android:textSize="@dimen/font14" />
+
+                        <TextView
+                            android:id="@+id/tv_second_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:text="19351239364"
+                            android:textColor="@color/color666666"
+                            android:textSize="@dimen/font14" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_line_second"
+                        style="@style/my_line_h"
+                        android:background="@color/coloreeeeee" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_line_second"
-                    style="@style/my_line_h"
-                    android:background="@color/coloreeeeee" />
 
                 <LinearLayout
                     android:id="@+id/ll_third"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/magin_15">
+                    android:layout_marginTop="@dimen/magin_15"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/tv_third_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/magin_15"
-                        android:layout_marginTop="@dimen/magin_15"
-                        android:text="袁鹏素"
-                        android:textColor="@color/color333333"
-                        android:textSize="@dimen/font14" />
-
-                    <TextView
-                        android:id="@+id/tv_third_phone"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical"
-                        android:text="19351239364"
-                        android:textColor="@color/color666666"
-                        android:textSize="@dimen/font14" />
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_third_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/magin_15"
+                            android:layout_marginBottom="@dimen/magin_15"
+                            android:text="袁鹏素"
+                            android:textColor="@color/color333333"
+                            android:textSize="@dimen/font14" />
+
+                        <TextView
+                            android:id="@+id/tv_third_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:text="19351239364"
+                            android:textColor="@color/color666666"
+                            android:textSize="@dimen/font14" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_line_third"
+                        style="@style/my_line_h"
+                        android:background="@color/coloreeeeee" />
+
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_line_third"
-                    style="@style/my_line_h"
-                    android:background="@color/coloreeeeee" />
-
-
             </LinearLayout>
 
 

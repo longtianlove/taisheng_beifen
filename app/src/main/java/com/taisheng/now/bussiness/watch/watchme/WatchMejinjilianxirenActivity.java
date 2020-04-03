@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +19,7 @@ import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 
 import androidx.core.app.ActivityCompat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,14 +59,14 @@ public class WatchMejinjilianxirenActivity extends BaseIvActivity implements Act
     @BindView(R.id.tv_line_third)
     TextView tvLineThird;
 
-    public String watchNameSos1;
-    public String watchSos1;
+    public static String watchNameSos1 = "";
+    public static String watchSos1 = "";
 
-    public String watchNameSos2;
-    public String watchSos2;
+    public static String watchNameSos2 = "";
+    public static String watchSos2 = "";
 
-    public String watchNameSos3;
-    public String watchSos3;
+    public static String watchNameSos3 = "";
+    public static String watchSos3 = "";
 
     @Override
     public void initView() {
@@ -76,7 +76,13 @@ public class WatchMejinjilianxirenActivity extends BaseIvActivity implements Act
 
     @Override
     public void initData() {
-
+        type = "1";
+        watchNameSos1 = "";
+        watchSos1 = "";
+        watchNameSos2 = "";
+        watchSos2 = "";
+        watchNameSos3 = "";
+        watchSos3 = "";
     }
 
     @Override
@@ -120,6 +126,7 @@ public class WatchMejinjilianxirenActivity extends BaseIvActivity implements Act
             case R.id.tv_addsos:
                 if (intent == null) {
                     intent = new Intent(WatchMejinjilianxirenActivity.this, WatchMeJinjilianxirenXinzengActivity.class);
+                    intent.putExtra("type", type);
                     startActivity(intent);
                 }
                 break;
@@ -129,12 +136,22 @@ public class WatchMejinjilianxirenActivity extends BaseIvActivity implements Act
         }
     }
 
+
+    String type = "1";
+
     @Override
     protected void onStart() {
         super.onStart();
-        initDatas();
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+        initDatas();
+
+    }
 
     private void initDatas() {
         SosListpostBean bean = new SosListpostBean();
@@ -146,43 +163,56 @@ public class WatchMejinjilianxirenActivity extends BaseIvActivity implements Act
             public void onSuccess(Response<BaseBean<NewSosJijinlianxirenlIstResultBean>> response, BaseBean<NewSosJijinlianxirenlIstResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (TextUtils.isEmpty(message.result.watchNameSos1)) {
-                            llFirst.setVisibility(View.GONE);
-                        } else {
-                            llFirst.setVisibility(View.VISIBLE);
-                            watchNameSos1 = message.result.watchNameSos1;
-                            watchSos1 = message.result.watchSos1;
-                            tvFirstName.setText(message.result.watchNameSos1);
-                            tvFirstPhone.setText(message.result.watchSos1);
-                        }
+                        if (message.result != null) {
+                            if (TextUtils.isEmpty(message.result.realNameOne)) {
+                                type = "1";
+                                llFirst.setVisibility(View.GONE);
+                                tvAddsos.setVisibility(View.VISIBLE);
+                                return;
+                            } else {
+                                type = "2";
+                                llFirst.setVisibility(View.VISIBLE);
+                                watchNameSos1 = message.result.realNameOne;
+                                watchSos1 = message.result.mobilePhoneOne;
+                                tvFirstName.setText(message.result.realNameOne);
+                                tvFirstPhone.setText(message.result.mobilePhoneOne);
+                            }
 
-                        if (TextUtils.isEmpty(message.result.watchNameSos2)) {
-                            llSecond.setVisibility(View.GONE);
-                            tvLineSecond.setVisibility(View.GONE);
-                        } else {
-                            llSecond.setVisibility(View.VISIBLE);
-                            watchNameSos2 = message.result.watchNameSos2;
-                            watchSos2 = message.result.watchSos2;
-                            tvSecondName.setText(message.result.watchNameSos2);
-                            tvSecondPhone.setText(message.result.watchSos2);
-                        }
-                        if (TextUtils.isEmpty(message.result.watchNameSos3)) {
-                            tvLineThird.setVisibility(View.GONE);
-                            llThird.setVisibility(View.GONE);
-                        } else {
-                            llThird.setVisibility(View.VISIBLE);
-                            watchNameSos3 = message.result.watchNameSos3;
-                            watchSos3 = message.result.watchSos3;
-                            tvThirdName.setText(message.result.watchNameSos3);
-                            tvThirdPhone.setText(message.result.watchSos3);
-                        }
+                            if (TextUtils.isEmpty(message.result.realNameTwo)) {
+                                type = "2";
+                                llSecond.setVisibility(View.GONE);
+                                tvLineSecond.setVisibility(View.GONE);
+                                tvAddsos.setVisibility(View.VISIBLE);
+                                return;
+                            } else {
+                                type = "3";
+                                llSecond.setVisibility(View.VISIBLE);
+                                watchNameSos2 = message.result.realNameTwo;
+                                watchSos2 = message.result.mobilePhoneTwo;
+                                tvSecondName.setText(message.result.realNameTwo);
+                                tvSecondPhone.setText(message.result.mobilePhoneTwo);
+                            }
+                            if (TextUtils.isEmpty(message.result.realNameThree)) {
+                                type = "3";
+                                tvLineThird.setVisibility(View.GONE);
+                                llThird.setVisibility(View.GONE);
 
-                        if (TextUtils.isEmpty(message.result.watchNameSos1)
-                                || TextUtils.isEmpty(message.result.watchNameSos2)
-                                || TextUtils.isEmpty(message.result.watchNameSos3)) {
-                            tvAddsos.setVisibility(View.VISIBLE);
-                        } else {
-                            tvAddsos.setVisibility(View.GONE);
+                            } else {
+                                type = "3";
+                                llThird.setVisibility(View.VISIBLE);
+                                watchNameSos3 = message.result.realNameThree;
+                                watchSos3 = message.result.mobilePhoneThree;
+                                tvThirdName.setText(message.result.realNameThree);
+                                tvThirdPhone.setText(message.result.mobilePhoneThree);
+                            }
+
+                            if (TextUtils.isEmpty(message.result.realNameOne)
+                                    || TextUtils.isEmpty(message.result.realNameTwo)
+                                    || TextUtils.isEmpty(message.result.realNameThree)) {
+                                tvAddsos.setVisibility(View.VISIBLE);
+                            } else {
+                                tvAddsos.setVisibility(View.GONE);
+                            }
                         }
                         break;
                 }

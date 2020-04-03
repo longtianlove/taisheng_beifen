@@ -97,9 +97,27 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseIvActivity {
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.sosUserName = etTongxunluName.getText().toString();
-                bean.sosPhone = etPhone.getText().toString();
-                bean.type = type;
+                switch (type) {
+                    case "SOS1":
+                        WatchMejinjilianxirenActivity.watchNameSos1 = etTongxunluName.getText().toString();
+                        WatchMejinjilianxirenActivity.watchSos1 = etPhone.getText().toString();
+                        break;
+                    case "SOS2":
+                        WatchMejinjilianxirenActivity.watchNameSos2 = etTongxunluName.getText().toString();
+                        WatchMejinjilianxirenActivity.watchSos2 = etPhone.getText().toString();
+                        break;
+                    case "SOS3":
+                        WatchMejinjilianxirenActivity.watchNameSos3 = etTongxunluName.getText().toString();
+                        WatchMejinjilianxirenActivity.watchSos3 = etPhone.getText().toString();
+                        break;
+                }
+
+                bean.mobilePhoneOne = WatchMejinjilianxirenActivity.watchSos1;
+                bean.realNameOne = WatchMejinjilianxirenActivity.watchNameSos1;
+                bean.mobilePhoneTwo = WatchMejinjilianxirenActivity.watchSos2;
+                bean.realNameTwo = WatchMejinjilianxirenActivity.watchNameSos2;
+                bean.mobilePhoneThree = WatchMejinjilianxirenActivity.watchSos3;
+                bean.realNameThree = WatchMejinjilianxirenActivity.watchNameSos3;
                 ApiUtils.getApiService().updateSosContactSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -118,33 +136,56 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseIvActivity {
                 });
 
 
-//                UpdateWatchPostBean bean = new UpdateWatchPostBean();
-//                bean.userId = UserInstance.getInstance().getUid();
-//                bean.token = UserInstance.getInstance().getToken();
-//                bean.deviceId = WatchInstance.getInstance().deviceId;
-//                bean.relationShip = WatchInstance.getInstance().relationShip;
-//                bean.headUrl = WatchInstance.getInstance().headUrl;
-//                bean.deviceNickName = et_nickname.getText().toString();
-//
-//                ApiUtils.getApiService().updateDeviceInfo(bean).enqueue(new TaiShengCallback<BaseBean>() {
-//                    @Override
-//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
-//                        switch (message.code) {
-//                            case Constants.HTTP_SUCCESS:
-//                                WatchInstance.getInstance().deviceNickName = bean.deviceNickName;
-//                                finish();
-//                                break;
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFail(Call<BaseBean> call, Throwable t) {
-//
-//                    }
-//                });
                 break;
             case R.id.tv_cancel:
-                this.finish();
+                UpdateSosContactSettingPostBean bean1 = new UpdateSosContactSettingPostBean();
+                bean1.userId = UserInstance.getInstance().getUid();
+                bean1.token = UserInstance.getInstance().getToken();
+                bean1.deviceId = WatchInstance.getInstance().deviceId;
+                switch (type) {
+                    case "SOS1":
+                        WatchMejinjilianxirenActivity.watchNameSos1 =WatchMejinjilianxirenActivity.watchNameSos2;
+                        WatchMejinjilianxirenActivity.watchSos1 =  WatchMejinjilianxirenActivity.watchSos2;
+                        WatchMejinjilianxirenActivity.watchNameSos2 =WatchMejinjilianxirenActivity.watchNameSos3;
+                        WatchMejinjilianxirenActivity.watchSos2 =  WatchMejinjilianxirenActivity.watchSos3;
+                        WatchMejinjilianxirenActivity.watchNameSos3 = "";
+                        WatchMejinjilianxirenActivity.watchSos3 = "";
+                        break;
+                    case "SOS2":
+                        WatchMejinjilianxirenActivity.watchNameSos2 =WatchMejinjilianxirenActivity.watchNameSos3;
+                        WatchMejinjilianxirenActivity.watchSos2 =  WatchMejinjilianxirenActivity.watchSos3;
+                        WatchMejinjilianxirenActivity.watchNameSos3 = "";
+                        WatchMejinjilianxirenActivity.watchSos3 = "";
+                        break;
+                    case "SOS3":
+                        WatchMejinjilianxirenActivity.watchNameSos3 = "";
+                        WatchMejinjilianxirenActivity.watchSos3 = "";
+                        break;
+                }
+
+                bean1.mobilePhoneOne = WatchMejinjilianxirenActivity.watchSos1;
+                bean1.realNameOne = WatchMejinjilianxirenActivity.watchNameSos1;
+                bean1.mobilePhoneTwo = WatchMejinjilianxirenActivity.watchSos2;
+                bean1.realNameTwo = WatchMejinjilianxirenActivity.watchNameSos2;
+                bean1.mobilePhoneThree = WatchMejinjilianxirenActivity.watchSos3;
+                bean1.realNameThree = WatchMejinjilianxirenActivity.watchNameSos3;
+                ApiUtils.getApiService().updateSosContactSetting(bean1).enqueue(new TaiShengCallback<BaseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                        switch (message.code) {
+                            case Constants.HTTP_SUCCESS:
+//                                WatchInstance.getInstance().deviceNickName = bean.deviceNickName;
+                                finish();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Call<BaseBean> call, Throwable t) {
+
+                    }
+                });
+
                 break;
         }
     }
@@ -159,8 +200,8 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseIvActivity {
                 }
                 Uri uri = data.getData();
                 String[] contacts = PhoneUtil.getPhoneContacts(this, uri);
-                etPhone.setText(contacts[0]);
-                etTongxunluName.setText(contacts[1]);
+                etPhone.setText(contacts[1]);
+                etTongxunluName.setText(contacts[0]);
                 break;
         }
     }

@@ -4,7 +4,11 @@ import com.taisheng.now.bussiness.bean.post.BasePostBean;
 
 public class UpdateSosContactSettingPostBean extends BasePostBean {
     public String deviceId;
-    public String sosPhone;
-    public String sosUserName;
-    public String type;
+    public String mobilePhoneOne;
+    public String mobilePhoneThree;
+    public String mobilePhoneTwo;
+    public String realNameOne;
+    public String realNameThree;
+    public String realNameTwo;
+
 }
