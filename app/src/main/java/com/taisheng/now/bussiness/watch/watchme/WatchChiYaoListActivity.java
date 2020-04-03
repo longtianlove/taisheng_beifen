@@ -23,6 +23,7 @@ import com.taisheng.now.bussiness.watch.bean.result.ChiyaoBeann;
 import com.taisheng.now.bussiness.watch.bean.result.ChiyaoLIstResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.WithScrolleViewListView;
 import com.th.j.commonlibrary.global.Global;
 
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.core.app.ActivityCompat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,7 +50,7 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
     TextView tvAddnaozhong;
     private ArticleAdapter madapter;
     private int size = 0;
-    private List<ChiyaoBeann> data;
+    public static List<ChiyaoBeann> data;
 
     @Override
     public void initView() {
@@ -70,6 +72,12 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
+    @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
         tvTitle.setText(getString(R.string.watch_msg02));
     }
@@ -77,34 +85,22 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
     @OnClick(R.id.tv_addnaozhong)
     public void onViewClicked() {
         Intent intent = new Intent(WatchChiYaoListActivity.this, WatchChiyaoXinzengActivity.class);
-        String takepillsNum = "1";
-        switch (size) {
-            case 0:
-                takepillsNum = "1";
-                break;
-            case 1:
-                takepillsNum = "2";
-                break;
-            case 2:
-                takepillsNum = "3";
-                break;
-        }
-
-        intent.putExtra("takepillsNum", takepillsNum);
+        intent.putExtra("position", -1);
         intent.putExtra(Global.INTENT_TYPE, Global.MEDICINE_ADD);
         startActivity(intent);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (data!=null&&data.size()>0) {
+        if (data != null && data.size() > 0) {
             ChiyaoBeann bean = data.get(position);
             Intent intent = new Intent(WatchChiYaoListActivity.this, WatchChiyaoXinzengActivity.class);
-            intent.putExtra("takepillsNum", bean.takepillsNum);
+            intent.putExtra("position", position);
+
             intent.putExtra(Global.INTENT_TYPE, Global.MEDICINE_UPDATA);
-            intent.putExtra("startTime", bean.startTime);
+            intent.putExtra("startTime", bean.remindTime);
             intent.putExtra("frequency", bean.frequency);
-            intent.putExtra("takepillsText", bean.takepillsText);
+            intent.putExtra("takepillsText", bean.remindText);
 
             startActivity(intent);
         }
@@ -116,38 +112,25 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        ApiUtils.getApiService().getWatchTakepillsList(bean).enqueue(new TaiShengCallback<BaseBean<ChiyaoLIstResultBean>>() {
+        bean.pageNo = 1;
+        bean.pageSize = 10;
+        bean.remindType = "1";
+        ApiUtils.getApiService().remindList(bean).enqueue(new TaiShengCallback<BaseBean<ChiyaoLIstResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<ChiyaoLIstResultBean>> response, BaseBean<ChiyaoLIstResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         if (message.result != null && message.result.records.size() >= 0) {
-                            //有消息
-//                            PAGE_NO++;
-                            data.addAll(message.result.records);
+                            data = message.result.records;
                             size = message.result.records.size();
                             if (size >= 3) {
                                 tvAddnaozhong.setVisibility(View.GONE);
                             } else {
                                 tvAddnaozhong.setVisibility(View.VISIBLE);
                             }
-
-
-//                            WatchInstance.getInstance().mDataNaoZhong.clear();
-//                            WatchInstance.getInstance().mDataNaoZhong.addAll(message.result.watchRemindList);
-//                            if(message.result.size()<10){
-//                                lv_articles.setHasLoadMore(false);
-//                                lv_articles.setLoadAllViewText("暂时只有这么多文章");
-//                                lv_articles.setLoadAllFooterVisible(false);
-//                            }else{
-//                                lv_articles.setHasLoadMore(true);
-//                            }
                             madapter.setmData(data);
                         } else {
-//                            //没有消息
-//                            lv_articles.setHasLoadMore(false);
-//                            lv_articles.setLoadAllViewText("暂时只有这么多文章");
-//                            lv_articles.setLoadAllFooterVisible(false);
+
                         }
                         break;
                 }
@@ -209,13 +192,9 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
             }
             ChiyaoBeann bean = mData.get(position);
 
-            util.tv_time.setText(bean.startTime);
-            if ("1".equals(bean.frequency)) {
-                util.tv_pinlv.setText("一次");
-
-            } else if ("2".equals(bean.frequency)) {
+            util.tv_time.setText(bean.remindTime);
+            if ("1".equals(bean.isOpenWeek1) && "1".equals(bean.isOpenWeek2) && "1".equals(bean.isOpenWeek3) && "1".equals(bean.isOpenWeek4) && "1".equals(bean.isOpenWeek5) && "1".equals(bean.isOpenWeek6) && "1".equals(bean.isOpenWeek7)) {
                 util.tv_pinlv.setText("每天");
-
             } else {
                 String temp = new String();
                 if ("1".equals(bean.isOpenWeek1)) {
@@ -265,34 +244,20 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
                 }
                 util.tv_pinlv.setText("星期" + temp);
             }
-            util.tv_takepillsText.setText(bean.takepillsText);
+            util.tv_takepillsText.setText(bean.remindText);
             Util finalUtil1 = util;
             util.iv_kaiguan_naozhong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     SetChiyaoPostBean setNaozhongPostBean = new SetChiyaoPostBean();
                     setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
                     setNaozhongPostBean.token = UserInstance.getInstance().getToken();
                     setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
-                    setNaozhongPostBean.takepillsNum = bean.takepillsNum;
-                    setNaozhongPostBean.frequency = bean.frequency;
-                    setNaozhongPostBean.isOpen = finalUtil1.iv_kaiguan_naozhong.isSelected() ? "0" : "1";
-                    setNaozhongPostBean.isOpenWeek1 = bean.isOpenWeek1;
-                    setNaozhongPostBean.isOpenWeek2 = bean.isOpenWeek2;
-                    setNaozhongPostBean.isOpenWeek3 = bean.isOpenWeek3;
-                    setNaozhongPostBean.isOpenWeek4 = bean.isOpenWeek4;
-                    setNaozhongPostBean.isOpenWeek5 = bean.isOpenWeek5;
-                    setNaozhongPostBean.isOpenWeek6 = bean.isOpenWeek6;
-                    setNaozhongPostBean.isOpenWeek7 = bean.isOpenWeek7;
-                    setNaozhongPostBean.startTime = bean.startTime;
-                    setNaozhongPostBean.takepillsText = bean.takepillsText;
-
-//                WatchInstance.getInstance().chiyaobean.isOpen = "1";
-//                WatchInstance.getInstance().chiyaobean.startTime = date_tv.getText().toString();
-//                WatchInstance.getInstance().mDataNaoZhong.add(WatchInstance.getInstance().chiyaobean);
-
-//                setNaozhongPostBean.watchRemindList = WatchInstance.getInstance().mDataNaoZhong;
-                    ApiUtils.getApiService().setWatchTakepills(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                    setNaozhongPostBean.remindType = "1";
+                    mData.get(position).isOpen = finalUtil1.iv_kaiguan_naozhong.isSelected() ? "0" : "1";
+                    setNaozhongPostBean.watchRemindList = WatchChiYaoListActivity.data;
+                    ApiUtils.getApiService().setRemind(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
@@ -302,12 +267,10 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
                                     } else {
                                         finalUtil1.iv_kaiguan_naozhong.setSelected(true);
                                     }
-
-
                                     break;
-//                                case 404000:
-//                                    ToastUtil.showAtCenter("请设置重复频率");
-//                                    break;
+                                case 404000:
+                                    Uiutils.showToast("请设置重复频率");
+                                    break;
                             }
                         }
 
@@ -316,6 +279,53 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
 
                         }
                     });
+
+//                    SetChiyaoPostBean setNaozhongPostBean = new SetChiyaoPostBean();
+//                    setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
+//                    setNaozhongPostBean.token = UserInstance.getInstance().getToken();
+//                    setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
+//
+//                    setNaozhongPostBean.frequency = bean.frequency;
+//                    setNaozhongPostBean.isOpen = finalUtil1.iv_kaiguan_naozhong.isSelected() ? "0" : "1";
+//                    setNaozhongPostBean.isOpenWeek1 = bean.isOpenWeek1;
+//                    setNaozhongPostBean.isOpenWeek2 = bean.isOpenWeek2;
+//                    setNaozhongPostBean.isOpenWeek3 = bean.isOpenWeek3;
+//                    setNaozhongPostBean.isOpenWeek4 = bean.isOpenWeek4;
+//                    setNaozhongPostBean.isOpenWeek5 = bean.isOpenWeek5;
+//                    setNaozhongPostBean.isOpenWeek6 = bean.isOpenWeek6;
+//                    setNaozhongPostBean.isOpenWeek7 = bean.isOpenWeek7;
+//                    setNaozhongPostBean.startTime = bean.remindTime;
+//                    setNaozhongPostBean.takepillsText = bean.remindText;
+//
+////                WatchInstance.getInstance().chiyaobean.isOpen = "1";
+////                WatchInstance.getInstance().chiyaobean.startTime = date_tv.getText().toString();
+////                WatchInstance.getInstance().mDataNaoZhong.add(WatchInstance.getInstance().chiyaobean);
+//
+////                setNaozhongPostBean.watchRemindList = WatchInstance.getInstance().mDataNaoZhong;
+//                    ApiUtils.getApiService().setWatchTakepills(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+//                        @Override
+//                        public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//                            switch (message.code) {
+//                                case Constants.HTTP_SUCCESS:
+//                                    if (finalUtil1.iv_kaiguan_naozhong.isSelected()) {
+//                                        finalUtil1.iv_kaiguan_naozhong.setSelected(false);
+//                                    } else {
+//                                        finalUtil1.iv_kaiguan_naozhong.setSelected(true);
+//                                    }
+//
+//
+//                                    break;
+////                                case 404000:
+////                                    ToastUtil.showAtCenter("请设置重复频率");
+////                                    break;
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                        }
+//                    });
                 }
             });
 
