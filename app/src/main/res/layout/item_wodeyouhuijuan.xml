@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
-                android:text="￥130"
+                android:text="130"
                 android:textColor="#ffff3b30"
                 android:textSize="25sp" />
 

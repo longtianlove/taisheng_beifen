@@ -49,6 +49,7 @@ import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.AnquanweiilanPostBean;
+import com.taisheng.now.evbusbean.BaiduSearchAddr;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.map.AddressAdapter;
@@ -65,6 +66,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.core.app.ActivityCompat;
@@ -111,6 +113,9 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
     TranslateAnimation translateAnimation;
     SuggestionSearch mSuggestionSearch;
     private GeoCoder mSearch;
+    private List<BaiduSearchAddr> addrList;
+    private SuggestionResult.SuggestionInfo suggestionBean;
+
 
     @Override
     public void initView() {
@@ -131,14 +136,14 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 
     @Override
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
-        tvTitle.setText("安全围栏");
-        tvRight.setText("确定");
+        tvTitle.setText(getString(R.string.watch_msg38));
+        tvRight.setText(getString(R.string.sure));
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!(latitude > 0)) {
-                    ToastUtil.showTost("请设置位置中心");
+                    Uiutils.showToast(getString(R.string.watch_msg39));
                     return;
                 }
                 AnquanweiilanPostBean bean = new AnquanweiilanPostBean();
@@ -156,7 +161,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                Uiutils.showToast("设置成功");
+                                Uiutils.showToast(getString(R.string.set_success));
                                 finish();
                                 break;
                         }
@@ -201,7 +206,6 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String searchString = etSearch.getText().toString();
-                LogUtilH.e(HomelocationInstance.getInstance().city+"==HomelocationInstance.getInstance().city");
                 if ("".equals(searchString)) {
                     return;
                 }
@@ -228,7 +232,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (Integer.parseInt(s.toString()) > 3000) {
-                    ToastUtil.showAtCenter("不能超过3000米");
+                    Uiutils.showToast("不能超过3000米");
                 }
             }
 
@@ -251,25 +255,24 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         adapter.setOnItemClickListener(new AddressAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, AddressAdapter.StateHolder holder, int position) {
-               /* HomelocationInstance.getInstance().setCenter(poiInfos.get(position).location, 1000);
+                HomelocationInstance.getInstance().setCenter(addrList.get(position).getPt(), 1000);
                 HomelocationInstance.getInstance().refreshMap();
-                if (position != -1) {
-                    iv_selected.setVisibility(View.GONE);
-                }
-                et_search.setText(poiInfos.get(position).name);
-                rv_addresslist.setVisibility(View.GONE);
-                adapter.notifyDataSetChanged();
+//                if (position != -1) {
+//                    iv_selected.setVisibility(View.GONE);
+//                }
+                etSearch.setText(addrList.get(position).getAddr());
+                rvAddresslist.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
-                if (poiInfos != null && poiInfos.size() > position) {
-                    PoiInfo bean = poiInfos.get(position);
-                    double[] temp = HomelocationInstance.bd09_To_Gcj02(bean.location.latitude, bean.location.longitude);
+                LatLng pt = addrList.get(position).getPt();
+                if (pt != null) {
+                    double[] temp = HomelocationInstance.bd09_To_Gcj02(pt.latitude, pt.longitude);
 //                    HomelocationInstance.getInstance().setCenter(poiInfos.get(0).location, 1000);
                     latitude = temp[0];
                     longitude = temp[1];
-                }*/
+                }
             }
         });
         rvAddresslist.setAdapter(adapter);
@@ -353,7 +356,13 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 
             @Override
             public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
-                LogUtilH.e("打印转换后的地址" + reverseGeoCodeResult.getAddress());
+                BaiduSearchAddr searchAddr = new BaiduSearchAddr();
+                searchAddr.setPt(suggestionBean.getPt());
+                searchAddr.setKey(suggestionBean.getKey());
+                searchAddr.setAddr(reverseGeoCodeResult.getAddress());
+                addrList.add(searchAddr);
+                rvAddresslist.setVisibility(View.VISIBLE);
+                adapter.setMdatas(addrList);
             }
         });
         //下面是传入对应的经纬度
@@ -364,23 +373,19 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                     return;
                     //未找到相关结果
                 }
-                List<SuggestionResult.SuggestionInfo> lists = res.getAllSuggestions();
-                if (lists.size() > 0) {
-                    rvAddresslist.setVisibility(View.GONE);
+                List<SuggestionResult.SuggestionInfo> duggesLists = res.getAllSuggestions();
+                if (duggesLists.size() > 0) {
+                    addrList = new ArrayList<>();
+                    for (int i = 0; i < duggesLists.size(); i++) {
+                        suggestionBean = duggesLists.get(i);
+                        if (suggestionBean.pt != null) {
+                            LatLng pt = suggestionBean.getPt();
+                            mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(pt));
+                        }
+                    }
                 } else {
-                    rvAddresslist.setVisibility(View.VISIBLE);
+                    rvAddresslist.setVisibility(View.GONE);
                 }
-                SuggestionResult.SuggestionInfo bean = lists.get(0);
-                LogUtilH.e(bean.key + "--"
-                        + bean.city + "--"
-                        + bean.district + "--"
-                        + bean.tag + "--"
-                        + bean.district + "--"
-                        + bean.uid + "-uid-"
-                        + bean.address + "--");
-                LatLng pt = bean.getPt();
-                mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(pt));
-                adapter.setMdatas(lists);
 
 
                 //获取在线建议检索结果
@@ -394,15 +399,16 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
     public void getActivityInfo(EventManage.bindingLocationChanged event) {
         final LatLng position = new LatLng(event.latitude, event.longitude);
-        MapLocationParser.queryLocationDesc(position, new addressParseListener() {
+       /* MapLocationParser.queryLocationDesc(position, new addressParseListener() {
             @Override
             public void onAddressparsed(String address, ReverseGeoCodeResult result) {
-                /*poiInfos = (ArrayList<PoiInfo>) result.getPoiList();
-                adapter.mdatas = poiInfos;*/
+                *//*poiInfos = (ArrayList<PoiInfo>) result.getPoiList();
+                adapter.mdatas = poiInfos;*//*
                 adapter.notifyDataSetChanged();
 
             }
-        });
+        });*/
+        rvAddresslist.setVisibility(View.GONE);
         double[] temp = HomelocationInstance.bd09_To_Gcj02(position.latitude, position.longitude);
         latitude = temp[0];
         longitude = temp[1];

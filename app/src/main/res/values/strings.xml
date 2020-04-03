@@ -402,9 +402,10 @@
     <string name="locus_map">轨迹地图</string>
     <string name="consultation">・去咨询</string>
     <string name="branch">分</string>
-    <string name="mony_code">￥</string>
+    <string name="mony_code">¥</string>
     <string name="code_binding01">扫描手环中的设备二维码，即可完成绑定</string>
     <string name="code_binding02">绑定设备</string>
+    <string name="wx_installed_tip">没有安装微信</string>
 
     <string name="device01">健康监测</string>
     <string name="device02">信息位置</string>
@@ -460,8 +461,11 @@
     <string name="watch_msg35">设备信息</string>
     <string name="watch_msg36">SOS设置</string>
     <string name="watch_msg37">监测信息通知</string>
+    <string name="watch_msg38">安全围栏</string>
+    <string name="watch_msg39">请设置位置中心</string>
     <string name="updata_success">更新成功</string>
     <string name="tips01">请输入正确手机号</string>
+    <string name="set_success">设置成功</string>
 
 
 </resources>

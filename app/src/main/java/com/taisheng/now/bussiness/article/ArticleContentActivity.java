@@ -321,9 +321,10 @@ public class ArticleContentActivity extends BaseIvActivity {
         //webSettings.setPluginsEnabled(true);//支持插件
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-        webSettings.setSupportZoom(false); //支持缩放，默认为true。是下面那个的前提。
+        webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
         webSettings.setBuiltInZoomControls(false); //设置内置的缩放控件。若为false，则该WebView不可缩放
         webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
+        webSettings.setTextZoom(100);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);  //自适应屏幕
         //其他细节操作
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT); //关闭webview中缓存

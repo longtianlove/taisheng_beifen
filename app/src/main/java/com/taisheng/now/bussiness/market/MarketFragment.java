@@ -45,6 +45,7 @@ import com.taisheng.now.view.WithListViewScrollView;
 import com.taisheng.now.view.WithScrolleViewListView;
 import com.taisheng.now.view.banner.BannerViewPager;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
+import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.wight.RoundImgView;
 import com.youth.banner.Banner;
 
@@ -104,7 +105,6 @@ public class MarketFragment extends BaseFragment {
     RecyclerView.LayoutManager mLayoutManager;
     HotGoodsAdapter hotGoodsAdapter;
     ArticleAdapter madapter;
-    private View bannerView;
 
     @Nullable
     @Override
@@ -120,7 +120,7 @@ public class MarketFragment extends BaseFragment {
 
     void initView(View rootView) {
         MainActivity activity = (MainActivity) getActivity();
-        activity.flRight.setOnClickListener(new View.OnClickListener() {
+        activity.tvRight.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -286,7 +286,7 @@ public class MarketFragment extends BaseFragment {
             public void onSuccess(Response<BaseBean<MallYouhuiquanResultBanner>> response, BaseBean<MallYouhuiquanResultBanner> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result.records != null && !message.result.records.isEmpty()) {
+                        if (message.result.records != null && message.result.records.size()>0) {
                             youhuiquanAdapter.mData = message.result.records;
                             youhuiquanAdapter.notifyDataSetChanged();
                         }
@@ -296,7 +296,7 @@ public class MarketFragment extends BaseFragment {
 
             @Override
             public void onFail(Call<BaseBean<MallYouhuiquanResultBanner>> call, Throwable t) {
-
+                LogUtilH.e(t.toString()+"---------------1------1------------");
             }
         });
     }

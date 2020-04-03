@@ -454,7 +454,8 @@ public class FirstFragment extends BaseFragment {
         initShipin();
 
 
-        tv_dianzan = inflate.findViewById(R.id.tv_dianzan);
+        iv_shipindianzan = inflate.findViewById(R.id.iv_shipindianzan);
+        tv_shipindianzan = inflate.findViewById(R.id.tv_shipindianzan);
         ll_shipindianzan = inflate.findViewById(R.id.ll_shipindianzan);
         ll_shipindianzan.setOnClickListener(new View.OnClickListener() {
 
@@ -472,7 +473,7 @@ public class FirstFragment extends BaseFragment {
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                if (tv_dianzan.isEnabled()) {
+                                if (!tv_shipindianzan.isSelected()) {
                                     String dianzanshuString = tv_shipindianzan.getText().toString();
                                     int dianzanshuint = Integer.parseInt(dianzanshuString) + 1;
                                     tv_shipindianzan.setText(dianzanshuint + "");
@@ -481,7 +482,8 @@ public class FirstFragment extends BaseFragment {
                                     int dianzanshuint = Integer.parseInt(dianzanshuString) - 1;
                                     tv_shipindianzan.setText(dianzanshuint + "");
                                 }
-                                tv_dianzan.setEnabled(!tv_dianzan.isEnabled());
+                                tv_shipindianzan.setSelected(!tv_shipindianzan.isSelected());
+                                iv_shipindianzan.setSelected(!iv_shipindianzan.isSelected());
                                 break;
                         }
                     }
@@ -493,7 +495,8 @@ public class FirstFragment extends BaseFragment {
                 });
             }
         });
-        tv_shipindianzan = inflate.findViewById(R.id.tv_shipindianzan);
+        tv_shipinguanzhu = inflate.findViewById(R.id.tv_shipinguanzhu);
+        iv_shipinguanzhu = inflate.findViewById(R.id.iv_shipinguanzhu);
         ll_shipinguanzhu = inflate.findViewById(R.id.ll_shipinguanzhu);
         ll_shipinguanzhu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -509,7 +512,7 @@ public class FirstFragment extends BaseFragment {
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                if (tv_guanzhu.isEnabled()) {
+                                if (!tv_shipinguanzhu.isSelected()) {
                                     String dianzanshuString = tv_shipinguanzhu.getText().toString();
                                     int dianzanshuint = Integer.parseInt(dianzanshuString) + 1;
                                     tv_shipinguanzhu.setText(dianzanshuint + "");
@@ -518,7 +521,8 @@ public class FirstFragment extends BaseFragment {
                                     int dianzanshuint = Integer.parseInt(dianzanshuString) - 1;
                                     tv_shipinguanzhu.setText(dianzanshuint + "");
                                 }
-                                tv_guanzhu.setEnabled(!tv_guanzhu.isEnabled());
+                                tv_shipinguanzhu.setSelected(!tv_shipinguanzhu.isSelected());
+                                iv_shipinguanzhu.setSelected(!iv_shipinguanzhu.isSelected());
                                 break;
                         }
                     }
@@ -530,14 +534,7 @@ public class FirstFragment extends BaseFragment {
                 });
             }
         });
-        tv_guanzhu = inflate.findViewById(R.id.tv_guanzhu);
-        tv_shipinguanzhu = inflate.findViewById(R.id.tv_shipinguanzhu);
         tv_shipinbofangshu = inflate.findViewById(R.id.tv_shipinbofangshu);
-
-
-        initShipinDianzan(rootView);
-
-
     }
 
 
@@ -583,21 +580,15 @@ public class FirstFragment extends BaseFragment {
 
     TextView tv_shipintitle;
     View ll_shipindianzan;
-    TextView tv_dianzan;
+    ImageView iv_shipindianzan;
     TextView tv_shipindianzan;
     View ll_shipinguanzhu;
-    TextView tv_guanzhu;
+    ImageView iv_shipinguanzhu;
     TextView tv_shipinguanzhu;
     TextView tv_shipinbofangshu;
 
 
     String shipinId;
-
-    void initShipinDianzan(View rootView) {
-        /*tv_shipintitle = rootView.findViewById(R.id.tv_shipintitle);*/
-
-
-    }
 
 
     void initData() {
@@ -780,16 +771,20 @@ public class FirstFragment extends BaseFragment {
                             tv_shipintitle.setText(bean.videoTitle);
                             tv_shipindianzan.setText(bean.videoPraise + "");
                             if ("NO".equals(bean.videoPraiseFlag)) {
-                                tv_dianzan.setEnabled(true);
+                                tv_shipindianzan.setSelected(false);
+                                iv_shipindianzan.setSelected(false);
                             } else {
-                                tv_dianzan.setEnabled(false);
+                                tv_shipindianzan.setSelected(true);
+                                iv_shipindianzan.setSelected(true);
                             }
 
                             tv_shipinguanzhu.setText(bean.collectionCount + "");
                             if ("NO".equals(bean.userCollected)) {
-                                tv_guanzhu.setEnabled(true);
+                                tv_shipinguanzhu.setSelected(false);
+                                iv_shipinguanzhu.setSelected(false);
                             } else {
-                                tv_guanzhu.setEnabled(false);
+                                tv_shipinguanzhu.setSelected(true);
+                                iv_shipinguanzhu.setSelected(true);
                             }
                             tv_shipinbofangshu.setText(bean.videoPlayTimes + "");
                         } else {
@@ -971,7 +966,7 @@ public class FirstFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 //        videoPlayer.onVideoResume();
-
+        videoPlayer.setEnlargeImageRes(R.drawable.icon_full);
         videoPlayer.setUp(source1, true, "测试视频");
 
 

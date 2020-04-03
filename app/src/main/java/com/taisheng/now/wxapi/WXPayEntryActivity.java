@@ -27,6 +27,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.th.j.commonlibrary.utils.LogUtilH;
 
 import java.math.BigDecimal;
 
@@ -154,7 +155,7 @@ public class WXPayEntryActivity extends BaseHActivity implements IWXAPIEventHand
 
     @Override
     public void onResp(BaseResp resp) {
-        Log.d("wechat", "onPayFinish, errCode = " + resp.errCode);
+        LogUtilH.e("onPayFinish, errCode = " + resp.errCode);
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
 //            AlertDialog.Builder builder = new AlertDialog.Builder(this);

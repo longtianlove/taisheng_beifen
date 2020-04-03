@@ -132,7 +132,7 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvLeft.setCompoundDrawables(drawable, null, null, null);
                 tvTitle.setTextColor(ContextCompat.getColor(this, R.color.color333333));
-                tvTitle.setText(getString(R.string.device04));
+                tvTitle.setText(getString(R.string.device05));
                 tvRight.setVisibility(View.GONE);
                 break;
         }

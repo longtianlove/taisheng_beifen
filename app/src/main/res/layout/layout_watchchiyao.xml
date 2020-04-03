@@ -80,7 +80,6 @@
                     android:drawableRight="@drawable/icon_right_jiantou"
                     android:gravity="right|center_vertical"
                     android:textColor="@color/color333333"
-                    android:text="每天"
                     android:textSize="@dimen/font14" />
 
             </LinearLayout>

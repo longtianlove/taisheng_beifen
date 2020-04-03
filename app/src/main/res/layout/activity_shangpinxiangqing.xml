@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="33333"
+                    android:text=""
                     android:textColor="@color/colorff3b30"
                     android:textSize="@dimen/font16" />
 
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
-                    android:text="222222"
+                    android:text=""
                     android:textColor="@color/color999999"
                     android:textSize="@dimen/font12" />
 
@@ -68,7 +68,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/magin_12"
-                    android:src="@drawable/goodshare" />
+                    android:src="@drawable/goodshare"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <TextView
@@ -79,7 +80,7 @@
                 android:layout_marginRight="@dimen/magin_12"
                 android:lineSpacingMultiplier="1.2"
                 android:maxLines="2"
-                android:text="健康美食搭配，助您身心健康助您身心健康助您身心健康助您身心健康"
+                android:text=""
                 android:textColor="@color/color333333"
                 android:textSize="@dimen/font14"
                 android:textStyle="bold" />
@@ -92,7 +93,7 @@
                 android:layout_marginLeft="@dimen/magin_12"
                 android:layout_marginRight="@dimen/magin_12"
                 android:layout_marginTop="@dimen/margin_5"
-                android:text="纯天然无污染，野生枸杞，精挑细选，这是一段文字性描述。"
+                android:text=""
                 android:textColor="@color/color999999"
                 android:textSize="@dimen/font12" />
 
@@ -150,6 +151,7 @@
                 android:layout_marginRight="@dimen/magin_12"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="1">
 
 
@@ -180,7 +182,8 @@
             <TextView
                 style="@style/my_line_h"
                 android:layout_marginLeft="@dimen/magin_12"
-                android:layout_marginRight="@dimen/magin_12" />
+                android:layout_marginRight="@dimen/magin_12"
+                android:visibility="gone" />
 
 
             <LinearLayout
@@ -190,6 +193,7 @@
                 android:layout_marginRight="@dimen/magin_12"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="1">
 
 

@@ -15,6 +15,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 import com.taisheng.now.EventManage;
+import com.th.j.commonlibrary.utils.LogUtilH;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -168,7 +169,7 @@ public class HomelocationInstance implements BDLocationListener {
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
         city=bdLocation.getCity();
-        Log.e("longtianlove海拔",bdLocation.getAltitude()+"");
+        LogUtilH.e("longtianlove海拔"+bdLocation.getAltitude()+"");
         phoneLatitude = bdLocation.getLatitude();
         phoneLongitude = bdLocation.getLongitude();
         EventManage.bindingLocationChanged event=new EventManage.bindingLocationChanged();

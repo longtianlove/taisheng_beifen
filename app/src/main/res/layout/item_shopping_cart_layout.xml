@@ -79,7 +79,7 @@
             android:layout_alignBottom="@+id/sdv_article"
             android:layout_marginLeft="@dimen/margin_10"
             android:layout_toRightOf="@+id/sdv_article"
-            android:text="￥390"
+            android:text="390"
             android:textColor="@color/color554e"
             android:textSize="@dimen/font14"
             android:textStyle="bold" />

@@ -203,7 +203,7 @@ android:orientation="vertical">
             android:id="@+id/tv_zongjia"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="￥49.00"
+            android:text="49.00"
             android:textColor="#ff666666"
             android:textSize="15sp" />
     </LinearLayout>
