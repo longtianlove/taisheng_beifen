@@ -15,9 +15,11 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseHActivity;
+import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.UpdateSosContactSettingPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.ToastUtil;
@@ -33,7 +35,7 @@ import retrofit2.Response;
  * Created by dragon on 2019/6/28.
  */
 
-public class WatchMeJinjilianxirenXinzengActivity extends BaseHActivity {
+public class WatchMeJinjilianxirenXinzengActivity extends BaseIvActivity {
     @BindView(R.id.et_phone)
     EditText etPhone;
     @BindView(R.id.tv_mail_list)
@@ -45,6 +47,7 @@ public class WatchMeJinjilianxirenXinzengActivity extends BaseHActivity {
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
 
+    String type = "1";
 
     @Override
     public void initView() {
@@ -54,7 +57,7 @@ public class WatchMeJinjilianxirenXinzengActivity extends BaseHActivity {
 
     @Override
     public void initData() {
-
+        type = getIntent().getStringExtra("type");
     }
 
     @Override
@@ -80,13 +83,38 @@ public class WatchMeJinjilianxirenXinzengActivity extends BaseHActivity {
                     return;
                 }
 
-                InsertSosJinjilianxirenPostBean bean = new InsertSosJinjilianxirenPostBean();
-                bean.userId = UserInstance.getInstance().getUid();
-                bean.token = UserInstance.getInstance().getToken();
-                bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.watchNameSOS = etTongxunluName.getText().toString();
-                bean.watchSos = etPhone.getText().toString();
-                ApiUtils.getApiService().insertSosContactSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                switch (type) {
+                    case "1":
+                        WatchMejinjilianxirenActivity.watchNameSos1 = etTongxunluName.getText().toString();
+                        WatchMejinjilianxirenActivity.watchSos1 = etPhone.getText().toString();
+                        WatchMejinjilianxirenActivity.watchNameSos2 = "";
+                        WatchMejinjilianxirenActivity.watchSos2 = "";
+                        WatchMejinjilianxirenActivity.watchNameSos3 = "";
+                        WatchMejinjilianxirenActivity.watchSos3 = "";
+                        break;
+                    case "2":
+                        WatchMejinjilianxirenActivity.watchNameSos2 = etTongxunluName.getText().toString();
+                        WatchMejinjilianxirenActivity.watchSos2 = etPhone.getText().toString();
+                        WatchMejinjilianxirenActivity.watchNameSos3 = "";
+                        WatchMejinjilianxirenActivity.watchSos3 = "";
+                        break;
+                    case "3":
+                        WatchMejinjilianxirenActivity.watchNameSos3 = etTongxunluName.getText().toString();
+                        WatchMejinjilianxirenActivity.watchSos3 = etPhone.getText().toString();
+                        break;
+                }
+
+                UpdateSosContactSettingPostBean bean1 = new UpdateSosContactSettingPostBean();
+                bean1.userId = UserInstance.getInstance().getUid();
+                bean1.token = UserInstance.getInstance().getToken();
+                bean1.deviceId = WatchInstance.getInstance().deviceId;
+                bean1.mobilePhoneOne = WatchMejinjilianxirenActivity.watchSos1;
+                bean1.realNameOne = WatchMejinjilianxirenActivity.watchNameSos1;
+                bean1.mobilePhoneTwo = WatchMejinjilianxirenActivity.watchSos2;
+                bean1.realNameTwo = WatchMejinjilianxirenActivity.watchNameSos2;
+                bean1.mobilePhoneThree = WatchMejinjilianxirenActivity.watchSos3;
+                bean1.realNameThree = WatchMejinjilianxirenActivity.watchNameSos3;
+                ApiUtils.getApiService().updateSosContactSetting(bean1).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -102,6 +130,29 @@ public class WatchMeJinjilianxirenXinzengActivity extends BaseHActivity {
 
                     }
                 });
+
+//                UpdateSosContactSettingPostBean bean = new UpdateSosContactSettingPostBean();
+//                bean.userId = UserInstance.getInstance().getUid();
+//                bean.token = UserInstance.getInstance().getToken();
+//                bean.deviceId = WatchInstance.getInstance().deviceId;
+//                bean.watchNameSOS = etTongxunluName.getText().toString();
+//                bean.watchSos = etPhone.getText().toString();
+//                ApiUtils.getApiService().insertSosContactSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+//                        switch (message.code) {
+//                            case Constants.HTTP_SUCCESS:
+////                                WatchInstance.getInstance().deviceNickName = bean.deviceNickName;
+//                                finish();
+//                                break;
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(Call<BaseBean> call, Throwable t) {
+//
+//                    }
+//                });
 
 
 //                UpdateWatchPostBean bean = new UpdateWatchPostBean();
@@ -145,8 +196,8 @@ public class WatchMeJinjilianxirenXinzengActivity extends BaseHActivity {
                 }
                 Uri uri = data.getData();
                 String[] contacts = PhoneUtil.getPhoneContacts(this, uri);
-                etPhone.setText(contacts[0]);
-                etTongxunluName.setText(contacts[1]);
+                etPhone.setText(contacts[1]);
+                etTongxunluName.setText(contacts[0]);
                 break;
         }
     }

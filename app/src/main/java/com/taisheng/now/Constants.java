@@ -208,14 +208,20 @@ public class Constants {
 
 
             //            APP-SOS联系人列表
-            public static final String listSosContactSetting = "jeecg-boot/app/watch/setting/listSosContactSetting";
+//            public static final String listSosContactSetting = "jeecg-boot/app/watch/setting/listSosContactSetting";
+
+
+            //            紧急联系人-分页列表查询
+            public static final String listSosContactSetting = "jeecg-boot/app/emergencycontact/list";
+
 
             //            APP-【SOS增加】联系人
             public static final String insertSosContactSetting = "jeecg-boot/app/watch/setting/insertSosContactSetting";
 
 
             //            APP-【SOS更新】联系人
-            public static final String updateSosContactSetting = "jeecg-boot/app/watch/setting/updateSosContactSetting";
+//            public static final String updateSosContactSetting = "jeecg-boot/app/watch/setting/updateSosContactSetting";
+            public static final String updateSosContactSetting = "jeecg-boot/app/emergencycontact/setting/sosContactConfig";
 
             //            手表预警记录-修改阅读状态
             public static final String watchWarningupdateBykey = "jeecg-boot/app/watchWarning/updateBykey";
@@ -227,7 +233,6 @@ public class Constants {
 
             //            闹钟提醒-分页列表查询
             public static final String remindList = "jeecg-boot/app/remind/list";
-
 
 
             //            闹钟设置-闹钟参数设置

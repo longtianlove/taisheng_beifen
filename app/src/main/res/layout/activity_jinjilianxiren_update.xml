@@ -136,6 +136,6 @@
         android:layout_marginRight="@dimen/magin_12"
         android:layout_marginTop="@dimen/magin_15"
         android:background="@drawable/naozhongcancel_button"
-        android:text="@string/cancal"
+        android:text="删除"
         android:textColor="@color/color999999" />
 </LinearLayout>

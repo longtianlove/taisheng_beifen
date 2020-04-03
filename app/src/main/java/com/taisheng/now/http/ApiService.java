@@ -248,8 +248,8 @@ public interface ApiService {
     Call<BaseBean<NewSosJijinlianxirenlIstResultBean>> listSosContactSetting(@Body SosListpostBean bean);
 
 
-    @POST(Constants.Url.Watch.insertSosContactSetting)
-    Call<BaseBean> insertSosContactSetting(@Body InsertSosJinjilianxirenPostBean bean);
+    @POST(Constants.Url.Watch.updateSosContactSetting)
+    Call<BaseBean> insertSosContactSetting(@Body UpdateSosContactSettingPostBean bean);
 
     @POST(Constants.Url.Watch.updateSosContactSetting)
     Call<BaseBean> updateSosContactSetting(@Body UpdateSosContactSettingPostBean bean);
