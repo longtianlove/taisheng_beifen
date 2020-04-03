@@ -265,8 +265,8 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                 }
                 Uri uri = data.getData();
                 String[] contacts = PhoneUtil.getPhoneContacts(this, uri);
-                etPhone.setText(contacts[0]);
-                etTongxunluName.setText(contacts[1]);
+                etPhone.setText(contacts[1]);
+                etTongxunluName.setText(contacts[0]);
                 break;
             case REQ_CODE_PHOTO_SOURCE:
                 if (data != null) {

@@ -14,6 +14,7 @@ import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
+import com.taisheng.now.bussiness.watch.bean.result.ChiyaoBeann;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.Uiutils;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.core.content.ContextCompat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -60,7 +62,7 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
     TextView tvCancel;
     private int cycle;
 
-    public String takepillsNum;
+
     private List<String> hour;
     private List<String> min;
     private String time;
@@ -74,11 +76,71 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
         ButterKnife.bind(this);
     }
 
+
+    int position;
+
     @Override
     public void initData() {
-        takepillsNum = getIntent().getStringExtra("takepillsNum");
+
+        position = getIntent().getIntExtra("position", -1);
         String takepillsText = getIntent().getStringExtra("takepillsText");
-        WatchInstance.getInstance().chiyaobean = new SetChiyaoPostBean();
+        if (position == -1) {
+            WatchInstance.getInstance().chiyaobean = new ChiyaoBeann();
+        } else {
+            WatchInstance.getInstance().chiyaobean = WatchChiYaoListActivity.data.get(position);
+        }
+
+        if ("1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek1) && "1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek2) && "1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek3) && "1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek4) && "1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek5) && "1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek6) && "1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek7)) {
+            tvRepeatValue.setText("每天");
+        } else {
+            String temp = new String();
+            if ("1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek1)) {
+                temp += "一";
+            }
+            if ("1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek2)) {
+                if ("".equals(temp)) {
+                    temp += "二";
+                } else {
+                    temp += ",二";
+                }
+            }
+            if ("1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek3)) {
+                if ("".equals(temp)) {
+                    temp += "三";
+                } else {
+                    temp += ",三";
+                }
+            }
+            if ("1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek4)) {
+                if ("".equals(temp)) {
+                    temp += "四";
+                } else {
+                    temp += ",四";
+                }
+            }
+            if ("1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek5)) {
+                if ("".equals(temp)) {
+                    temp += "五";
+                } else {
+                    temp += ",五";
+                }
+            }
+            if ("1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek6)) {
+                if ("".equals(temp)) {
+                    temp += "六";
+                } else {
+                    temp += ",六";
+                }
+            }
+            if ("1".equals(WatchInstance.getInstance().chiyaobean.isOpenWeek7)) {
+                if ("".equals(temp)) {
+                    temp += "日";
+                } else {
+                    temp += ",日";
+                }
+            }
+            tvRepeatValue.setText("星期" + temp);
+        }
         intenType = getIntent().getStringExtra(Global.INTENT_TYPE);
         if (Global.MEDICINE_UPDATA.equals(intenType)) {
             tvCancel.setText(getString(R.string.delete));
@@ -175,6 +237,7 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
     public void selectRemindCycle() {
         final SelectRemindCyclePopup fp = new SelectRemindCyclePopup(this);
         fp.showPopup(llAll);
+        fp.initSelectedView(WatchInstance.getInstance().chiyaobean);
         fp.setOnSelectRemindCyclePopupListener(new SelectRemindCyclePopup
                 .SelectRemindCyclePopupOnClickListener() {
 
@@ -217,8 +280,15 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
                         fp.dismiss();
                         break;
                     case 8:
-                        tvRepeatValue.setText("重复");
+                        tvRepeatValue.setText("每天");
                         WatchInstance.getInstance().chiyaobean.frequency = "2";
+                        WatchInstance.getInstance().chiyaobean.isOpenWeek1 = "1";
+                        WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "1";
+                        WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "1";
+                        WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "1";
+                        WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "1";
+                        WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "1";
+                        WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "1";
                         cycle = 0;
                         fp.dismiss();
                         break;
@@ -247,6 +317,13 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
 //            repeat = 127;
             cycle = "每天";
             WatchInstance.getInstance().chiyaobean.frequency = "2";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek1 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "1";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "1";
             return cycle;
         }
         WatchInstance.getInstance().chiyaobean.frequency = "3";
@@ -255,13 +332,13 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
             WatchInstance.getInstance().chiyaobean.isOpenWeek1 = "1";
             weeks = "1";
         } else {
-            WatchInstance.getInstance().chiyaobean.isOpenWeek1 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek1 = "";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
 
         }
         if (repeat % 4 >= 2) {
@@ -275,12 +352,12 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
             WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "1";
 
         } else {
-            WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek2 = "";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat % 8 >= 4) {
             if ("".equals(cycle)) {
@@ -294,11 +371,11 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
 
         } else {
 
-            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek3 = "";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat % 16 >= 8) {
             if ("".equals(cycle)) {
@@ -311,10 +388,10 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
             WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "1";
 
         } else {
-            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek4 = "";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat % 32 >= 16) {
             if ("".equals(cycle)) {
@@ -327,9 +404,9 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
             WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "1";
 
         } else {
-            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek5 = "";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat % 64 >= 32) {
             if ("".equals(cycle)) {
@@ -342,8 +419,8 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
             WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "1";
 
         } else {
-            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "0";
-            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek6 = "";
+//            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
         }
         if (repeat / 64 == 1) {
             if ("".equals(cycle)) {
@@ -356,7 +433,7 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
             WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "1";
 
         } else {
-            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "0";
+            WatchInstance.getInstance().chiyaobean.isOpenWeek7 = "";
         }
 
         return flag == 0 ? cycle : weeks;
@@ -383,20 +460,41 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
                 setNaozhongPostBean.userId = UserInstance.getInstance().getUid();
                 setNaozhongPostBean.token = UserInstance.getInstance().getToken();
                 setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
-                setNaozhongPostBean.takepillsNum = takepillsNum;
-                setNaozhongPostBean.frequency = WatchInstance.getInstance().chiyaobean.frequency;
-                setNaozhongPostBean.isOpen = "1";
-                setNaozhongPostBean.isOpenWeek1 = WatchInstance.getInstance().chiyaobean.isOpenWeek1;
-                setNaozhongPostBean.isOpenWeek2 = WatchInstance.getInstance().chiyaobean.isOpenWeek2;
-                setNaozhongPostBean.isOpenWeek3 = WatchInstance.getInstance().chiyaobean.isOpenWeek3;
-                setNaozhongPostBean.isOpenWeek4 = WatchInstance.getInstance().chiyaobean.isOpenWeek4;
-                setNaozhongPostBean.isOpenWeek5 = WatchInstance.getInstance().chiyaobean.isOpenWeek5;
-                setNaozhongPostBean.isOpenWeek6 = WatchInstance.getInstance().chiyaobean.isOpenWeek6;
-                setNaozhongPostBean.isOpenWeek7 = WatchInstance.getInstance().chiyaobean.isOpenWeek7;
-                setNaozhongPostBean.startTime = time;
-                setNaozhongPostBean.takepillsText = TextsUtils.getTexts(etShuru);
+                setNaozhongPostBean.remindType = "1";
+                if (position == -1) {
+                    ChiyaoBeann chiyaoBeann = new ChiyaoBeann();
+                    chiyaoBeann.frequency = WatchInstance.getInstance().chiyaobean.frequency;
+                    chiyaoBeann.isOpen = "1";
+                    chiyaoBeann.isOpenWeek1 = WatchInstance.getInstance().chiyaobean.isOpenWeek1;
+                    chiyaoBeann.isOpenWeek2 = WatchInstance.getInstance().chiyaobean.isOpenWeek2;
+                    chiyaoBeann.isOpenWeek3 = WatchInstance.getInstance().chiyaobean.isOpenWeek3;
+                    chiyaoBeann.isOpenWeek4 = WatchInstance.getInstance().chiyaobean.isOpenWeek4;
+                    chiyaoBeann.isOpenWeek5 = WatchInstance.getInstance().chiyaobean.isOpenWeek5;
+                    chiyaoBeann.isOpenWeek6 = WatchInstance.getInstance().chiyaobean.isOpenWeek6;
+                    chiyaoBeann.isOpenWeek7 = WatchInstance.getInstance().chiyaobean.isOpenWeek7;
+                    chiyaoBeann.remindTime = time;
+                    chiyaoBeann.remindText = TextsUtils.getTexts(etShuru);
+                    chiyaoBeann.remindType = "1";
+                    WatchChiYaoListActivity.data.add(chiyaoBeann);
 
-                ApiUtils.getApiService().setWatchTakepills(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                } else {
+                    ChiyaoBeann chiyaoBeann = WatchChiYaoListActivity.data.get(position);
+                    chiyaoBeann.frequency = WatchInstance.getInstance().chiyaobean.frequency;
+                    chiyaoBeann.isOpen = "1";
+                    chiyaoBeann.isOpenWeek1 = WatchInstance.getInstance().chiyaobean.isOpenWeek1;
+                    chiyaoBeann.isOpenWeek2 = WatchInstance.getInstance().chiyaobean.isOpenWeek2;
+                    chiyaoBeann.isOpenWeek3 = WatchInstance.getInstance().chiyaobean.isOpenWeek3;
+                    chiyaoBeann.isOpenWeek4 = WatchInstance.getInstance().chiyaobean.isOpenWeek4;
+                    chiyaoBeann.isOpenWeek5 = WatchInstance.getInstance().chiyaobean.isOpenWeek5;
+                    chiyaoBeann.isOpenWeek6 = WatchInstance.getInstance().chiyaobean.isOpenWeek6;
+                    chiyaoBeann.isOpenWeek7 = WatchInstance.getInstance().chiyaobean.isOpenWeek7;
+                    chiyaoBeann.remindTime = time;
+                    chiyaoBeann.remindText = TextsUtils.getTexts(etShuru);
+                    chiyaoBeann.remindType = "1";
+                }
+                setNaozhongPostBean.watchRemindList = WatchChiYaoListActivity.data;
+
+                ApiUtils.getApiService().setRemind(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -418,6 +516,32 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
                 break;
             case R.id.tv_cancel:
                 if (Global.MEDICINE_UPDATA.equals(intenType)) {
+                    SetChiyaoPostBean setNaozhongPostBean1 = new SetChiyaoPostBean();
+                    setNaozhongPostBean1.userId = UserInstance.getInstance().getUid();
+                    setNaozhongPostBean1.token = UserInstance.getInstance().getToken();
+                    setNaozhongPostBean1.deviceId = WatchInstance.getInstance().deviceId;
+                    setNaozhongPostBean1.remindType = "1";
+                    WatchChiYaoListActivity.data.remove(position);
+                    setNaozhongPostBean1.watchRemindList = WatchChiYaoListActivity.data;
+                    ApiUtils.getApiService().setRemind(setNaozhongPostBean1).enqueue(new TaiShengCallback<BaseBean>() {
+                        @Override
+                        public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                            switch (message.code) {
+                                case Constants.HTTP_SUCCESS:
+                                    Uiutils.showToast("设置成功");
+                                    finish();
+                                    break;
+                                case 404000:
+                                    Uiutils.showToast("请设置重复频率");
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onFail(Call<BaseBean> call, Throwable t) {
+
+                        }
+                    });
 
                 } else {
                     this.finish();
