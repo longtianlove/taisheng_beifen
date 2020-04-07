@@ -1,6 +1,5 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,7 +14,6 @@ import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
@@ -76,24 +74,24 @@ public class WatchMeXinlvyujingbianjiActivity extends BaseIvActivity implements 
                 bean.deviceId = WatchInstance.getInstance().deviceId;
 
 
-                bean.bpxyHighMax = WatchInstance.getInstance().temp_bpxyHighMax;
-                bean.bpxyHighMin = WatchInstance.getInstance().temp_bpxyHighMin;
+                bean.bloodPressureHighMax = WatchInstance.getInstance().temp_bpxyHighMax;
+                bean.bloodPressureHighMin = WatchInstance.getInstance().temp_bpxyHighMin;
 
-                bean.bpxyLowMax = WatchInstance.getInstance().temp_bpxyLowMax;
-                bean.bpxyLowMin = WatchInstance.getInstance().temp_bpxyLowMin;
+                bean.bloodPressureLowMax = WatchInstance.getInstance().temp_bpxyLowMax;
+                bean.bloodPressureLowMin = WatchInstance.getInstance().temp_bpxyLowMin;
 
-                bean.bpxyPressureDifferenceMax = WatchInstance.getInstance().temp_bpxyPressureDifferenceMax;
-                bean.bpxyPressureDifferenceMin = WatchInstance.getInstance().temp_bpxyPressureDifferenceMin;
-                bean.heartNumMax = Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuidazhi));
-                bean.heartNumMin = Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuixiaozhi));
+                bean.bloodPressureDiffMax = WatchInstance.getInstance().temp_bpxyPressureDifferenceMax;
+                bean.bloodPressureDiffMin = WatchInstance.getInstance().temp_bpxyPressureDifferenceMin;
+                bean.heartRateMax = Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuidazhi));
+                bean.heartRateMin = Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuixiaozhi));
 
                 ApiUtils.getApiService().setWatchWarning(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
                             case Constants.HTTP_SUCCESS:
-                                WatchInstance.getInstance().temp_heartNumMax = bean.heartNumMax;
-                                WatchInstance.getInstance().temp_heartNumMin = bean.heartNumMin;
+                                WatchInstance.getInstance().temp_heartNumMax = bean.heartRateMax;
+                                WatchInstance.getInstance().temp_heartNumMin = bean.heartRateMin;
                                 WatchMeXinlvyujingbianjiActivity.this.finish();
                                 break;
                         }

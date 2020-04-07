@@ -43,6 +43,7 @@ public class WatchYujingFragment extends BaseFragment {
     MaterialDesignPtrFrameLayout ptr_refresh;
     TaishengListView lv_doctors;
     private DoctorAdapter madapter;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -125,10 +126,10 @@ public class WatchYujingFragment extends BaseFragment {
                             lv_doctors.setLoading(false);
                             if (PAGE_NO == 1) {
                                 madapter.mData.clear();
-                                    Yujingbean bean1 = message.result.records.get(0);
-                                    EventManage.tongzhiWeidu event = new EventManage.tongzhiWeidu();
-                                    event.weidu = bean1.status;
-                                    EventBus.getDefault().post(event);
+                                Yujingbean bean1 = message.result.records.get(0);
+                                EventManage.tongzhiWeidu event = new EventManage.tongzhiWeidu();
+                                event.weidu = bean1.status;
+                                EventBus.getDefault().post(event);
                             }
                             //有消息
                             PAGE_NO++;
@@ -168,7 +169,7 @@ public class WatchYujingFragment extends BaseFragment {
 
         private Context mcontext;
 
-        private List<Yujingbean> mData=new ArrayList<>();
+        private List<Yujingbean> mData = new ArrayList<>();
 
         public DoctorAdapter(Context mcontext) {
             this.mcontext = mcontext;
@@ -251,23 +252,25 @@ public class WatchYujingFragment extends BaseFragment {
             });
             util.tv_time.setText(bean.createTime);
             util.tv_message.setText(bean.warningContent);
-            String temp;
-            switch (bean.warningType) {
-                case "heart":
-                    temp = "心率信息通知";
-                    break;
-                case "bpxy":
-                    temp = "血压信息通知";
-                    break;
-                case "bphrt":
-                    temp = "心率信息通知";
-                    break;
-                case "LK":
-                    temp = "低电量通知";
-                    break;
-                default:
-                    temp = "监测信息通知";
-                    break;
+            String temp = "监测信息通知";
+            if (bean.warningType != null) {
+                switch (bean.warningType) {
+                    case "heart":
+                        temp = "心率信息通知";
+                        break;
+                    case "bpxy":
+                        temp = "血压信息通知";
+                        break;
+                    case "bphrt":
+                        temp = "心率信息通知";
+                        break;
+                    case "LK":
+                        temp = "低电量通知";
+                        break;
+                    default:
+                        temp = "监测信息通知";
+                        break;
+                }
             }
             util.tv_jiancetongzhi.setText(temp);
 
