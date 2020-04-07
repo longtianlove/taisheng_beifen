@@ -53,6 +53,16 @@ public abstract class TaiShengCallback<T extends BaseBean> implements Callback<T
 //                }
 
             if (message != null) {
+                if (message.code == Constants.USER_NOTEXIST) {
+                    //注销小米账号
+                    XMPushManagerInstance.getInstance().stop();
+                    ToastUtil.showTost("用户不存在");
+                    UserInstance.getInstance().clearUserInfo();
+                    Intent intent = new Intent(SampleAppLike.mcontext, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    SampleAppLike.mcontext.startActivity(intent);
+                    return;
+                }
                 if (message.code == Constants.USER_FREEZE) {
                     //注销小米账号
                     XMPushManagerInstance.getInstance().stop();
