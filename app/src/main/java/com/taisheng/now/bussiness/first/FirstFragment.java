@@ -336,7 +336,7 @@ public class FirstFragment extends BaseFragment {
                                     WatchInstance.getInstance().deviceId = bean1.deviceId;
 
                                     //todo 上线前去掉
-                                    WatchInstance.getInstance().deviceId = "359193974088693";
+//                                    WatchInstance.getInstance().deviceId = "359193974088693";
 
                                     SPUtil.putDeviced(bean1.deviceId);
                                     WatchInstance.getInstance().deviceNickName = bean1.nickName;
