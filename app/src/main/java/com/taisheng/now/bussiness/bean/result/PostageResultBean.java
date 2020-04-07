@@ -4,7 +4,7 @@ public class PostageResultBean {
 
     public String id;
     public String name;
-    public int money;
+    public double money;
     public String createTime;
     public String updateTime;
     public String status;

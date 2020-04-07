@@ -100,7 +100,8 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
     @BindView(R.id.btn_qujiesuan)
     TextView btnQujiesuan;
     private ArticleAdapter madapter;
-
+    private String discount = "0";
+    private String youfei = "0";
     @Override
     public void initView() {
         setContentView(R.layout.layout_diandanjiesuan);
@@ -183,7 +184,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                     bean.goodsList = DingdanInstance.getInstance().jifenshangpindingdanList;
                 }
                 bean.postFeeId = DingdanInstance.getInstance().postFeeId;
-                bean.message = TextsUtils.getHints(etBeizhu);
+                bean.message = TextsUtils.getTexts(etBeizhu);
                 ApiUtils.getApiService().createOrder(bean).enqueue(new TaiShengCallback<BaseBean<CreateOrderResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<CreateOrderResultBean>> response, BaseBean<CreateOrderResultBean> message) {
@@ -312,9 +313,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
         BasePostBean basePostBean = new BasePostBean();
         basePostBean.userId = UserInstance.getInstance().getUid();
         basePostBean.token = UserInstance.getInstance().getToken();
-
         if (DingdanInstance.getInstance().scoreGoods == 1) {
-
             //获取邮费
             ApiUtils.getApiService().getPostage(basePostBean).enqueue(new TaiShengCallback<BaseBean<PostageResultBean>>() {
                 @Override
@@ -325,12 +324,12 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                             DingdanInstance.getInstance().youfei = message.result.money;
                             DingdanInstance.getInstance().postFeeId = message.result.id;
                             tvYoufei.setText(getString(R.string.mony_code) + youfei);
-//                            tv_zongjia.setText("¥" + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
+//                            tv_zongjia.setText(getString(R.string.mony_code) + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
                             BigDecimal temp = new BigDecimal(DingdanInstance.getInstance().zongjia);
                             BigDecimal temp1 = temp.add(new BigDecimal(youfei));
                             BigDecimal temp2 = temp1.subtract(new BigDecimal(discount));
 
-                            tvZongjia.setText("¥" + temp2);
+                            tvZongjia.setText(getString(R.string.mony_code) + temp2);
 
                             break;
                     }
@@ -338,7 +337,6 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
 
                 @Override
                 public void onFail(Call<BaseBean<PostageResultBean>> call, Throwable t) {
-
                 }
             });
         } else {
@@ -347,8 +345,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
         }
     }
 
-    String discount = "0";
-    String youfei = "0";
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -366,11 +363,11 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                 discount = DingdanInstance.getInstance().tv_discount;
                 tvYouhuijuan.setText(getString(R.string.mony_code) + discount);
                 tvJianyouhuijuan.setText("-"+getString(R.string.mony_code) + discount);
-//                tv_zongjia.setText("¥" + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
+//                tv_zongjia.setText(getString(R.string.mony_code) + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
                 BigDecimal temp = new BigDecimal(DingdanInstance.getInstance().zongjia);
                 BigDecimal temp1 = temp.add(new BigDecimal(youfei));
                 BigDecimal temp2 = temp1.subtract(new BigDecimal(discount));
-                tvZongjia.setText("¥" + temp2);
+                tvZongjia.setText(getString(R.string.mony_code) + temp2);
                 break;
         }
     }

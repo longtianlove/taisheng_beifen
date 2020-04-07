@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_35"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/reduce_btn"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@drawable/bg_transparent_passcolor"
+        android:text="-"
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/font14" />
+
+    <EditText
+        android:id="@+id/amount_et"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_white_frame5"
+        android:gravity="center"
+        android:editable="false"
+        android:inputType="number"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:text="0"
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/font12" />
+
+    <TextView
+        android:id="@+id/increase_btn"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@drawable/bg_transparent_passcolor"
+        android:text="+"
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/font14" />
+
+</LinearLayout>

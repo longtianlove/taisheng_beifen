@@ -216,7 +216,7 @@
     <string name="long_click_record">按住 说话</string>
     <string name="hang_up_finsh">松开 结束</string>
     <string name="release_cancel">松开 取消</string>
-    <string name="login01">请输入用户名/手机号</string>
+    <string name="login01">请输入手机号</string>
     <string name="login02">请输入验证码</string>
     <string name="login03">获取验证码</string>
     <string name="login04">登录</string>

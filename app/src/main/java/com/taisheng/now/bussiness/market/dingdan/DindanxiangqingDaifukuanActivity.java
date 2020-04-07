@@ -193,7 +193,7 @@ public class DindanxiangqingDaifukuanActivity extends BaseHActivity {
                         });
 
 
-                        if (TextUtils.isEmpty(message.result.message)) {
+                        if (TextUtils.isEmpty(message.result.message)||message.result.message.contains("请输入备注")) {
                             tvBeizhu.setVisibility(View.GONE);
 
                         } else {

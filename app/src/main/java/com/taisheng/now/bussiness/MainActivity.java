@@ -117,7 +117,6 @@ public class MainActivity extends BaseIvActivity implements BottomBar.OnItemList
                 break;
             case 3:
                 llTop.setVisibility(View.VISIBLE);
-                tvLeft.setVisibility(View.INVISIBLE);
                 tvTitle.setText(getString(R.string.home16));
                 tvRight.setVisibility(View.GONE);
                 ivRightT.setVisibility(View.GONE);

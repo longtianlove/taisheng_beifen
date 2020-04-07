@@ -504,10 +504,8 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                             sdv_shangpin.setImageURI(uri);
                             if (scoreGoods == 1) {
                                 tv_price.setText(getString(R.string.mony_code) + message.result.goodsEntity.counterPrice + "");
-
                             } else {
                                 tv_price.setText("" + message.result.goodsEntity.counterPrice.multiply(new BigDecimal(100)) + "");
-
                             }
 
                         }
@@ -515,8 +513,8 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                         if (message.result.goodsSpecificationEntities != null && message.result.goodsSpecificationEntities.size() > 0) {
                             tv_guige.setText(message.result.goodsSpecificationEntities.get(0).getName());
                             guige_list = new ArrayList<>();
-                            for (int i = 0; i < message.result.goodsSpecificationEntities.get(0).getValueList().size(); i++) {
-                                ValueList tempVauleList = message.result.goodsSpecificationEntities.get(0).getValueList().get(i);
+                            for (int i = 0; i < message.result.goodsSpecificationEntities.size(); i++) {
+                                ValueList tempVauleList = message.result.goodsSpecificationEntities.get(i).getValueList().get(0);
                                 guige_list.add(tempVauleList.getValue());
                             }
 
@@ -613,5 +611,13 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
             }
         });
 
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (wv_shangpinxiangqing != null) {
+            wv_shangpinxiangqing.removeAllViews();
+            wv_shangpinxiangqing.destroy();
+        }
     }
 }

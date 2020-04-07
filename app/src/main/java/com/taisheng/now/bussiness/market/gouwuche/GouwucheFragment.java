@@ -32,6 +32,7 @@ import com.taisheng.now.util.LogUtil;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.TaishengListView;
+import com.th.j.commonlibrary.interfaces.ILvAmountView;
 import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
@@ -47,7 +48,7 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapter.CheckInterface, ShoppingCartAdapter.ModifyCountInterface {
+public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapter.CheckInterface, ShoppingCartAdapter.ModifyCountInterface, ILvAmountView {
 
     public String assessmentType;
     public int scoreGoods;
@@ -59,7 +60,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
     TextView tvShowPrice;
     @BindView(R.id.tv_settlement)
     TextView tvSettlement;
-    public  ShoppingCartAdapter shoppingCartAdapter;
+    public ShoppingCartAdapter shoppingCartAdapter;
     private List<ShoppingCartBean> shoppingCartBeanList = new ArrayList<>();
     private BigDecimal totalPrice = new BigDecimal(0.00);// 购买的商品总价
     private int totalCount = 0;// 购买的商品总数量
@@ -86,6 +87,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
     //初始化数据
     protected void initData() {
         shoppingCartAdapter = new ShoppingCartAdapter(getActivity());
+        shoppingCartAdapter.setAmountView(this);
         shoppingCartAdapter.scoreGoods = scoreGoods;
         shoppingCartAdapter.setCheckInterface(this);
         shoppingCartAdapter.setModifyCountInterface(this);
@@ -164,6 +166,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
             @Override
             public void onFail(Call<BaseBean<GouwucheResultBean>> call, Throwable t) {
 //                ptr_refresh.refreshComplete();
+                DialogUtil.closeProgress();
             }
         });
 
@@ -177,7 +180,6 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
             }
             shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
             shoppingCartAdapter.setTure(isTure);
-            shoppingCartAdapter.notifyDataSetChanged();
             ckAll.setChecked(false);
         }
         statistics(isTure);
@@ -200,7 +202,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
         }
 
         DingdanInstance.getInstance().zongjia = totalPrice + "";
-
+        LogUtilH.e(DingdanInstance.getInstance().zongjia +"***3**");
         DingdanInstance.getInstance().scoreGoods = scoreGoods;
 
         //跳转到支付界面
@@ -315,7 +317,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
      */
     @Override
     public void doIncrease(int position, View showCountView, boolean isChecked) {
-        ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(position);
+        /*ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(position);
         UpdateCartNumberPostBean updateCartNumberPostBean = new UpdateCartNumberPostBean();
         updateCartNumberPostBean.userId = UserInstance.getInstance().getUid();
         updateCartNumberPostBean.token = UserInstance.getInstance().getToken();
@@ -359,7 +361,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
             public void onFail(Call<BaseBean> call, Throwable t) {
 
             }
-        });
+        });*/
 
 
     }
@@ -497,7 +499,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                                 case Constants.HTTP_SUCCESS:
                                     statistics(shoppingCartAdapter.isTure());
                                     if (indext.size() > 0) {
-                                        for (int i = indext.size() - 1; i >= 0 ; i--) {
+                                        for (int i = indext.size() - 1; i >= 0; i--) {
                                             shoppingCartBeanList.remove((int) indext.get(i));
                                         }
                                     }
@@ -518,5 +520,59 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                 }
                 break;
         }
+    }
+
+    @Override
+    public void clicks(int type,int i, int value) {
+        ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(i);
+        shoppingCartBean.setCount(value);
+        UpdateCartNumberPostBean updateCartNumberPostBean = new UpdateCartNumberPostBean();
+        updateCartNumberPostBean.userId = UserInstance.getInstance().getUid();
+        updateCartNumberPostBean.token = UserInstance.getInstance().getToken();
+        updateCartNumberPostBean.goodsId = shoppingCartBean.goodsId;
+        updateCartNumberPostBean.number = value;
+        updateCartNumberPostBean.operateType = type;
+        updateCartNumberPostBean.productId = shoppingCartBean.productId;
+        ApiUtils.getApiService().updateCartNumber(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+            @Override
+            public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (scoreGoods == 1) {
+                            for (xiadanshangpinBean bean : DingdanInstance.getInstance().putongshangpindingdanList) {
+                                if (bean.goodsId == shoppingCartBean.goodsId) {
+                                    bean.number = value + "";
+                                }
+                            }
+                        } else {
+                            for (xiadanshangpinBean bean : DingdanInstance.getInstance().jifenshangpindingdanList) {
+                                if (bean.goodsId == shoppingCartBean.goodsId) {
+                                    bean.number = value + "";
+                                }
+                            }
+                        }
+                        shoppingCartBean.setCount(value);
+                        shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
+                        statistics(shoppingCartAdapter.isTure());
+                        break;
+                    case 500:
+                        if (value > 0) {
+                            shoppingCartBean.setCount(value - 1);
+                        } else {
+                            shoppingCartBean.setCount(1);
+                        }
+                        shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
+                        ToastUtil.showAtCenter(message.message);
+                        statistics(shoppingCartAdapter.isTure());
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean> call, Throwable t) {
+
+            }
+        });
     }
 }

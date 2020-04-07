@@ -24,6 +24,7 @@ import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.TaishengListView;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class MoreYouhuijuanActivity extends BaseHActivity {
     private YouhuiquanAdapter madapter;
     private int PAGE_NO = 1;
     private int PAGE_SIZE = 10;
+
     @Override
     public void initView() {
         setContentView(R.layout.activity_moreyouhuijuan);
@@ -70,7 +72,7 @@ public class MoreYouhuijuanActivity extends BaseHActivity {
         tvTitle.setText(getString(R.string.coupon_area));
     }
 
-   private void initViews() {
+    private void initViews() {
 
         /**
          * 下拉刷新
@@ -97,9 +99,7 @@ public class MoreYouhuijuanActivity extends BaseHActivity {
     }
 
 
-
-
-   private void getDoctors() {
+    private void getDoctors() {
         BaseListPostBean bean = new BaseListPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
@@ -203,7 +203,12 @@ public class MoreYouhuijuanActivity extends BaseHActivity {
 
                 }
             });
-            util.tv_discount.setText(bean.discount + "");
+            if (!TextsUtils.isEmpty(bean.discount + "")) {
+                util.tv_discount.setText(mcontext.getString(R.string.mony_code) + bean.discount + "");
+            } else {
+                util.tv_discount.setText(mcontext.getString(R.string.mony_code) + "0");
+            }
+
             util.tv_name.setText(bean.name);
             util.tv_tag.setText(bean.tag);
             util.tv_usedate.setText(bean.useDate);

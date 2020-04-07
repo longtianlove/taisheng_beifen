@@ -62,15 +62,14 @@ public class Constants {
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
         //测试服务器
-       /* public static String Host = "http://49.234.71.11:8080/";//有视频的
+      /*  public static String Host = "http://49.234.71.11:8080/";//有视频的
 //        public static String File_Host = "http://49.234.71.11:8888/";
         public static String File_Host = "http://49.234.71.11/jeecg-boot/sys/common/view/";
         public static String File_Host_head = "http://49.234.71.11:8888/img/";
         public static String WEB_SOCKET_URL = "ws://49.234.71.11:8879";*/
-
-       /* public static String Host = "http://192.168.1.15:8080/";//有视频的
+        /*public static String Host = "http://192.168.1.12:8080/";//有视频的
         //        public static String File_Host = "http://49.234.71.11:8888/";
-        public static String File_Host = "http://49.234.71.11/jeecg-boot/sys/common/view/";
+        public static String File_Host = "http://49.234.71.12/jeecg-boot/sys/common/view/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "ws://192.168.1.15:8879";*/
 

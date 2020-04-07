@@ -49,6 +49,7 @@ import com.taisheng.now.view.ScoreStar;
 import com.taisheng.now.view.StarGrade;
 import com.taisheng.now.view.TaishengListView;
 import com.tencent.trtc.TRTCCloudDef;
+import com.th.j.commonlibrary.utils.LogUtilH;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -118,19 +119,21 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
     public String chatType = "video";
     private String mUserId = "";
     private String mUserSig = "";
+    private List<DoctorCommentBean> scoreList;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_doctor_detail);
         ButterKnife.bind(this);
-        initViews();
     }
 
     @Override
     public void initData() {
+        scoreList=new ArrayList<>();
         madapter = new DoctorCommentAdapter(this);
         Intent intent = getIntent();
         doctorId = intent.getStringExtra("id");
+        initViews();
     }
 
     @Override
@@ -226,6 +229,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
         lvComments.setOnUpLoadListener(new TaishengListView.OnUpLoadListener() {
             @Override
             public void onUpLoad() {
+                PAGE_NO++;
                 getDoctorComment();
             }
         });
@@ -309,6 +313,9 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
         PAGE_NO = 1;
         PAGE_SIZE = 10;
         bean = new DoctorCommentPostBean();
+        if (scoreList!=null) {
+            scoreList.clear();
+        }
         getDoctorComment();
         getServiceNumber();
         getBeCommentedNum();
@@ -475,25 +482,23 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
         bean.token = UserInstance.getInstance().getToken();
         bean.userId = UserInstance.getInstance().getUid();
         bean.doctorId = doctorId;
+        LogUtilH.e("--6-");
         DialogUtil.showProgress(this, "");
         ApiUtils.getApiService().doctorScoreList(bean).enqueue(new TaiShengCallback<BaseBean<DoctorCommentResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DoctorCommentResultBean>> response, BaseBean<DoctorCommentResultBean> message) {
                 DialogUtil.closeProgress();
+                LogUtilH.e("--1-");
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-
                         if (message.result == null) {
                             return;
                         }
+                        LogUtilH.e("--2-");
                         if (message.result.records != null && message.result.records.size() > 0) {
                             lvComments.setLoading(false);
-                            if (PAGE_NO == 1) {
-                                madapter.mData.clear();
-                            }
-                            //有消息
-                            PAGE_NO++;
-                            madapter.mData.addAll(message.result.records);
+                            scoreList.addAll(message.result.records);
+                            madapter.setmData(scoreList);
                             if (message.result.records.size() < 10) {
                                 lvComments.setHasLoadMore(false);
                                 lvComments.setLoadAllViewText("暂时只有这么多评论");
@@ -501,12 +506,13 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
                             } else {
                                 lvComments.setHasLoadMore(true);
                             }
-                            madapter.notifyDataSetChanged();
+                            LogUtilH.e("--3-");
                         } else {
                             //没有消息
                             lvComments.setHasLoadMore(false);
                             lvComments.setLoadAllViewText("暂时只有这么多评论");
                             lvComments.setLoadAllFooterVisible(true);
+                            LogUtilH.e("--4-");
                         }
 
                         break;
@@ -517,7 +523,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
             @Override
             public void onFail(Call<BaseBean<DoctorCommentResultBean>> call, Throwable t) {
                 DialogUtil.closeProgress();
-
+                LogUtilH.e("--5-");
             }
         });
     }
@@ -525,17 +531,22 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
 
     class DoctorCommentAdapter extends BaseAdapter {
 
-        public Context mcontext;
+        private Context mcontext;
 
-        List<DoctorCommentBean> mData = new ArrayList<DoctorCommentBean>();
+        private List<DoctorCommentBean> mData ;
 
         public DoctorCommentAdapter(Context context) {
             this.mcontext = context;
         }
 
+        public void setmData(List<DoctorCommentBean> mData) {
+            this.mData = mData;
+            this.notifyDataSetChanged();
+        }
+
         @Override
         public int getCount() {
-            return mData.size();
+            return mData==null?0:mData.size();
         }
 
         @Override
@@ -553,7 +564,6 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
             // 声明内部类
             Util util = null;
             // 中间变量
-            final int flag = position;
             if (convertView == null) {
                 util = new Util();
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
@@ -570,7 +580,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
                 util = (Util) convertView.getTag();
             }
             DoctorCommentBean bean = mData.get(position);
-
+            LogUtilH.e(mData.size()+"---------mData.size()-------------------");
 
             String temp_url = Constants.Url.File_Host + bean.avatar;
             if (bean.avatar == null || "".equals(bean.avatar)) {
