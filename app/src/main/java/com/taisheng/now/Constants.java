@@ -57,6 +57,7 @@ public class Constants {
 //        public static String File_Host_head = "https://taishenghealth.com/image-video/";
 //        public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";
         //测试
+//        public static String Host = "http://192.168.1.19:8080/";
         public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
@@ -245,7 +246,7 @@ public class Constants {
             public static final String setphonbook = "jeecg-boot/app/watchPhoneBook/setphonbook";
 
             //重启接口
-            public static final String reboot = "jeecg-boot/app/watch/setting/reboot";
+            public static final String reboot = "jeecg-boot/app/watchcommond/restart";
 
             //            恢复出厂设置
             public static final String restoreFactorySettings = "jeecg-boot/app/watch/setting/restoreFactorySettings";
