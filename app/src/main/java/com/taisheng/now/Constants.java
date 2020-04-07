@@ -51,16 +51,16 @@ public class Constants {
 //      public static String File_Host = "http://193.112.19.18:8080/jeecg-boot/sys/common/view/";
 //      public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
         //正式服务器
-//        public static String Host = "https://taishenghealth.com/";
-        public static String Host = "http://192.168.1.18:8080/";
-        public static String File_Host = "https://taishenghealth.com/image-video/";
-        public static String File_Host_head = "https://taishenghealth.com/image-video/";
-        public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";
+////        public static String Host = "https://taishenghealth.com/";
+//        public static String Host = "http://192.168.1.18:8080/";
+//        public static String File_Host = "https://taishenghealth.com/image-video/";
+//        public static String File_Host_head = "https://taishenghealth.com/image-video/";
+//        public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";
         //测试
-       /* public static String Host = "https://test.taishenghealth.com/";
+        public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
-        public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";*/
+        public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
         //测试服务器
        /* public static String Host = "http://49.234.71.11:8080/";//有视频的
 //        public static String File_Host = "http://49.234.71.11:8888/";
