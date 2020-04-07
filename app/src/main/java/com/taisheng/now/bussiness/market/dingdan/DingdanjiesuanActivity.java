@@ -40,9 +40,11 @@ import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.WithListViewScrollView;
 import com.taisheng.now.view.WithScrolleViewListView;
+import com.taisheng.now.wxapi.WXPayUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
 import java.math.BigDecimal;
@@ -98,7 +100,8 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
     @BindView(R.id.btn_qujiesuan)
     TextView btnQujiesuan;
     private ArticleAdapter madapter;
-
+    private String discount = "0";
+    private String youfei = "0";
     @Override
     public void initView() {
         setContentView(R.layout.layout_diandanjiesuan);
@@ -128,8 +131,8 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
             viewYouhuijuanlabel.setVisibility(View.GONE);
         }
         lvJiesuan.setAdapter(madapter);
-        tvJianyouhuijuan.setText("-¥0");
-        tvYoufei.setText("￥0");
+        tvJianyouhuijuan.setText("-"+getString(R.string.mony_code)+"0");
+        tvYoufei.setText(getString(R.string.mony_code)+"0");
         if (DingdanInstance.getInstance().scoreGoods == 0) {
             llYoufei.setVisibility(View.GONE);
         } else {
@@ -163,7 +166,10 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                 startActivityForResult(intent2, 2);
                 break;
             case R.id.btn_qujiesuan:
-                if ("请选择".equals(TextsUtils.getTexts(tvYouhuijuan))) {
+                if (!WXPayUtil.isWxAppInstalled(this)){
+                    return;
+                }
+                if (TextsUtils.isEmpty(TextsUtils.getTexts(tvYouhuijuan))) {
                     DingdanInstance.getInstance().couponId = "";
                 }
                 CreateOrderPostBean bean = new CreateOrderPostBean();
@@ -178,7 +184,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                     bean.goodsList = DingdanInstance.getInstance().jifenshangpindingdanList;
                 }
                 bean.postFeeId = DingdanInstance.getInstance().postFeeId;
-                bean.message = TextsUtils.getHints(etBeizhu);
+                bean.message = TextsUtils.getTexts(etBeizhu);
                 ApiUtils.getApiService().createOrder(bean).enqueue(new TaiShengCallback<BaseBean<CreateOrderResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<CreateOrderResultBean>> response, BaseBean<CreateOrderResultBean> message) {
@@ -307,9 +313,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
         BasePostBean basePostBean = new BasePostBean();
         basePostBean.userId = UserInstance.getInstance().getUid();
         basePostBean.token = UserInstance.getInstance().getToken();
-
         if (DingdanInstance.getInstance().scoreGoods == 1) {
-
             //获取邮费
             ApiUtils.getApiService().getPostage(basePostBean).enqueue(new TaiShengCallback<BaseBean<PostageResultBean>>() {
                 @Override
@@ -319,13 +323,13 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                             youfei = message.result.money + "";
                             DingdanInstance.getInstance().youfei = message.result.money;
                             DingdanInstance.getInstance().postFeeId = message.result.id;
-                            tvYoufei.setText("￥" + youfei);
-//                            tv_zongjia.setText("¥" + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
+                            tvYoufei.setText(getString(R.string.mony_code) + youfei);
+//                            tv_zongjia.setText(getString(R.string.mony_code) + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
                             BigDecimal temp = new BigDecimal(DingdanInstance.getInstance().zongjia);
                             BigDecimal temp1 = temp.add(new BigDecimal(youfei));
                             BigDecimal temp2 = temp1.subtract(new BigDecimal(discount));
 
-                            tvZongjia.setText("¥" + temp2);
+                            tvZongjia.setText(getString(R.string.mony_code) + temp2);
 
                             break;
                     }
@@ -333,7 +337,6 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
 
                 @Override
                 public void onFail(Call<BaseBean<PostageResultBean>> call, Throwable t) {
-
                 }
             });
         } else {
@@ -342,8 +345,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
         }
     }
 
-    String discount = "0";
-    String youfei = "0";
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -359,13 +361,13 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                 break;
             case 2:
                 discount = DingdanInstance.getInstance().tv_discount;
-                tvYouhuijuan.setText("¥" + discount);
-                tvJianyouhuijuan.setText("-¥" + discount);
-//                tv_zongjia.setText("¥" + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
+                tvYouhuijuan.setText(getString(R.string.mony_code) + discount);
+                tvJianyouhuijuan.setText("-"+getString(R.string.mony_code) + discount);
+//                tv_zongjia.setText(getString(R.string.mony_code) + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
                 BigDecimal temp = new BigDecimal(DingdanInstance.getInstance().zongjia);
                 BigDecimal temp1 = temp.add(new BigDecimal(youfei));
                 BigDecimal temp2 = temp1.subtract(new BigDecimal(discount));
-                tvZongjia.setText("¥" + temp2);
+                tvZongjia.setText(getString(R.string.mony_code) + temp2);
                 break;
         }
     }
@@ -439,14 +441,10 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                 util.sdv_article.setImageURI(uri);
             }
             util.tv_name.setText(bean.name);
-
             if (DingdanInstance.getInstance().scoreGoods == 1) {
-                String temp_counterprice = bean.counterPrice.charAt(0) == '¥' ? bean.counterPrice : ("¥" + bean.counterPrice);
-                util.tv_counterprice.setText(temp_counterprice);
+                util.tv_counterprice.setText(mcontext.getString(R.string.mony_code)+bean.counterPrice);
             } else {
-                String temp_counterprice = bean.counterPrice.charAt(0) == '¥' ? bean.counterPrice : ("¥" + bean.counterPrice);
-                temp_counterprice = temp_counterprice.substring(1);
-                BigDecimal temp = new BigDecimal(temp_counterprice);
+                BigDecimal temp = new BigDecimal(bean.counterPrice);
                 util.tv_counterprice.setText(temp.multiply(new BigDecimal(100)) + "");
             }
 //            util.tv_retailprice.setText(bean.retailPrice + "");

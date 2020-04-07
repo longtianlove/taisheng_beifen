@@ -108,7 +108,6 @@
             android:layout_marginRight="@dimen/magin_12"
             android:background="@null"
             android:hint="@string/watch_msg11"
-            android:maxLength="5"
             android:textColor="@color/colorbbbbbb"
             android:textColorHint="@color/colorbbbbbb"
             android:textSize="@dimen/font14" />

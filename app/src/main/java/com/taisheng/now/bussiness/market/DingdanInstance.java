@@ -71,6 +71,6 @@ public class DingdanInstance {
 
 
 
-    public int youfei=10;
+    public double youfei=10.00;
 
 }

@@ -51,7 +51,7 @@
             android:gravity="center|left"
             android:lineSpacingMultiplier="1.2"
             android:maxLines="1"
-            android:text="健康美食搭配，助您身心健康助您身心健康助您身心健康助您身心健康"
+            android:text=""
             android:textColor="#ff333333"
             android:textStyle="bold"
             android:textSize="15sp" />
@@ -64,7 +64,7 @@
             android:layout_marginTop="4dp"
             android:gravity="center|left"
             android:maxLines="1"
-            android:text="纯天然无污染，野生枸杞，精挑细选，这是一段文字性描述。"
+            android:text=""
             android:textColor="#ff666666"
             android:textSize="12sp" />
 
@@ -104,7 +104,7 @@
                 android:id="@+id/tv_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="x 1"
+                android:text=""
                 android:gravity="center"
                 android:textColor="#ff333333"
                 android:layout_marginRight="80dp"

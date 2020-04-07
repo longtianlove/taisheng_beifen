@@ -24,6 +24,7 @@ import com.taisheng.now.http.TaiShengCallback;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -64,7 +65,13 @@ public class AdapterDate extends BaseAdapter {
 
 
     }
-
+    private   int getCurrentMonthLastDay() {
+        Calendar a = Calendar.getInstance();
+        a.set(Calendar.DATE, 1);//把日期设置为百当月第一天度
+        a.roll(Calendar.DATE, -1);//日期回滚一天，也就是最后一天
+        int maxDate = a.get(Calendar.DATE);
+        return maxDate;
+    }
     void qiandao() {
 //        int position = DateUtil.getFirstDayOfMonth() - 1+DateUtil.getPostion();
 //        status.set(position, true);
@@ -88,7 +95,7 @@ public class AdapterDate extends BaseAdapter {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         ArrayList<SignBean> signArraylist = message.result.list;
-                        if (signArraylist != null && !signArraylist.isEmpty()) {
+                        if (signArraylist != null && signArraylist.size()>0) {
                             for (int i = 0; i < signArraylist.size(); i++) {
                                 days.add(i + 1);
 
@@ -102,10 +109,17 @@ public class AdapterDate extends BaseAdapter {
 
                                 //初始化日历签到状态
                             }
-                            notifyDataSetChanged();
+
+                        }else {
+                            for (int i = 0; i < getCurrentMonthLastDay() ; i++) {
+                                //DateUtil.getFirstDayOfMonth()获取当月第一天是星期几，星期日是第一天，依次类推
+                                days.add(i+1);
+                                //0代表需要隐藏的item
+                                status.add(false);
+                                //false代表为签到状态
+                            }
                         }
-
-
+                        notifyDataSetChanged();
                         EventManage.qiaodaoSuccess event = new EventManage.qiaodaoSuccess(message.result.tomorrowPoints, message.result.points);
                         EventBus.getDefault().post(event);
                         break;

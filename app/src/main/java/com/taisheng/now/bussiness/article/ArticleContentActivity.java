@@ -115,6 +115,7 @@ public class ArticleContentActivity extends BaseIvActivity {
 //                                        + "<style>body{max-width:100% !important;}</style>" + "</head><body>";
 //                                webView.loadDataWithBaseURL(null, sHead + message.result.content + "</body></html>", "text/html", "utf-8", null);
                                 loadWeb();
+//                                webView.loadUrl(Constants.Url.Article.articleContent+articleId+"&type=app&userId="+UserInstance.getInstance().getUid());
                             } catch (Exception e) {
                                 Log.e("article", e.getMessage());
                             }
@@ -294,6 +295,7 @@ public class ArticleContentActivity extends BaseIvActivity {
      */
     private void loadWeb() {
         String urlpinjie = Constants.Url.Article.articleContent + articleId + "&type=app&userId=" + UserInstance.getInstance().getUid();
+        LogUtilH.e(urlpinjie+"=urlpinjie");
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -310,20 +312,27 @@ public class ArticleContentActivity extends BaseIvActivity {
 //                wb.setLayoutParams(params);
             }
         });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
         webView.loadUrl(urlpinjie);
+
         //是否可以后退
         webView.canGoBack();
         //是否可以前进
         webView.canGoForward();
         //声明WebSettings子类
         WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);//如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
+        webSettings.setDefaultFixedFontSize(28);
+        webSettings.setJavaScriptEnabled(false);//如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         //webSettings.setPluginsEnabled(true);//支持插件
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
         webSettings.setSupportZoom(false); //支持缩放，默认为true。是下面那个的前提。
         webSettings.setBuiltInZoomControls(false); //设置内置的缩放控件。若为false，则该WebView不可缩放
         webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
+//        webSettings.setTextZoom(100);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);  //自适应屏幕
         //其他细节操作
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT); //关闭webview中缓存
@@ -331,7 +340,7 @@ public class ArticleContentActivity extends BaseIvActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
 //        webView.addJavascriptInterface(new WebAppInterface(this), "android");
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
-        webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
+//        webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
         webSettings.setAppCacheEnabled(false);
 
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);//开启硬件加速
@@ -356,26 +365,13 @@ public class ArticleContentActivity extends BaseIvActivity {
         });
     }
 
-    private void showShare(String platform) {
-        final OnekeyShare oks = new OnekeyShare();
-        //指定分享的平台，如果为空，还是会调用九宫格的平台列表界面
-        if (platform != null) {
-            oks.setPlatform(platform);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (webView != null) {
+            webView.removeAllViews();
+            webView.destroy();
         }
-        oks.setTitle(getString(R.string.app_name));
-        // titleUrl QQ和QQ空间跳转链接
-        oks.setTitleUrl(Constants.Url.Article.articleContent + articleId);
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText("我是分享文本");
-        // imagePath是图片的本地路径，确保SDcard下面存在此张图片
-//        oks.setImagePath("/sdcard/test.jpg");
-        oks.setImageData(BitmapFactory.decodeResource(getResources(), R.drawable.icon_app));
-        // url在微信、Facebook等平台中使用
-        oks.setUrl(Constants.Url.Article.articleContent + articleId);
-        //启动分享
-        oks.show(MobSDK.getContext());
     }
-
-
 
 }

@@ -38,6 +38,7 @@ import com.taisheng.now.bussiness.market.gouwuche.GouwucheActivity;
 import com.taisheng.now.bussiness.market.youhuijuan.MoreYouhuijuanActivity;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.shipin.OpenGLBaseModule.GLThread;
 import com.taisheng.now.util.GlideImageLoader;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
@@ -45,6 +46,8 @@ import com.taisheng.now.view.WithListViewScrollView;
 import com.taisheng.now.view.WithScrolleViewListView;
 import com.taisheng.now.view.banner.BannerViewPager;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
+import com.th.j.commonlibrary.utils.LogUtilH;
+import com.th.j.commonlibrary.utils.TextsUtils;
 import com.th.j.commonlibrary.wight.RoundImgView;
 import com.youth.banner.Banner;
 
@@ -104,7 +107,6 @@ public class MarketFragment extends BaseFragment {
     RecyclerView.LayoutManager mLayoutManager;
     HotGoodsAdapter hotGoodsAdapter;
     ArticleAdapter madapter;
-    private View bannerView;
 
     @Nullable
     @Override
@@ -118,9 +120,9 @@ public class MarketFragment extends BaseFragment {
         return rootView;
     }
 
-    void initView(View rootView) {
+    private void initView(View rootView) {
         MainActivity activity = (MainActivity) getActivity();
-        activity.flRight.setOnClickListener(new View.OnClickListener() {
+        activity.ivRight.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -286,7 +288,7 @@ public class MarketFragment extends BaseFragment {
             public void onSuccess(Response<BaseBean<MallYouhuiquanResultBanner>> response, BaseBean<MallYouhuiquanResultBanner> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result.records != null && !message.result.records.isEmpty()) {
+                        if (message.result.records != null && message.result.records.size() > 0) {
                             youhuiquanAdapter.mData = message.result.records;
                             youhuiquanAdapter.notifyDataSetChanged();
                         }
@@ -296,7 +298,7 @@ public class MarketFragment extends BaseFragment {
 
             @Override
             public void onFail(Call<BaseBean<MallYouhuiquanResultBanner>> call, Throwable t) {
-
+                LogUtilH.e(t.toString() + "---------------1------1------------");
             }
         });
     }
@@ -353,7 +355,11 @@ public class MarketFragment extends BaseFragment {
                 public void onClick(View v) {
                 }
             });
-            util.tv_discount.setText("¥" + bean.discount + "");
+            if (!TextsUtils.isEmpty(bean.discount + "")) {
+                util.tv_discount.setText(mcontext.getString(R.string.mony_code) + bean.discount + "");
+            } else {
+                util.tv_discount.setText(mcontext.getString(R.string.mony_code) + "0.00");
+            }
             util.tv_name.setText(bean.name);
             util.tv_tag.setText(bean.tag);
             util.tv_usedate.setText(bean.useDate);
@@ -455,7 +461,11 @@ public class MarketFragment extends BaseFragment {
                         .apply(new RequestOptions().error(R.drawable.article_default).placeholder(R.drawable.article_default))
                         .into(holder2.sdv_header);
                 holder2.tv_goods_name.setText(hotGoodsBean.name);
-                holder2.tv_goods_jiage.setText("¥" + hotGoodsBean.retailPrice + "");
+                if (!TextsUtils.isEmpty(hotGoodsBean.retailPrice + "")) {
+                    holder2.tv_goods_jiage.setText(mContext.getString(R.string.mony_code) + hotGoodsBean.retailPrice + "");
+                } else {
+                    holder2.tv_goods_jiage.setText(mContext.getString(R.string.mony_code) + "0.00");
+                }
                 holder2.ll_all.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -580,7 +590,11 @@ public class MarketFragment extends BaseFragment {
 
             util.tv_name.setText(bean.name);
             util.tv_jianjie.setText(bean.brief);
-            util.tv_counterprice.setText(bean.retailPrice.multiply(new BigDecimal(100)) + "");
+            if (!TextsUtils.isEmpty(bean.retailPrice+"")){
+                util.tv_counterprice.setText(bean.retailPrice.multiply(new BigDecimal(100)) + "");
+            }else {
+                util.tv_counterprice.setText("0");
+            }
 //            util.tv_retailprice.setText(bean.counterPrice .multiply(new BigDecimal(100))+ "");
 
 //            util.tv_retailprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

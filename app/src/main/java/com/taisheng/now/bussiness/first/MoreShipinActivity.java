@@ -124,7 +124,6 @@ public class MoreShipinActivity extends BaseHActivity {
     }
 
 
-
     void getShipins() {
         MoreShipinPostBean bean = new MoreShipinPostBean();
         bean.userId = UserInstance.getInstance().getUid();
@@ -223,8 +222,8 @@ public class MoreShipinActivity extends BaseHActivity {
                 util.ll_shipinguanzhu = convertView.findViewById(R.id.ll_shipinguanzhu);
                 util.tv_shipinguanzhu = convertView.findViewById(R.id.tv_shipinguanzhu);
                 util.tv_shipinbofangshu = convertView.findViewById(R.id.tv_shipinbofangshu);
-                util.tv_dianzan = convertView.findViewById(R.id.tv_dianzan);
-                util.tv_guanzhu = convertView.findViewById(R.id.tv_guanzhu);
+                util.iv_shipindianzan = convertView.findViewById(R.id.iv_shipindianzan);
+                util.iv_shipinguanzhu = convertView.findViewById(R.id.iv_shipinguanzhu);
                 convertView.setTag(util);
             } else {
                 util = (Util) convertView.getTag();
@@ -233,15 +232,19 @@ public class MoreShipinActivity extends BaseHActivity {
             Util finalUtil = util;
 
             if ("NO".equals(bean.videoPraiseFlag)) {
-                finalUtil.tv_dianzan.setEnabled(true);
+                finalUtil.tv_shipindianzan.setSelected(false);
+                finalUtil.iv_shipindianzan.setSelected(false);
             } else {
-                finalUtil.tv_dianzan.setEnabled(false);
+                finalUtil.tv_shipindianzan.setSelected(true);
+                finalUtil.iv_shipindianzan.setSelected(true);
             }
 
             if ("NO".equals(bean.userCollected)) {
-                finalUtil.tv_guanzhu.setEnabled(true);
+                finalUtil.tv_shipinguanzhu.setSelected(false);
+                finalUtil.iv_shipinguanzhu.setSelected(false);
             } else {
-                finalUtil.tv_guanzhu.setEnabled(false);
+                finalUtil.tv_shipinguanzhu.setSelected(true);
+                finalUtil.iv_shipinguanzhu.setSelected(true);
             }
             util.ll_shipindianzan.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -257,7 +260,7 @@ public class MoreShipinActivity extends BaseHActivity {
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
                                 case Constants.HTTP_SUCCESS:
-                                    if (finalUtil.tv_dianzan.isEnabled()) {
+                                    if (!finalUtil.tv_shipindianzan.isSelected()) {
                                         String dianzanshuString = finalUtil.tv_shipindianzan.getText().toString();
                                         int dianzanshuint = Integer.parseInt(dianzanshuString) + 1;
                                         finalUtil.tv_shipindianzan.setText(dianzanshuint + "");
@@ -266,7 +269,8 @@ public class MoreShipinActivity extends BaseHActivity {
                                         int dianzanshuint = Integer.parseInt(dianzanshuString) - 1;
                                         finalUtil.tv_shipindianzan.setText(dianzanshuint + "");
                                     }
-                                    finalUtil.tv_dianzan.setEnabled(!finalUtil.tv_dianzan.isEnabled());
+                                    finalUtil.tv_shipindianzan.setSelected(!finalUtil.tv_shipindianzan.isSelected());
+                                    finalUtil.iv_shipindianzan.setSelected(!finalUtil.iv_shipindianzan.isSelected());
                                     break;
                             }
                         }
@@ -293,7 +297,7 @@ public class MoreShipinActivity extends BaseHActivity {
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
                                 case Constants.HTTP_SUCCESS:
-                                    if (finalUtil.tv_guanzhu.isEnabled()) {
+                                    if (!finalUtil.tv_shipinguanzhu.isSelected()) {
                                         String dianzanshuString = finalUtil.tv_shipinguanzhu.getText().toString();
                                         int dianzanshuint = Integer.parseInt(dianzanshuString) + 1;
                                         finalUtil.tv_shipinguanzhu.setText(dianzanshuint + "");
@@ -302,7 +306,8 @@ public class MoreShipinActivity extends BaseHActivity {
                                         int dianzanshuint = Integer.parseInt(dianzanshuString) - 1;
                                         finalUtil.tv_shipinguanzhu.setText(dianzanshuint + "");
                                     }
-                                    finalUtil.tv_guanzhu.setEnabled(!finalUtil.tv_guanzhu.isEnabled());
+                                    finalUtil.tv_shipinguanzhu.setSelected(!finalUtil.tv_shipinguanzhu.isSelected());
+                                    finalUtil.iv_shipinguanzhu.setSelected(!finalUtil.iv_shipinguanzhu.isSelected());
                                     break;
                             }
                         }
@@ -316,7 +321,7 @@ public class MoreShipinActivity extends BaseHActivity {
                 }
             });
 
-
+            util.gsyVideoPlayer.setEnlargeImageRes(R.drawable.icon_full);
             util.gsyVideoPlayer.loadCoverImage(bean.videoBanner, R.mipmap.health01);
             util.gsyVideoPlayer.setUpLazy(bean.videoUrl, true, null, null, "");
             //增加title
@@ -365,8 +370,8 @@ public class MoreShipinActivity extends BaseHActivity {
             View ll_shipinguanzhu;
             TextView tv_shipinguanzhu;
             TextView tv_shipinbofangshu;
-            TextView tv_dianzan;
-            TextView tv_guanzhu;
+            ImageView iv_shipindianzan;
+            ImageView iv_shipinguanzhu;
         }
 
     }

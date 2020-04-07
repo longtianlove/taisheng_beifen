@@ -204,7 +204,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:background="#fff"
-                        android:divider="#fff"
+                        android:divider="@null"
                         android:dividerHeight="10dp"
                         android:footerDividersEnabled="false"
                         android:headerDividersEnabled="false"

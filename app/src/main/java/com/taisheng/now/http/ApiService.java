@@ -258,22 +258,13 @@ public interface ApiService {
     @POST(Constants.Url.Watch.watchWarningupdateBykey)
     Call<BaseBean> watchWarningupdateBykey(@Body YujingxinxiSetYiduPostBean bean);
 
-//
-//    @POST(Constants.Url.Watch.getWatchTakepillsList)
-//    Call<BaseBean<ChiyaoLIstResultBean>> getWatchTakepillsList(@Body ChiyaolistPostBean bean);
+
+    @POST(Constants.Url.Watch.getWatchTakepillsList)
+    Call<BaseBean<ChiyaoLIstResultBean>> getWatchTakepillsList(@Body ChiyaolistPostBean bean);
 
 
-
-    @POST(Constants.Url.Watch.remindList)
-    Call<BaseBean<ChiyaoLIstResultBean>> remindList(@Body ChiyaolistPostBean bean);
-
-
-//    @POST(Constants.Url.Watch.setWatchTakepills)
-//    Call<BaseBean> setWatchTakepills(@Body SetChiyaoPostBean bean);
-
-
-    @POST(Constants.Url.Watch.setRemind)
-    Call<BaseBean>  setRemind(@Body SetChiyaoPostBean bean);
+    @POST(Constants.Url.Watch.setWatchTakepills)
+    Call<BaseBean> setWatchTakepills(@Body SetChiyaoPostBean bean);
 
 //    @POST(Constants.Url.Watch.setWatchPhbx)
 //    Call<BaseBean> setWatchPhbx(@Body SetTongxunluPostBean bean);

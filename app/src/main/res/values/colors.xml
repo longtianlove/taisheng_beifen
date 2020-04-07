@@ -18,6 +18,7 @@
     <color name="half_transparent_black">#BB000000</color>
 
     <color name="light_black">#141414</color>
+    <color name="colord0d0d0">#0d0d0d</color>
 
 
     <color name="SelectedTabIndicatorColor">@color/color00c8aa</color>

@@ -41,6 +41,7 @@ import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.GlideImageLoader;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.GuigeLabelWrapLayout;
+import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.SpanUtil;
 import com.th.j.commonlibrary.utils.TextsUtils;
 import com.youth.banner.Banner;
@@ -456,28 +457,33 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         //商品轮播图
-                        if (message.result.goodsEntity != null && message.result.goodsEntity.gallery != null && message.result.goodsEntity.gallery.size() > 0) {
+                        if (message.result.goodsEntity != null) {
                             ArrayList<String> pictureUrls = new ArrayList<>();
-                            for (String urlTemp : message.result.goodsEntity.gallery) {
-                                pictureUrls.add(urlTemp);
+                            if ( message.result.goodsEntity.gallery != null && message.result.goodsEntity.gallery.size() > 0){
+                                for (String urlTemp : message.result.goodsEntity.gallery) {
+                                    pictureUrls.add(urlTemp);
+                                }
                             }
                             bannerContaner.setImageLoader(new GlideImageLoader());
                             bannerContaner.setImages(pictureUrls);
                             bannerContaner.start();
-
                             scoreGoods = message.result.goodsEntity.scoreGoods;
                             if (scoreGoods == 1) {
                                 tv_jifenlabel.setVisibility(View.GONE);
                                 tv_retailprice.setVisibility(View.VISIBLE);
                                 tv_retailprice.setVisibility(View.VISIBLE);
-                                tv_retailprice.setText(TextsUtils.span(getString(R.string.mony_code) + message.result.goodsEntity.retailPrice));
+                                tv_retailprice.setText(TextsUtils.span(getString(R.string.mony_code) +  TextsUtils.isEmptys(message.result.goodsEntity.retailPrice+"","0.00")));
                                 SpanUtil.create()
-                                        .addSection(getString(R.string.mony_code) + message.result.goodsEntity.counterPrice)
+                                        .addSection(getString(R.string.mony_code) + TextsUtils.isEmptys(message.result.goodsEntity.counterPrice+"","0.00"))
                                         .setAbsSize(getString(R.string.mony_code) + message.result.goodsEntity.counterPrice + "", 40)
                                         .setRelSize(getString(R.string.mony_code), 0.6f)
                                         .showIn(tv_counterprice);
                             } else {
-                                tv_counterprice.setText(message.result.goodsEntity.retailPrice.multiply(new BigDecimal(100)) + "");
+                                if (TextsUtils.isEmpty(message.result.goodsEntity.retailPrice+"")){
+                                    tv_counterprice.setText("0");
+                                }else {
+                                    tv_counterprice.setText(message.result.goodsEntity.retailPrice.multiply(new BigDecimal(100)) + "");
+                                }
                                 tv_jifenlabel.setVisibility(View.VISIBLE);
                             }
                             counterPrice = message.result.goodsEntity.retailPrice;
@@ -497,11 +503,9 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                             picUrl = message.result.goodsEntity.picUrl;
                             sdv_shangpin.setImageURI(uri);
                             if (scoreGoods == 1) {
-                                tv_price.setText("￥" + message.result.goodsEntity.counterPrice + "");
-
+                                tv_price.setText(getString(R.string.mony_code) + message.result.goodsEntity.counterPrice + "");
                             } else {
                                 tv_price.setText("" + message.result.goodsEntity.counterPrice.multiply(new BigDecimal(100)) + "");
-
                             }
 
                         }
@@ -509,8 +513,8 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                         if (message.result.goodsSpecificationEntities != null && message.result.goodsSpecificationEntities.size() > 0) {
                             tv_guige.setText(message.result.goodsSpecificationEntities.get(0).getName());
                             guige_list = new ArrayList<>();
-                            for (int i = 0; i < message.result.goodsSpecificationEntities.get(0).getValueList().size(); i++) {
-                                ValueList tempVauleList = message.result.goodsSpecificationEntities.get(0).getValueList().get(i);
+                            for (int i = 0; i < message.result.goodsSpecificationEntities.size(); i++) {
+                                ValueList tempVauleList = message.result.goodsSpecificationEntities.get(i).getValueList().get(0);
                                 guige_list.add(tempVauleList.getValue());
                             }
 
@@ -567,7 +571,7 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                                             counterPrice = bean.price;
 //                                            tv_price.setText(counterPrice + "");
                                             if (scoreGoods == 1) {
-                                                tv_price.setText("￥" + counterPrice + "");
+                                                tv_price.setText(getString(R.string.mony_code) + counterPrice + "");
 
                                             } else {
                                                 tv_price.setText("" + counterPrice.multiply(new BigDecimal(100)) + "");
@@ -581,7 +585,7 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                                         counterPrice = bean.price;
 //                                        tv_price.setText(counterPrice + "");
                                         if (scoreGoods == 1) {
-                                            tv_price.setText("￥" + counterPrice + "");
+                                            tv_price.setText(getString(R.string.mony_code) + counterPrice + "");
 
                                         } else {
                                             tv_price.setText("" + counterPrice.multiply(new BigDecimal(100)) + "");
@@ -604,9 +608,16 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
 
             @Override
             public void onFail(Call<BaseBean<JsonRootBean>> call, Throwable t) {
-
             }
         });
 
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (wv_shangpinxiangqing != null) {
+            wv_shangpinxiangqing.removeAllViews();
+            wv_shangpinxiangqing.destroy();
+        }
     }
 }

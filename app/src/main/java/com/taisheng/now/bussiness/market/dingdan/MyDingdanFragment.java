@@ -34,6 +34,7 @@ import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.TaishengListView;
 import com.taisheng.now.view.WithScrolleViewListView;
+import com.taisheng.now.wxapi.WXPayUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -271,6 +272,9 @@ public class MyDingdanFragment extends BaseFragment {
 
                         @Override
                         public void onClick(View v) {
+                            if (!WXPayUtil.isWxAppInstalled(getActivity())){
+                                return;
+                            }
                             WexinZhifuPostBean bean1 = new WexinZhifuPostBean();
                             bean1.orderId = bean.orderId;
                             DingdanInstance.getInstance().orderId=bean.orderId;
@@ -422,6 +426,7 @@ public class MyDingdanFragment extends BaseFragment {
                                 public void onSuccess(Response<BaseBean> response, BaseBean message) {
                                     switch (message.code) {
                                         case Constants.HTTP_SUCCESS:
+                                            PAGE_NO = 1;
                                             ToastUtil.showAtCenter("已确认");
                                             getDoctors();
                                             break;

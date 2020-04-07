@@ -80,7 +80,7 @@ public class UpdatePasswordFirstActivity extends BaseHActivity implements LoginV
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s != null && s.length() > 0) {
+                if (s != null && s.length() > 5) {
                     tvDone.setEnabled(true);
                 } else {
                     tvDone.setEnabled(false);

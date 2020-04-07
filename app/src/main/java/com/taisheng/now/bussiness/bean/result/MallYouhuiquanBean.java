@@ -8,7 +8,7 @@ public class MallYouhuiquanBean {
     public String name;
     public String tag;
     public String useDate;
-    public int discount;
+    public BigDecimal discount;
 
     public BigDecimal min;
 

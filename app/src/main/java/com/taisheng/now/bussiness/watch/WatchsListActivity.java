@@ -28,6 +28,7 @@ import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
 import com.taisheng.now.view.WithScrolleViewListView;
+import com.th.j.commonlibrary.utils.TextsUtils;
 import com.th.j.commonlibrary.wight.CircleImageView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -247,7 +248,9 @@ public class WatchsListActivity extends BaseIvActivity {
                             .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(util.sdv_header);
             util.tv_nickname.setText(bean.nickName);
-            util.tv_relationship.setText("(我是TA的" + bean.deviceRelation + ")");
+            if (!TextsUtils.isEmpty(bean.deviceRelation)){
+                util.tv_relationship.setText("(我是TA的" + bean.deviceRelation + ")");
+            }
             StringBuffer stringBuffer = new StringBuffer(bean.phoneNumber);
             stringBuffer.insert(3, " ");
             stringBuffer.insert(8, " ");

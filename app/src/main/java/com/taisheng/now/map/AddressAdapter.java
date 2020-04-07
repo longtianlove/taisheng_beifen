@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.taisheng.now.R;
+import com.taisheng.now.evbusbean.BaiduSearchAddr;
 
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import java.util.List;
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.StateHolder> {
 
     private Context context;
-    public List<SuggestionResult.SuggestionInfo> mdatas;
+    public List<BaiduSearchAddr> mdatas;
 
     public int mposition = -1;
 
@@ -33,7 +34,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.StateHol
         this.context = context;
     }
 
-    public void setMdatas(List<SuggestionResult.SuggestionInfo> mdatas) {
+    public void setMdatas(List<BaiduSearchAddr> mdatas) {
         this.mdatas = mdatas;
         this.notifyDataSetChanged();
     }
@@ -46,22 +47,15 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.StateHol
     @Override
     public void onBindViewHolder(final StateHolder holder, final int position) {
         if (null == mdatas || mdatas.size() == 0) return;
-        SuggestionResult.SuggestionInfo suggestionInfo = mdatas.get(position);
+        BaiduSearchAddr searchAddr = mdatas.get(position);
 
-
-       /* if (bean.address != null && !"".equals(bean.address)) {
-            holder.tv_address.setText(bean.address);
-        }
-        if (bean.name != null && !"".equals(bean.name)) {
-            holder.tv_name.setText(bean.name);
-        }*/
-
-        if (mposition == position) {
-            holder.iv_selected.setVisibility(View.VISIBLE);
+        holder.tv_address.setText(searchAddr.getAddr());
+        holder.tv_name.setText(searchAddr.getKey());
+        if (position == 0) {
+            holder.iv_dot.setBackgroundResource(R.drawable.circle_green);
         } else {
-            holder.iv_selected.setVisibility(View.GONE);
+            holder.iv_dot.setBackgroundResource(R.drawable.circle_grey);
         }
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
                                                @Override
@@ -95,13 +89,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.StateHol
     public class StateHolder extends RecyclerView.ViewHolder {
         public TextView tv_name;
         public TextView tv_address;
-        public ImageView iv_selected;
+        public ImageView iv_dot;
 
         public StateHolder(View itemView) {
             super(itemView);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_address = (TextView) itemView.findViewById(R.id.tv_address);
-            iv_selected = (ImageView) itemView.findViewById(R.id.iv_selected);
+            iv_dot = (ImageView) itemView.findViewById(R.id.iv_dot);
         }
     }
 }

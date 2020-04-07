@@ -18,6 +18,8 @@ import com.taisheng.now.R;
 import com.taisheng.now.bussiness.bean.result.xiadanshangpinBean;
 import com.taisheng.now.bussiness.market.DingdanInstance;
 import com.taisheng.now.bussiness.market.ShangPinxiangqingActivity;
+import com.taisheng.now.view.AmountView2;
+import com.th.j.commonlibrary.interfaces.ILvAmountView;
 import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.wight.RoundImgView;
 
@@ -42,9 +44,14 @@ public class ShoppingCartAdapter extends BaseAdapter {
     private ModifyCountInterface modifyCountInterface;
     private Context context;
     private boolean isTure;
+    private ILvAmountView amountView;
 
     public ShoppingCartAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setAmountView(ILvAmountView amountView) {
+        this.amountView = amountView;
     }
 
     public void setShoppingCartBeanList(List<ShoppingCartBean> shoppingCartBeanList) {
@@ -114,7 +121,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
         xbean.goodsId=shoppingCartBean.goodsId;
         xbean.name=shoppingCartBean.shoppingName;
-        xbean.counterPrice="¥"+shoppingCartBean.price+"";
+        xbean.counterPrice=shoppingCartBean.price+"";
 //        xbean.retailPrice=retailPrice;
         xbean.number=shoppingCartBean.count+"";
         xbean.picUrl=shoppingCartBean.imageUrl;
@@ -161,8 +168,8 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
         }
         holder.tvCommodityNum.setText(" X"+shoppingCartBean.getCount()+"");
-        holder.tvCommodityShowNum.setText(shoppingCartBean.getCount()+"");
-//        ImageLoader.getInstance().displayImage(shoppingCartBean.getImageUrl(),holder.ivShowPic);
+        holder.av_num.setCurrentValue(shoppingCartBean.getCount());
+//        holder.tvCommodityShowNum.setText(shoppingCartBean.getCount()+"");
         //单选框按钮
         holder.ckOneChose.setOnClickListener(
                 new View.OnClickListener() {
@@ -239,18 +246,31 @@ public class ShoppingCartAdapter extends BaseAdapter {
                     }
                 }
         );
+
+        holder.av_num.setOnChangeClick(new AmountView2.OnChangeClick() {
+            @Override
+            public void onChangeds(int type,int value) {
+                if (amountView != null) {
+                    holder.av_num.setTag(position);
+                    int tag = (int) holder.av_num.getTag();
+                    amountView.clicks(type,tag, value);
+                }
+            }
+        });
+
+
         //增加按钮
         holder.ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modifyCountInterface.doIncrease(position, holder.tvCommodityShowNum, holder.ckOneChose.isChecked());//暴露增加接口
+//                modifyCountInterface.doIncrease(position, holder.tvCommodityShowNum, holder.ckOneChose.isChecked());//暴露增加接口
             }
         });
         //删减按钮
         holder.ivSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modifyCountInterface.doDecrease(position, holder.tvCommodityShowNum, holder.ckOneChose.isChecked());//暴露删减接口
+//                modifyCountInterface.doDecrease(position, holder.tvCommodityShowNum, holder.ckOneChose.isChecked());//暴露删减接口
             }
         });
 
@@ -270,9 +290,11 @@ public class ShoppingCartAdapter extends BaseAdapter {
     //初始化控件
     class ViewHolder {
         View ll_all;
-        TextView tvCommodityName, tvCommodityAttr, tvCommodityPrice, tvCommodityNum, tvCommodityShowNum,ivSub, ivAdd;
+        TextView tvCommodityName, tvCommodityAttr, tvCommodityPrice, tvCommodityNum,ivSub, ivAdd;
         CheckBox ckOneChose;
-        RoundImgView sdv_article;;
+        RoundImgView sdv_article;
+        AmountView2 av_num;
+
         public ViewHolder(View itemView) {
             ll_all=itemView.findViewById(R.id.ll_all);
             ckOneChose = (CheckBox) itemView.findViewById(R.id.ck_chose);
@@ -282,8 +304,9 @@ public class ShoppingCartAdapter extends BaseAdapter {
             tvCommodityAttr = (TextView) itemView.findViewById(R.id.tv_commodity_attr);
             tvCommodityPrice = (TextView) itemView.findViewById(R.id.tv_commodity_price);
             tvCommodityNum = (TextView) itemView.findViewById(R.id.tv_commodity_num);
-            tvCommodityShowNum = (TextView) itemView.findViewById(R.id.tv_commodity_show_num);
+//            tvCommodityShowNum = (TextView) itemView.findViewById(R.id.tv_commodity_show_num);
             sdv_article=itemView.findViewById(R.id.sdv_article);
+            av_num=itemView.findViewById(R.id.av_num);
 
 
         }

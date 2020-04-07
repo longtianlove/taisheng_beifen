@@ -27,6 +27,7 @@ import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.view.TaishengListView;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -49,8 +50,6 @@ public class FenleiMarketTabFragment extends BaseFragment {
 
 
     MaterialDesignPtrFrameLayout ptr_refresh;
-
-
 
 
     @Nullable
@@ -79,8 +78,6 @@ public class FenleiMarketTabFragment extends BaseFragment {
         });
 
 
-
-
         lv_articles = (TaishengListView) rootView.findViewById(R.id.lv_articles);
         madapter = new ArticleAdapter(mActivity);
         lv_articles.setAdapter(madapter);
@@ -97,11 +94,7 @@ public class FenleiMarketTabFragment extends BaseFragment {
         PAGE_SIZE = 10;
         bean = new MarketTypePostBean();
         getArticles();
-
     }
-
-
-
 
 
     int PAGE_NO = 1;
@@ -175,7 +168,6 @@ public class FenleiMarketTabFragment extends BaseFragment {
     }
 
 
-
     class ArticleAdapter extends BaseAdapter {
 
         public Context mcontext;
@@ -204,7 +196,7 @@ public class FenleiMarketTabFragment extends BaseFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // 声明内部类
-           Util util = null;
+            Util util = null;
             // 中间变量
             final int flag = position;
             if (convertView == null) {
@@ -214,9 +206,9 @@ public class FenleiMarketTabFragment extends BaseFragment {
                 util.ll_all = convertView.findViewById(R.id.ll_all);
                 util.sdv_article = convertView.findViewById(R.id.sdv_article);
                 util.tv_name = convertView.findViewById(R.id.tv_name);
-                util.tv_jianjie=convertView.findViewById(R.id.tv_jianjie);
+                util.tv_jianjie = convertView.findViewById(R.id.tv_jianjie);
                 util.tv_counterprice = convertView.findViewById(R.id.tv_counterprice);
-                util.tv_jifenlabel=convertView.findViewById(R.id.tv_jifenlabel);
+                util.tv_jifenlabel = convertView.findViewById(R.id.tv_jifenlabel);
                 util.tv_retailprice = convertView.findViewById(R.id.tv_retailprice);
 
                 convertView.setTag(util);
@@ -247,17 +239,31 @@ public class FenleiMarketTabFragment extends BaseFragment {
             util.tv_name.setText(bean.name);
             util.tv_jianjie.setText(bean.brief);
             //上面还有一个
-            if("积分兑换".equals(typeName)){
-                util.tv_counterprice.setText(bean.retailPrice.multiply(new BigDecimal(100)) + "");
-                util.tv_jifenlabel.setVisibility(View.VISIBLE);
-                util.tv_retailprice.setVisibility(View.GONE);
+            if ("积分兑换".equals(typeName)) {
+                if (TextsUtils.isEmpty(bean.retailPrice + "")) {
+                    util.tv_counterprice.setText(0 + "");
+                    util.tv_jifenlabel.setVisibility(View.VISIBLE);
+                    util.tv_retailprice.setVisibility(View.GONE);
+                } else {
+                    util.tv_counterprice.setText(bean.retailPrice.multiply(new BigDecimal(100)) + "");
+                    util.tv_jifenlabel.setVisibility(View.VISIBLE);
+                    util.tv_retailprice.setVisibility(View.GONE);
+                }
+
 //                util.tv_retailprice.setText(bean.counterPrice .multiply(new BigDecimal(100))+ "");
-            }else{
+            } else {
+                if (TextsUtils.isEmpty(bean.retailPrice + "")) {
+                    util.tv_counterprice.setText(mcontext.getString(R.string.mony_code) + "0.00");
+                } else {
+                    util.tv_counterprice.setText(mcontext.getString(R.string.mony_code) + bean.retailPrice + "");
+                }
+                if (TextsUtils.isEmpty(bean.counterPrice + "")) {
+                    util.tv_retailprice.setText(mcontext.getString(R.string.mony_code) + "0.00");
+                } else {
+                    util.tv_retailprice.setText(mcontext.getString(R.string.mony_code) + bean.counterPrice + "");
+                }
                 util.tv_jifenlabel.setVisibility(View.GONE);
                 util.tv_retailprice.setVisibility(View.VISIBLE);
-                util.tv_counterprice.setText("¥"+bean.retailPrice + "");
-                util.tv_retailprice.setText("¥"+bean.counterPrice + "");
-
             }
 
             util.tv_retailprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
