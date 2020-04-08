@@ -101,7 +101,7 @@ public class DizhiBianjiActivity extends BaseIvActivity {
 
 
         iv_dizhidefault = findViewById(R.id.iv_dizhidefault);
-        iv_dizhidefault.setSelected(false);
+        iv_dizhidefault.setSelected(true);
         ll_dizhidefault = findViewById(R.id.ll_dizhidefault);
         ll_dizhidefault.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -472,10 +472,10 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                                 tv_jifenlabel.setVisibility(View.GONE);
                                 tv_retailprice.setVisibility(View.VISIBLE);
                                 tv_retailprice.setVisibility(View.VISIBLE);
-                                tv_retailprice.setText(TextsUtils.span(getString(R.string.mony_code) +  TextsUtils.isEmptys(message.result.goodsEntity.retailPrice+"","0.00")));
+                                tv_retailprice.setText(TextsUtils.span(getString(R.string.mony_code) +  TextsUtils.isEmptys(message.result.goodsEntity.counterPrice+"","0.00")));
                                 SpanUtil.create()
-                                        .addSection(getString(R.string.mony_code) + TextsUtils.isEmptys(message.result.goodsEntity.counterPrice+"","0.00"))
-                                        .setAbsSize(getString(R.string.mony_code) + message.result.goodsEntity.counterPrice + "", 40)
+                                        .addSection(getString(R.string.mony_code) + TextsUtils.isEmptys(message.result.goodsEntity.retailPrice+"","0.00"))
+                                        .setAbsSize(getString(R.string.mony_code) + message.result.goodsEntity.retailPrice + "", 40)
                                         .setRelSize(getString(R.string.mony_code), 0.6f)
                                         .showIn(tv_counterprice);
                             } else {

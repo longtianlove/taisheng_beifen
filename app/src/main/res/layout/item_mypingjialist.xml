@@ -10,7 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:layout_marginTop="@dimen/margin_14"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -36,7 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
-        android:gravity="center"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
         android:text="这是我的评价内容。自己组织文字叙述。自己组织文字叙述。自己组织文字叙述自己组织文字叙述自己组织文字叙述。"
         android:textColor="#ff666666"
         android:textSize="12sp" />
@@ -46,6 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
         android:background="@drawable/item_doctor_background"
         android:orientation="horizontal"
         android:paddingBottom="15dp"
@@ -192,6 +197,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginTop="9dp"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:layout_marginBottom="@dimen/magin_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -200,7 +208,6 @@
             android:layout_height="8dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/icon_time"
-
             />
 
         <TextView
@@ -208,11 +215,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="@dimen/magin_5"
             android:text="2019-10-24 10:29:43"
             android:textColor="#999999"
             android:textSize="10sp" />
     </LinearLayout>
+
+    <TextView
+        style="@style/my_line_h"
+        android:background="@color/colorf6f6f6"
+        android:layout_height="@dimen/size_10"/>
 
 
 </LinearLayout>

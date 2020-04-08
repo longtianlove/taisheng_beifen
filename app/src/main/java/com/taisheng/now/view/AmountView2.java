@@ -61,126 +61,126 @@ public class AmountView2 extends FrameLayout {
 
     private void initView() {
         rootView = LayoutInflater.from(mContext).inflate(R.layout.layout_amount_view, null);
-
         amountEt = (EditText) rootView.findViewById(R.id.amount_et);
-
+        amountEt.setFocusable(false);
+        amountEt.setFocusableInTouchMode(false);
 //        amountEt.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
 
-            amountEt.setImeOptions(EditorInfo.IME_ACTION_SEND);
-            amountEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    // after changed, check minValue and maxValue. change button enable. call listener.
-                    if (TextUtils.isEmpty((amountEt.getText().toString()))) {
+        amountEt.setImeOptions(EditorInfo.IME_ACTION_SEND);
+        amountEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                // after changed, check minValue and maxValue. change button enable. call listener.
+                if (TextUtils.isEmpty((amountEt.getText().toString()))) {
+                    minValue = minValue;
+                    amountEt.setHint(String.valueOf(minValue));
+                } else {
+                    int amount = Integer.parseInt(amountEt.getText().toString());
+
+                    if (amount < minValue) {
                         minValue = minValue;
                         amountEt.setHint(String.valueOf(minValue));
+                    } else if (amount > maxValue) {
+                        minValue = minValue;
+                        amountEt.setText(String.valueOf(maxValue));
                     } else {
-                        int amount = Integer.parseInt(amountEt.getText().toString());
-
-                        if (amount < minValue) {
-                            minValue = minValue;
-                            amountEt.setHint(String.valueOf(minValue));
-                        } else if (amount > maxValue) {
-                            minValue = minValue;
-                            amountEt.setText(String.valueOf(maxValue));
+                        if (amount > minValue) {
+                            reduceBtn.setEnabled(true);
                         } else {
-                            if (amount > minValue) {
-                                reduceBtn.setEnabled(true);
-                            } else {
-                                reduceBtn.setEnabled(false);
-                            }
-                            if (amount < maxValue) {
-                                increaseBtn.setEnabled(true);
-                            } else {
-                                increaseBtn.setEnabled(false);
-                            }
-                            try {
-                                if (defaultNum > 1) {
-                                    int k = Integer.parseInt(amountEt.getText().toString());
-                                    int i = inputeSet(defaultNum, k);
-                                    if (i != -1) {
-                                        amountEt.setText(String.valueOf(i));
-                                    }
-                                }
-                            } catch (NumberFormatException e) {
-                                e.printStackTrace();
-                            }
-
+                            reduceBtn.setEnabled(false);
                         }
+                        if (amount < maxValue) {
+                            increaseBtn.setEnabled(true);
+                        } else {
+                            increaseBtn.setEnabled(false);
+                        }
+                        try {
+                            if (defaultNum > 1) {
+                                int k = Integer.parseInt(amountEt.getText().toString());
+                                int i = inputeSet(defaultNum, k);
+                                if (i != -1) {
+                                    amountEt.setText(String.valueOf(i));
+                                }
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-                    if (null != mOnChangeListener) {
-                        mOnChangeListener.onChanged(amountEt, Integer.parseInt(amountEt.getText().toString()));
-                    }
-                    if (mOnChangeListener2 != null) {
+                }
+                if (null != mOnChangeListener) {
+                    mOnChangeListener.onChanged(amountEt, Integer.parseInt(amountEt.getText().toString()));
+                }
+                if (mOnChangeListener2 != null) {
 //                                mOnChangeListener2.afterTextChanged(getCurrentValue()+"");
-                    }
-                    amountEt.setSelection(amountEt.getText().toString().length());
-                    return true;
                 }
-            });
-            amountEt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                amountEt.setSelection(amountEt.getText().toString().length());
+                return true;
+            }
+        });
+        amountEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
+            }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (mOnChangeListener2 != null) {
-                        mOnChangeListener2.onTextChanged();
-                    }
-
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (mOnChangeListener2 != null) {
+                    mOnChangeListener2.onTextChanged();
                 }
 
-                @Override
-                public void afterTextChanged(Editable s) {
-                    // after changed, check minValue and maxValue. change button enable. call listener.
-                    if (TextUtils.isEmpty(s.toString())) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // after changed, check minValue and maxValue. change button enable. call listener.
+                if (TextUtils.isEmpty(s.toString())) {
+                    minValue = minValue;
+                    amountEt.setHint(String.valueOf(minValue));
+                } else {
+                    int amount = Integer.parseInt(amountEt.getText().toString());
+
+                    if (amount < minValue) {
                         minValue = minValue;
                         amountEt.setHint(String.valueOf(minValue));
+                    } else if (amount > maxValue) {
+                        minValue = minValue;
+                        amountEt.setText(String.valueOf(maxValue));
                     } else {
-                        int amount = Integer.parseInt(amountEt.getText().toString());
-
-                        if (amount < minValue) {
-                            minValue = minValue;
-                            amountEt.setHint(String.valueOf(minValue));
-                        } else if (amount > maxValue) {
-                            minValue = minValue;
-                            amountEt.setText(String.valueOf(maxValue));
+                        if (amount > minValue) {
+                            reduceBtn.setEnabled(true);
                         } else {
-                            if (amount > minValue) {
-                                reduceBtn.setEnabled(true);
-                            } else {
-                                reduceBtn.setEnabled(false);
-                            }
-                            if (amount < maxValue) {
-                                increaseBtn.setEnabled(true);
-                            } else {
-                                increaseBtn.setEnabled(false);
-                            }
-                            try {
-                                if (defaultNum > 1) {
-                                    int k = Integer.parseInt(amountEt.getText().toString());
-                                    int i = inputeSet(defaultNum, k);
-                                    if (i != -1) {
-                                        amountEt.setText(String.valueOf(i));
-                                    }
+                            reduceBtn.setEnabled(false);
+                        }
+                        if (amount < maxValue) {
+                            increaseBtn.setEnabled(true);
+                        } else {
+                            increaseBtn.setEnabled(false);
+                        }
+                        try {
+                            if (defaultNum > 1) {
+                                int k = Integer.parseInt(amountEt.getText().toString());
+                                int i = inputeSet(defaultNum, k);
+                                if (i != -1) {
+                                    amountEt.setText(String.valueOf(i));
                                 }
-                            } catch (NumberFormatException e) {
-                                e.printStackTrace();
                             }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                             /*if (null != mOnChangeListener) {
                                 mOnChangeListener.onChanged(amountEt,getCurrentValue());
                             }
                             if (mOnChangeListener2 != null) {
                                 mOnChangeListener2.afterTextChanged(s);
                             }*/
-                        }
-                        amountEt.setSelection(amountEt.getText().toString().length());
                     }
-
+                    amountEt.setSelection(amountEt.getText().toString().length());
                 }
-            });
+
+            }
+        });
 
         reduceBtn = (TextView) rootView.findViewById(R.id.reduce_btn);
         reduceBtn.setOnClickListener(new OnClickListener() {
@@ -192,7 +192,7 @@ public class AmountView2 extends FrameLayout {
 
                 if (onChangeClick != null) {
                     int amount = Integer.parseInt(amountEt.getText().toString());
-                    onChangeClick.onChangeds(2,amount);
+                    onChangeClick.onChangeds(2, amount);
                 }
             }
         });
@@ -204,7 +204,7 @@ public class AmountView2 extends FrameLayout {
                 amountEt.setText(String.valueOf(Integer.parseInt(TextsUtils.isEmptys(amountEt.getText().toString(), "0")) + defaultNum));
                 if (onChangeClick != null) {
                     int amount = Integer.parseInt(amountEt.getText().toString());
-                    onChangeClick.onChangeds(1,amount);
+                    onChangeClick.onChangeds(1, amount);
                 }
 //                }
             }
@@ -325,7 +325,7 @@ public class AmountView2 extends FrameLayout {
     }
 
     public interface OnChangeClick {
-        void onChangeds(int type,int value);
+        void onChangeds(int type, int value);
     }
 
 

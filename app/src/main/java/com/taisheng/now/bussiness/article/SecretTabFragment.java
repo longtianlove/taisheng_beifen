@@ -190,8 +190,12 @@ public class SecretTabFragment extends BaseFragment {
                                 String time = DateUtil.getDatePoor2(Long.valueOf(DateUtil.getTime()) / 1000, Long.valueOf(DateUtil.dateToStamp(bean.fromMedicineTime)) / 1000);
                                 tv_year.setText(getString(R.string.home03) + time + getString(R.string.home04));
                             }
-                            tv_goo_at.setText(getString(R.string.home02) + bean.goodDiseases);
-
+                            if (!TextsUtils.isEmpty(bean.goodDiseases)){
+                                tv_goo_at.setVisibility(View.VISIBLE);
+                                tv_goo_at.setText(getString(R.string.home02) + bean.goodDiseases);
+                            }else {
+                                tv_goo_at.setVisibility(View.INVISIBLE);
+                            }
                             SpanUtil.create()
 //                            .addSection(String.valueOf(messageWaitTime) + "S"+"重新发送")  //添加带前景色的文字片段
                                     .addForeColorSection("好评率：", ContextCompat.getColor(getActivity(), R.color.color666666)) //设置相对字体

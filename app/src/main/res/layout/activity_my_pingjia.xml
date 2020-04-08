@@ -24,7 +24,6 @@
             android:id="@+id/lv_mypingluns"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/magin_12"
             android:background="@color/colorWhite"
             android:dividerHeight="@dimen/size_1"
             android:footerDividersEnabled="false"

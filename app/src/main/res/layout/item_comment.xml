@@ -100,16 +100,14 @@
 
             <TextView
                 android:id="@+id/tv_content"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:gravity="center"
-                android:maxLines="2"
+                android:layout_marginRight="@dimen/magin_12"
+                android:layout_marginTop="@dimen/margin_14"
                 android:ellipsize="end"
-                android:text="医术精湛，预测的病症很准，赞！医术精湛，预测的病症很
-准，赞！医术精湛，预测的病症很准，赞！"
-                android:textColor="#ff333333"
-                android:textSize="11sp" />
+                android:text="医术精湛，预测的病症很准，赞！医术精湛，预测的病症很准，赞！医术精湛，预测的病症很准，赞！"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/font12" />
 
         </LinearLayout>
 

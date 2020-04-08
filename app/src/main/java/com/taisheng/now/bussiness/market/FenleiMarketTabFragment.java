@@ -103,21 +103,14 @@ public class FenleiMarketTabFragment extends BaseFragment {
     void getArticles() {
         bean.pageNo = PAGE_NO;
         bean.pageSize = PAGE_SIZE;
-        switch (typeName) {
-            case "营养保健":
-                bean.type = "ad63e761d074716cd76202f78dacec56";
-                break;
-            case "食品滋补":
-                bean.type = "064387677d5ffb88f2b6ef4810e94af3";
-                break;
-            case "中药材":
-                bean.type = "aae5e9deb8fdec69b6e4982b9ee27214";
-                break;
-            case "积分兑换":
-                //下面还有一个
-                bean.type = "ad63e761d074716cd76202f78dacec55";
-                break;
-
+        if ("营养保健".equals(typeName)){
+            bean.type = "ad63e761d074716cd76202f78dacec56";
+        }else if ("食品滋补".equals(typeName)){
+            bean.type = "064387677d5ffb88f2b6ef4810e94af3";
+        }else if ("中药材".equals(typeName)){
+            bean.type = "aae5e9deb8fdec69b6e4982b9ee27214";
+        }else if ("积分兑换".equals(typeName)){
+            bean.type = "ad63e761d074716cd76202f78dacec55";
         }
         bean.token = UserInstance.getInstance().getToken();
         bean.userId = UserInstance.getInstance().getUid();
