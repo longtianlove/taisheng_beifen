@@ -15,6 +15,7 @@
         android:layout_marginRight="@dimen/magin_12"
         android:layout_marginTop="@dimen/magin_15"
         android:padding="@dimen/magin_12"
+        android:maxLength="500"
         android:background="@drawable/me_kapian_background"
         android:gravity="left|top"
         android:hint="有什么不足跟需要改进的地方，尽管提出来哟~您的建议是我们进步的动力！谢谢~"

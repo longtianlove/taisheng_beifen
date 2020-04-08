@@ -1,0 +1,127 @@
+<!--设置页面全屏显是-->
+<style type="text/css">
+	html {
+		height: 100%;
+		margin: 0;
+	}
+
+	body {
+		height: 100%;
+		margin: 0;
+	}
+</style>
+
+<head>
+	<meta charset="utf-8">
+	<title>ECharts</title>
+	<!-- 引入 echarts.js -->
+	<script src="echarts.min.js"></script>
+</head>
+
+<body>
+	<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	<div id="main" style="width: 100%;height:100%;"></div>
+	<script type="text/javascript">
+
+		var dom = document.getElementById("main");
+		var myChart = echarts.init(dom);
+		var option = {
+			xAxis: {
+				type: 'category',
+				data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+				axisLabel: {
+					show: true,
+					textStyle: {
+						color: ['#333333'],
+						fontSize:40
+					}
+				},
+				axisLine: {
+					color: ['#333333'],
+
+					lineStyle:{
+						type : 'dotted',
+						color: ['#00C8AA'],
+					},
+				},
+			},
+			yAxis: {
+				type: 'value',
+				axisLine: {
+					show: false,
+				},
+				axisLabel: {
+					show: true,
+					textStyle: {
+						color: ['#333333'],
+						fontSize:48
+					}
+				},
+
+				splitLine: {
+					show: false,
+					lineStyle:{
+						color: ['#000000'],
+						width: 0.5,
+						type: 'dotted'
+					}
+				}
+
+			},
+			tooltip: {
+				trigger: 'item',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        },
+        formatter: function (params) {
+            var color = params.color;//图例颜色
+            var htmlStr ='<div>';
+            /*htmlStr += params.name + '<br/>';//x轴的名称*/
+            
+            //为了保证和原来的效果一样，这里自己实现了一个点的效果
+            htmlStr += '<span style="margin-right:5px;display:inline-block;width:10px;height:10px;border-radius:5px;background-color:'+color+';"></span>';
+            
+            //添加一个汉字，这里你可以格式你的数字或者自定义文本内容
+            htmlStr += params.value + '次/分钟';
+            
+            htmlStr += '</div>';
+            
+            return htmlStr; 
+        }
+
+    },
+    series: [{
+    	data: [820, 932, 901, 934, 1290, 1330, 1320],
+    	type: 'line',
+
+    	itemStyle: {
+    		normal: {
+    			color: 'rgba(255, 2, 2, 1)',
+    			lineStyle:{
+    				color: 'rgba(204, 244, 238, 1)',
+    			}
+    		}
+    	},
+
+    },
+    {
+    	data: [800, 850, 860, 920, 1200, 1300, 1200],
+    	type: 'line',
+
+    	itemStyle: {
+    		normal: {
+    			color: 'rgba(255, 197, 0, 1)',
+    			lineStyle:{
+    				color: 'rgba(143, 230, 217, 1)',
+    			}
+    		}
+    	},
+
+    }
+    ]
+};
+myChart.setOption(option);
+
+</script>
+</body>
+</html>

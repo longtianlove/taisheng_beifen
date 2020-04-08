@@ -42,6 +42,7 @@
         android:layout_marginTop="@dimen/margin_14"
         android:background="@drawable/me_kapian_background"
         android:gravity="left|top"
+        android:maxLength="500"
         android:hint="针对本次咨询，您是否还满意？说说您的心得，分享给别的小伙伴吧"
         android:textColorHint="@color/color999999"
         android:textSize="@dimen/font12" />

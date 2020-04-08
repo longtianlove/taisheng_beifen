@@ -21,6 +21,7 @@ import com.taisheng.now.bussiness.market.ShangPinxiangqingActivity;
 import com.taisheng.now.view.AmountView2;
 import com.th.j.commonlibrary.interfaces.ILvAmountView;
 import com.th.j.commonlibrary.utils.LogUtilH;
+import com.th.j.commonlibrary.utils.TextsUtils;
 import com.th.j.commonlibrary.wight.RoundImgView;
 
 import java.math.BigDecimal;
@@ -162,9 +163,19 @@ public class ShoppingCartAdapter extends BaseAdapter {
         }
         holder.tvCommodityName.setText(shoppingCartBean.getShoppingName());
         if (scoreGoods == 1) {
-            holder.tvCommodityPrice.setText(shoppingCartBean.getPrice() + "");
+            if (!TextsUtils.isEmpty(shoppingCartBean.getPrice()+"")){
+                holder.tvCommodityPrice.setText(context.getString(R.string.mony_code)+shoppingCartBean.getPrice() + "");
+            }else {
+                holder.tvCommodityPrice.setText(context.getString(R.string.mony_code) + "0.00");
+
+            }
+
         }else{
-            holder.tvCommodityPrice.setText(shoppingCartBean.getPrice().multiply(new BigDecimal(100)) + "");
+            if (!TextsUtils.isEmpty(shoppingCartBean.getPrice()+"")){
+                holder.tvCommodityPrice.setText(shoppingCartBean.getPrice().multiply(new BigDecimal(100)) + "");
+            }else {
+                holder.tvCommodityPrice.setText(context.getString(R.string.mony_code) + "0");
+            }
 
         }
         holder.tvCommodityNum.setText(" X"+shoppingCartBean.getCount()+"");
