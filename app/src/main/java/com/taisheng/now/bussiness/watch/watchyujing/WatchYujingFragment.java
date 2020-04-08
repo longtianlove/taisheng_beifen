@@ -255,17 +255,23 @@ public class WatchYujingFragment extends BaseFragment {
             String temp = "监测信息通知";
             if (bean.warningType != null) {
                 switch (bean.warningType) {
-                    case "heart":
+                    case "1":
                         temp = "心率信息通知";
                         break;
-                    case "bpxy":
+                    case "2":
                         temp = "血压信息通知";
                         break;
-                    case "bphrt":
-                        temp = "心率信息通知";
+                    case "3":
+                        temp = "脉压差信息通知";
                         break;
-                    case "LK":
+                    case "4":
                         temp = "低电量通知";
+                        break;
+                    case "5":
+                        temp = "SOS预警通知";
+                        break;
+                    case "6":
+                        temp = "电子围栏预警通知";
                         break;
                     default:
                         temp = "监测信息通知";

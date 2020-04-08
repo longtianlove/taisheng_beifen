@@ -235,7 +235,7 @@ public class Constants {
             public static final String updateSosContactSetting = "jeecg-boot/app/emergencycontact/setting/sosContactConfig";
 
             //            手表预警记录-修改阅读状态
-            public static final String watchWarningupdateBykey = "jeecg-boot/app/watchWarning/updateBykey";
+            public static final String watchWarningupdateBykey = "jeecg-boot/app/alarmMessage/updateBykey";
 
 
             //            语音版吃药提醒-批量获取

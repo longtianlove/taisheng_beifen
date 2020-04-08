@@ -57,17 +57,23 @@ public class WatchMeYujingxinxiXiangqingActivity extends BaseIvActivity implemen
         tv_title = findViewById(R.id.tv_title);
         String temp;
         switch (warningType) {
-            case "heart":
+            case "1":
                 temp = "心率信息通知";
                 break;
-            case "bpxy":
+            case "2":
                 temp = "血压信息通知";
                 break;
-            case "bphrt":
-                temp = "心率信息通知";
+            case "3":
+                temp = "脉压差信息通知";
                 break;
-            case "LK":
+            case "4":
                 temp = "低电量通知";
+                break;
+            case "5":
+                temp = "SOS预警通知";
+                break;
+            case "6":
+                temp = "电子围栏预警通知";
                 break;
             default:
                 temp = "监测信息通知";
