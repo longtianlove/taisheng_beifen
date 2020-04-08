@@ -121,6 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
@@ -213,7 +214,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
+                    android:visibility="gone"
                     android:paddingLeft="50dp"
                     android:paddingTop="5dp"
                     android:paddingRight="80dp"
@@ -240,6 +241,7 @@
 
                 <com.taisheng.now.view.WithScrolleViewListView
                     android:id="@+id/lv_data"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"

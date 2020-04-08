@@ -203,6 +203,15 @@ public interface ApiService {
     Call<BaseBean<XueYaDayResultBean>> querythedaybpxy(@Body ShishiCollectionBean bean);
 
 
+
+
+    @POST(Constants.Url.Watch.xueya_querythismonth)
+    Call<BaseBean<XueYaDayResultBean>> xueya_querythismonth(@Body ShishiCollectionBean bean);
+
+
+    @POST(Constants.Url.Watch.xunlv_querythismonth)
+    Call<BaseBean<XinLvResultBean>> xunlv_querythismonth(@Body ShishiCollectionBean bean);
+
     @POST(Constants.Url.Watch.obtainBpxyList)
     Call<BaseBean<ArrayList<XueyaResultBean>>> obtainBpxyList(@Body ObtainBpxyHeartStepListDTOPostBean bean);
 

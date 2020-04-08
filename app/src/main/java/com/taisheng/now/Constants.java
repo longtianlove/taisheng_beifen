@@ -25,7 +25,7 @@ public class Constants {
     public final static int LOGIN_VERIFYCODE_OVERDUE_FAIL = 1007;//"验证码已过期，请重新获取！"
     public final static int LOGIN_USERNAME_NOT_EXISTENCE = 1002;//账号不存在,请切换手机号登陆！
     public final static int LOGIN_PASSWORD_ERROR = 101;//密码错误
-    public final static int USER_NOTEXIST=404002;
+    public final static int USER_NOTEXIST = 404002;
     public final static int USER_FREEZE = 401020;//用户冻结
     public final static int USER_ACCOUNT_SOURCE_ERROR = 401021;//用户来源错误
     public final static int USER_DATABASE_TOKEN_NOT_EXIST = 401022;//token异常，数据库token不存在
@@ -58,8 +58,8 @@ public class Constants {
         public static String File_Host_head = "https://taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";*/
         //测试
-//        public static String Host = "http://192.168.1.19:8080/";
-        public static String Host = "https://test.taishenghealth.com/";
+        public static String Host = "http://192.168.1.19:8080/";
+//        public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
@@ -107,22 +107,31 @@ public class Constants {
 
 
             //根据日期获取血压列表
-            public static final String obtainBpxyList = "jeecg-boot/app/watchBpxy/obtainBpxyList";
+            public static final String obtainBpxyList = "jeecg-boot/app/watchblood/obtainBpxyList";
             //根据日期获取心率列表
-            public static final String obtainHeartList = "jeecg-boot/app/watchHeart/obtainHeartList";
+            public static final String obtainHeartList = "jeecg-boot/app/heartrate/obtainHeartList";
 
 
             //            APP-获取血压日统计量
             public static final String querythedaybpxy = "jeecg-boot/app/watch/querythedaybpxy";
 
+
+            //            APP-获取血压月统计量
+            public static final String xueya_querythismonth = "jeecg-boot/app/watchblood/querythismonth";
+
+
             //获取心率日统计量
             public static final String querythedayheart = "jeecg-boot/app/watch/querythedayheart";
+
+//            APP-获取心率月统计量
+public static final String xunlv_querythismonth = "jeecg-boot/app/heartrate/querythismonth";
+
 
             //            APP-获取步数周统计量
             public static final String querythisweekwalk = "jeecg-boot/app/watch/querythisweekwalk";
 
             //            APP-获取步数月统计量
-            public static final String querythismonthwalk = "jeecg-boot/app/watch/querythismonthwalk";
+            public static final String querythismonthwalk = "jeecg-boot/app/step/querythismonthwalk";
 
 
             //            获取手表定位轨迹-批量获取
