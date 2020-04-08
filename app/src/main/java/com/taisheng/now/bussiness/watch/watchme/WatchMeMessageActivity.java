@@ -288,6 +288,13 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
     @Override
     protected void onStart() {
         super.onStart();
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (WatchInstance.getInstance().headUrl != null) {
             Glide.with(this)
                     .load(Constants.Url.File_Host + WatchInstance.getInstance().headUrl)

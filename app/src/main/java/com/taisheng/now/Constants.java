@@ -58,8 +58,8 @@ public class Constants {
         public static String File_Host_head = "https://taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";*/
         //测试
-        public static String Host = "http://192.168.1.19:8080/";
-        //        public static String Host = "https://test.taishenghealth.com/";
+        public static String Host = "http://193.112.19.18:8080/";
+//        public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
@@ -139,7 +139,7 @@ public class Constants {
 
 //            手表电子围栏-添加
 
-            public static final String addwatchElectronicFence = "jeecg-boot/app/watchUd/WatchUdSetting";
+            public static final String addwatchElectronicFence = "jeecg-boot/app/watchlocation/locationSetting";
 
 
             //            获取手表老人电话本-批量获取

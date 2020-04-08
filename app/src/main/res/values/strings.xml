@@ -408,7 +408,7 @@
     <string name="wx_installed_tip">没有安装微信</string>
 
     <string name="device01">健康监测</string>
-    <string name="device02">信息位置</string>
+    <string name="device02">位置信息</string>
     <string name="device03">微聊消息</string>
     <string name="device04">预警信息</string>
     <string name="device05">个人中心</string>
