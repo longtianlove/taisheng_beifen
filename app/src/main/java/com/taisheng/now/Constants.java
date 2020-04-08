@@ -58,8 +58,8 @@ public class Constants {
         public static String File_Host_head = "https://taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";*/
         //测试
-        public static String Host = "http://193.112.19.18:8080/";
-//        public static String Host = "https://test.taishenghealth.com/";
+//        public static String Host = "http://193.112.19.18:8080/";
+        public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
@@ -209,7 +209,7 @@ public class Constants {
 
 //            心率血压预警设置-修改
 
-            public static final String setWatchWarning = "jeecg-boot/app/watchWarning/setWatchWarning";
+            public static final String setWatchWarning = "jeecg-boot/app/watchWarning/warnParamConfig";
 
             //            手表预警记录-查询
             public static final String getWatchWarningAll = "jeecg-boot/app/alarmMessage/getWatchWarningAll";
@@ -225,14 +225,14 @@ public class Constants {
 
 
             //            APP-SOS联系人列表
-            public static final String listSosContactSetting = "jeecg-boot/app/watch/setting/listSosContactSetting";
+            public static final String listSosContactSetting = "jeecg-boot/app/emergencycontact/list";
 
             //            APP-【SOS增加】联系人
             public static final String insertSosContactSetting = "jeecg-boot/app/watch/setting/insertSosContactSetting";
 
 
             //            APP-【SOS更新】联系人
-            public static final String updateSosContactSetting = "jeecg-boot/app/watch/setting/updateSosContactSetting";
+            public static final String updateSosContactSetting = "jeecg-boot/app/emergencycontact/setting/sosContactConfig";
 
             //            手表预警记录-修改阅读状态
             public static final String watchWarningupdateBykey = "jeecg-boot/app/watchWarning/updateBykey";
@@ -242,8 +242,13 @@ public class Constants {
             public static final String getWatchTakepillsList = "jeecg-boot/app/watchTakepills/getWatchTakepillsList";
 
 
-            //            语音版吃药提醒-设置
-            public static final String setWatchTakepills = "jeecg-boot/app/watchTakepills/setWatchTakepills";
+            //            闹钟提醒-分页列表查询
+            public static final String remindList = "jeecg-boot/app/remind/list";
+
+
+
+            //            闹钟设置-闹钟参数设置
+            public static final String setRemind = "jeecg-boot/app/remind/setRemind";
 
 
             //            //            设置老人版电话本
