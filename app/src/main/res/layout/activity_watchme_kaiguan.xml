@@ -23,7 +23,7 @@
             android:layout_marginLeft="@dimen/magin_12"
             android:layout_marginTop="@dimen/magin_15"
             android:layout_marginBottom="@dimen/magin_15"
-            android:text="@string/watch_msg25"
+            android:text="白名单开关"
             android:textColor="@color/color333333"
             android:textSize="@dimen/font14" />
 

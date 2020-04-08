@@ -59,7 +59,7 @@ public class Constants {
         public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";*/
         //测试
         public static String Host = "http://192.168.1.19:8080/";
-//        public static String Host = "https://test.taishenghealth.com/";
+        //        public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
@@ -123,8 +123,8 @@ public class Constants {
             //获取心率日统计量
             public static final String querythedayheart = "jeecg-boot/app/watch/querythedayheart";
 
-//            APP-获取心率月统计量
-public static final String xunlv_querythismonth = "jeecg-boot/app/heartrate/querythismonth";
+            //            APP-获取心率月统计量
+            public static final String xunlv_querythismonth = "jeecg-boot/app/heartrate/querythismonth";
 
 
             //            APP-获取步数周统计量
@@ -161,15 +161,22 @@ public static final String xunlv_querythismonth = "jeecg-boot/app/heartrate/quer
 
             //            获取最新定位信息
 //            public static final String getNewPosition = "jeecg-boot/app/watchUd/getNewPosition";
-            //todo 后台还没修改好
+
             public static final String getNewPosition = "jeecg-boot/app/watchlocation/getNewPosition";
 
 
             //所有的开关状态
 //            public static final String allSetting = "jeecg-boot/app/watch/setting/allSetting";
-            public static final String allSetting = "jeecg-boot/app/switch/obtainAllSwitch";
+            public static final String allSetting = "jeecg-boot/app/deviceSwitchStatus/getDeviceSwitchStatus";
             //所有开关开关用一个接口
             public static final String watchSwitchConfig = "jeecg-boot/app/switch/watchSwitchConfig";
+
+            //            Watch-白名单开关接口
+            public static final String phonebookswitch = "jeecg-boot/app/watchPhoneBook/phoneBookSwitch";
+
+            //            Watch-设置计步开关接口
+            public static final String edometerSwitch = "jeecg-boot/app/step/edometerSwitch";
+
 
             //            Watch-翻转检测开关设置
             public static final String flipCheckSetting = "jeecg-boot/app/watch/setting/flipCheckSetting";
@@ -205,7 +212,7 @@ public static final String xunlv_querythismonth = "jeecg-boot/app/heartrate/quer
             public static final String setWatchWarning = "jeecg-boot/app/watchWarning/setWatchWarning";
 
             //            手表预警记录-查询
-            public static final String getWatchWarningAll = "jeecg-boot/app/watchWarning/getWatchWarningAll";
+            public static final String getWatchWarningAll = "jeecg-boot/app/alarmMessage/getWatchWarningAll";
 
 
             //更新昵称

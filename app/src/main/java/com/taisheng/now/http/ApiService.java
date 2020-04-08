@@ -298,6 +298,15 @@ public interface ApiService {
     Call<BaseBean> watchSwitchConfig(@Body KaiguanSettingPostBean bean);
 
 
+
+    @POST(Constants.Url.Watch.phonebookswitch)
+    Call<BaseBean> phonebookswitch(@Body KaiguanSettingPostBean bean);
+
+
+    @POST(Constants.Url.Watch.edometerSwitch)
+    Call<BaseBean> edometerSwitch(@Body KaiguanSettingPostBean bean);
+
+
     @POST(Constants.Url.Watch.gpsSetting)
     Call<BaseBean> gpsSetting(@Body KaiGuanPostBean bean);
 
