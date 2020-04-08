@@ -45,13 +45,13 @@ public class JibuFragment extends BaseFragment {
 
 
     View ll_guijiditu;
-    private ArrayList<Entry> list = new ArrayList<>();  //数据集合
-    private ArrayList<Entry> list_month = new ArrayList<>();
+//    private ArrayList<Entry> list = new ArrayList<>();  //数据集合
+//    private ArrayList<Entry> list_month = new ArrayList<>();
 
     TextView tv_bushu;
     TextView tv_label;
-    private LineChart mChart;
-    LineChart chart_month;
+//    private LineChart mChart;
+//    LineChart chart_month;
 
     void initView(View rootView) {
         tv_bushu = rootView.findViewById(R.id.tv_bushu);
@@ -64,8 +64,8 @@ public class JibuFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        mChart = (LineChart) rootView.findViewById(R.id.chart);
-        chart_month = rootView.findViewById(R.id.chart_month);
+//        mChart = (LineChart) rootView.findViewById(R.id.chart);
+//        chart_month = rootView.findViewById(R.id.chart_month);
 //        list.clear();
 //        for (int i = 0; i < 10; i++) {
 //            list.add(new Entry(i, (float) (Math.random() * 80)));
@@ -121,7 +121,7 @@ public class JibuFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
 
-
+//        获取计步的实时数据
         ApiUtils.getApiService().getwatchstep(bean).enqueue(new TaiShengCallback<BaseBean<GetwatchstepResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GetwatchstepResultBean>> response, BaseBean<GetwatchstepResultBean> message) {
@@ -200,7 +200,7 @@ public class JibuFragment extends BaseFragment {
 //        });
 
 
-//        getMonth();
+        getMonth();
 
 
     }
@@ -211,6 +211,7 @@ public class JibuFragment extends BaseFragment {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
+//        获取计步的月统计数据
         ApiUtils.getApiService().querythismonthwalk(bean).enqueue(new TaiShengCallback<BaseBean<BushuResultBean>>() {
 
             @Override
@@ -220,27 +221,27 @@ public class JibuFragment extends BaseFragment {
 
                         if (message.result.records != null && message.result.records.size() > 0) {
 
-                            list_month.clear();
-                            ArrayList<String> days = new ArrayList<>();
-                            for (int i = 0; i < message.result.records.size(); i++) {
-                                list_month.add(new Entry(i, Integer.parseInt(message.result.records.get(i).stepNum)));
-                                String[] temp = message.result.records.get(i).createTime.split(" ");
-                                String[] temp1 = temp[0].split("-");
-                                days.add(temp1[1] + "-" + temp1[2]);
-
-                            }
-
-                            //自定义x轴显示
-                            MyXFormatter formatter = new MyXFormatter();
-                            formatter.days = days;
-                            XAxis xAxis = chart_month.getXAxis();
-                            xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-                            xAxis.setDrawAxisLine(false);
-                            xAxis.setDrawGridLines(false);
-                            //显示个数
-//                            xAxis.setLabelCount(days.size());
-                            xAxis.setValueFormatter(formatter);
-                            LineChartUtils lineChartUtils = new LineChartUtils(list_month, chart_month, "#00C8AA", "步数");
+//                            list_month.clear();
+//                            ArrayList<String> days = new ArrayList<>();
+//                            for (int i = 0; i < message.result.records.size(); i++) {
+//                                list_month.add(new Entry(i, Integer.parseInt(message.result.records.get(i).stepNum)));
+//                                String[] temp = message.result.records.get(i).createTime.split(" ");
+//                                String[] temp1 = temp[0].split("-");
+//                                days.add(temp1[1] + "-" + temp1[2]);
+//
+//                            }
+//
+//                            //自定义x轴显示
+//                            MyXFormatter formatter = new MyXFormatter();
+//                            formatter.days = days;
+//                            XAxis xAxis = chart_month.getXAxis();
+//                            xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+//                            xAxis.setDrawAxisLine(false);
+//                            xAxis.setDrawGridLines(false);
+//                            //显示个数
+////                            xAxis.setLabelCount(days.size());
+//                            xAxis.setValueFormatter(formatter);
+//                            LineChartUtils lineChartUtils = new LineChartUtils(list_month, chart_month, "#00C8AA", "步数");
                         }
                         break;
                 }

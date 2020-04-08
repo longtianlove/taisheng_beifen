@@ -20,6 +20,7 @@ import com.taisheng.now.bussiness.watch.bean.post.ObtainBpxyHeartStepListDTOPost
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetheartrateResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvAnriqiResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
@@ -36,9 +37,9 @@ import retrofit2.Response;
 
 public class XinlvFragment extends BaseFragment {
 
-
-    ListView lv_data;
-    DataAdapter madapter;
+//
+//    ListView lv_data;
+//    DataAdapter madapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,33 +58,33 @@ public class XinlvFragment extends BaseFragment {
     TextView tv_xinlv;
     TextView tv_label;
     //    private LineChart mChart;
-    View ll_health_left;
-    View ll_health_right;
-    TextView tv_date;
+//    View ll_health_left;
+//    View ll_health_right;
+//    TextView tv_date;
 
     void initView(View rootView) {
         tv_xinlv = rootView.findViewById(R.id.tv_xinlv);
-        tv_label=rootView.findViewById(R.id.tv_label);
+        tv_label = rootView.findViewById(R.id.tv_label);
 //       mChart = (LineChart) rootView.findViewById(R.id.chart);
-        ll_health_left = rootView.findViewById(R.id.ll_health_left);
-        ll_health_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateSelectedData(-1);
-            }
-        });
-        ll_health_right = rootView.findViewById(R.id.ll_health_right);
-        ll_health_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateSelectedData(1);
-            }
-        });
-
-        tv_date = (TextView) rootView.findViewById(R.id.tv_date);
-        lv_data = rootView.findViewById(R.id.lv_data);
-        madapter=new DataAdapter(getActivity());
-        lv_data.setAdapter(madapter);
+//        ll_health_left = rootView.findViewById(R.id.ll_health_left);
+//        ll_health_left.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateSelectedData(-1);
+//            }
+//        });
+//        ll_health_right = rootView.findViewById(R.id.ll_health_right);
+//        ll_health_right.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateSelectedData(1);
+//            }
+//        });
+//
+//        tv_date = (TextView) rootView.findViewById(R.id.tv_date);
+//        lv_data = rootView.findViewById(R.id.lv_data);
+//        madapter = new DataAdapter(getActivity());
+//        lv_data.setAdapter(madapter);
     }
 
     @Override
@@ -112,37 +113,35 @@ public class XinlvFragment extends BaseFragment {
         start = (int) between_days;
 
 
-        if (start == 0) {
-            ll_health_left.setVisibility(View.INVISIBLE);
-            ll_health_right.setVisibility(View.INVISIBLE);
-        } else {
-            ll_health_left.setVisibility(View.VISIBLE);
-            ll_health_right.setVisibility(View.INVISIBLE);
-        }
+//        if (start == 0) {
+//            ll_health_left.setVisibility(View.INVISIBLE);
+//            ll_health_right.setVisibility(View.INVISIBLE);
+//        } else {
+//            ll_health_left.setVisibility(View.VISIBLE);
+//            ll_health_right.setVisibility(View.INVISIBLE);
+//        }
     }
-
-
 
 
     //更新整天的信息
     public void updateSelectedData(int section) {
-
-        beforeDayNum = beforeDayNum + section;
-        if ((start < beforeDayNum) && (beforeDayNum < 0)) {
-            ll_health_left.setVisibility(View.VISIBLE);
-            ll_health_right.setVisibility(View.VISIBLE);
-        } else if (beforeDayNum == 0) {
-            ll_health_left.setVisibility(View.VISIBLE);
-            ll_health_right.setVisibility(View.INVISIBLE);
-        } else if (beforeDayNum == start) {
-            ll_health_left.setVisibility(View.INVISIBLE);
-            ll_health_right.setVisibility(View.VISIBLE);
-        }
-        if (start == 0) {
-            ll_health_left.setVisibility(View.INVISIBLE);
-            ll_health_right.setVisibility(View.INVISIBLE);
-        }
-        anrizhihuoquueya();
+//
+//        beforeDayNum = beforeDayNum + section;
+//        if ((start < beforeDayNum) && (beforeDayNum < 0)) {
+//            ll_health_left.setVisibility(View.VISIBLE);
+//            ll_health_right.setVisibility(View.VISIBLE);
+//        } else if (beforeDayNum == 0) {
+//            ll_health_left.setVisibility(View.VISIBLE);
+//            ll_health_right.setVisibility(View.INVISIBLE);
+//        } else if (beforeDayNum == start) {
+//            ll_health_left.setVisibility(View.INVISIBLE);
+//            ll_health_right.setVisibility(View.VISIBLE);
+//        }
+//        if (start == 0) {
+//            ll_health_left.setVisibility(View.INVISIBLE);
+//            ll_health_right.setVisibility(View.INVISIBLE);
+//        }
+//        anrizhihuoquueya();
 
     }
 
@@ -167,13 +166,14 @@ public class XinlvFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
         bean.queryDate = dateString;
+        //获取实时日统计
         ApiUtils.getApiService().obtainHeartList(bean).enqueue(new TaiShengCallback<BaseBean<ArrayList<XinlvAnriqiResultBean>>>() {
             @Override
             public void onSuccess(Response<BaseBean<ArrayList<XinlvAnriqiResultBean>>> response, BaseBean<ArrayList<XinlvAnriqiResultBean>> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        madapter.mData=message.result;
-                        madapter.notifyDataSetChanged();
+//                        madapter.mData = message.result;
+//                        madapter.notifyDataSetChanged();
                         break;
                 }
             }
@@ -190,7 +190,7 @@ public class XinlvFragment extends BaseFragment {
 //        } else {
 //            tv_date.setText(dateString);
 //        }
-        tv_date.setText(dateString);
+//        tv_date.setText(dateString);
     }
 
     void initData() {
@@ -224,7 +224,7 @@ public class XinlvFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
 
-
+//获取实时统计
         ApiUtils.getApiService().getheartrate(bean).enqueue(new TaiShengCallback<BaseBean<GetheartrateResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GetheartrateResultBean>> response, BaseBean<GetheartrateResultBean> message) {
@@ -235,11 +235,11 @@ public class XinlvFragment extends BaseFragment {
 //                        WatchInstance.getInstance().stepNum = message.result.stepNum;
 //                        WatchInstance.getInstance().watchHeart = message.result.watchHeart;
 //                        tv_xinlv.setText(WatchInstance.getInstance().watchHeart);
-                        if(message.result!=null){
-                            WatchInstance.getInstance().watchHeart = message.result.heartNum+"";
+                        if (message.result != null) {
+                            WatchInstance.getInstance().watchHeart = message.result.heartNum + "";
                             tv_label.setVisibility(View.VISIBLE);
                             tv_xinlv.setText(WatchInstance.getInstance().watchHeart);
-                        }else{
+                        } else {
                             //todo 数据为空的时候修改UI
                             tv_xinlv.setText("暂无数据");
                             tv_label.setVisibility(View.GONE);
@@ -255,7 +255,25 @@ public class XinlvFragment extends BaseFragment {
         });
 
 
-//        anrizhihuoquueya();
+        anrizhihuoquueya();
+
+        ShishiCollectionBean bean1 = new ShishiCollectionBean();
+        bean1.userId = UserInstance.getInstance().getUid();
+        bean1.token = UserInstance.getInstance().getToken();
+        bean1.deviceId = WatchInstance.getInstance().deviceId;
+
+        //获取月统计
+        ApiUtils.getApiService().xunlv_querythismonth(bean1).enqueue(new TaiShengCallback<BaseBean<XinLvResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<XinLvResultBean>> response, BaseBean<XinLvResultBean> message) {
+                //todo 获取心率月
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<XinLvResultBean>> call, Throwable t) {
+
+            }
+        });
 
 //        ApiUtils.getApiService().querythedayheart(bean).enqueue(new TaiShengCallback<BaseBean<XinLvResultBean>>() {
 //            @Override
@@ -335,15 +353,15 @@ public class XinlvFragment extends BaseFragment {
                 util = new DataAdapter.Util();
                 LayoutInflater inflater = LayoutInflater.from(mcontext);
                 convertView = inflater.inflate(R.layout.item_xinlv_data, null);
-                util.tv_xinlv=convertView.findViewById(R.id.tv_xinlv);
+                util.tv_xinlv = convertView.findViewById(R.id.tv_xinlv);
                 util.tv_time = convertView.findViewById(R.id.tv_time);
                 convertView.setTag(util);
             } else {
                 util = (DataAdapter.Util) convertView.getTag();
             }
-            XinlvAnriqiResultBean bean=mData.get(position);
+            XinlvAnriqiResultBean bean = mData.get(position);
 
-            util.tv_xinlv.setText(bean.heartNum+"");
+            util.tv_xinlv.setText(bean.heartNum + "");
             util.tv_time.setText(bean.createTime);
 
             return convertView;

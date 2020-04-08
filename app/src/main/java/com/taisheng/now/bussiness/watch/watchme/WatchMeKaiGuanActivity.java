@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +19,7 @@ import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 
 import androidx.core.app.ActivityCompat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -98,7 +98,10 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
             public void onSuccess(Response<BaseBean<AllSettingResultBean>> response, BaseBean<AllSettingResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if ("1".equals(message.result.watchGpsSwitch)) {
+                        if (message.result == null) {
+                            return;
+                        }
+                        if ("1".equals(message.result.phoneBookSwitch)) {
                             ivKaiguanGps.setSelected(true);
                         } else {
                             ivKaiguanGps.setSelected(false);
@@ -118,7 +121,7 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
                         } else {
                             ivKaiguanQuxiashouhuan.setSelected(false);
                         }
-                        if ("1".equals(message.result.watchPedo)) {
+                        if ("1".equals(message.result.stepSwitch)) {
                             ivKaiguanJibu.setSelected(true);
                         } else {
                             ivKaiguanJibu.setSelected(false);
@@ -151,9 +154,10 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.deviceId = WatchInstance.getInstance().deviceId;
-                bean.switchType = "APPLOCK";
-                bean.switchValue = ivKaiguanGps.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
+//                bean.switchType = "APPLOCK";
+//                bean.switchValue = ivKaiguanGps.isSelected() ? "0" : "1";
+                bean.value=ivKaiguanGps.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().phonebookswitch(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -366,9 +370,10 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
                 bean5.userId = UserInstance.getInstance().getUid();
                 bean5.token = UserInstance.getInstance().getToken();
                 bean5.deviceId = WatchInstance.getInstance().deviceId;
-                bean5.switchType = " PEDO";
-                bean5.switchValue = ivKaiguanJibu.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean5).enqueue(new TaiShengCallback<BaseBean>() {
+//                bean5.switchType = " PEDO";
+//                bean5.switchValue = ivKaiguanJibu.isSelected() ? "0" : "1";
+                bean5.value = ivKaiguanJibu.isSelected() ? "0" : "1";
+                ApiUtils.getApiService().edometerSwitch(bean5).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

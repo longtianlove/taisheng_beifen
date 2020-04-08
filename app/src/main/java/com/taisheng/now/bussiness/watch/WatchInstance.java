@@ -5,6 +5,7 @@ import com.taisheng.now.EventManage;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.bean.result.PictureBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
+import com.taisheng.now.bussiness.watch.bean.result.ChiyaoBeann;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
@@ -58,7 +59,7 @@ public class WatchInstance {
     public ArrayList<NaozhongLIstBean> mDataNaoZhong=new ArrayList<>();
     public NaozhongLIstBean naozhongLIstBean=new NaozhongLIstBean();
 
-    public SetChiyaoPostBean chiyaobean=new SetChiyaoPostBean();
+    public ChiyaoBeann chiyaobean=new ChiyaoBeann();
 
     //上传头像信息
     public void uploadImage(final String path) {

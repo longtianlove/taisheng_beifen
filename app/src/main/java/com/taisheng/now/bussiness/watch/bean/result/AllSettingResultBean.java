@@ -6,8 +6,11 @@ public class AllSettingResultBean {
     public String watchLowbat;
     public String watchRemove;
     public String watchRemovesms;
-    public String watchPedo;
+    public String stepSwitch;
     public String watchSleeptimeSwitch;
     public String watchSliencetimeSwitch;
     public String watchHrtstartSwitch;
+
+
+    public String phoneBookSwitch;
 }

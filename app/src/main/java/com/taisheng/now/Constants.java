@@ -25,7 +25,7 @@ public class Constants {
     public final static int LOGIN_VERIFYCODE_OVERDUE_FAIL = 1007;//"验证码已过期，请重新获取！"
     public final static int LOGIN_USERNAME_NOT_EXISTENCE = 1002;//账号不存在,请切换手机号登陆！
     public final static int LOGIN_PASSWORD_ERROR = 101;//密码错误
-    public final static int USER_NOTEXIST=404002;
+    public final static int USER_NOTEXIST = 404002;
     public final static int USER_FREEZE = 401020;//用户冻结
     public final static int USER_ACCOUNT_SOURCE_ERROR = 401021;//用户来源错误
     public final static int USER_DATABASE_TOKEN_NOT_EXIST = 401022;//token异常，数据库token不存在
@@ -58,7 +58,7 @@ public class Constants {
         public static String File_Host_head = "https://taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";*/
         //测试
-//        public static String Host = "http://192.168.1.19:8080/";
+//        public static String Host = "http://193.112.19.18:8080/";
         public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
@@ -107,22 +107,31 @@ public class Constants {
 
 
             //根据日期获取血压列表
-            public static final String obtainBpxyList = "jeecg-boot/app/watchBpxy/obtainBpxyList";
+            public static final String obtainBpxyList = "jeecg-boot/app/watchblood/obtainBpxyList";
             //根据日期获取心率列表
-            public static final String obtainHeartList = "jeecg-boot/app/watchHeart/obtainHeartList";
+            public static final String obtainHeartList = "jeecg-boot/app/heartrate/obtainHeartList";
 
 
             //            APP-获取血压日统计量
             public static final String querythedaybpxy = "jeecg-boot/app/watch/querythedaybpxy";
 
+
+            //            APP-获取血压月统计量
+            public static final String xueya_querythismonth = "jeecg-boot/app/watchblood/querythismonth";
+
+
             //获取心率日统计量
             public static final String querythedayheart = "jeecg-boot/app/watch/querythedayheart";
+
+            //            APP-获取心率月统计量
+            public static final String xunlv_querythismonth = "jeecg-boot/app/heartrate/querythismonth";
+
 
             //            APP-获取步数周统计量
             public static final String querythisweekwalk = "jeecg-boot/app/watch/querythisweekwalk";
 
             //            APP-获取步数月统计量
-            public static final String querythismonthwalk = "jeecg-boot/app/watch/querythismonthwalk";
+            public static final String querythismonthwalk = "jeecg-boot/app/step/querythismonthwalk";
 
 
             //            获取手表定位轨迹-批量获取
@@ -130,7 +139,7 @@ public class Constants {
 
 //            手表电子围栏-添加
 
-            public static final String addwatchElectronicFence = "jeecg-boot/app/watchUd/WatchUdSetting";
+            public static final String addwatchElectronicFence = "jeecg-boot/app/watchlocation/locationSetting";
 
 
             //            获取手表老人电话本-批量获取
@@ -152,15 +161,22 @@ public class Constants {
 
             //            获取最新定位信息
 //            public static final String getNewPosition = "jeecg-boot/app/watchUd/getNewPosition";
-            //todo 后台还没修改好
+
             public static final String getNewPosition = "jeecg-boot/app/watchlocation/getNewPosition";
 
 
             //所有的开关状态
 //            public static final String allSetting = "jeecg-boot/app/watch/setting/allSetting";
-            public static final String allSetting = "jeecg-boot/app/switch/obtainAllSwitch";
+            public static final String allSetting = "jeecg-boot/app/deviceSwitchStatus/getDeviceSwitchStatus";
             //所有开关开关用一个接口
             public static final String watchSwitchConfig = "jeecg-boot/app/switch/watchSwitchConfig";
+
+            //            Watch-白名单开关接口
+            public static final String phonebookswitch = "jeecg-boot/app/watchPhoneBook/phoneBookSwitch";
+
+            //            Watch-设置计步开关接口
+            public static final String edometerSwitch = "jeecg-boot/app/step/edometerSwitch";
+
 
             //            Watch-翻转检测开关设置
             public static final String flipCheckSetting = "jeecg-boot/app/watch/setting/flipCheckSetting";
@@ -193,10 +209,10 @@ public class Constants {
 
 //            心率血压预警设置-修改
 
-            public static final String setWatchWarning = "jeecg-boot/app/watchWarning/setWatchWarning";
+            public static final String setWatchWarning = "jeecg-boot/app/watchWarning/warnParamConfig";
 
             //            手表预警记录-查询
-            public static final String getWatchWarningAll = "jeecg-boot/app/watchWarning/getWatchWarningAll";
+            public static final String getWatchWarningAll = "jeecg-boot/app/alarmMessage/getWatchWarningAll";
 
 
             //更新昵称
@@ -209,14 +225,14 @@ public class Constants {
 
 
             //            APP-SOS联系人列表
-            public static final String listSosContactSetting = "jeecg-boot/app/watch/setting/listSosContactSetting";
+            public static final String listSosContactSetting = "jeecg-boot/app/emergencycontact/list";
 
             //            APP-【SOS增加】联系人
             public static final String insertSosContactSetting = "jeecg-boot/app/watch/setting/insertSosContactSetting";
 
 
             //            APP-【SOS更新】联系人
-            public static final String updateSosContactSetting = "jeecg-boot/app/watch/setting/updateSosContactSetting";
+            public static final String updateSosContactSetting = "jeecg-boot/app/emergencycontact/setting/sosContactConfig";
 
             //            手表预警记录-修改阅读状态
             public static final String watchWarningupdateBykey = "jeecg-boot/app/watchWarning/updateBykey";
@@ -226,8 +242,13 @@ public class Constants {
             public static final String getWatchTakepillsList = "jeecg-boot/app/watchTakepills/getWatchTakepillsList";
 
 
-            //            语音版吃药提醒-设置
-            public static final String setWatchTakepills = "jeecg-boot/app/watchTakepills/setWatchTakepills";
+            //            闹钟提醒-分页列表查询
+            public static final String remindList = "jeecg-boot/app/remind/list";
+
+
+
+            //            闹钟设置-闹钟参数设置
+            public static final String setRemind = "jeecg-boot/app/remind/setRemind";
 
 
             //            //            设置老人版电话本

@@ -185,7 +185,16 @@ public class WatchMeFragment extends BaseFragment {
         });
     }
 
+
+
     private void initData() {
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
         Glide.with(getActivity())
                 .load(Constants.Url.File_Host + WatchInstance.getInstance().headUrl)
                 .apply(new RequestOptions().placeholder(R.drawable.article_default)

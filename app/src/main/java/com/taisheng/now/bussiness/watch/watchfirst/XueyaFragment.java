@@ -21,6 +21,7 @@ import com.taisheng.now.bussiness.watch.bean.post.ObtainBpxyHeartStepListDTOPost
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetbloodpressureResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.XueYaDayResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueyaResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
@@ -40,8 +41,8 @@ public class XueyaFragment extends BaseFragment {
     TextView tv_time;
     TextView tv_gaoya;
     TextView tv_diya;
-    ListView lv_data;
-    DataAdapter madapter;
+//    ListView lv_data;
+//    DataAdapter madapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,9 +63,9 @@ public class XueyaFragment extends BaseFragment {
 
 
     //    private LineChart mChart;
-    View ll_health_left;
-    View ll_health_right;
-    TextView tv_date;
+//    View ll_health_left;
+//    View ll_health_right;
+//    TextView tv_date;
 
     void initView(View rootView) {
         tv_time = rootView.findViewById(R.id.tv_time);
@@ -72,25 +73,25 @@ public class XueyaFragment extends BaseFragment {
         tv_diya = rootView.findViewById(R.id.tv_diya);
 
 //        this.mChart = (LineChart) rootView.findViewById(R.id.chart);
-        ll_health_left = rootView.findViewById(R.id.ll_health_left);
-        ll_health_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateSelectedData(-1);
-            }
-        });
-        ll_health_right = rootView.findViewById(R.id.ll_health_right);
-        ll_health_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateSelectedData(1);
-            }
-        });
+//        ll_health_left = rootView.findViewById(R.id.ll_health_left);
+//        ll_health_left.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateSelectedData(-1);
+//            }
+//        });
+//        ll_health_right = rootView.findViewById(R.id.ll_health_right);
+//        ll_health_right.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateSelectedData(1);
+//            }
+//        });
 
-        tv_date = (TextView) rootView.findViewById(R.id.tv_date);
-        lv_data = rootView.findViewById(R.id.lv_data);
-        madapter = new DataAdapter(getActivity());
-        lv_data.setAdapter(madapter);
+//        tv_date = (TextView) rootView.findViewById(R.id.tv_date);
+//        lv_data = rootView.findViewById(R.id.lv_data);
+//        madapter = new DataAdapter(getActivity());
+//        lv_data.setAdapter(madapter);
 
     }
 
@@ -116,39 +117,39 @@ public class XueyaFragment extends BaseFragment {
         long time2 = cal.getTimeInMillis();
         long between_days = (time2 - time1) / (1000 * 3600 * 24);
         start = (int) between_days;
-
-
-        if (start == 0) {
-            ll_health_left.setVisibility(View.INVISIBLE);
-            ll_health_right.setVisibility(View.INVISIBLE);
-        } else {
-            ll_health_left.setVisibility(View.VISIBLE);
-            ll_health_right.setVisibility(View.INVISIBLE);
-        }
+//
+//
+//        if (start == 0) {
+//            ll_health_left.setVisibility(View.INVISIBLE);
+//            ll_health_right.setVisibility(View.INVISIBLE);
+//        } else {
+//            ll_health_left.setVisibility(View.VISIBLE);
+//            ll_health_right.setVisibility(View.INVISIBLE);
+//        }
     }
 
 
-    //更新整天的信息
-    public void updateSelectedData(int section) {
-
-        beforeDayNum = beforeDayNum + section;
-        if ((start < beforeDayNum) && (beforeDayNum < 0)) {
-            ll_health_left.setVisibility(View.VISIBLE);
-            ll_health_right.setVisibility(View.VISIBLE);
-        } else if (beforeDayNum == 0) {
-            ll_health_left.setVisibility(View.VISIBLE);
-            ll_health_right.setVisibility(View.INVISIBLE);
-        } else if (beforeDayNum == start) {
-            ll_health_left.setVisibility(View.INVISIBLE);
-            ll_health_right.setVisibility(View.VISIBLE);
-        }
-        if (start == 0) {
-            ll_health_left.setVisibility(View.INVISIBLE);
-            ll_health_right.setVisibility(View.INVISIBLE);
-        }
-        anrizhihuoquueya();
-
-    }
+//    //更新整天的信息
+//    public void updateSelectedData(int section) {
+//
+//        beforeDayNum = beforeDayNum + section;
+//        if ((start < beforeDayNum) && (beforeDayNum < 0)) {
+//            ll_health_left.setVisibility(View.VISIBLE);
+//            ll_health_right.setVisibility(View.VISIBLE);
+//        } else if (beforeDayNum == 0) {
+//            ll_health_left.setVisibility(View.VISIBLE);
+//            ll_health_right.setVisibility(View.INVISIBLE);
+//        } else if (beforeDayNum == start) {
+//            ll_health_left.setVisibility(View.INVISIBLE);
+//            ll_health_right.setVisibility(View.VISIBLE);
+//        }
+//        if (start == 0) {
+//            ll_health_left.setVisibility(View.INVISIBLE);
+//            ll_health_right.setVisibility(View.INVISIBLE);
+//        }
+//        anrizhihuoquueya();
+//
+//    }
 
 
     Date today = new Date();
@@ -171,13 +172,14 @@ public class XueyaFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
         bean.queryDate = dateString;
+        //获取日统计
         ApiUtils.getApiService().obtainBpxyList(bean).enqueue(new TaiShengCallback<BaseBean<ArrayList<XueyaResultBean>>>() {
             @Override
             public void onSuccess(Response<BaseBean<ArrayList<XueyaResultBean>>> response, BaseBean<ArrayList<XueyaResultBean>> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        madapter.mData = message.result;
-                        madapter.notifyDataSetChanged();
+//                        madapter.mData = message.result;
+//                        madapter.notifyDataSetChanged();
                         break;
                 }
             }
@@ -194,7 +196,7 @@ public class XueyaFragment extends BaseFragment {
 //        } else {
 //            tv_date.setText(dateString);
 //        }
-        tv_date.setText(dateString);
+//        tv_date.setText(dateString);
     }
 
     void initData() {
@@ -236,7 +238,7 @@ public class XueyaFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
 
-
+//获取实时统计
         ApiUtils.getApiService().getbloodpressure(bean).enqueue(new TaiShengCallback<BaseBean<GetbloodpressureResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GetbloodpressureResultBean>> response, BaseBean<GetbloodpressureResultBean> message) {
@@ -254,8 +256,8 @@ public class XueyaFragment extends BaseFragment {
                             WatchInstance.getInstance().watchBpxyLow = message.result.bloodPressureLow + "";
                             tv_time.setVisibility(View.VISIBLE);
                             tv_time.setText(message.result.createTime.toString());
-                            tv_gaoya.setText(message.result.bloodPressureHigh+"");
-                            tv_diya.setText(message.result.bloodPressureLow+"");
+                            tv_gaoya.setText(message.result.bloodPressureHigh + "");
+                            tv_diya.setText(message.result.bloodPressureLow + "");
                         } else {
                             //todo 数据为空的时候修改UI
                             tv_time.setVisibility(View.GONE);
@@ -271,7 +273,23 @@ public class XueyaFragment extends BaseFragment {
 
             }
         });
-//        anrizhihuoquueya();
+        ShishiCollectionBean bean1 = new ShishiCollectionBean();
+        bean1.userId = UserInstance.getInstance().getUid();
+        bean1.token = UserInstance.getInstance().getToken();
+        bean1.deviceId = WatchInstance.getInstance().deviceId;
+        //获取月统计
+        ApiUtils.getApiService().xueya_querythismonth(bean1).enqueue(new TaiShengCallback<BaseBean<XueYaDayResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<XueYaDayResultBean>> response, BaseBean<XueYaDayResultBean> message) {
+//todo 获取血压月
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<XueYaDayResultBean>> call, Throwable t) {
+
+            }
+        });
+        anrizhihuoquueya();
 
 //        ApiUtils.getApiService().querythedaybpxy(bean).enqueue(new TaiShengCallback<BaseBean<XueYaDayResultBean>>() {
 //            @Override
@@ -316,6 +334,8 @@ public class XueyaFragment extends BaseFragment {
 //
 //            }
 //        });
+
+
     }
 
 
@@ -362,8 +382,8 @@ public class XueyaFragment extends BaseFragment {
                 util = (Util) convertView.getTag();
             }
             XueyaResultBean bean = mData.get(position);
-            util.tvgaoya.setText(bean.bpxyHigh + "");
-            util.tvdiya.setText(bean.bpxyLow + "");
+            util.tvgaoya.setText(bean.bloodPressureHigh + "");
+            util.tvdiya.setText(bean.bloodPressureLow + "");
             util.tv_time.setText(bean.createTime);
 
             return convertView;

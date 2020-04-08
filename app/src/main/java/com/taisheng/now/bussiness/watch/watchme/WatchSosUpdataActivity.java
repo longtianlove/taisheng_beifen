@@ -91,8 +91,8 @@ public class WatchSosUpdataActivity extends BaseIvActivity {
                 }
                 Uri uri = data.getData();
                 String[] contacts = PhoneUtil.getPhoneContacts(this,uri);
-                etPhone.setText(contacts[0]);
-                etTongxunluName.setText(contacts[1]);
+                etPhone.setText(contacts[1]);
+                etTongxunluName.setText(contacts[0]);
                 break;
         }
     }

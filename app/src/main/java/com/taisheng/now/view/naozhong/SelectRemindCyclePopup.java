@@ -14,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.taisheng.now.R;
+import com.taisheng.now.bussiness.watch.bean.result.ChiyaoBeann;
 
 
 public class SelectRemindCyclePopup implements OnClickListener {
@@ -79,6 +80,47 @@ public class SelectRemindCyclePopup implements OnClickListener {
         every_day.setOnClickListener(this);
 
         return view;
+    }
+
+    public void initSelectedView(ChiyaoBeann bean) {
+        Drawable nav_right = mContext.getResources().getDrawable(R.drawable.cycle_check);
+        nav_right.setBounds(0, 0, nav_right.getMinimumWidth(), nav_right.getMinimumHeight());
+        if("1".equals(bean.isOpenWeek1)){
+            tv_mon.setCompoundDrawables(null, null, nav_right, null);
+        }else{
+            tv_mon.setCompoundDrawables(null, null, null, null);
+        }
+        if("1".equals(bean.isOpenWeek2)){
+            tv_tue.setCompoundDrawables(null, null, nav_right, null);
+        }else{
+            tv_tue.setCompoundDrawables(null, null, null, null);
+        }
+        if("1".equals(bean.isOpenWeek3)){
+            tv_wed.setCompoundDrawables(null, null, nav_right, null);
+        }else{
+            tv_wed.setCompoundDrawables(null, null, null, null);
+        }
+        if("1".equals(bean.isOpenWeek4)){
+            tv_thu.setCompoundDrawables(null, null, nav_right, null);
+        }else{
+            tv_thu.setCompoundDrawables(null, null, null, null);
+        }
+        if("1".equals(bean.isOpenWeek5)){
+            tv_fri.setCompoundDrawables(null, null, nav_right, null);
+        }else{
+            tv_fri.setCompoundDrawables(null, null, null, null);
+        }
+        if("1".equals(bean.isOpenWeek6)){
+            tv_sat.setCompoundDrawables(null, null, nav_right, null);
+        }else{
+            tv_sat.setCompoundDrawables(null, null, null, null);
+        }
+        if("1".equals(bean.isOpenWeek7)){
+            tv_sun.setCompoundDrawables(null, null, nav_right, null);
+        }else{
+            tv_sun.setCompoundDrawables(null, null, null, null);
+        }
+
     }
 
     @Override
