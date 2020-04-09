@@ -79,6 +79,7 @@
     <dimen name="magin_85">85dp</dimen>
     <dimen name="magin_90">90dp</dimen>
     <dimen name="magin_100">100dp</dimen>
+    <dimen name="magin_115">115dp</dimen>
     <dimen name="magin_120">120dp</dimen>
     <dimen name="magin_130">130dp</dimen>
     <dimen name="magin_150">150dp</dimen>
@@ -100,6 +101,7 @@
     <dimen name="size_2">2dp</dimen>
     <dimen name="size_4">4dp</dimen>
     <dimen name="size_5">5dp</dimen>
+    <dimen name="size_6">6dp</dimen>
     <dimen name="size_7">7dp</dimen>
     <dimen name="size_10">10dp</dimen>
     <dimen name="size_11">11dp</dimen>
@@ -110,6 +112,7 @@
     <dimen name="size_18">18dp</dimen>
     <dimen name="size_20">20dp</dimen>
     <dimen name="size_23">23dp</dimen>
+    <dimen name="size_24">24dp</dimen>
     <dimen name="size_25">25dp</dimen>
     <dimen name="size_28">28dp</dimen>
     <dimen name="size_33">33dp</dimen>
@@ -159,11 +162,15 @@
     <dimen name="size_230">230dp</dimen>
     <dimen name="size_248">248dp</dimen>
     <dimen name="size_240">240dp</dimen>
+    <dimen name="size_242">242dp</dimen>
     <dimen name="size_246">246dp</dimen>
     <dimen name="size_260">260dp</dimen>
+    <dimen name="size_280">280dp</dimen>
     <dimen name="size_300">300dp</dimen>
     <dimen name="size_303">303dp</dimen>
+    <dimen name="size_310">310dp</dimen>
     <dimen name="size_313">313dp</dimen>
+    <dimen name="size_340">340dp</dimen>
 
 
 

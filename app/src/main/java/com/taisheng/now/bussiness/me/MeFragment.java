@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
-import com.taisheng.now.PaceActivity;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
@@ -125,9 +124,7 @@ public class MeFragment extends BaseFragment {
         ll_doctorcollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(mActivity, DoctorCollectActivity.class);
-                startActivity(intent);*/
-                Intent intent = new Intent(mActivity, PaceActivity.class);
+                Intent intent = new Intent(mActivity, DoctorCollectActivity.class);
                 startActivity(intent);
             }
         });

@@ -28,7 +28,7 @@ public class WatchFirstFragment extends BaseFragment {
 
 
     public static TabLayout tl_tab;
-    ViewPager vp_content;
+    private ViewPager vp_content;
     private List<String> tabIndicators;
     private List<Fragment> tabFragments;
     private ContentPagerAdapter contentAdapter;
@@ -41,28 +41,16 @@ public class WatchFirstFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_watchfirst, container, false);
         initView(rootView);
-
-
-//        EventBus.getDefault().register(this);
-        initData();
-
-
         return rootView;
     }
 
 
-    void initView(View rootView) {
+    private void initView(View rootView) {
         tl_tab = (TabLayout) rootView.findViewById(R.id.tl_tab);
         vp_content = (ViewPager) rootView.findViewById(R.id.vp_content);
         initContent();
         initTab();
     }
-
-    void initData() {
-
-
-    }
-
 
     private void initTab() {
         tl_tab.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -215,10 +203,4 @@ public class WatchFirstFragment extends BaseFragment {
         }
     }
 
-
-    public void onDestroy() {
-        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
-
-    }
 }

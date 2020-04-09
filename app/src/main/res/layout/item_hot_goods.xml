@@ -44,7 +44,7 @@
                 android:layout_marginTop="@dimen/margin_10"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:maxLines="2"
+                android:lines="2"
                 android:text="桂圆红枣枸杞茶养生滋补首选佳品"
                 android:textColor="@color/color333333"
                 android:textSize="@dimen/font14" />

@@ -47,13 +47,6 @@ public class BindWatchsActivity extends BaseIvActivity {
     public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
         tvTitle.setText(getString(R.string.device_binding));
         tvRight.setVisibility(View.VISIBLE);
-        tvRight.setText(getString(R.string.device_binding));
-        tvRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BindWatchsActivity.this,WatchMainActivity.class));
-            }
-        });
     }
     @OnClick(R.id.tv_adddevice)
     public void onViewClicked() {

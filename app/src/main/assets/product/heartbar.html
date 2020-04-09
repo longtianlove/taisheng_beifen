@@ -23,17 +23,37 @@
 	<div id="main" style="width: 100%;height:100%;"></div>
 	<script type="text/javascript">
 
+
+	var parityInfoSize = window.android.getXlistBarSize();
+        function loadX() {//放置x轴数据
+        	var list = [];
+            for (var i = 0; i < parityInfoSize; i++) {
+            	list.push(window.android.getXlistBar(i));
+            }
+            return list;
+        }
+
+        //通过ajax加载数据
+        function loadData(option) {
+        	option.series[0].data = [];
+        	option.series[1].data = [];
+             for (var i = 0; i < parityInfoSize; i++) {
+             	option.series[0].data.push(window.android.getDatasBar(i));
+             	option.series[1].data.push(window.android.getDatasBar2(i));
+             }
+         }
+
 		var dom = document.getElementById("main");
 		var myChart = echarts.init(dom);
 		var option = {
 			xAxis: {
 				type: 'category',
-				data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+				data:loadX(),
 				axisLabel: {
 					show: true,
 					textStyle: {
 						color: ['#333333'],
-						fontSize:40
+						fontSize:30
 					}
 				},
 				axisLine: {
@@ -54,7 +74,7 @@
 					show: true,
 					textStyle: {
 						color: ['#333333'],
-						fontSize:40
+						fontSize:30
 					}
 				},
 
@@ -84,11 +104,11 @@
         },
         formatter: function (params) {
             var color = params.color;//图例颜色
-            var htmlStr ='<div>';
+            var htmlStr ='<div style="font-size:30px;">';
             /*htmlStr += params.name + '<br/>';//x轴的名称*/
             
             //为了保证和原来的效果一样，这里自己实现了一个点的效果
-            htmlStr += '<span style="margin-right:5px;display:inline-block;width:10px;height:10px;border-radius:5px;background-color:'+color+';"></span>';
+            htmlStr += '<span style="margin-right:5px;display:inline-block;width:60px;height:60px;border-radius:5px;background-color:'+color+';"></span>';
             
             //添加一个汉字，这里你可以格式你的数字或者自定义文本内容
             htmlStr += params.value + '次/分钟';
@@ -100,37 +120,47 @@
 
     },
 
-
+    legend: {
+        data: ['心率最大值', '心率最小值'],
+        top: 'auto',
+        textStyle:{
+             fontSize:40,
+             padding: [10, 0, 0, 0]
+        },
+    },
     grid: {
     	left: '3%',
     	right: '10%',
     	bottom: '3%',
-    	top: '15%',
+    	top: '10%',
     	containLabel: true
     },
     series: [
     {
-    	/*data: {[240],[240],[240],[240],[240],[240],[240]},*/
-    	data: [240, 100, 120, 60, 80, 150],
     	type: 'bar',
-
+        stack: "num",//折叠显示
+        name:'心率最大值',
+        barWidth: '60%',
+    	barMaxWidth: 50,
     	showBackground: false,
-    	barGap:'20%',
     	itemStyle: {
-    		color: ['#FFA037']
+    		color: 'rgba(255, 160, 55, 1)'
     	}
 
 
     },
 
     {
-    	data: [240, 220, 140, 60, 50, 100],
-    	type: 'bar',
-    	barGap:'20%',
-    	showBackground: false,
 
+    	type: 'bar',
+    	stack: "num",//折叠显示
+    	name:'心率最小值',
+    	barWidth: '60%',
+    	barMaxWidth: 50,
+    	showBackground: false,
+        stack: "num",//折叠显示
     	itemStyle: {
-    		color: ['#FFA037']
+    		color:'rgba(255, 160, 55, 0.3)'
     	}
     }
 
@@ -138,6 +168,7 @@
 
 
 };
+loadData(option)
 myChart.setOption(option);
 
 </script>

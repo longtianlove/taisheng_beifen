@@ -23,17 +23,43 @@
 	<div id="main" style="width: 100%;height:100%;"></div>
 	<script type="text/javascript">
 
+	    var parityInfoSize = window.android.getXlistBarSize();
+        function loadX() {//放置x轴数据
+        	var list = [];
+            for (var i = 0; i < parityInfoSize; i++) {
+            	list.push(window.android.getXlistBar(i));
+            }
+            return list;
+        }
+
+        //通过ajax加载数据
+        function loadData(option) {
+        	option.series[0].data = [];
+        	option.series[1].data = [];
+        	option.series[2].data = [];
+        	option.series[3].data = [];
+             for (var i = 0; i < parityInfoSize; i++) {
+             	option.series[0].data.push(window.android.getDatasBar(i));
+             	option.series[1].data.push(window.android.getDatasBar2(i));
+             	option.series[2].data.push(window.android.getDatasBar3(i));
+             	option.series[3].data.push(window.android.getDatasBar4(i));
+             }
+         }
+
+
+
+
 		var dom = document.getElementById("main");
 		var myChart = echarts.init(dom);
 		var option = {
 			xAxis: {
 				type: 'category',
-				data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+				data:loadX(),
 				axisLabel: {
 					show: true,
 					textStyle: {
 						color: ['#333333'],
-						fontSize:40
+						fontSize:30
 					}
 				},
 				axisLine: {
@@ -54,7 +80,7 @@
 					show: true,
 					textStyle: {
 						color: ['#333333'],
-						fontSize:40
+						fontSize:30
 					}
 				},
 
@@ -73,7 +99,7 @@
 				show: true, 
 				position: 'top',
 				color: ['#529FFB'],
-				fontSize: 40
+				fontSize: 30
 				
 				
 			},*/
@@ -84,11 +110,11 @@
         },
         formatter: function (params) {
             var color = params.color;//图例颜色
-            var htmlStr ='<div>';
+            var htmlStr ='<div  style="font-size:30px;">';
             /*htmlStr += params.name + '<br/>';//x轴的名称*/
             
             //为了保证和原来的效果一样，这里自己实现了一个点的效果
-            htmlStr += '<span style="margin-right:5px;display:inline-block;width:10px;height:10px;border-radius:5px;background-color:'+color+';"></span>';
+            htmlStr += '<span style="margin-right:5px;display:inline-block;width:60px;height:60px;border-radius:5px;background-color:'+color+';"></span>';
             
             //添加一个汉字，这里你可以格式你的数字或者自定义文本内容
             htmlStr += params.value + '次/分钟';
@@ -108,14 +134,24 @@
     	top: '15%',
     	containLabel: true
     },
+    legend: {
+        data: ['高压最大值', '高压最小值','低压最大值', '低压最小值'],
+        top: 'auto',
+        textStyle:{
+             fontSize:30,
+             padding: [10, 0, 0, 0]
+        },
+    },
     series: [
     {
-    	/*data: {[240],[240],[240],[240],[240],[240],[240]},*/
-    	data: [240, 100, 120, 60, 80, 150],
+
+
     	type: 'bar',
+    	name:'高压最大值',
 				stack: "num",//折叠显示
 				showBackground: false,
 				barGap:'20%',
+    	        barMaxWidth: 50,
 				itemStyle: {
 					color: ['#00C8AA']
 				}
@@ -123,40 +159,44 @@
 
 			},
 			{
-				data: [120, 200, 150, 80, 70, 110],
+
 				type: 'bar',
+				name:'高压最小值',
 				stack: "num",//折叠显示
 				showBackground: false,
-
+    	barMaxWidth: 50,
 				itemStyle: {
 					color:'rgba(0, 200, 170, 0.2)'
 				}
 			},
 
 			{
-				data: [240, 220, 140, 60, 50, 100],
+
 				type: 'bar',
+				name:'低压最大值',
 				barGap:'20%',
+    	barMaxWidth: 50,
 				showBackground: false,
 			stack: "nums",//折叠显示
 			itemStyle: {
-				color: ['#00C8AA']
+				color: 'rgba(255, 85, 78, 1)'
 			}
 		},
 		{
-			data: [120, 200, 150, 80, 70, 110],
 			type: 'bar',
+			name:'低压最小值',
 				stack: "nums",//折叠显
 				showBackground: false,
-
+    	barMaxWidth: 50,
 				itemStyle: {
-					color:'rgba(0, 200, 170, 0.2)'
+					color:'rgba(255, 85, 78, 0.2)'
 				}
 			}
 			]
 
 
 		};
+		loadData(option)
 		myChart.setOption(option);
 
 	</script>

@@ -22,10 +22,10 @@
 	<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 	<div id="main" style="width: 100%;height:100%;"></div>
 	<script type="text/javascript">
-	var parityInfoSize = window.android.getXlistSize();//获取母猪胎龄集合大小
+	var parityInfoSize = window.android.getXlistSize();
         function loadX() {//放置x轴数据
             var list = [];
-            for (var i = 0; i < parityInfoSize; i++) {//应为原来集合有汉字 所以从1开始取
+            for (var i = 0; i < parityInfoSize; i++) {
                 list.push(window.android.getXlist(i));
             }
             return list;
@@ -34,7 +34,7 @@
         //通过ajax加载数据
         function loadData(option) {
             option.series[0].data = [];
-             for (var i = 0; i < parityInfoSize; i++) {//应为原来集合有汉字 所以从1开始取
+             for (var i = 0; i < parityInfoSize; i++) {
                 option.series[0].data.push(window.android.getDatas(i));
             }
         }
@@ -49,7 +49,7 @@
 					show: true,
 					textStyle: {
 						color: ['#333333'],
-						fontSize:40
+						fontSize:30
 					}
 				},
 				axisLine: {
@@ -65,7 +65,7 @@
 					show: true,
 					textStyle: {
 						color: ['#333333'],
-						fontSize:40
+						fontSize:30
 					}
 				},
 
@@ -84,7 +84,7 @@
 				show: true, 
 				position: 'top',
 				color: ['#529FFB'],
-				fontSize: 40
+				fontSize: 30
 				
 				
 			},
@@ -93,13 +93,14 @@
                 left: '3%',
                 right: '10%',
                 bottom: '3%',
-                top: '15%',
+                top: '3%',
                 containLabel: true
             },
 			series: [{
 				type: 'bar',
 				showBackground: false,
 				barWidth:'50%',
+				barMaxWidth: 50,
 				itemStyle: {
 					color: ['#529FFB']
 				}

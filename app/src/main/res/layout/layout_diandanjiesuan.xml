@@ -251,9 +251,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-
                     android:gravity="center_vertical"
                     android:weightSum="1">
 
@@ -274,10 +273,11 @@
                         android:layout_marginRight="@dimen/magin_12"
                         android:background="@null"
                         android:maxLength="50"
+                        android:lines="3"
                         android:hint="请输入备注"
-                        android:textColor="#ff333333"
-                        android:textColorHint="#ff999999"
-                        android:textSize="15sp" />
+                        android:textColor="@color/color333333"
+                        android:textColorHint="@color/color999999"
+                        android:textSize="@dimen/font14" />
 
                 </LinearLayout>
 

@@ -2,30 +2,15 @@ package com.taisheng.now.bussiness.watch;
 
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
-import com.taisheng.now.bussiness.doctor.DoctorFragment;
-import com.taisheng.now.bussiness.first.FirstFragment;
-import com.taisheng.now.bussiness.login.UserInstance;
-import com.taisheng.now.bussiness.market.MarketFragment;
-import com.taisheng.now.bussiness.me.MeFragment;
-import com.taisheng.now.bussiness.message.MessageFragment;
-import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
-import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
-import com.taisheng.now.bussiness.watch.bean.result.Yujingbean;
 import com.taisheng.now.bussiness.watch.location.WatchLocationFragment;
 import com.taisheng.now.bussiness.watch.watchchat.WatchChatFragment;
 import com.taisheng.now.bussiness.watch.watchchat.WeChatActivity;
@@ -35,29 +20,19 @@ import com.taisheng.now.bussiness.watch.watchyujing.ThreadUtil;
 import com.taisheng.now.bussiness.watch.watchyujing.WatchYujingFragment;
 import com.taisheng.now.chat.ChatManagerInstance;
 import com.taisheng.now.evbusbean.WeChatMsg;
-import com.taisheng.now.http.ApiUtils;
-import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.map.TrackInstance;
 import com.taisheng.now.util.SPUtil;
-import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.wight.BottomBar;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Response;
 
-//import android.support.v4.app.FragmentTransaction;
 
 @SuppressLint("WrongConstant")
 public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnItemListener {
-
 
     @BindView(R.id.fl_mains_watch)
     FrameLayout flMainsWatch;
