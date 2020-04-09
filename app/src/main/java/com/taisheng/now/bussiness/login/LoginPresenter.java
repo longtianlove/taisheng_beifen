@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.login;
 
 import android.annotation.SuppressLint;
-import android.widget.Toast;
 
 
 import com.taisheng.now.Constants;
@@ -56,7 +55,7 @@ public class LoginPresenter {
             tloginView.showDialog();
             CaptchaPostBean bean = new CaptchaPostBean();
             bean.phoneNumber = phone;
-            ApiUtils.getApiService().appAcquireVerifyCode(bean).enqueue(new TaiShengCallback<BaseBean>() {
+            ApiUtils.getApiService_hasdialog().appAcquireVerifyCode(bean).enqueue(new TaiShengCallback<BaseBean>() {
                 @Override
                 public void onSuccess(Response<BaseBean> response, BaseBean message) {
                     switch (message.code) {
@@ -124,7 +123,7 @@ public class LoginPresenter {
         if (tloginView != null) {
             tloginView.showDialog();
 
-            ApiUtils.getApiService().applogin(loginPostBean).enqueue(new TaiShengCallback<BaseBean<LoginResultBean>>() {
+            ApiUtils.getApiService_hasdialog().applogin(loginPostBean).enqueue(new TaiShengCallback<BaseBean<LoginResultBean>>() {
                 @Override
                 public void onSuccess(Response<BaseBean<LoginResultBean>> response, BaseBean<LoginResultBean> message) {
                     switch (message.code) {

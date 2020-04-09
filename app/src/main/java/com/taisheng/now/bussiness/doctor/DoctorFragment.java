@@ -3,12 +3,10 @@ package com.taisheng.now.bussiness.doctor;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,7 +129,7 @@ public class DoctorFragment extends BaseFragment {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 PAGE_NO = 1;
-                getDoctors();
+                getDoctors_nodialog();
 
             }
         });
@@ -142,7 +140,7 @@ public class DoctorFragment extends BaseFragment {
             @Override
             public void onUpLoad() {
                 PAGE_NO++;
-                getDoctors();
+                getDoctors_nodialog();
             }
         });
     }
@@ -159,7 +157,7 @@ public class DoctorFragment extends BaseFragment {
         bean.pageSize = PAGE_SIZE;
         bean.nickName = nickName;
         DialogUtil.showProgress(mActivity, "");
-        ApiUtils.getApiService().doctorslist(bean).enqueue(new TaiShengCallback<BaseBean<DoctorsResultBean>>() {
+        ApiUtils.getApiService_hasdialog().doctorslist(bean).enqueue(new TaiShengCallback<BaseBean<DoctorsResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DoctorsResultBean>> response, BaseBean<DoctorsResultBean> message) {
                 ptr_refresh.refreshComplete();
@@ -187,6 +185,58 @@ public class DoctorFragment extends BaseFragment {
                                 lv_doctors.setLoadAllViewText("暂时只有这么多医生");
                                 lv_doctors.setLoadAllFooterVisible(true);
                             }
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<DoctorsResultBean>> call, Throwable t) {
+                ptr_refresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+
+
+    }
+
+
+    void getDoctors_nodialog() {
+        RecommendDoctorPostBean bean = new RecommendDoctorPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        bean.nickName = nickName;
+        DialogUtil.showProgress(mActivity, "");
+        ApiUtils.getApiService().doctorslist(bean).enqueue(new TaiShengCallback<BaseBean<DoctorsResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<DoctorsResultBean>> response, BaseBean<DoctorsResultBean> message) {
+                ptr_refresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lv_doctors.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                            }
+                            //有消息
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lv_doctors.setHasLoadMore(false);
+                                lv_doctors.setLoadAllViewText("暂时只有这么多医生");
+                                lv_doctors.setLoadAllFooterVisible(true);
+                            } else {
+                                lv_doctors.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lv_doctors.setHasLoadMore(false);
+                            lv_doctors.setLoadAllViewText("暂时只有这么多医生");
+                            lv_doctors.setLoadAllFooterVisible(true);
+                        }
 
                         break;
                 }

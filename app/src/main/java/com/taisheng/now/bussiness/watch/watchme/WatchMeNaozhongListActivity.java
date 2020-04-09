@@ -2,7 +2,6 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
@@ -111,7 +109,7 @@ public class WatchMeNaozhongListActivity extends BaseIvActivity implements Activ
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        ApiUtils.getApiService().getWatchREMINDList(bean).enqueue(new TaiShengCallback<BaseBean<NaozhongListResultBean>>() {
+        ApiUtils.getApiService_hasdialog().getWatchREMINDList(bean).enqueue(new TaiShengCallback<BaseBean<NaozhongListResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<NaozhongListResultBean>> response, BaseBean<NaozhongListResultBean> message) {
                 switch (message.code) {
@@ -216,7 +214,7 @@ public class WatchMeNaozhongListActivity extends BaseIvActivity implements Activ
                     setNaozhongPostBean.token = UserInstance.getInstance().getToken();
                     setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
                     setNaozhongPostBean.watchRemindList = mData;
-                    ApiUtils.getApiService().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
@@ -254,7 +252,7 @@ public class WatchMeNaozhongListActivity extends BaseIvActivity implements Activ
                     setNaozhongPostBean.deviceId = WatchInstance.getInstance().deviceId;
                     WatchInstance.getInstance().mDataNaoZhong.remove(position);
                     setNaozhongPostBean.watchRemindList = WatchInstance.getInstance().mDataNaoZhong;
-                    ApiUtils.getApiService().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {

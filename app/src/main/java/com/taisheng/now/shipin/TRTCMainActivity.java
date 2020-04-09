@@ -676,7 +676,7 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
             bean.doctorId = doctorId;
             bean.roomId = roomId + "";
             bean.offType = "0";
-            ApiUtils.getApiService().updateDoctorStatus(bean).enqueue(new TaiShengCallback<BaseBean>() {
+            ApiUtils.getApiService_hasdialog().updateDoctorStatus(bean).enqueue(new TaiShengCallback<BaseBean>() {
                 @Override
                 public void onSuccess(Response<BaseBean> response, BaseBean message) {
                     switch (message.code) {
@@ -709,7 +709,7 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
         bean.doctorId = doctorId;
         bean.roomId = roomId + "";
         bean.offType = "1";
-        ApiUtils.getApiService().updateDoctorStatus(bean).enqueue(new TaiShengCallback<BaseBean>() {
+        ApiUtils.getApiService_hasdialog().updateDoctorStatus(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
                 switch (message.code) {
@@ -1067,7 +1067,7 @@ public class TRTCMainActivity extends Activity implements View.OnClickListener, 
                 bean.token = UserInstance.getInstance().getToken();
                 bean.doctorId = activity.doctorId;
                 bean.roomId = activity.roomId + "";
-                ApiUtils.getApiService().detectRoomIn(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().detectRoomIn(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
 

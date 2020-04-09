@@ -3,7 +3,6 @@ package com.taisheng.now.bussiness.me;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,7 +122,7 @@ public class RecommendShareActivity extends BaseIvActivity {
         bean.pageNo = PAGE_NO;
         bean.pageSize = PAGE_SIZE;
         DialogUtil.showProgress(this, "");
-        ApiUtils.getApiService().myrecommendshare(bean).enqueue(new TaiShengCallback<BaseBean<RecommendSharedResultBean>>() {
+        ApiUtils.getApiService_hasdialog().myrecommendshare(bean).enqueue(new TaiShengCallback<BaseBean<RecommendSharedResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<RecommendSharedResultBean>> response, BaseBean<RecommendSharedResultBean> message) {
                 DialogUtil.closeProgress();
@@ -171,7 +170,7 @@ public class RecommendShareActivity extends BaseIvActivity {
         bean.pageNo = PAGE_NO;
         bean.pageSize = PAGE_SIZE;
         DialogUtil.showProgress(this, "");
-        ApiUtils.getApiService().myrecommendshare(bean).enqueue(new TaiShengCallback<BaseBean<RecommendSharedResultBean>>() {
+        ApiUtils.getApiService_hasdialog().myrecommendshare(bean).enqueue(new TaiShengCallback<BaseBean<RecommendSharedResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<RecommendSharedResultBean>> response, BaseBean<RecommendSharedResultBean> message) {
                 DialogUtil.closeProgress();
@@ -223,10 +222,8 @@ public class RecommendShareActivity extends BaseIvActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //todo 修改分享的url
-//        bitmap = ZXingUtils.createQRImage("http://192.168.1.111:8020/article/app_downLoad.html?recommender=" + UserInstance.getInstance().getUid() + "&extensionSource=EXTENSION_02", DensityUtil.dip2px(this, 230), DensityUtil.dip2px(this, 230));
-        LogUtilH.e(Constants.Url.Host + "article/app_downLoad.html?recommender=" + UserInstance.getInstance().getUid() + "&extensionSource=EXTENSION_02");
-        bitmap = ZXingUtils.createQRImage(Constants.Url.Host + "article/app_downLoad.html?recommender=" + UserInstance.getInstance().getUid() + "&extensionSource=EXTENSION_02", DensityUtil.dip2px(this, 230), DensityUtil.dip2px(this, 230));
+        LogUtilH.e(Constants.Url.Host + "public-h5/app_downLoad.html?recommender=" + UserInstance.getInstance().getUid() + "&extensionSource=EXTENSION_02");
+        bitmap = ZXingUtils.createQRImage(Constants.Url.Host + "public-h5/app_downLoad.html?recommender=" + UserInstance.getInstance().getUid() + "&extensionSource=EXTENSION_02", DensityUtil.dip2px(this, 230), DensityUtil.dip2px(this, 230));
         ivShareQr.setImageBitmap(bitmap);
     }
 

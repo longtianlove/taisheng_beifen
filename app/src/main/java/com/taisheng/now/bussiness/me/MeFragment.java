@@ -20,7 +20,6 @@ import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.article.ArticleCollectActivity;
 import com.taisheng.now.bussiness.bean.post.BasePostBean;
 import com.taisheng.now.bussiness.bean.result.IsSign;
-import com.taisheng.now.bussiness.doctor.DoctorCollectActivity;
 import com.taisheng.now.bussiness.healthfiles.HealthCheckHistoryActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
@@ -209,7 +208,7 @@ public class MeFragment extends BaseFragment {
         BasePostBean bean = new BasePostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        ApiUtils.getApiService().isSign(bean).enqueue(new TaiShengCallback<BaseBean<IsSign>>() {
+        ApiUtils.getApiService_hasdialog().isSign(bean).enqueue(new TaiShengCallback<BaseBean<IsSign>>() {
             @Override
             public void onSuccess(Response<BaseBean<IsSign>> response, BaseBean<IsSign> message) {
                 switch (message.code) {

@@ -23,7 +23,6 @@ import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
-import com.th.j.commonlibrary.utils.LogUtilH;
 import com.taisheng.now.view.TaishengListView;
 
 import java.util.ArrayList;
@@ -107,7 +106,7 @@ public class KanjuanFragment extends BaseFragment {
         }
         DialogUtil.showProgress(getActivity(), "");
 
-        ApiUtils.getApiService().getCouponlist(bean).enqueue(new TaiShengCallback<BaseBean<MallYouhuiquanResultBanner>>() {
+        ApiUtils.getApiService_hasdialog().getCouponlist(bean).enqueue(new TaiShengCallback<BaseBean<MallYouhuiquanResultBanner>>() {
             @Override
             public void onSuccess(Response<BaseBean<MallYouhuiquanResultBanner>> response, BaseBean<MallYouhuiquanResultBanner> message) {
 //                ptr_refresh.refreshComplete();

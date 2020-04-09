@@ -2,10 +2,7 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,11 +11,9 @@ import android.widget.TextView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
-import com.taisheng.now.bussiness.watch.bean.post.InsertSosJinjilianxirenPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UpdateSosContactSettingPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
@@ -114,7 +109,7 @@ public class WatchMeJinjilianxirenXinzengActivity extends BaseIvActivity {
                 bean1.realNameTwo = WatchMejinjilianxirenActivity.watchNameSos2;
                 bean1.mobilePhoneThree = WatchMejinjilianxirenActivity.watchSos3;
                 bean1.realNameThree = WatchMejinjilianxirenActivity.watchNameSos3;
-                ApiUtils.getApiService().updateSosContactSetting(bean1).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().updateSosContactSetting(bean1).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

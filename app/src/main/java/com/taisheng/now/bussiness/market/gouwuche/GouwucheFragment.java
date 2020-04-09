@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
@@ -28,13 +26,11 @@ import com.taisheng.now.bussiness.market.dizhi.DizhiBianjiActivity;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
-import com.taisheng.now.util.LogUtil;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.TaishengListView;
 import com.th.j.commonlibrary.interfaces.ILvAmountView;
 import com.th.j.commonlibrary.utils.LogUtilH;
-import com.th.j.commonlibrary.utils.TextsUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -111,7 +107,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
             scoreGoods = 0;
         }
         DialogUtil.showProgress(getActivity(), "");
-        ApiUtils.getApiService().gouwuchelist(bean).enqueue(new TaiShengCallback<BaseBean<GouwucheResultBean>>() {
+        ApiUtils.getApiService_hasdialog().gouwuchelist(bean).enqueue(new TaiShengCallback<BaseBean<GouwucheResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GouwucheResultBean>> response, BaseBean<GouwucheResultBean> message) {
 //                ptr_refresh.refreshComplete();
@@ -214,7 +210,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
         bean.pageNo = 1;
         bean.pageSize = 10;
 
-        ApiUtils.getApiService().addressList(bean).enqueue(new TaiShengCallback<BaseBean<DizhilistResultBean>>() {
+        ApiUtils.getApiService_hasdialog().addressList(bean).enqueue(new TaiShengCallback<BaseBean<DizhilistResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DizhilistResultBean>> response, BaseBean<DizhilistResultBean> message) {
 
@@ -414,7 +410,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.cartId = shoppingCartBean.getId() + ",";
-        ApiUtils.getApiService().cartDelete(bean).enqueue(new TaiShengCallback<BaseBean>() {
+        ApiUtils.getApiService_hasdialog().cartDelete(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
 
@@ -492,7 +488,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                     bean.userId = UserInstance.getInstance().getUid();
                     bean.token = UserInstance.getInstance().getToken();
                     bean.cartId = stringBuffer.toString();
-                    ApiUtils.getApiService().cartDelete(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().cartDelete(bean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
@@ -533,7 +529,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
         updateCartNumberPostBean.number = value;
         updateCartNumberPostBean.operateType = type;
         updateCartNumberPostBean.productId = shoppingCartBean.productId;
-        ApiUtils.getApiService().updateCartNumber(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+        ApiUtils.getApiService_hasdialog().updateCartNumber(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
                 switch (message.code) {

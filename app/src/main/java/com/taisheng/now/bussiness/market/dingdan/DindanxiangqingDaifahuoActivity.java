@@ -3,7 +3,6 @@ package com.taisheng.now.bussiness.market.dingdan;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,8 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseHActivity;
-import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.OrderxiangqingPostBean;
 import com.taisheng.now.bussiness.bean.result.market.DingdanxiangqingGoodBean;
 import com.taisheng.now.bussiness.bean.result.market.DingdanxiangqingResultBean;
@@ -93,7 +90,7 @@ public class DindanxiangqingDaifahuoActivity extends BaseHActivity {
         bean.orderId = orderId;
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        ApiUtils.getApiService().orderDetail(bean).enqueue(new TaiShengCallback<BaseBean<DingdanxiangqingResultBean>>() {
+        ApiUtils.getApiService_hasdialog().orderDetail(bean).enqueue(new TaiShengCallback<BaseBean<DingdanxiangqingResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DingdanxiangqingResultBean>> response, BaseBean<DingdanxiangqingResultBean> message) {
                 switch (message.code) {

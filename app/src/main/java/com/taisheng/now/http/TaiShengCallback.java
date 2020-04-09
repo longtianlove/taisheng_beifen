@@ -11,6 +11,7 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.login.LoginActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.push.XMPushManagerInstance;
+import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.ToastUtil;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -27,6 +28,7 @@ import retrofit2.Response;
 public abstract class TaiShengCallback<T extends BaseBean> implements Callback<T> {
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
+        DialogUtil.new_closeProgress();
         if (response.code() >= 200 && response.code() < 300) {
             T message = response.body();
 //            if (message != null) {
@@ -121,6 +123,7 @@ public abstract class TaiShengCallback<T extends BaseBean> implements Callback<T
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
+        DialogUtil.new_closeProgress();
         onFail(call, t);
     }
 

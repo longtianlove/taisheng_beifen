@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -162,7 +161,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
                 bean.token = UserInstance.getInstance().getToken();
                 bean.collectionType = "1";
                 bean.dataId = doctorId;
-                ApiUtils.getApiService().collectionaddOrRemove(bean).enqueue(new TaiShengCallback<BaseBean<CollectAddorRemoveResultBean>>() {
+                ApiUtils.getApiService_hasdialog().collectionaddOrRemove(bean).enqueue(new TaiShengCallback<BaseBean<CollectAddorRemoveResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<CollectAddorRemoveResultBean>> response, BaseBean<CollectAddorRemoveResultBean> message) {
                         switch (message.code) {
@@ -245,7 +244,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
         } else {
             bean.type = "0";
         }
-        ApiUtils.getApiService().connectDoctor(bean).enqueue(new TaiShengCallback<BaseBean<ConnectDoctorResultBean>>() {
+        ApiUtils.getApiService_hasdialog().connectDoctor(bean).enqueue(new TaiShengCallback<BaseBean<ConnectDoctorResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<ConnectDoctorResultBean>> response, BaseBean<ConnectDoctorResultBean> message) {
                 ConnectDoctorResultBean bean = message.result;
@@ -334,7 +333,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.id = doctorId;
-        ApiUtils.getApiService().doctorQueryById(bean).enqueue(new TaiShengCallback<BaseBean<DoctorBean>>() {
+        ApiUtils.getApiService_hasdialog().doctorQueryById(bean).enqueue(new TaiShengCallback<BaseBean<DoctorBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DoctorBean>> response, BaseBean<DoctorBean> message) {
                 switch (message.code) {
@@ -411,7 +410,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.id = doctorId;
-        ApiUtils.getApiService().getDoctorServerNum(bean).enqueue(new TaiShengCallback<BaseBean<DoctorNumberResultBean>>() {
+        ApiUtils.getApiService_hasdialog().getDoctorServerNum(bean).enqueue(new TaiShengCallback<BaseBean<DoctorNumberResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DoctorNumberResultBean>> response, BaseBean<DoctorNumberResultBean> message) {
                 switch (message.code) {
@@ -433,7 +432,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.id = doctorId;
-        ApiUtils.getApiService().getBeCommentedNum(bean).enqueue(new TaiShengCallback<BaseBean<DoctorNumberResultBean>>() {
+        ApiUtils.getApiService_hasdialog().getBeCommentedNum(bean).enqueue(new TaiShengCallback<BaseBean<DoctorNumberResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DoctorNumberResultBean>> response, BaseBean<DoctorNumberResultBean> message) {
                 switch (message.code) {
@@ -457,7 +456,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
         bean.token = UserInstance.getInstance().getToken();
         bean.dataId = doctorId;
         bean.collectionType = "1";
-        ApiUtils.getApiService().getBeDoctorAttentionNum(bean).enqueue(new TaiShengCallback<BaseBean<DoctorNumberResultBean>>() {
+        ApiUtils.getApiService_hasdialog().getBeDoctorAttentionNum(bean).enqueue(new TaiShengCallback<BaseBean<DoctorNumberResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DoctorNumberResultBean>> response, BaseBean<DoctorNumberResultBean> message) {
                 switch (message.code) {
@@ -484,7 +483,7 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
         bean.doctorId = doctorId;
         LogUtilH.e("--6-");
         DialogUtil.showProgress(this, "");
-        ApiUtils.getApiService().doctorScoreList(bean).enqueue(new TaiShengCallback<BaseBean<DoctorCommentResultBean>>() {
+        ApiUtils.getApiService_hasdialog().doctorScoreList(bean).enqueue(new TaiShengCallback<BaseBean<DoctorCommentResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DoctorCommentResultBean>> response, BaseBean<DoctorCommentResultBean> message) {
                 DialogUtil.closeProgress();

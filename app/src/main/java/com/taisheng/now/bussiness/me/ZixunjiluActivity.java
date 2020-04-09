@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.me;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +64,7 @@ public class ZixunjiluActivity extends BaseHActivity {
     public void addData() {
         PAGE_NO = 1;
         PAGE_SIZE = 10;
-        getconsultList();
+        getconsultList_first();
     }
 
     @Override
@@ -80,8 +79,9 @@ public class ZixunjiluActivity extends BaseHActivity {
         ptrRefresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-
-                addData();
+                PAGE_NO = 1;
+                PAGE_SIZE = 10;
+                getconsultList();
             }
         });
         lvDoctors = (TaishengListView) findViewById(R.id.lv_doctors);
@@ -95,7 +95,56 @@ public class ZixunjiluActivity extends BaseHActivity {
         });
     }
 
+    void getconsultList_first() {
+        BaseListPostBean bean = new BaseListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
 
+        DialogUtil.showProgress(this, "");
+        ApiUtils.getApiService_hasdialog().consultList(bean).enqueue(new TaiShengCallback<BaseBean<ConsultListResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<ConsultListResultBean>> response, BaseBean<ConsultListResultBean> message) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+
+                            lvDoctors.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                            }
+                            //有消息
+                            PAGE_NO++;
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lvDoctors.setHasLoadMore(false);
+                                lvDoctors.setLoadAllViewText("暂时只有这么多咨询");
+                                lvDoctors.setLoadAllFooterVisible(true);
+                            } else {
+                                lvDoctors.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lvDoctors.setHasLoadMore(false);
+                            lvDoctors.setLoadAllViewText("暂时只有这么多咨询");
+                            lvDoctors.setLoadAllFooterVisible(true);
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<ConsultListResultBean>> call, Throwable t) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+
+    }
     void getconsultList() {
         BaseListPostBean bean = new BaseListPostBean();
         bean.userId = UserInstance.getInstance().getUid();

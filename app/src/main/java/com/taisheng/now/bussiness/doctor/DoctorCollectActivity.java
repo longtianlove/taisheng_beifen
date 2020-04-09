@@ -2,9 +2,7 @@ package com.taisheng.now.bussiness.doctor;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +70,7 @@ public class DoctorCollectActivity extends BaseHActivity {
     public void addData() {
         PAGE_NO = 1;
         PAGE_SIZE = 10;
-        getDoctors();
+        getDoctors_hasdialog();
     }
 
     @Override
@@ -87,7 +85,9 @@ public class DoctorCollectActivity extends BaseHActivity {
         ptrRefresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                addData();
+                PAGE_NO = 1;
+                PAGE_SIZE = 10;
+                getDoctors();
             }
         });
         madapter = new DoctorAdapter(this);
@@ -101,6 +101,56 @@ public class DoctorCollectActivity extends BaseHActivity {
     }
 
 
+    private void getDoctors_hasdialog() {
+        CollectListPostBean bean = new CollectListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        bean.collectionType = "1";
+        DialogUtil.showProgress(this, "");
+        ApiUtils.getApiService().doctorcollectionlist(bean).enqueue(new TaiShengCallback<BaseBean<DoctorCollectListResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<DoctorCollectListResultBean>> response, BaseBean<DoctorCollectListResultBean> message) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lvDoctors.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                            }
+                            //有消息
+                            PAGE_NO++;
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lvDoctors.setHasLoadMore(false);
+                                lvDoctors.setLoadAllViewText("暂时只有这么多医生");
+                                lvDoctors.setLoadAllFooterVisible(true);
+                            } else {
+                                lvDoctors.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lvDoctors.setHasLoadMore(false);
+                            lvDoctors.setLoadAllViewText("暂时只有这么多医生");
+                            lvDoctors.setLoadAllFooterVisible(true);
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<DoctorCollectListResultBean>> call, Throwable t) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+
+
+    }
     private void getDoctors() {
         CollectListPostBean bean = new CollectListPostBean();
         bean.userId = UserInstance.getInstance().getUid();

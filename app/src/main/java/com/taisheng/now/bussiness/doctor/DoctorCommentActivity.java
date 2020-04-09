@@ -1,10 +1,8 @@
 package com.taisheng.now.bussiness.doctor;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -95,7 +93,7 @@ public class DoctorCommentActivity extends BaseHActivity implements TextWatcher 
         bean.doctorId = doctorId;
         bean.consultationScore = starGrade.resultScore;
         bean.content = TextsUtils.getTexts(etCommend);
-        ApiUtils.getApiService().doctorScore(bean).enqueue(new TaiShengCallback<BaseBean>() {
+        ApiUtils.getApiService_hasdialog().doctorScore(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
                 switch (message.code) {

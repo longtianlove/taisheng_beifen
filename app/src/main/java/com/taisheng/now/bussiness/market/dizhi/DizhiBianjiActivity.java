@@ -136,7 +136,7 @@ public class DizhiBianjiActivity extends BaseIvActivity {
                         return;
                     }
 
-                    ApiUtils.getApiService().addressAdd(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().addressAdd(bean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
@@ -183,7 +183,7 @@ public class DizhiBianjiActivity extends BaseIvActivity {
                         return;
                     }
 
-                    ApiUtils.getApiService().updateAddressById(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().updateAddressById(bean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
@@ -214,7 +214,7 @@ public class DizhiBianjiActivity extends BaseIvActivity {
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.id = dizhiid;
-                ApiUtils.getApiService().addressDelete(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().addressDelete(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

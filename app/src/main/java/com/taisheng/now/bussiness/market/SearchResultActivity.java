@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +95,7 @@ public class SearchResultActivity extends BaseHActivity {
         bean.token = UserInstance.getInstance().getToken();
         bean.userId = UserInstance.getInstance().getUid();
         DialogUtil.showProgress(this, "");
-        ApiUtils.getApiService().goodslist(bean).enqueue(new TaiShengCallback<BaseBean<ShangPinResultBeann>>() {
+        ApiUtils.getApiService_hasdialog().goodslist(bean).enqueue(new TaiShengCallback<BaseBean<ShangPinResultBeann>>() {
             @Override
             public void onSuccess(Response<BaseBean<ShangPinResultBeann>> response, BaseBean<ShangPinResultBeann> message) {
                 DialogUtil.closeProgress();

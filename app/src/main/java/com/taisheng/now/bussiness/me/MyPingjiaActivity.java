@@ -3,7 +3,6 @@ package com.taisheng.now.bussiness.me;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +69,7 @@ public class MyPingjiaActivity extends BaseHActivity {
     public void addData() {
         PAGE_NO = 1;
         PAGE_SIZE = 10;
-        getMyPingjias();
+        getMyPingjias_hasdialog();
     }
 
     @Override
@@ -85,7 +84,9 @@ public class MyPingjiaActivity extends BaseHActivity {
         ptrRefresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                addData();
+                PAGE_NO = 1;
+                PAGE_SIZE = 10;
+                getMyPingjias();
             }
         });
         madapter = new MyPingjiaAdapter(this);
@@ -99,7 +100,53 @@ public class MyPingjiaActivity extends BaseHActivity {
 
     }
 
+    void getMyPingjias_hasdialog() {
+        BaseListPostBean bean = new BaseListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        DialogUtil.showProgress(this, "");
+        ApiUtils.getApiService_hasdialog().myDoctorScores(bean).enqueue(new TaiShengCallback<BaseBean<MyPingjiaResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<MyPingjiaResultBean>> response, BaseBean<MyPingjiaResultBean> message) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lvMypingluns.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                            }
+                            //有消息
+                            PAGE_NO++;
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lvMypingluns.setHasLoadMore(false);
+                                lvMypingluns.setLoadAllViewText("暂时只有这么多评论");
+                                lvMypingluns.setLoadAllFooterVisible(true);
+                            } else {
+                                lvMypingluns.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lvMypingluns.setHasLoadMore(false);
+                            lvMypingluns.setLoadAllViewText("暂时只有这么多评论");
+                            lvMypingluns.setLoadAllFooterVisible(true);
+                        }
+                        break;
+                }
+            }
 
+            @Override
+            public void onFail(Call<BaseBean<MyPingjiaResultBean>> call, Throwable t) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+    }
 
 
     void getMyPingjias() {

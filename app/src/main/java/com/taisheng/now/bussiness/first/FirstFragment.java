@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,7 +55,6 @@ import com.taisheng.now.evbusbean.HomeChange;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
-import com.taisheng.now.util.GlideImageLoader;
 import com.taisheng.now.util.GlideImageLoader2;
 
 import com.taisheng.now.util.SPUtil;
@@ -134,7 +132,7 @@ public class FirstFragment extends BaseFragment {
 
 
 //        EventBus.getDefault().register(this);
-        initData();
+        initData_first();
 
 
         return rootView;
@@ -322,7 +320,7 @@ public class FirstFragment extends BaseFragment {
                 bean.token = UserInstance.getInstance().getToken();
                 bean.pageNo = 1;
                 bean.pageSize = 10;
-                ApiUtils.getApiService().queryDeviceBinding(bean).enqueue(new TaiShengCallback<BaseBean<WatchListResultBean>>() {
+                ApiUtils.getApiService_hasdialog().queryDeviceBinding(bean).enqueue(new TaiShengCallback<BaseBean<WatchListResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<WatchListResultBean>> response, BaseBean<WatchListResultBean> message) {
                         switch (message.code) {
@@ -591,12 +589,52 @@ public class FirstFragment extends BaseFragment {
     String shipinId;
 
 
+    void initData_first() {
+
+        getRecommendDoctors_first();
+        getRecommendShipin_first();
+        getHotArticle_first();
+
+    }
+
+
     void initData() {
 
         getRecommendDoctors();
         getRecommendShipin();
         getHotArticle();
 
+    }
+
+
+    void getRecommendDoctors_first() {
+        RecommendDoctorPostBean bean = new RecommendDoctorPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = 1;
+        bean.pageSize = 5;
+        DialogUtil.showProgress(mActivity, "");
+        ApiUtils.getApiService_hasdialog().recommendList(bean).enqueue(new TaiShengCallback<BaseBean<DoctorsResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<DoctorsResultBean>> response, BaseBean<DoctorsResultBean> message) {
+                ptr_refresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        zhuanjiaAdapter.doctors = message.result.records;
+                        zhuanjiaAdapter.notifyDataSetChanged();
+                        break;
+                }
+
+
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<DoctorsResultBean>> call, Throwable t) {
+                ptr_refresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
     }
 
     void getRecommendDoctors() {
@@ -744,6 +782,67 @@ public class FirstFragment extends BaseFragment {
     }
 
 
+    void getRecommendShipin_first() {
+        BasePostBean bean = new BasePostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        DialogUtil.showProgress(getActivity(), "");
+        ApiUtils.getApiService_hasdialog().recommendShiPin(bean).enqueue(new TaiShengCallback<BaseBean<ShipinsResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<ShipinsResultBean>> response, BaseBean<ShipinsResultBean> message) {
+                ptr_refresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+//                            ll_shipin_all.setVisibility(View.VISIBLE);
+//                            madapter.mData.addAll(message.result.records);
+                            ShipinBean bean = message.result.records.get(0);
+                            shipinId = bean.id;
+                            source1 = bean.videoUrl;
+                            videoPlayer.setUp(bean.videoUrl, true, "测试视频");
+                            Glide.with(getActivity())
+                                    .load(bean.videoBanner)
+                                    .apply(new RequestOptions().error(R.mipmap.health01).placeholder(R.mipmap.health01))
+                                    .into(imageView);
+
+                            tv_shipintitle.setText(bean.videoTitle);
+                            tv_shipindianzan.setText(bean.videoPraise + "");
+                            if ("NO".equals(bean.videoPraiseFlag)) {
+                                tv_shipindianzan.setSelected(false);
+                                iv_shipindianzan.setSelected(false);
+                            } else {
+                                tv_shipindianzan.setSelected(true);
+                                iv_shipindianzan.setSelected(true);
+                            }
+
+                            tv_shipinguanzhu.setText(bean.collectionCount + "");
+                            if ("NO".equals(bean.userCollected)) {
+                                tv_shipinguanzhu.setSelected(false);
+                                iv_shipinguanzhu.setSelected(false);
+                            } else {
+                                tv_shipinguanzhu.setSelected(true);
+                                iv_shipinguanzhu.setSelected(true);
+                            }
+                            tv_shipinbofangshu.setText(bean.videoPlayTimes + "");
+                        } else {
+//                            //没有消息
+
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<ShipinsResultBean>> call, Throwable t) {
+                ptr_refresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+
+
+    }
+
     void getRecommendShipin() {
         BasePostBean bean = new BasePostBean();
         bean.userId = UserInstance.getInstance().getUid();
@@ -805,6 +904,55 @@ public class FirstFragment extends BaseFragment {
 
     }
 
+
+
+    void getHotArticle_first() {
+
+        BasePostBean bean = new BasePostBean();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.userId = UserInstance.getInstance().getUid();
+
+
+//        DialogUtil.showProgress(mActivity, "");
+        ApiUtils.getApiService_hasdialog().hotArticleList(bean).enqueue(new TaiShengCallback<BaseBean<ArticleResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<ArticleResultBean>> response, BaseBean<ArticleResultBean> message) {
+//                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result != null && message.result.records.size() > 0) {
+                            lv_articles.setLoading(false);
+                            //有消息
+//                            PAGE_NO++;
+                            madapter.mData.clear();
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 1000) {
+                                lv_articles.setHasLoadMore(false);
+                                lv_articles.setLoadAllViewText("暂时只有这么多文章");
+                                lv_articles.setLoadAllFooterVisible(true);
+                            } else {
+                                lv_articles.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+//                            //没有消息
+                            lv_articles.setHasLoadMore(false);
+                            lv_articles.setLoadAllViewText("暂时只有这么多文章");
+                            lv_articles.setLoadAllFooterVisible(true);
+                        }
+
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<ArticleResultBean>> call, Throwable t) {
+//                DialogUtil.closeProgress();
+            }
+        });
+    }
 
     void getHotArticle() {
 

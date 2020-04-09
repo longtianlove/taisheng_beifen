@@ -109,7 +109,7 @@ public class JiangyaoshiyongKanjuanFragment extends BaseFragment {
         }
         DialogUtil.showProgress(getActivity(), "");
 
-        ApiUtils.getApiService().getCouponlist(bean).enqueue(new TaiShengCallback<BaseBean<MallYouhuiquanResultBanner>>() {
+        ApiUtils.getApiService_hasdialog().getCouponlist(bean).enqueue(new TaiShengCallback<BaseBean<MallYouhuiquanResultBanner>>() {
             @Override
             public void onSuccess(Response<BaseBean<MallYouhuiquanResultBanner>> response, BaseBean<MallYouhuiquanResultBanner> message) {
 //                ptr_refresh.refreshComplete();

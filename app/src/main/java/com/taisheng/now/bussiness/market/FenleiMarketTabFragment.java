@@ -58,7 +58,7 @@ public class FenleiMarketTabFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_market_tab, container, false);
         initView(rootView);
-        initData();
+        initData_first();
         return rootView;
     }
 
@@ -89,6 +89,14 @@ public class FenleiMarketTabFragment extends BaseFragment {
         });
     }
 
+
+    void initData_first() {
+        PAGE_NO = 1;
+        PAGE_SIZE = 10;
+        bean = new MarketTypePostBean();
+        getArticles_first();
+    }
+
     void initData() {
         PAGE_NO = 1;
         PAGE_SIZE = 10;
@@ -99,6 +107,67 @@ public class FenleiMarketTabFragment extends BaseFragment {
 
     int PAGE_NO = 1;
     int PAGE_SIZE = 10;
+
+
+    void getArticles_first() {
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        if ("营养保健".equals(typeName)){
+            bean.type = "ad63e761d074716cd76202f78dacec56";
+        }else if ("食品滋补".equals(typeName)){
+            bean.type = "064387677d5ffb88f2b6ef4810e94af3";
+        }else if ("中药材".equals(typeName)){
+            bean.type = "aae5e9deb8fdec69b6e4982b9ee27214";
+        }else if ("积分兑换".equals(typeName)){
+            bean.type = "ad63e761d074716cd76202f78dacec55";
+        }
+        bean.token = UserInstance.getInstance().getToken();
+        bean.userId = UserInstance.getInstance().getUid();
+        DialogUtil.showProgress(mActivity, "");
+        ApiUtils.getApiService_hasdialog().goodsTtype(bean).enqueue(new TaiShengCallback<BaseBean<ShangPinResultBeann>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<ShangPinResultBeann>> response, BaseBean<ShangPinResultBeann> message) {
+                DialogUtil.closeProgress();
+                ptr_refresh.refreshComplete();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lv_articles.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                            }
+                            //有消息
+                            PAGE_NO++;
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lv_articles.setHasLoadMore(false);
+                                lv_articles.setLoadAllViewText("暂时只有这么多商品");
+                                lv_articles.setLoadAllFooterVisible(true);
+                            } else {
+                                lv_articles.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lv_articles.setHasLoadMore(false);
+                            lv_articles.setLoadAllViewText("暂时只有这么多商品");
+                            lv_articles.setLoadAllFooterVisible(true);
+                        }
+
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<ShangPinResultBeann>> call, Throwable t) {
+                DialogUtil.closeProgress();
+                ptr_refresh.refreshComplete();
+            }
+        });
+    }
 
     void getArticles() {
         bean.pageNo = PAGE_NO;

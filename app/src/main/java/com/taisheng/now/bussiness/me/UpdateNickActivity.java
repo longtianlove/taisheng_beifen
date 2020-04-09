@@ -1,6 +1,5 @@
 package com.taisheng.now.bussiness.me;
 
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
@@ -91,7 +90,7 @@ public class UpdateNickActivity extends BaseHActivity implements TextWatcher {
                 bean.sysUser.userName = UserInstance.getInstance().userInfo.userName;
                 bean.sysUser.nickName = TextsUtils.getTexts(etNickname);
 
-                ApiUtils.getApiService().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
+                ApiUtils.getApiService_hasdialog().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<ModifyUserInfoResultBean>> response, BaseBean<ModifyUserInfoResultBean> message) {
                         switch (message.code) {

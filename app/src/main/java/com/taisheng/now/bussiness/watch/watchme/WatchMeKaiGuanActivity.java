@@ -93,7 +93,7 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        ApiUtils.getApiService().allSetting(bean).enqueue(new TaiShengCallback<BaseBean<AllSettingResultBean>>() {
+        ApiUtils.getApiService_hasdialog().allSetting(bean).enqueue(new TaiShengCallback<BaseBean<AllSettingResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<AllSettingResultBean>> response, BaseBean<AllSettingResultBean> message) {
                 switch (message.code) {
@@ -157,7 +157,7 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
 //                bean.switchType = "APPLOCK";
 //                bean.switchValue = ivKaiguanGps.isSelected() ? "0" : "1";
                 bean.value=ivKaiguanGps.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().phonebookswitch(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().phonebookswitch(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -211,7 +211,7 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
                 bean2.deviceId = WatchInstance.getInstance().deviceId;
                 bean2.switchType = "SOSSMS";
                 bean2.switchValue = ivKaiguanSos.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean2).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().watchSwitchConfig(bean2).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -268,7 +268,7 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
                 bean3.deviceId = WatchInstance.getInstance().deviceId;
                 bean3.switchType = "LOWBAT";
                 bean3.switchValue = ivKaiguanDidianduanxin.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean3).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().watchSwitchConfig(bean3).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -321,7 +321,7 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
                 bean4.deviceId = WatchInstance.getInstance().deviceId;
                 bean4.switchType = "REMOVE";
                 bean4.switchValue = ivKaiguanQuxiashouhuan.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean4).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().watchSwitchConfig(bean4).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -373,7 +373,7 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
 //                bean5.switchType = " PEDO";
 //                bean5.switchValue = ivKaiguanJibu.isSelected() ? "0" : "1";
                 bean5.value = ivKaiguanJibu.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().edometerSwitch(bean5).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().edometerSwitch(bean5).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -425,7 +425,7 @@ public class WatchMeKaiGuanActivity extends BaseIvActivity implements ActivityCo
                 bean6.deviceId = WatchInstance.getInstance().deviceId;
                 bean6.switchType = " SLEEPTIME";
                 bean6.switchValue = ivKaiguanFanzhuan.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean6).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().watchSwitchConfig(bean6).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

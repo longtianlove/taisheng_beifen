@@ -3,7 +3,6 @@ package com.taisheng.now.bussiness.market.dingdan;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,8 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseHActivity;
-import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.DeleteOrderPostBean;
 import com.taisheng.now.bussiness.bean.post.OrderxiangqingPostBean;
 import com.taisheng.now.bussiness.bean.post.WexinZhifuPostBean;
@@ -109,7 +106,7 @@ public class DindanxiangqingDaifukuanActivity extends BaseHActivity {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
 
-        ApiUtils.getApiService().orderDetail(bean).enqueue(new TaiShengCallback<BaseBean<DingdanxiangqingResultBean>>() {
+        ApiUtils.getApiService_hasdialog().orderDetail(bean).enqueue(new TaiShengCallback<BaseBean<DingdanxiangqingResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DingdanxiangqingResultBean>> response, BaseBean<DingdanxiangqingResultBean> message) {
                 switch (message.code) {
@@ -134,7 +131,7 @@ public class DindanxiangqingDaifukuanActivity extends BaseHActivity {
                                 deleteOrderPostBean.userId = UserInstance.getInstance().getUid();
                                 deleteOrderPostBean.token = UserInstance.getInstance().getToken();
                                 deleteOrderPostBean.orderId = bean.orderId;
-                                ApiUtils.getApiService().deleteOrder(deleteOrderPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                                ApiUtils.getApiService_hasdialog().deleteOrder(deleteOrderPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                                     @Override
                                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                                         switch (message.code) {
@@ -163,7 +160,7 @@ public class DindanxiangqingDaifukuanActivity extends BaseHActivity {
 
                                 bean1.userId = UserInstance.getInstance().getUid();
                                 bean1.token = UserInstance.getInstance().getToken();
-                                ApiUtils.getApiService().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
+                                ApiUtils.getApiService_hasdialog().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
                                     @Override
                                     public void onSuccess(Response<BaseBean<WechatResultBean>> response, BaseBean<WechatResultBean> message) {
                                         switch (message.code) {

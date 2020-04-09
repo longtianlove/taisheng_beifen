@@ -416,7 +416,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
 
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fImage);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", fImage.getName(), requestFile);
-            ApiUtils.getApiService().uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+            ApiUtils.getApiService_hasdialog().uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
                                                                   @Override
                                                                   public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {

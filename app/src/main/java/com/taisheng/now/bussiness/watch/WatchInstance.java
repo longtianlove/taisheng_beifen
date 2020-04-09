@@ -4,7 +4,6 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.bussiness.bean.result.PictureBean;
-import com.taisheng.now.bussiness.watch.bean.post.SetChiyaoPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.ChiyaoBeann;
 import com.taisheng.now.bussiness.watch.bean.result.NaozhongLIstBean;
 import com.taisheng.now.http.ApiUtils;
@@ -69,7 +68,7 @@ public class WatchInstance {
             File fImage = new File(path);
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fImage);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", fImage.getName(), requestFile);
-            ApiUtils.getApiService().uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+            ApiUtils.getApiService_hasdialog().uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
                                                                   @Override
                                                                   public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {

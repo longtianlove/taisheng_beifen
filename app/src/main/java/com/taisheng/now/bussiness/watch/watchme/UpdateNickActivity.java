@@ -1,6 +1,5 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
@@ -75,7 +73,7 @@ public class UpdateNickActivity extends BaseHActivity {
                 bean.headUrl = WatchInstance.getInstance().headUrl;
                 bean.deviceNickName = et_nickname.getText().toString();
 
-                ApiUtils.getApiService().updateDeviceInfo(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().updateDeviceInfo(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

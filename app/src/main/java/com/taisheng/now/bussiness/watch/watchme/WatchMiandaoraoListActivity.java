@@ -2,7 +2,6 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
@@ -92,7 +90,7 @@ tvTitle.setText("免打扰时间段");
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        ApiUtils.getApiService().notDisturbSwitchSetting(bean).enqueue(new TaiShengCallback<BaseBean<NewMiandaraoListResultBean>>() {
+        ApiUtils.getApiService_hasdialog().notDisturbSwitchSetting(bean).enqueue(new TaiShengCallback<BaseBean<NewMiandaraoListResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<NewMiandaraoListResultBean>> response, BaseBean<NewMiandaraoListResultBean> message) {
                 switch (message.code) {

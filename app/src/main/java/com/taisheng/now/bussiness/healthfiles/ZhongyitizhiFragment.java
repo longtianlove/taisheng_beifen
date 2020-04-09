@@ -118,7 +118,7 @@ public class ZhongyitizhiFragment extends BaseFragment {
         bean.subjectdbType = "1";
         bean.assessmentType = assessmentType;
         DialogUtil.showProgress(mActivity, "");
-        ApiUtils.getApiService().answerRecordList(bean).enqueue(new TaiShengCallback<BaseBean<CheckHistoryResultBean>>() {
+        ApiUtils.getApiService_hasdialog().answerRecordList(bean).enqueue(new TaiShengCallback<BaseBean<CheckHistoryResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<CheckHistoryResultBean>> response, BaseBean<CheckHistoryResultBean> message) {
                 DialogUtil.closeProgress();
@@ -167,7 +167,7 @@ public class ZhongyitizhiFragment extends BaseFragment {
         bean.subjectdbType = "1";
         bean.assessmentType = assessmentType;
         DialogUtil.showProgress(mActivity, "");
-        ApiUtils.getApiService().answerRecordList(bean).enqueue(new TaiShengCallback<BaseBean<CheckHistoryResultBean>>() {
+        ApiUtils.getApiService_hasdialog().answerRecordList(bean).enqueue(new TaiShengCallback<BaseBean<CheckHistoryResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<CheckHistoryResultBean>> response, BaseBean<CheckHistoryResultBean> message) {
                 DialogUtil.closeProgress();

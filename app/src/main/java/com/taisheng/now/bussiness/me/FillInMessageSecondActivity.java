@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.me;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,7 +23,6 @@ import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
-import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.dialog.BleedDialog;
 import com.th.j.commonlibrary.utils.TextsUtils;
@@ -203,7 +201,7 @@ public class FillInMessageSecondActivity extends BaseHActivity implements BleedD
         userHealth.hereditaryHistory = hereditaryHistory;
         userHealth.bloodType = TextsUtils.getTexts(tvBlood);
         bean.userHealth = userHealth;
-        ApiUtils.getApiService().addOrUpdateHealth(bean).enqueue(new TaiShengCallback<BaseBean>() {
+        ApiUtils.getApiService_hasdialog().addOrUpdateHealth(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
                 switch (message.code) {

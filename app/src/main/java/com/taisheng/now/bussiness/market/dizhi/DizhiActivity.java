@@ -2,7 +2,6 @@ package com.taisheng.now.bussiness.market.dizhi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +60,7 @@ public class DizhiActivity extends BaseIvActivity {
 
     @Override
     public void initData() {
-        initDatas();
+        initDatas_first();
     }
 
     @Override
@@ -96,7 +95,7 @@ public class DizhiActivity extends BaseIvActivity {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 PAGE_NO = 1;
-                initData();
+                initDatas();
 
             }
         });
@@ -107,11 +106,57 @@ public class DizhiActivity extends BaseIvActivity {
             @Override
             public void onUpLoad() {
                 PAGE_NO = 1;
-                initData();
+                initDatas();
             }
         });
     }
+    private void initDatas_first() {
+        BaseListPostBean bean = new BaseListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = 10;
+        DialogUtil.showProgress(this, "");
+        ApiUtils.getApiService_hasdialog().addressList(bean).enqueue(new TaiShengCallback<BaseBean<DizhilistResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<DizhilistResultBean>> response, BaseBean<DizhilistResultBean> message) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lvDizhis.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                            }
+                            //有消息
+                            PAGE_NO++;
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lvDizhis.setHasLoadMore(false);
+                                lvDizhis.setLoadAllViewText("暂时只有这么多地址");
+                                lvDizhis.setLoadAllFooterVisible(true);
+                            } else {
+                                lvDizhis.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lvDizhis.setHasLoadMore(false);
+                            lvDizhis.setLoadAllViewText("暂时只有这么多地址");
+                            lvDizhis.setLoadAllFooterVisible(true);
+                        }
+                        break;
+                }
+            }
 
+            @Override
+            public void onFail(Call<BaseBean<DizhilistResultBean>> call, Throwable t) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+    }
 
     private void initDatas() {
         BaseListPostBean bean = new BaseListPostBean();

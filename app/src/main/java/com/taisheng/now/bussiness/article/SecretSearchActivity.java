@@ -2,7 +2,6 @@ package com.taisheng.now.bussiness.article;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.HotPostBean;
 import com.taisheng.now.bussiness.bean.result.HotResultBean;
@@ -167,7 +165,7 @@ public class SecretSearchActivity extends BaseIvActivity implements TextWatcher 
         HotPostBean bean = new HotPostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        ApiUtils.getApiService().hotSearchArticle(bean).enqueue(new TaiShengCallback<BaseBean<HotResultBean>>() {
+        ApiUtils.getApiService_hasdialog().hotSearchArticle(bean).enqueue(new TaiShengCallback<BaseBean<HotResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<HotResultBean>> response, BaseBean<HotResultBean> message) {
                 switch (message.code) {

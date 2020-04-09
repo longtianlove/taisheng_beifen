@@ -2,7 +2,6 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +19,13 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
-import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
 import com.taisheng.now.bussiness.watch.bean.post.GetWatchPhoneBookPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetWatchPhoneBookResultBean;
-import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluliistBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.view.WithListViewScrollView;
 import com.taisheng.now.view.WithScrolleViewListView;
 import com.th.j.commonlibrary.global.Global;
-import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.wight.CircleImageView;
 
 import java.util.ArrayList;
@@ -189,7 +184,7 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
         bean.pageNo = 1;
         bean.pageSize = 10;
         bean.type = "1";
-        ApiUtils.getApiService().getWatchPhoneBook(bean).enqueue(new TaiShengCallback<BaseBean<GetWatchPhoneBookResultBean>>() {
+        ApiUtils.getApiService_hasdialog().getWatchPhoneBook(bean).enqueue(new TaiShengCallback<BaseBean<GetWatchPhoneBookResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GetWatchPhoneBookResultBean>> response, BaseBean<GetWatchPhoneBookResultBean> message) {
                 switch (message.code) {

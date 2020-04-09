@@ -494,7 +494,7 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
                 }
                 setNaozhongPostBean.watchRemindList = WatchChiYaoListActivity.data;
 
-                ApiUtils.getApiService().setRemind(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().setRemind(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -523,7 +523,7 @@ public class WatchChiyaoXinzengActivity extends BaseIvActivity {
                     setNaozhongPostBean1.remindType = "1";
                     WatchChiYaoListActivity.data.remove(position);
                     setNaozhongPostBean1.watchRemindList = WatchChiYaoListActivity.data;
-                    ApiUtils.getApiService().setRemind(setNaozhongPostBean1).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().setRemind(setNaozhongPostBean1).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {

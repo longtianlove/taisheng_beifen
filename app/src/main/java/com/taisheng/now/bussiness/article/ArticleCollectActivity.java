@@ -3,7 +3,6 @@ package com.taisheng.now.bussiness.article;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +64,7 @@ public class ArticleCollectActivity extends BaseHActivity {
     public void addData() {
         PAGE_NO = 1;
         PAGE_SIZE = 10;
-        getDoctors();
+        getDoctors_hasdialog();
     }
 
     @Override
@@ -81,7 +80,9 @@ public class ArticleCollectActivity extends BaseHActivity {
         ptrRefresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                addData();
+                PAGE_NO = 1;
+                PAGE_SIZE = 10;
+                getDoctors();
             }
         });
 
@@ -93,6 +94,57 @@ public class ArticleCollectActivity extends BaseHActivity {
                 getDoctors();
             }
         });
+    }
+
+
+    private void getDoctors_hasdialog() {
+        CollectListPostBean bean = new CollectListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        bean.collectionType = "2";
+        DialogUtil.showProgress(this, "");
+        ApiUtils.getApiService().articlecollectionlist(bean).enqueue(new TaiShengCallback<BaseBean<ArticleCollectListResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<ArticleCollectListResultBean>> response, BaseBean<ArticleCollectListResultBean> message) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lvDoctors.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                            }
+                            //有消息
+                            PAGE_NO++;
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lvDoctors.setHasLoadMore(false);
+                                lvDoctors.setLoadAllViewText("暂时只有这么多文章");
+                                lvDoctors.setLoadAllFooterVisible(true);
+                            } else {
+                                lvDoctors.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lvDoctors.setHasLoadMore(false);
+                            lvDoctors.setLoadAllViewText("暂时只有这么多文章");
+                            lvDoctors.setLoadAllFooterVisible(true);
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<ArticleCollectListResultBean>> call, Throwable t) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+
     }
 
    private void getDoctors() {
