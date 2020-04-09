@@ -121,7 +121,7 @@ public class MyDingdanFragment extends BaseFragment {
         bean.pageSize=PAGE_SIZE;
         DialogUtil.showProgress(getActivity(), "");
 
-        ApiUtils.getApiService().orderList(bean).enqueue(new TaiShengCallback<BaseBean<OrderListResultBean>>() {
+        ApiUtils.getApiService_hasdialog().orderList(bean).enqueue(new TaiShengCallback<BaseBean<OrderListResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<OrderListResultBean>> response, BaseBean<OrderListResultBean> message) {
 //                ptr_refresh.refreshComplete();
@@ -249,7 +249,7 @@ public class MyDingdanFragment extends BaseFragment {
                             deleteOrderPostBean.userId = UserInstance.getInstance().getUid();
                             deleteOrderPostBean.token = UserInstance.getInstance().getToken();
                             deleteOrderPostBean.orderId = bean.orderId;
-                            ApiUtils.getApiService().deleteOrder(deleteOrderPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                            ApiUtils.getApiService_hasdialog().deleteOrder(deleteOrderPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                                 @Override
                                 public void onSuccess(Response<BaseBean> response, BaseBean message) {
                                     switch (message.code) {
@@ -282,7 +282,7 @@ public class MyDingdanFragment extends BaseFragment {
                             DingdanInstance.getInstance().gangzhifu_zongjia=bean.totalPrice.subtract(new BigDecimal(DingdanInstance.getInstance().youfei));
                             bean1.userId = UserInstance.getInstance().getUid();
                             bean1.token = UserInstance.getInstance().getToken();
-                            ApiUtils.getApiService().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
+                            ApiUtils.getApiService_hasdialog().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
                                 @Override
                                 public void onSuccess(Response<BaseBean<WechatResultBean>> response, BaseBean<WechatResultBean> message) {
                                     switch (message.code) {
@@ -421,7 +421,7 @@ public class MyDingdanFragment extends BaseFragment {
                             deleteOrderPostBean.userId = UserInstance.getInstance().getUid();
                             deleteOrderPostBean.token = UserInstance.getInstance().getToken();
                             deleteOrderPostBean.orderId = bean2.orderId;
-                            ApiUtils.getApiService().confirmReceiveGoods(deleteOrderPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                            ApiUtils.getApiService_hasdialog().confirmReceiveGoods(deleteOrderPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                                 @Override
                                 public void onSuccess(Response<BaseBean> response, BaseBean message) {
                                     switch (message.code) {

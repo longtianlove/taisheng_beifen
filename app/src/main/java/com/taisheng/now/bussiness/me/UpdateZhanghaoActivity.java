@@ -67,7 +67,7 @@ public class UpdateZhanghaoActivity extends BaseActivity {
                 bean.sysUser.nickName=UserInstance.getInstance().userInfo.nickName;
 
 
-                ApiUtils.getApiService().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
+                ApiUtils.getApiService_hasdialog().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<ModifyUserInfoResultBean>> response, BaseBean<ModifyUserInfoResultBean> message) {
                         switch (message.code) {

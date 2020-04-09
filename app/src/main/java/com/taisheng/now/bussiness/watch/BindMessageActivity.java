@@ -24,7 +24,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.result.DeviceBindingResultBean;
@@ -258,7 +257,7 @@ public class BindMessageActivity extends BaseIvActivity implements ActivityCompa
                 bean.realName = et_realname.getText().toString();
                 bean.idcard = et_idcard.getText().toString();
                 bean.phoneNumber = et_phonenumber.getText().toString();
-                ApiUtils.getApiService().deviceBinding(bean).enqueue(new TaiShengCallback<BaseBean<DeviceBindingResultBean>>() {
+                ApiUtils.getApiService_hasdialog().deviceBinding(bean).enqueue(new TaiShengCallback<BaseBean<DeviceBindingResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<DeviceBindingResultBean>> response, BaseBean<DeviceBindingResultBean> message) {
                         switch (message.code) {

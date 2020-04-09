@@ -9,14 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
@@ -38,13 +36,11 @@ import com.taisheng.now.bussiness.market.gouwuche.GouwucheActivity;
 import com.taisheng.now.bussiness.market.youhuijuan.MoreYouhuijuanActivity;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.shipin.OpenGLBaseModule.GLThread;
 import com.taisheng.now.util.GlideImageLoader;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.WithListViewScrollView;
 import com.taisheng.now.view.WithScrolleViewListView;
-import com.taisheng.now.view.banner.BannerViewPager;
 import com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout;
 import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.TextsUtils;
@@ -116,7 +112,7 @@ public class MarketFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
 
         initView(rootView);
-        initData();
+        initData_first();
         return rootView;
     }
 
@@ -231,13 +227,52 @@ public class MarketFragment extends BaseFragment {
         lvYouhuijuans.setAdapter(youhuiquanAdapter);
     }
 
+
+    void initData_first() {
+        getBanner_first();
+        getYouhuiquan_first();
+        getHotGoodsJifenduihuan_first();
+    }
     void initData() {
         getBanner();
         getYouhuiquan();
         getHotGoodsJifenduihuan();
     }
 
+    public void getBanner_first() {
+        BaseListPostBean bean = new BaseListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = 1;
+        bean.pageSize = 5;
+        ApiUtils.getApiService_hasdialog().banner(bean).enqueue(new TaiShengCallback<BaseBean<MallBannerResultBanner>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<MallBannerResultBanner>> response, BaseBean<MallBannerResultBanner> message) {
+                ptrRefresh.refreshComplete();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        List<String> pictureUrls = new ArrayList<>();
+                        if (message.result.records != null && !message.result.records.isEmpty()) {
 
+                            for (MallBannerBean bean :
+                                    message.result.records) {
+                                pictureUrls.add(bean.url);
+                            }
+                            bannerContaner.setImageLoader(new GlideImageLoader());
+                            bannerContaner.setImages(pictureUrls);
+                            bannerContaner.start();
+
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<MallBannerResultBanner>> call, Throwable t) {
+                ptrRefresh.refreshComplete();
+            }
+        });
+    }
     public void getBanner() {
         BaseListPostBean bean = new BaseListPostBean();
         bean.userId = UserInstance.getInstance().getUid();
@@ -275,6 +310,34 @@ public class MarketFragment extends BaseFragment {
 
 
     YouhuiquanAdapter youhuiquanAdapter;
+
+
+    public void getYouhuiquan_first() {
+
+        BaseListPostBean bean = new BaseListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = 1;
+        bean.pageSize = 10;
+        ApiUtils.getApiService_hasdialog().coupon(bean).enqueue(new TaiShengCallback<BaseBean<MallYouhuiquanResultBanner>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<MallYouhuiquanResultBanner>> response, BaseBean<MallYouhuiquanResultBanner> message) {
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            youhuiquanAdapter.mData = message.result.records;
+                            youhuiquanAdapter.notifyDataSetChanged();
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<MallYouhuiquanResultBanner>> call, Throwable t) {
+                LogUtilH.e(t.toString() + "---------------1------1------------");
+            }
+        });
+    }
 
     public void getYouhuiquan() {
 
@@ -371,7 +434,7 @@ public class MarketFragment extends BaseFragment {
                     bean1.userId = UserInstance.getInstance().getUid();
                     bean1.token = UserInstance.getInstance().getToken();
                     bean1.id = bean.id;
-                    ApiUtils.getApiService().getCoupon(bean1).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().getCoupon(bean1).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
@@ -404,6 +467,35 @@ public class MarketFragment extends BaseFragment {
             View tv_lingqu;
         }
     }
+
+    public void getHotGoodsJifenduihuan_first() {
+        BasePostBean bean = new BasePostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        ApiUtils.getApiService_hasdialog().cainixihuan(bean).enqueue(new TaiShengCallback<BaseBean<CainixihuanResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<CainixihuanResultBean>> response, BaseBean<CainixihuanResultBean> message) {
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.hotGoodsList != null && !message.result.hotGoodsList.isEmpty()) {
+                            hotGoodsAdapter.mData = message.result.hotGoodsList;
+
+                            hotGoodsAdapter.notifyDataSetChanged();
+                        }
+                        if (message.result.scoreList != null && !message.result.scoreList.isEmpty()) {
+                            madapter.mData = message.result.scoreList;
+                            madapter.notifyDataSetChanged();
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<CainixihuanResultBean>> call, Throwable t) {
+            }
+        });
+    }
+
 
     public void getHotGoodsJifenduihuan() {
         BasePostBean bean = new BasePostBean();

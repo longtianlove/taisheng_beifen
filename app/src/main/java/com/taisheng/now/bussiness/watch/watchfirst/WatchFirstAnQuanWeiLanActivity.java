@@ -2,10 +2,8 @@ package com.taisheng.now.bussiness.watch.watchfirst;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
@@ -20,23 +18,11 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Projection;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.core.CityInfo;
-import com.baidu.mapapi.search.core.PoiDetailInfo;
-import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
-import com.baidu.mapapi.search.poi.PoiAddrInfo;
-import com.baidu.mapapi.search.poi.PoiCitySearchOption;
-import com.baidu.mapapi.search.poi.PoiDetailResult;
-import com.baidu.mapapi.search.poi.PoiDetailSearchOption;
-import com.baidu.mapapi.search.poi.PoiDetailSearchResult;
-import com.baidu.mapapi.search.poi.PoiIndoorResult;
-import com.baidu.mapapi.search.poi.PoiResult;
-import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
@@ -58,7 +44,6 @@ import com.taisheng.now.map.MapLocationParser;
 import com.taisheng.now.map.MapPetAtHomeView;
 import com.taisheng.now.map.addressParseListener;
 import com.taisheng.now.util.DensityUtil;
-import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.th.j.commonlibrary.utils.LogUtilH;
 
@@ -75,7 +60,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.jessyan.autosize.utils.LogUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -156,7 +140,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 bean.longitude = longitude + "";
                 bean.longitudeSign = "E";
                 bean.status = "1";
-                ApiUtils.getApiService().addwatchElectronicFence(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().addwatchElectronicFence(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

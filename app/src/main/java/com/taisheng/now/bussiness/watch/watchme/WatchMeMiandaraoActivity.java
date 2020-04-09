@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,7 +9,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.KaiguanSettingPostBean;
@@ -70,7 +68,7 @@ tvTitle.setText("免打扰设置");
                 bean.deviceId=WatchInstance.getInstance().deviceId;
                 bean.switchType="SILENCETIME";
                 bean.switchValue= iv_kaiguan_gps.isSelected() ? "0" : "1";
-                ApiUtils.getApiService().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().watchSwitchConfig(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

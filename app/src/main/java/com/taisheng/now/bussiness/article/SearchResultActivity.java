@@ -3,7 +3,6 @@ package com.taisheng.now.bussiness.article;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +98,7 @@ public class SearchResultActivity extends BaseHActivity {
         bean.userId = UserInstance.getInstance().getUid();
         bean.type = "";
         DialogUtil.showProgress(this, "");
-        ApiUtils.getApiService().articleList(bean).enqueue(new TaiShengCallback<BaseBean<ArticleResultBean>>() {
+        ApiUtils.getApiService_hasdialog().articleList(bean).enqueue(new TaiShengCallback<BaseBean<ArticleResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<ArticleResultBean>> response, BaseBean<ArticleResultBean> message) {
                 DialogUtil.closeProgress();

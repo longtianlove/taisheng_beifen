@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.market;
 
 import android.content.Intent;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -41,7 +40,6 @@ import com.taisheng.now.util.DialogUtil;
 import com.taisheng.now.util.GlideImageLoader;
 import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.view.GuigeLabelWrapLayout;
-import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.SpanUtil;
 import com.th.j.commonlibrary.utils.TextsUtils;
 import com.youth.banner.Banner;
@@ -200,7 +198,7 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                 updateCartNumberPostBean.number = Integer.parseInt(number);
                 updateCartNumberPostBean.operateType = 1;
                 updateCartNumberPostBean.productId = productid;
-                ApiUtils.getApiService().fastBuyCheckNumbe(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().fastBuyCheckNumbe(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -283,7 +281,7 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                 bean.goodsId = goodsid;
                 bean.productId = productid;
                 bean.number = number;
-                ApiUtils.getApiService().addgouwuche(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().addgouwuche(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -352,7 +350,7 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                 updateCartNumberPostBean.number = Integer.parseInt(number);
                 updateCartNumberPostBean.operateType = 1;
                 updateCartNumberPostBean.productId = productid;
-                ApiUtils.getApiService().fastBuyCheckNumbe(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().fastBuyCheckNumbe(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -394,7 +392,7 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
         bean.pageNo = 1;
         bean.pageSize = 10;
 
-        ApiUtils.getApiService().addressList(bean).enqueue(new TaiShengCallback<BaseBean<DizhilistResultBean>>() {
+        ApiUtils.getApiService_hasdialog().addressList(bean).enqueue(new TaiShengCallback<BaseBean<DizhilistResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DizhilistResultBean>> response, BaseBean<DizhilistResultBean> message) {
 
@@ -451,7 +449,7 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
         bean.id = goodsid;
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        ApiUtils.getApiService().shangpinxiangqing(bean).enqueue(new TaiShengCallback<BaseBean<JsonRootBean>>() {
+        ApiUtils.getApiService_hasdialog().shangpinxiangqing(bean).enqueue(new TaiShengCallback<BaseBean<JsonRootBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<JsonRootBean>> response, BaseBean<JsonRootBean> message) {
                 switch (message.code) {

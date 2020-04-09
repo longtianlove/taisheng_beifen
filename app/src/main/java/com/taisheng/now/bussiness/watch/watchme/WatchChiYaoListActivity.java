@@ -2,7 +2,6 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,7 +114,7 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
         bean.pageNo = 1;
         bean.pageSize = 10;
         bean.remindType = "1";
-        ApiUtils.getApiService().remindList(bean).enqueue(new TaiShengCallback<BaseBean<ChiyaoLIstResultBean>>() {
+        ApiUtils.getApiService_hasdialog().remindList(bean).enqueue(new TaiShengCallback<BaseBean<ChiyaoLIstResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<ChiyaoLIstResultBean>> response, BaseBean<ChiyaoLIstResultBean> message) {
                 switch (message.code) {
@@ -257,7 +256,7 @@ public class WatchChiYaoListActivity extends BaseIvActivity implements ActivityC
                     setNaozhongPostBean.remindType = "1";
                     mData.get(position).isOpen = finalUtil1.iv_kaiguan_naozhong.isSelected() ? "0" : "1";
                     setNaozhongPostBean.watchRemindList = WatchChiYaoListActivity.data;
-                    ApiUtils.getApiService().setRemind(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().setRemind(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {

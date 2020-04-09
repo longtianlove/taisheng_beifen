@@ -1,11 +1,9 @@
 package com.taisheng.now.bussiness.me;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -24,7 +22,6 @@ import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.SPUtil;
-import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
@@ -171,7 +168,7 @@ public class FillInMessageActivity extends BaseHActivity {
         bean.sysUser.realName = TextsUtils.getTexts(etRealname);
         bean.sysUser.sex = sex;
 
-        ApiUtils.getApiService().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
+        ApiUtils.getApiService_hasdialog().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<ModifyUserInfoResultBean>> response, BaseBean<ModifyUserInfoResultBean> message) {
                 switch (message.code) {

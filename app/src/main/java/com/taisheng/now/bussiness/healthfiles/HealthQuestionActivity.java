@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.healthfiles;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
@@ -108,7 +107,7 @@ public class HealthQuestionActivity extends BaseHActivity {
         bean.assessmentType = assessmentType;
         bean.subjectdbType = subjectdbType;
 //        bean.sign = null;
-        ApiUtils.getApiService().getExtractionSubjectDb(bean).enqueue(new TaiShengCallback<BaseBean<QuestionResultBean>>() {
+        ApiUtils.getApiService_hasdialog().getExtractionSubjectDb(bean).enqueue(new TaiShengCallback<BaseBean<QuestionResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<QuestionResultBean>> response, BaseBean<QuestionResultBean> message) {
                 switch (message.code) {
@@ -196,7 +195,7 @@ public class HealthQuestionActivity extends BaseHActivity {
             bean.userId = UserInstance.getInstance().getUid();
             bean.token = UserInstance.getInstance().getToken();
             bean.ids = answersResult;
-            ApiUtils.getApiService().saveAnswer(bean).enqueue(new TaiShengCallback<BaseBean<AnswerResultBean>>() {
+            ApiUtils.getApiService_hasdialog().saveAnswer(bean).enqueue(new TaiShengCallback<BaseBean<AnswerResultBean>>() {
                 @Override
                 public void onSuccess(Response<BaseBean<AnswerResultBean>> response, BaseBean<AnswerResultBean> message) {
                     DialogUtil.closeProgress();

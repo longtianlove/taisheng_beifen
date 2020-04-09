@@ -3,7 +3,6 @@ package com.taisheng.now.bussiness.market.dingdan;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,6 @@ import com.taisheng.now.wxapi.WXPayUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
 import java.math.BigDecimal;
@@ -186,7 +184,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                 }
                 bean.postFeeId = DingdanInstance.getInstance().postFeeId;
                 bean.message = TextsUtils.getTexts(etBeizhu);
-                ApiUtils.getApiService().createOrder(bean).enqueue(new TaiShengCallback<BaseBean<CreateOrderResultBean>>() {
+                ApiUtils.getApiService_hasdialog().createOrder(bean).enqueue(new TaiShengCallback<BaseBean<CreateOrderResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<CreateOrderResultBean>> response, BaseBean<CreateOrderResultBean> message) {
                         switch (message.code) {
@@ -205,7 +203,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
 
                                     bean1.userId = UserInstance.getInstance().getUid();
                                     bean1.token = UserInstance.getInstance().getToken();
-                                    ApiUtils.getApiService().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
+                                    ApiUtils.getApiService_hasdialog().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
                                         @Override
                                         public void onSuccess(Response<BaseBean<WechatResultBean>> response, BaseBean<WechatResultBean> message) {
                                             switch (message.code) {
@@ -269,7 +267,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
         bean.pageNo = 1;
         bean.pageSize = 10;
 
-        ApiUtils.getApiService().addressList(bean).enqueue(new TaiShengCallback<BaseBean<DizhilistResultBean>>() {
+        ApiUtils.getApiService_hasdialog().addressList(bean).enqueue(new TaiShengCallback<BaseBean<DizhilistResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DizhilistResultBean>> response, BaseBean<DizhilistResultBean> message) {
 
@@ -319,7 +317,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
         basePostBean.token = UserInstance.getInstance().getToken();
         if (DingdanInstance.getInstance().scoreGoods == 1) {
             //获取邮费
-            ApiUtils.getApiService().getPostage(basePostBean).enqueue(new TaiShengCallback<BaseBean<PostageResultBean>>() {
+            ApiUtils.getApiService_hasdialog().getPostage(basePostBean).enqueue(new TaiShengCallback<BaseBean<PostageResultBean>>() {
                 @Override
                 public void onSuccess(Response<BaseBean<PostageResultBean>> response, BaseBean<PostageResultBean> message) {
                     switch (message.code) {

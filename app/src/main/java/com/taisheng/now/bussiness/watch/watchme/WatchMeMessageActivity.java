@@ -23,12 +23,10 @@ import androidx.core.content.FileProvider;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.application.SampleAppLike;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.MainActivity;
@@ -156,7 +154,7 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.deviceId = WatchInstance.getInstance().deviceId;
-                ApiUtils.getApiService().unbind(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().unbind(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

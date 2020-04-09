@@ -25,7 +25,9 @@ import com.taisheng.now.bussiness.watch.bean.post.ObtainBpxyHeartStepListDTOPost
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetheartrateResultBean;
+
 import com.taisheng.now.bussiness.watch.bean.result.XinLvBean;
+
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvAnriqiResultBean;
 import com.taisheng.now.http.ApiUtils;
@@ -110,7 +112,7 @@ public class XinlvFragment extends BaseFragment {
         bean.deviceId = WatchInstance.getInstance().deviceId;
         bean.queryDate = dateString;
         //获取实时日统计
-        ApiUtils.getApiService().obtainHeartList(bean).enqueue(new TaiShengCallback<BaseBean<ArrayList<XinlvAnriqiResultBean>>>() {
+        ApiUtils.getApiService_hasdialog().obtainHeartList(bean).enqueue(new TaiShengCallback<BaseBean<ArrayList<XinlvAnriqiResultBean>>>() {
             @Override
             public void onSuccess(Response<BaseBean<ArrayList<XinlvAnriqiResultBean>>> response, BaseBean<ArrayList<XinlvAnriqiResultBean>> message) {
                 switch (message.code) {
@@ -148,7 +150,7 @@ public class XinlvFragment extends BaseFragment {
         bean.deviceId = WatchInstance.getInstance().deviceId;
 
 //获取实时统计
-        ApiUtils.getApiService().getheartrate(bean).enqueue(new TaiShengCallback<BaseBean<GetheartrateResultBean>>() {
+        ApiUtils.getApiService_hasdialog().getheartrate(bean).enqueue(new TaiShengCallback<BaseBean<GetheartrateResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GetheartrateResultBean>> response, BaseBean<GetheartrateResultBean> message) {
                 switch (message.code) {
@@ -180,7 +182,7 @@ public class XinlvFragment extends BaseFragment {
         bean1.token = UserInstance.getInstance().getToken();
         bean1.deviceId = WatchInstance.getInstance().deviceId;
         //获取月统计
-        ApiUtils.getApiService().xunlv_querythismonth(bean1).enqueue(new TaiShengCallback<BaseBean<XinLvResultBean>>() {
+        ApiUtils.getApiService_hasdialog().xunlv_querythismonth(bean1).enqueue(new TaiShengCallback<BaseBean<XinLvResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<XinLvResultBean>> response, BaseBean<XinLvResultBean> message) {
                 switch (message.code) {

@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.text.Selection;
-import android.text.Spannable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -27,13 +25,10 @@ import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.me.SelectAvatarSourceDialog;
 import com.taisheng.now.bussiness.watch.WatchInstance;
-import com.taisheng.now.bussiness.watch.bean.post.SetTongxunluPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.SetphonbookPostBean;
-import com.taisheng.now.bussiness.watch.bean.post.TongxunluDeletePostBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluliistBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.taisheng.now.view.crop.Crop;
 import com.th.j.commonlibrary.global.Global;
@@ -181,7 +176,7 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                     tempBean.mobilePhone = TextsUtils.getTexts(etPhone);
                 }
                 bean.list = WatchMeTongxunluActivity.data;
-                ApiUtils.getApiService().setphonbook(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().setphonbook(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -233,7 +228,7 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                     setphonbookPostBean.type = "1";
                     WatchMeTongxunluActivity.data.remove(position);
                     setphonbookPostBean.list = WatchMeTongxunluActivity.data;
-                    ApiUtils.getApiService().setphonbook(setphonbookPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().setphonbook(setphonbookPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {

@@ -206,7 +206,7 @@ public class MeFragment extends BaseFragment {
         BasePostBean bean = new BasePostBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
-        ApiUtils.getApiService().isSign(bean).enqueue(new TaiShengCallback<BaseBean<IsSign>>() {
+        ApiUtils.getApiService_hasdialog().isSign(bean).enqueue(new TaiShengCallback<BaseBean<IsSign>>() {
             @Override
             public void onSuccess(Response<BaseBean<IsSign>> response, BaseBean<IsSign> message) {
                 switch (message.code) {

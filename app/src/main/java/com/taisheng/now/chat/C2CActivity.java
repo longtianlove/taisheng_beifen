@@ -2,7 +2,6 @@ package com.taisheng.now.chat;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,7 +16,6 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 
 import com.taisheng.now.base.BaseBean;
-import com.taisheng.now.base.BaseFragmentActivity;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.ConnectDoctorPostBean;
 import com.taisheng.now.bussiness.bean.result.ConnectDoctorResultBean;
@@ -174,7 +172,7 @@ public class C2CActivity extends BaseIvActivity implements ActivityCompat.OnRequ
         } else {
             bean.type = "0";
         }
-        ApiUtils.getApiService().connectDoctor(bean).enqueue(new TaiShengCallback<BaseBean<ConnectDoctorResultBean>>() {
+        ApiUtils.getApiService_hasdialog().connectDoctor(bean).enqueue(new TaiShengCallback<BaseBean<ConnectDoctorResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<ConnectDoctorResultBean>> response, BaseBean<ConnectDoctorResultBean> message) {
                 ConnectDoctorResultBean bean = message.result;

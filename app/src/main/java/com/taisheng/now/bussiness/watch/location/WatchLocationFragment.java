@@ -107,7 +107,7 @@ public class WatchLocationFragment extends BaseFragment {
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.deviceId = WatchInstance.getInstance().deviceId;
-                ApiUtils.getApiService().getNewPosition(bean).enqueue(new TaiShengCallback<BaseBean<NewLocationBean>>() {
+                ApiUtils.getApiService_hasdialog().getNewPosition(bean).enqueue(new TaiShengCallback<BaseBean<NewLocationBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<NewLocationBean>> response, BaseBean<NewLocationBean> message) {
                         switch (message.code) {
@@ -135,7 +135,7 @@ public class WatchLocationFragment extends BaseFragment {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        ApiUtils.getApiService().getNewPosition(bean).enqueue(new TaiShengCallback<BaseBean<NewLocationBean>>() {
+        ApiUtils.getApiService_hasdialog().getNewPosition(bean).enqueue(new TaiShengCallback<BaseBean<NewLocationBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<NewLocationBean>> response, BaseBean<NewLocationBean> message) {
                 switch (message.code) {

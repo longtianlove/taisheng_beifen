@@ -30,12 +30,14 @@ import com.taisheng.now.http.TaiShengCallback;
 import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -83,7 +85,7 @@ public class JibuFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
 //        获取计步的实时数据
-        ApiUtils.getApiService().getwatchstep(bean).enqueue(new TaiShengCallback<BaseBean<GetwatchstepResultBean>>() {
+        ApiUtils.getApiService_hasdialog().getwatchstep(bean).enqueue(new TaiShengCallback<BaseBean<GetwatchstepResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GetwatchstepResultBean>> response, BaseBean<GetwatchstepResultBean> message) {
                 switch (message.code) {
@@ -115,7 +117,7 @@ public class JibuFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
 //        获取计步的月统计数据
-        ApiUtils.getApiService().querythismonthwalk(bean).enqueue(new TaiShengCallback<BaseBean<BushuResultBean>>() {
+        ApiUtils.getApiService_hasdialog().querythismonthwalk(bean).enqueue(new TaiShengCallback<BaseBean<BushuResultBean>>() {
 
             @Override
             public void onSuccess(Response<BaseBean<BushuResultBean>> response, BaseBean<BushuResultBean> message) {

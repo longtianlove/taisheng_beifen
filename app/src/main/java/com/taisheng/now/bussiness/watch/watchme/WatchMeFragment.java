@@ -2,7 +2,6 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -23,7 +22,6 @@ import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.RebootPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.th.j.commonlibrary.wight.CircleImageView;
 
@@ -142,7 +140,7 @@ public class WatchMeFragment extends BaseFragment {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        ApiUtils.getApiService().restoreFactorySettings(bean).enqueue(new TaiShengCallback<BaseBean>() {
+        ApiUtils.getApiService_hasdialog().restoreFactorySettings(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
 
@@ -166,7 +164,7 @@ public class WatchMeFragment extends BaseFragment {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
-        ApiUtils.getApiService().reboot(bean).enqueue(new TaiShengCallback<BaseBean>() {
+        ApiUtils.getApiService_hasdialog().reboot(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
 

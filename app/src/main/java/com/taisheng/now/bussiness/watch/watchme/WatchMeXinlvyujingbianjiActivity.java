@@ -85,7 +85,7 @@ public class WatchMeXinlvyujingbianjiActivity extends BaseIvActivity implements 
                 bean.heartRateMax = Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuidazhi));
                 bean.heartRateMin = Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuixiaozhi));
 
-                ApiUtils.getApiService().setWatchWarning(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().setWatchWarning(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

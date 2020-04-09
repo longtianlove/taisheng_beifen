@@ -1,7 +1,6 @@
 package com.taisheng.now.wxapi;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.MainActivity;
@@ -76,7 +74,7 @@ public class WXPayEntryActivity extends BaseHActivity implements IWXAPIEventHand
                 bean1.orderId = DingdanInstance.getInstance().orderId;
                 bean1.userId = UserInstance.getInstance().getUid();
                 bean1.token = UserInstance.getInstance().getToken();
-                ApiUtils.getApiService().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
+                ApiUtils.getApiService_hasdialog().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<WechatResultBean>> response, BaseBean<WechatResultBean> message) {
                         switch (message.code) {

@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.first;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +67,7 @@ public class MoreShipinActivity extends BaseHActivity {
 
     @Override
     public void addData() {
-        getShipins();
+        getShipins_hasdialog();
     }
 
     @Override
@@ -121,6 +120,57 @@ public class MoreShipinActivity extends BaseHActivity {
                 }
             }
         });
+    }
+
+
+
+    void getShipins_hasdialog() {
+        MoreShipinPostBean bean = new MoreShipinPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        DialogUtil.showProgress(this, "");
+        ApiUtils.getApiService_hasdialog().moreShiPin(bean).enqueue(new TaiShengCallback<BaseBean<ShipinsResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<ShipinsResultBean>> response, BaseBean<ShipinsResultBean> message) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lvShipins.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                            }
+                            //有消息
+                            PAGE_NO++;
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lvShipins.setHasLoadMore(false);
+                                lvShipins.setLoadAllViewText("暂时只有这么多视频");
+                                lvShipins.setLoadAllFooterVisible(true);
+                            } else {
+                                lvShipins.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lvShipins.setHasLoadMore(false);
+                            lvShipins.setLoadAllViewText("暂时只有这么多视频");
+                            lvShipins.setLoadAllFooterVisible(true);
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<ShipinsResultBean>> call, Throwable t) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+
     }
 
 

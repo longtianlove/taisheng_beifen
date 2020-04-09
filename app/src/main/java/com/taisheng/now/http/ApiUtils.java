@@ -5,6 +5,7 @@ package com.taisheng.now.http;
 import com.taisheng.now.Constants;
 import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.util.Apputil;
+import com.taisheng.now.util.DialogUtil;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -40,10 +41,17 @@ public class ApiUtils {
      *
      * @return
      */
+    public static ApiService getApiService_hasdialog() {
+        DialogUtil.new_showProgress(SampleAppLike.getCurrentActivity(),"");
+        taishengApiService = getRetrofitClient(Constants.Url.Host).create(ApiService.class);
+        return taishengApiService;
+    }
     public static ApiService getApiService() {
         taishengApiService = getRetrofitClient(Constants.Url.Host).create(ApiService.class);
         return taishengApiService;
     }
+
+
 
     /**
      * 文件上传端口不同

@@ -3,7 +3,6 @@ package com.taisheng.now.bussiness.market.dingdan;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,7 +108,7 @@ public class DindanxiangqingYiwanchengActivity extends BaseHActivity {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
 
-        ApiUtils.getApiService().orderDetail(bean).enqueue(new TaiShengCallback<BaseBean<DingdanxiangqingResultBean>>() {
+        ApiUtils.getApiService_hasdialog().orderDetail(bean).enqueue(new TaiShengCallback<BaseBean<DingdanxiangqingResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<DingdanxiangqingResultBean>> response, BaseBean<DingdanxiangqingResultBean> message) {
                 switch (message.code) {

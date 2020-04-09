@@ -124,7 +124,7 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
         bean.sysUser.userName = UserInstance.getInstance().userInfo.userName;
         bean.sysUser.avatar = event.path;
 
-        ApiUtils.getApiService().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
+        ApiUtils.getApiService_hasdialog().modifyuser(bean).enqueue(new TaiShengCallback<BaseBean<ModifyUserInfoResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<ModifyUserInfoResultBean>> response, BaseBean<ModifyUserInfoResultBean> message) {
                 switch (message.code) {
@@ -168,7 +168,7 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
         bean.headUrl = event.path;
         bean.relationShip = WatchInstance.getInstance().relationShip;
 
-        ApiUtils.getApiService().updateDeviceInfo(bean).enqueue(new TaiShengCallback<BaseBean>() {
+        ApiUtils.getApiService_hasdialog().updateDeviceInfo(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
                 switch (message.code) {

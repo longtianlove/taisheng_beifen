@@ -98,7 +98,7 @@ public class WatchMeXueyajingBianjiActivity extends BaseIvActivity implements Ac
                 bean.heartRateMax = WatchInstance.getInstance().temp_heartNumMax;
                 bean.heartRateMin = WatchInstance.getInstance().temp_heartNumMin;
 
-                ApiUtils.getApiService().setWatchWarning(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().setWatchWarning(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

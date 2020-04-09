@@ -3,7 +3,6 @@ package com.taisheng.now.bussiness.doctor;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -103,12 +102,61 @@ public class DoctorsFenleiFragment extends BaseFragment {
         if (data != null) {
             data.clear();
         }
-        getDoctors();
+        getDoctors_first();
     }
 
     int PAGE_NO = 1;
     int PAGE_SIZE = 10;
     public String type;
+
+
+    void getDoctors_first() {
+        getListDoctorTypePostBean bean = new getListDoctorTypePostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        bean.type = type;
+        DialogUtil.showProgress(mActivity, "");
+        ApiUtils.getApiService_hasdialog().getListDoctor(bean).enqueue(new TaiShengCallback<BaseBean<DoctorsResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<DoctorsResultBean>> response, BaseBean<DoctorsResultBean> message) {
+                ptr_refresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lv_doctors.setLoading(false);
+                            data.addAll( message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lv_doctors.setHasLoadMore(false);
+                                lv_doctors.setLoadAllViewText("暂时只有这么多医生");
+                                lv_doctors.setLoadAllFooterVisible(true);
+                            } else {
+                                lv_doctors.setHasLoadMore(true);
+                            }
+                            madapter.setmData(data);
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lv_doctors.setHasLoadMore(false);
+                            lv_doctors.setLoadAllViewText("暂时只有这么多医生");
+                            lv_doctors.setLoadAllFooterVisible(true);
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<DoctorsResultBean>> call, Throwable t) {
+                ptr_refresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+
+
+    }
+
 
     void getDoctors() {
         getListDoctorTypePostBean bean = new getListDoctorTypePostBean();

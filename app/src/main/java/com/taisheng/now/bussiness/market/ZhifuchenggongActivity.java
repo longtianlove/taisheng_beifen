@@ -1,8 +1,6 @@
 package com.taisheng.now.bussiness.market;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -124,7 +122,7 @@ public class ZhifuchenggongActivity extends BaseHActivity {
                 bean1.orderId = DingdanInstance.getInstance().orderId;
                 bean1.userId = UserInstance.getInstance().getUid();
                 bean1.token = UserInstance.getInstance().getToken();
-                ApiUtils.getApiService().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
+                ApiUtils.getApiService_hasdialog().weChatPay(bean1).enqueue(new TaiShengCallback<BaseBean<WechatResultBean>>() {
                     @Override
                     public void onSuccess(Response<BaseBean<WechatResultBean>> response, BaseBean<WechatResultBean> message) {
                         switch (message.code) {

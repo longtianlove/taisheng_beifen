@@ -1,7 +1,6 @@
 package com.taisheng.now.bussiness.market.youhuijuan;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,10 +93,59 @@ public class MoreYouhuijuanActivity extends BaseHActivity {
                 getDoctors();
             }
         });
-        getDoctors();
+        getDoctors_first();
 
     }
+    private void getDoctors_first() {
+        BaseListPostBean bean = new BaseListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = 10;
+        DialogUtil.showProgress(this, "");
 
+        ApiUtils.getApiService_hasdialog().couponlist(bean).enqueue(new TaiShengCallback<BaseBean<MallYouhuiquanResultBanner>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<MallYouhuiquanResultBanner>> response, BaseBean<MallYouhuiquanResultBanner> message) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lvYouhuijuans.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                            }
+                            //有消息
+                            PAGE_NO++;
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lvYouhuijuans.setHasLoadMore(false);
+                                lvYouhuijuans.setLoadAllViewText("暂时只有这么多优惠券");
+                                lvYouhuijuans.setLoadAllFooterVisible(true);
+                            } else {
+                                lvYouhuijuans.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            //没有消息
+                            lvYouhuijuans.setHasLoadMore(false);
+                            lvYouhuijuans.setLoadAllViewText("暂时只有这么多优惠券");
+                            lvYouhuijuans.setLoadAllFooterVisible(true);
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<MallYouhuiquanResultBanner>> call, Throwable t) {
+                ptrRefresh.refreshComplete();
+                DialogUtil.closeProgress();
+            }
+        });
+
+
+    }
 
     private void getDoctors() {
         BaseListPostBean bean = new BaseListPostBean();
@@ -220,7 +268,7 @@ public class MoreYouhuijuanActivity extends BaseHActivity {
                     bean1.userId = UserInstance.getInstance().getUid();
                     bean1.token = UserInstance.getInstance().getToken();
                     bean1.id = bean.id;
-                    ApiUtils.getApiService().getCoupon(bean1).enqueue(new TaiShengCallback<BaseBean>() {
+                    ApiUtils.getApiService_hasdialog().getCoupon(bean1).enqueue(new TaiShengCallback<BaseBean>() {
                         @Override
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {

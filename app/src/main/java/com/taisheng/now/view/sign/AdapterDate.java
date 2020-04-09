@@ -89,7 +89,7 @@ public class AdapterDate extends BaseAdapter {
         BasePostBean bean = new BasePostBean();
         bean.token = UserInstance.getInstance().getToken();
         bean.userId = UserInstance.getInstance().getUid();
-        ApiUtils.getApiService().nowSign(bean).enqueue(new TaiShengCallback<BaseBean<SignResultBean>>() {
+        ApiUtils.getApiService_hasdialog().nowSign(bean).enqueue(new TaiShengCallback<BaseBean<SignResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<SignResultBean>> response, BaseBean<SignResultBean> message) {
                 switch (message.code) {

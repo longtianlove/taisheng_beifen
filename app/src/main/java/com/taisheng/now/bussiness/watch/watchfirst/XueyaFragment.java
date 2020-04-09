@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import android.widget.TextView;
 
 import com.taisheng.now.Constants;
@@ -22,7 +24,9 @@ import com.taisheng.now.bussiness.watch.bean.post.GetbloodpressurePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ObtainBpxyHeartStepListDTOPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetbloodpressureResultBean;
+
 import com.taisheng.now.bussiness.watch.bean.result.XueYaDayBean;
+
 import com.taisheng.now.bussiness.watch.bean.result.XueYaDayResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueyaResultBean;
 import com.taisheng.now.http.ApiUtils;
@@ -116,7 +120,7 @@ public class XueyaFragment extends BaseFragment {
         bean.deviceId = WatchInstance.getInstance().deviceId;
         bean.queryDate = dateString;
         //获取日统计
-        ApiUtils.getApiService().obtainBpxyList(bean).enqueue(new TaiShengCallback<BaseBean<ArrayList<XueyaResultBean>>>() {
+        ApiUtils.getApiService_hasdialog().obtainBpxyList(bean).enqueue(new TaiShengCallback<BaseBean<ArrayList<XueyaResultBean>>>() {
             @Override
             public void onSuccess(Response<BaseBean<ArrayList<XueyaResultBean>>> response, BaseBean<ArrayList<XueyaResultBean>> message) {
                 switch (message.code) {
@@ -158,7 +162,7 @@ public class XueyaFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
 //获取实时统计
-        ApiUtils.getApiService().getbloodpressure(bean).enqueue(new TaiShengCallback<BaseBean<GetbloodpressureResultBean>>() {
+        ApiUtils.getApiService_hasdialog().getbloodpressure(bean).enqueue(new TaiShengCallback<BaseBean<GetbloodpressureResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GetbloodpressureResultBean>> response, BaseBean<GetbloodpressureResultBean> message) {
                 switch (message.code) {
@@ -190,7 +194,7 @@ public class XueyaFragment extends BaseFragment {
         bean1.token = UserInstance.getInstance().getToken();
         bean1.deviceId = WatchInstance.getInstance().deviceId;
         //获取月统计
-        ApiUtils.getApiService().xueya_querythismonth(bean1).enqueue(new TaiShengCallback<BaseBean<XueYaDayResultBean>>() {
+        ApiUtils.getApiService_hasdialog().xueya_querythismonth(bean1).enqueue(new TaiShengCallback<BaseBean<XueYaDayResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<XueYaDayResultBean>> response, BaseBean<XueYaDayResultBean> message) {
                 switch (message.code) {

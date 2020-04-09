@@ -52,7 +52,7 @@ public class WatchYujingFragment extends BaseFragment {
 
 
 //        EventBus.getDefault().register(this);
-        initData();
+        initData_first();
 
 
         return rootView;
@@ -107,6 +107,64 @@ public class WatchYujingFragment extends BaseFragment {
 
     int PAGE_NO = 1;
     int PAGE_SIZE = 10;
+
+
+    void initData_first() {
+        YuJingListPostBean bean = new YuJingListPostBean();
+        bean.userId = UserInstance.getInstance().getUid();
+        bean.token = UserInstance.getInstance().getToken();
+        bean.pageNo = PAGE_NO;
+        bean.pageSize = PAGE_SIZE;
+        bean.deviceId = WatchInstance.getInstance().deviceId;
+        ApiUtils.getApiService_hasdialog().getWatchWarningAll(bean).enqueue(new TaiShengCallback<BaseBean<YujingResultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<YujingResultBean>> response, BaseBean<YujingResultBean> message) {
+                ptr_refresh.refreshComplete();
+
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            lv_doctors.setLoading(false);
+                            if (PAGE_NO == 1) {
+                                madapter.mData.clear();
+                                Yujingbean bean1 = message.result.records.get(0);
+                                EventManage.tongzhiWeidu event = new EventManage.tongzhiWeidu();
+                                event.weidu = bean1.status;
+                                EventBus.getDefault().post(event);
+                            }
+                            //有消息
+                            PAGE_NO++;
+                            madapter.mData.addAll(message.result.records);
+                            if (message.result.records.size() < 10) {
+                                lv_doctors.setHasLoadMore(false);
+                                lv_doctors.setLoadAllViewText("暂时只有这么多消息");
+                                lv_doctors.setLoadAllFooterVisible(true);
+                            } else {
+                                lv_doctors.setHasLoadMore(true);
+                            }
+                            madapter.notifyDataSetChanged();
+                        } else {
+                            if (PAGE_NO == 1) {
+                                EventManage.tongzhiWeidu event = new EventManage.tongzhiWeidu();
+                                event.weidu = "0";
+                                EventBus.getDefault().post(event);
+                            }
+                            //没有消息
+                            lv_doctors.setHasLoadMore(false);
+                            lv_doctors.setLoadAllViewText("暂时只有这么多消息");
+                            lv_doctors.setLoadAllFooterVisible(true);
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<YujingResultBean>> call, Throwable t) {
+                ptr_refresh.refreshComplete();
+            }
+        });
+
+    }
 
     void initData() {
         YuJingListPostBean bean = new YuJingListPostBean();

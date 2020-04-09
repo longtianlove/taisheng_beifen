@@ -35,15 +35,38 @@ public class DialogUtil {
     private static CustomProgress mCustomProgress;
 
     /**
-     * 显示带文本的加载进度对话框
+     * 显示带文本的加载进度对话框----废弃
      */
+    @Deprecated
     public static void showProgress(Context context, String str) {
+//        try {
+//            if ("".equals(str)) {
+//                str = "";
+//            }
+//            if (mCustomProgress == null) {
+//                mCustomProgress = CustomProgress.show(context, str, false, null);
+//            } else {
+//                mCustomProgress.setMessage(str);
+//                mCustomProgress.show();
+//            }
+//        } catch (Exception e) {
+//            Log.e("showProgress", e.getMessage());
+//        }
+    }
+
+
+    public static void new_showProgress(Context context, String str) {
         try {
+            if (context == null) {
+                return;
+            }
             if ("".equals(str)) {
                 str = "";
             }
             if (mCustomProgress == null) {
                 mCustomProgress = CustomProgress.show(context, str, false, null);
+            } else if (mCustomProgress.isShowing()) {
+
             } else {
                 mCustomProgress.setMessage(str);
                 mCustomProgress.show();
@@ -54,9 +77,21 @@ public class DialogUtil {
     }
 
     /**
-     * 关掉加载进度对话框
+     * 关掉加载进度对话框----废弃
      */
+    @Deprecated
     public static void closeProgress() {
+//        if (mCustomProgress != null && mCustomProgress.isShowing()) {
+//            try {//bug fixxed with umeng at 5.0.1 by long
+//                mCustomProgress.dismiss();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            mCustomProgress = null;
+//        }
+    }
+
+    public static void new_closeProgress() {
         if (mCustomProgress != null && mCustomProgress.isShowing()) {
             try {//bug fixxed with umeng at 5.0.1 by long
                 mCustomProgress.dismiss();

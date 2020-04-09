@@ -1,35 +1,27 @@
 package com.taisheng.now.bussiness.me;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.bussiness.bean.post.UpdatePswPostBean;
-import com.taisheng.now.bussiness.login.LoginPresenter;
 import com.taisheng.now.bussiness.login.LoginView;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
-import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
-import com.th.j.commonlibrary.utils.LogUtilH;
-import com.th.j.commonlibrary.utils.SpanUtil;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
-import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -146,7 +138,7 @@ public class UpdatePasswordFirstActivity extends BaseHActivity implements LoginV
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
                 bean.password = TextsUtils.getTexts(etPassword);
-                ApiUtils.getApiService().modifypasswrod(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().modifypasswrod(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

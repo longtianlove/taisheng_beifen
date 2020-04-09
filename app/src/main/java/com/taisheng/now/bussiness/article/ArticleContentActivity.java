@@ -1,9 +1,7 @@
 package com.taisheng.now.bussiness.article;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.mob.MobSDK;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
@@ -35,7 +31,6 @@ import com.th.j.commonlibrary.wight.MyWebView;
 
 import java.util.HashMap;
 
-import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -93,7 +88,7 @@ public class ArticleContentActivity extends BaseIvActivity {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.articleId = articleId;
-        ApiUtils.getApiService().articleQeryById(bean).enqueue(new TaiShengCallback<BaseBean<ArticleContentBean>>() {
+        ApiUtils.getApiService_hasdialog().articleQeryById(bean).enqueue(new TaiShengCallback<BaseBean<ArticleContentBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<ArticleContentBean>> response, BaseBean<ArticleContentBean> message) {
                 switch (message.code) {
@@ -168,7 +163,7 @@ public class ArticleContentActivity extends BaseIvActivity {
                 bean.token = UserInstance.getInstance().getToken();
                 bean.dataSource = "0";
                 bean.dataId = articleId;
-                ApiUtils.getApiService().saveCollectionArticleLog(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().saveCollectionArticleLog(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -210,7 +205,7 @@ public class ArticleContentActivity extends BaseIvActivity {
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
         bean.articleId = articleId;
-        ApiUtils.getApiService().updateArticleReadCount(bean).enqueue(new TaiShengCallback<BaseBean>() {
+        ApiUtils.getApiService_hasdialog().updateArticleReadCount(bean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
 
@@ -235,7 +230,7 @@ public class ArticleContentActivity extends BaseIvActivity {
 //                bean.token = UserInstance.getInstance().getToken();
                 bean.shareType = "app";
                 bean.articleId = articleId;
-                ApiUtils.getApiService().saveShareArticleLog(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().saveShareArticleLog(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

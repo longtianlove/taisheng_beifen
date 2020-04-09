@@ -44,6 +44,7 @@ public class SampleAppLike extends DefaultApplicationLike {
     public static Handler handler = new Handler();
     private static volatile Activity mCurrentActivity;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -129,12 +130,19 @@ public class SampleAppLike extends DefaultApplicationLike {
             SDKInitializer.setCoordType(CoordType.BD09LL);
 
 
+            registerActivityLifecycleCallback(new SwitchBackgroundCallbacks());
+
+
         }
         //适配页面
         AutoSizeConfig.getInstance().getUnitsManager()//适配
                 .setSupportDP(true)
                 .setSupportSP(true);
         AutoSizeConfig.getInstance().setCustomFragment(true);
+
+
+
+
 
     }
 

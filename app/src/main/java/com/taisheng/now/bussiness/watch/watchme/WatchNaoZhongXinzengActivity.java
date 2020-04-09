@@ -2,7 +2,6 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.app.TimePickerDialog;
 import android.app.job.JobScheduler;
-import android.os.Bundle;
 
 import android.text.TextUtils;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.TimePicker;
 
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
-import com.taisheng.now.base.BaseActivity;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
@@ -80,7 +78,7 @@ public class WatchNaoZhongXinzengActivity extends BaseIvActivity implements View
                 WatchInstance.getInstance().mDataNaoZhong.add(WatchInstance.getInstance().naozhongLIstBean);
 
                 setNaozhongPostBean.watchRemindList = WatchInstance.getInstance().mDataNaoZhong;
-                ApiUtils.getApiService().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().setWatchREMIND(setNaozhongPostBean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {

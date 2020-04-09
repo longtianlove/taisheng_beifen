@@ -2,12 +2,7 @@ package com.taisheng.now.bussiness.watch.watchme;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.Editable;
-import android.text.Selection;
-import android.text.Spannable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -118,7 +113,7 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseIvActivity {
                 bean.realNameTwo = WatchMejinjilianxirenActivity.watchNameSos2;
                 bean.mobilePhoneThree = WatchMejinjilianxirenActivity.watchSos3;
                 bean.realNameThree = WatchMejinjilianxirenActivity.watchNameSos3;
-                ApiUtils.getApiService().updateSosContactSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().updateSosContactSetting(bean).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
@@ -169,7 +164,7 @@ public class WatchMeJinjilianxirenUpdateActivity extends BaseIvActivity {
                 bean1.realNameTwo = WatchMejinjilianxirenActivity.watchNameSos2;
                 bean1.mobilePhoneThree = WatchMejinjilianxirenActivity.watchSos3;
                 bean1.realNameThree = WatchMejinjilianxirenActivity.watchNameSos3;
-                ApiUtils.getApiService().updateSosContactSetting(bean1).enqueue(new TaiShengCallback<BaseBean>() {
+                ApiUtils.getApiService_hasdialog().updateSosContactSetting(bean1).enqueue(new TaiShengCallback<BaseBean>() {
                     @Override
                     public void onSuccess(Response<BaseBean> response, BaseBean message) {
                         switch (message.code) {
