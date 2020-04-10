@@ -321,9 +321,7 @@ public class FirstFragment extends BaseFragment {
                                 } else if (message.result.records.size() == 1) {
                                     WatchListBean bean1 = message.result.records.get(0);
                                     WatchInstance.getInstance().deviceId = bean1.deviceId;
-
-                                    //todo 上线前去掉
-//                                    WatchInstance.getInstance().deviceId = "359193978994051";
+//                                  WatchInstance.getInstance().deviceId = "359193978994051";
 
                                     SPUtil.putDeviced(bean1.deviceId);
                                     WatchInstance.getInstance().deviceNickName = bean1.nickName;
@@ -892,7 +890,6 @@ public class FirstFragment extends BaseFragment {
 
 
     }
-
 
 
     void getHotArticle_first() {

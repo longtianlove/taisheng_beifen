@@ -80,8 +80,8 @@ tvTitle.setText("免打扰时间段");
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         initDatas();
     }
 

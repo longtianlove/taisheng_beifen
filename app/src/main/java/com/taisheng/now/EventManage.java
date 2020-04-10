@@ -46,7 +46,7 @@ public class EventManage {
         }
     }
 
-    //上传头像成功
+    //手表上传头像成功
     public static class uploadWatchImageSuccess {
         public String path;
 
@@ -54,7 +54,14 @@ public class EventManage {
             this.path = path;
         }
     }
+    //通讯录上传头像成功
+    public static class uploadTongxunluImageSuccess {
+        public String path;
 
+        public uploadTongxunluImageSuccess(String path) {
+            this.path = path;
+        }
+    }
 
     //收到消息
     public static class  AEVENT_C2C_REV_MSG{

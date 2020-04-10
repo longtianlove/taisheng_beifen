@@ -180,7 +180,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fYuyin);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", fYuyin.getName(), requestFile);
-            ApiUtils.getApiService_hasdialog().microcharVoice(UserInstance.getInstance().getUid(),WatchInstance.getInstance().deviceId,body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+            ApiUtils.getApiService().microcharVoice(UserInstance.getInstance().getUid(),WatchInstance.getInstance().deviceId,body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
                                                                       @Override
                                                                       public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
@@ -948,7 +948,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
                                 RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fYuyin);
                                 MultipartBody.Part body = MultipartBody.Part.createFormData("file", fYuyin.getName(), requestFile);
-                                ApiUtils.getApiService_hasdialog().microcharVoice(UserInstance.getInstance().getUid(),WatchInstance.getInstance().deviceId,body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+                                ApiUtils.getApiService().microcharVoice(UserInstance.getInstance().getUid(),WatchInstance.getInstance().deviceId,body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
                                                                                           @Override
                                                                                           public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {

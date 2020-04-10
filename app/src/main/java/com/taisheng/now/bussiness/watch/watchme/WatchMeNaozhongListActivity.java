@@ -99,8 +99,8 @@ public class WatchMeNaozhongListActivity extends BaseIvActivity implements Activ
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         initDatas();
     }
 

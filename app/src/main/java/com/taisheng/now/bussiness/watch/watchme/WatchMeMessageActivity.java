@@ -179,8 +179,8 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
 
     public void modifyAvatar() {
 
-        WatchInstance.getInstance().isWtch = true;
-
+//        WatchInstance.getInstance().isWtch = true;
+        WatchInstance.getInstance().uploadimage_type = "2";
         Intent intent = new Intent(this, SelectAvatarSourceDialog.class);
         startActivityForResult(intent, REQ_CODE_PHOTO_SOURCE);
     }
@@ -334,6 +334,7 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
         switch (requestCode) {
 
             case REQ_CODE_PHOTO_SOURCE:

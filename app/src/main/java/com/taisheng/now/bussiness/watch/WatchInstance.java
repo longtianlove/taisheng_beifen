@@ -24,6 +24,8 @@ import retrofit2.Response;
 public class WatchInstance {
     public boolean isWtch = false;
 
+    public String uploadimage_type="1";//图片上传类型,默认是上传app用户头像
+
     private static WatchInstance watchInstance;
 
     private WatchInstance() {
@@ -60,8 +62,8 @@ public class WatchInstance {
 
     public ChiyaoBeann chiyaobean=new ChiyaoBeann();
 
-    //上传头像信息
-    public void uploadImage(final String path) {
+    //设备上传头像信息
+    public void uploadImage_Watch(final String path) {
         try {
 
             //把Bitmap保存到sd卡中
@@ -89,6 +91,44 @@ public class WatchInstance {
 
                                                                   }
                                                               }
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public String temp_tongxunlu_headUrl;
+
+    public void uploadImage_Tongxunlu(final String path) {
+        try {
+
+            //把Bitmap保存到sd卡中
+            File fImage = new File(path);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fImage);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", fImage.getName(), requestFile);
+            ApiUtils.getApiService_hasdialog().uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+
+                                                                            @Override
+                                                                            public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
+                                                                                switch (message.code) {
+                                                                                    case Constants.HTTP_SUCCESS:
+                                                                                        String path = message.result.path;
+                                                                                        temp_tongxunlu_headUrl = path;
+                                                                                        EventBus.getDefault().post(new EventManage.uploadTongxunluImageSuccess(path));
+                                                                                        break;
+                                                                                }
+
+
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
+
+                                                                            }
+                                                                        }
             );
 
         } catch (Exception e) {

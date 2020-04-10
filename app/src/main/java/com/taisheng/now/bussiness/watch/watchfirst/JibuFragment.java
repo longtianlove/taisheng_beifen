@@ -73,8 +73,8 @@ public class JibuFragment extends BaseFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         initData();
     }
 
@@ -85,7 +85,7 @@ public class JibuFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
 //        获取计步的实时数据
-        ApiUtils.getApiService_hasdialog().getwatchstep(bean).enqueue(new TaiShengCallback<BaseBean<GetwatchstepResultBean>>() {
+        ApiUtils.getApiService().getwatchstep(bean).enqueue(new TaiShengCallback<BaseBean<GetwatchstepResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GetwatchstepResultBean>> response, BaseBean<GetwatchstepResultBean> message) {
                 switch (message.code) {
@@ -117,7 +117,7 @@ public class JibuFragment extends BaseFragment {
         bean.token = UserInstance.getInstance().getToken();
         bean.deviceId = WatchInstance.getInstance().deviceId;
 //        获取计步的月统计数据
-        ApiUtils.getApiService_hasdialog().querythismonthwalk(bean).enqueue(new TaiShengCallback<BaseBean<BushuResultBean>>() {
+        ApiUtils.getApiService().querythismonthwalk(bean).enqueue(new TaiShengCallback<BaseBean<BushuResultBean>>() {
 
             @Override
             public void onSuccess(Response<BaseBean<BushuResultBean>> response, BaseBean<BushuResultBean> message) {

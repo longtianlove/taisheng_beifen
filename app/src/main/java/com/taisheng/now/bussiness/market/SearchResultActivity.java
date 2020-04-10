@@ -83,8 +83,8 @@ public class SearchResultActivity extends BaseHActivity {
 
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         PAGE_NO = 1;
     }
 

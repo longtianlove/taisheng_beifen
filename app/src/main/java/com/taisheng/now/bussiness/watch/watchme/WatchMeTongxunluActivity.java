@@ -266,7 +266,6 @@ public class WatchMeTongxunluActivity extends BaseIvActivity implements Activity
                 util = (Util) convertView.getTag();
             }
             TongxunluliistBean bean = mData.get(position);
-            //todo 图片路径前添加host
             Glide.with(mcontext)
                     .load(Constants.Url.File_Host_head + bean.avatarUrl)
                     .apply(new RequestOptions()
