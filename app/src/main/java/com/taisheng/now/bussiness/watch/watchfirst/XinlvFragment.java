@@ -76,8 +76,8 @@ public class XinlvFragment extends BaseFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         initData();
         beforeDayNum = 0;
         Calendar cal = Calendar.getInstance();
@@ -112,7 +112,7 @@ public class XinlvFragment extends BaseFragment {
         bean.deviceId = WatchInstance.getInstance().deviceId;
         bean.queryDate = dateString;
         //获取实时日统计
-        ApiUtils.getApiService_hasdialog().obtainHeartList(bean).enqueue(new TaiShengCallback<BaseBean<ArrayList<XinlvAnriqiResultBean>>>() {
+        ApiUtils.getApiService().obtainHeartList(bean).enqueue(new TaiShengCallback<BaseBean<ArrayList<XinlvAnriqiResultBean>>>() {
             @Override
             public void onSuccess(Response<BaseBean<ArrayList<XinlvAnriqiResultBean>>> response, BaseBean<ArrayList<XinlvAnriqiResultBean>> message) {
                 switch (message.code) {
@@ -150,7 +150,7 @@ public class XinlvFragment extends BaseFragment {
         bean.deviceId = WatchInstance.getInstance().deviceId;
 
 //获取实时统计
-        ApiUtils.getApiService_hasdialog().getheartrate(bean).enqueue(new TaiShengCallback<BaseBean<GetheartrateResultBean>>() {
+        ApiUtils.getApiService().getheartrate(bean).enqueue(new TaiShengCallback<BaseBean<GetheartrateResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<GetheartrateResultBean>> response, BaseBean<GetheartrateResultBean> message) {
                 switch (message.code) {
@@ -182,7 +182,7 @@ public class XinlvFragment extends BaseFragment {
         bean1.token = UserInstance.getInstance().getToken();
         bean1.deviceId = WatchInstance.getInstance().deviceId;
         //获取月统计
-        ApiUtils.getApiService_hasdialog().xunlv_querythismonth(bean1).enqueue(new TaiShengCallback<BaseBean<XinLvResultBean>>() {
+        ApiUtils.getApiService().xunlv_querythismonth(bean1).enqueue(new TaiShengCallback<BaseBean<XinLvResultBean>>() {
             @Override
             public void onSuccess(Response<BaseBean<XinLvResultBean>> response, BaseBean<XinLvResultBean> message) {
                 switch (message.code) {

@@ -191,6 +191,10 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
+    public void upLoadSucess(EventManage.uploadTongxunluImageSuccess event) {
+        finish();
+    }
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -444,12 +448,25 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
 
         DialogUtil.showProgress(this, "");
 
-        if (WatchInstance.getInstance().isWtch) {
-            WatchInstance.getInstance().uploadImage(clipImagePath);
-        } else {
-            // 上传头像
-            UserInstance.getInstance().uploadImage(clipImagePath);
+
+        switch (WatchInstance.getInstance().uploadimage_type) {
+            case "1":
+                UserInstance.getInstance().uploadImage(clipImagePath);
+                break;
+            case "2":
+                WatchInstance.getInstance().uploadImage_Watch(clipImagePath);
+                break;
+            case "3":
+                WatchInstance.getInstance().uploadImage_Tongxunlu(clipImagePath);
+                break;
         }
+
+//        if (WatchInstance.getInstance().isWtch) {
+//            WatchInstance.getInstance().uploadImage_Watch(clipImagePath);
+//        } else {
+//            // 上传头像
+//            UserInstance.getInstance().uploadImage(clipImagePath);
+//        }
 
 //        if(PetInfoInstance.getInstance().isnewAdd){
 //            NewPetInfoInstance.getInstance().uploadImage(clipImagePath);

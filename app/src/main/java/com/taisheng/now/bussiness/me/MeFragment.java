@@ -229,8 +229,8 @@ public class MeFragment extends BaseFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         if (UserInstance.getInstance().userInfo.avatar != null) {
             Uri uri = Uri.parse(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar);
             sdv_header.setImageURI(uri);

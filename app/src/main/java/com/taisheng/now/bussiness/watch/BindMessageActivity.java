@@ -245,7 +245,7 @@ public class BindMessageActivity extends BaseIvActivity implements ActivityCompa
                 }
 
 //                showGoRecommendDialog();
-                //todo 绑定设备
+
                 BindDevicePostBean bean = new BindDevicePostBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();
@@ -315,8 +315,8 @@ public class BindMessageActivity extends BaseIvActivity implements ActivityCompa
 
 
     public void modifyAvatar() {
-        WatchInstance.getInstance().isWtch = true;
-
+//        WatchInstance.getInstance().isWtch = true;
+        WatchInstance.getInstance().uploadimage_type = "2";
         Intent intent = new Intent(this, SelectAvatarSourceDialog.class);
         startActivityForResult(intent, REQ_CODE_PHOTO_SOURCE);
     }

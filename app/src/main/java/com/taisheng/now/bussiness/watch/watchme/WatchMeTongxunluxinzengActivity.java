@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.taisheng.now.Constants;
+import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseIvActivity;
@@ -41,6 +42,10 @@ import java.io.File;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,14 +108,14 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
         if (!TextUtils.isEmpty(phbxTelephone)) {
             etPhone.setText(phbxTelephone);
         }
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void addData() {
         if (!TextUtils.isEmpty(avatarUrl)) {
-            //todo 图片host是否正确
             Glide.with(this)
-                    .load(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar)
+                    .load(Constants.Url.File_Host_head +avatarUrl)
                     .apply(new RequestOptions()
                             .placeholder(R.drawable.ad_sculpture)
                             .error(R.drawable.ad_sculpture)
@@ -165,9 +170,9 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                     tongxunluliistBean.avatarUrl = avatarUrl;
                     tongxunluliistBean.name = TextsUtils.getTexts(etTongxunluName);
                     tongxunluliistBean.mobilePhone = TextsUtils.getTexts(etPhone);
-                    tongxunluliistBean.deviceId=WatchInstance.getInstance().deviceId;
-                    tongxunluliistBean.type="1";
-                    tongxunluliistBean.userId=UserInstance.getInstance().getUid();
+                    tongxunluliistBean.deviceId = WatchInstance.getInstance().deviceId;
+                    tongxunluliistBean.type = "1";
+                    tongxunluliistBean.userId = UserInstance.getInstance().getUid();
                     WatchMeTongxunluActivity.data.add(tongxunluliistBean);
                 } else {
                     TongxunluliistBean tempBean = WatchMeTongxunluActivity.data.get(position);
@@ -220,7 +225,6 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
 //                    });
 
 
-
                     SetphonbookPostBean setphonbookPostBean = new SetphonbookPostBean();
                     setphonbookPostBean.userId = UserInstance.getInstance().getUid();
                     setphonbookPostBean.token = UserInstance.getInstance().getToken();
@@ -247,6 +251,23 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                 }
 
                 break;
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
+    public void uploadImageSuccess(EventManage.uploadTongxunluImageSuccess event) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri source = FileProvider.getUriForFile(this, "com.taisheng.now.fileprovider", new File(Environment
+                    .getExternalStorageDirectory(), "temp.jpg"));
+            getContentResolver().delete(source, null, null);
+        } else {
+
+            File picture = new File(Environment.getExternalStorageDirectory()
+                    , "temp.jpg");
+            if (picture.exists() && picture.isFile()) {
+                picture.delete();
+            }
         }
     }
 
@@ -301,16 +322,14 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                 break;
 
             case Crop.REQUEST_CROP:
-                //todo 图片host是否正确
                 Glide.with(this)
-                        .load(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar)
+                        .load(Constants.Url.File_Host_head + WatchInstance.getInstance().temp_tongxunlu_headUrl)
                         .apply(new RequestOptions()
                                 .placeholder(R.drawable.article_default)
                                 .error(R.drawable.article_default)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(sdvHeader);
-                //todo 也需要改返回结果
-                avatarUrl = UserInstance.getInstance().userInfo.avatar;
+                avatarUrl = WatchInstance.getInstance().temp_tongxunlu_headUrl;
                 break;
         }
     }
@@ -366,7 +385,8 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
     }
 
     private void modifyAvatar() {
-        WatchInstance.getInstance().isWtch = false;
+//        WatchInstance.getInstance().isWtch = false;
+        WatchInstance.getInstance().uploadimage_type = "3";
         Intent intent = new Intent(this, SelectAvatarSourceDialog.class);
         startActivityForResult(intent, REQ_CODE_PHOTO_SOURCE);
     }

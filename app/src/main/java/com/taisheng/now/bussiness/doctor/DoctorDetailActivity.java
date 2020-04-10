@@ -322,8 +322,8 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         initDatas();
     }
 

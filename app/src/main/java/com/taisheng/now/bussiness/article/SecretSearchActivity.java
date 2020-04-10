@@ -264,8 +264,8 @@ public class SecretSearchActivity extends BaseIvActivity implements TextWatcher 
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         historysearchlist = SPUtil.getHistorySearch();
         if (historysearchlist == null || historysearchlist.isEmpty()) {
             llHistoryLabel.setVisibility(View.GONE);

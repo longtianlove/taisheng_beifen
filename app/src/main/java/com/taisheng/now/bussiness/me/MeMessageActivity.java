@@ -99,7 +99,8 @@ public class MeMessageActivity extends BaseHActivity implements ActivityCompat.O
     }
 
     private void modifyAvatar() {
-        WatchInstance.getInstance().isWtch = false;
+//        WatchInstance.getInstance().isWtch = false;
+        WatchInstance.getInstance().uploadimage_type="1";
         Intent intent = new Intent(this, SelectAvatarSourceDialog.class);
         startActivityForResult(intent, REQ_CODE_PHOTO_SOURCE);
     }
@@ -205,6 +206,12 @@ public class MeMessageActivity extends BaseHActivity implements ActivityCompat.O
     @Override
     protected void onStart() {
         super.onStart();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (UserInstance.getInstance().userInfo.avatar != null) {
             Uri uri = Uri.parse(Constants.Url.File_Host_head + UserInstance.getInstance().userInfo.avatar);
             sdvHeader.setImageURI(uri);
@@ -237,6 +244,7 @@ public class MeMessageActivity extends BaseHActivity implements ActivityCompat.O
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
         switch (requestCode) {
 
             case REQ_CODE_PHOTO_SOURCE:

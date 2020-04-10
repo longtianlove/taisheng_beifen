@@ -298,7 +298,7 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                             tvAddress.setText(bean.province + bean.city + bean.county + bean.addressDetail);
 
                         } else {
-//todo 什么逻辑
+
                         }
                         break;
                 }
