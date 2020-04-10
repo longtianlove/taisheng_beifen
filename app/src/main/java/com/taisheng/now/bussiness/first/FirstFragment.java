@@ -85,22 +85,11 @@ import retrofit2.Response;
 @SuppressLint("WrongConstant")
 public class FirstFragment extends BaseFragment {
     View ll_search;
-
     MaterialDesignPtrFrameLayout ptr_refresh;
-
     private Banner bannerContaner;
-    private View bannerView;
-
-
-//    HorizontalListViewAdapter horizontalListViewAdapter;
-
     ZhuanjiaAdapter zhuanjiaAdapter;
-
     TextView tv_doctor_more;
     TextView tv_secret_more;
-
-//    View ll_shipin_all;
-
     View ll_shishizixun;
     View ll_sushenhufu;
     View ll_yiliaoyangsheng;

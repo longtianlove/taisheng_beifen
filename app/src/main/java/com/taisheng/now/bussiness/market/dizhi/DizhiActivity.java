@@ -60,7 +60,7 @@ public class DizhiActivity extends BaseIvActivity {
 
     @Override
     public void initData() {
-        initDatas_first();
+
     }
 
     @Override
@@ -110,6 +110,13 @@ public class DizhiActivity extends BaseIvActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initDatas_first();
+    }
+
     private void initDatas_first() {
         BaseListPostBean bean = new BaseListPostBean();
         bean.userId = UserInstance.getInstance().getUid();

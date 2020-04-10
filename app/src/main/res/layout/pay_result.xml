@@ -101,6 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
+                        android:visibility="gone"
                         android:text="哎呀，貌似网络出了点小问题~"
                         android:textColor="#ff666666"
                         android:textSize="12sp" />

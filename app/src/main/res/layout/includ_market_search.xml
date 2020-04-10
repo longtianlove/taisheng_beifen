@@ -52,6 +52,7 @@
                 android:layout_height="@dimen/size_15"
                 android:layout_marginLeft="@dimen/margin_15"
                 android:layout_marginRight="@dimen/margin_15"
+                android:visibility="invisible"
                 android:src="@drawable/icon_voice" />
 
         </LinearLayout>

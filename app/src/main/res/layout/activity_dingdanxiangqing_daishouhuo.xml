@@ -22,24 +22,27 @@
     <LinearLayout
         android:id="@+id/ll_kuaidi"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/me_kapian_background"
         android:gravity="center_vertical"
-        android:padding="10dp"
+        android:padding="@dimen/magin_12"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_kuaidi_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#ff666666"
-            android:text="快递公司：圆通速递"
+            android:maxLines="2"
+            android:text="快递公司：圆通速递---------------------------2222222222222222--------------"
             android:textSize="13sp"></TextView>
         <TextView
             android:id="@+id/tv_kuaidi_bianhao"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:layout_marginTop="@dimen/magin_5"
             android:textColor="#ff666666"
             android:text="快递单号：19378460280759530"
             android:textSize="13sp"></TextView>

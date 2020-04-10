@@ -137,7 +137,7 @@ public class DindanxiangqingDaishouhuoActivity extends BaseHActivity {
                     case Constants.HTTP_SUCCESS:
 
                         tvKuaidiName.setText("快递公司:" + message.result.shipChannel);
-                        tvKuaidiBianhao.setText("快递单号" + message.result.shipSn);
+                        tvKuaidiBianhao.setText("快递单号:" + message.result.shipSn);
 
 
                         tvDizhiname.setText(message.result.consignee);

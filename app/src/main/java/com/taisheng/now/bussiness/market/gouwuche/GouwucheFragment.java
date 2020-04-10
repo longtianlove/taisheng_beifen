@@ -558,7 +558,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                             shoppingCartBean.setCount(1);
                         }
                         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
-                        ToastUtil.showAtCenter("添加失败");
+                        ToastUtil.showAtCenter(message.message);
                         statistics(shoppingCartAdapter.isTure());
                         break;
 

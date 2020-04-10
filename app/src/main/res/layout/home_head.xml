@@ -233,7 +233,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/margin_10"
             android:paddingLeft="@dimen/margin_12"
             android:paddingRight="@dimen/margin_13"
             android:paddingTop="@dimen/margin_10"

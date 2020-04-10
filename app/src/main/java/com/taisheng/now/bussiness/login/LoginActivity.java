@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.google.gson.Gson;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;

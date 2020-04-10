@@ -112,7 +112,6 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.1.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     api 'org.ligboy.retrofit2:converter-fastjson:2.1.0'
-    //    api 'com.google.code.gson:gson:2.8.6'
     api 'com.squareup.retrofit2:converter-gson:2.6.2'
     api 'com.facebook.fresco:fresco:0.12.0'
     api 'com.google.android.material:material:1.0.0'
@@ -138,8 +137,7 @@ dependencies {
     /*微信支付集成*/
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     api project(':lib-zxing1')
-    api 'com.veken:chart_view:1.0.2'
-    api 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
     api files('libs/BaiduLBS_Android.jar')
     api files('libs/MiPush_SDK_Client_3_6_18.jar')
     api files('libs/BaiduTraceSDK_v3_1_4.jar')
@@ -148,9 +146,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0"
     api 'com.google.android.material:material:1.0.0'
     api project(':commonlibrary')
-
-    api files('libs/BaiduTraceSDK_v3_1_4.jar')
-    api files('libs/BaiduLBS_Android.jar')
 
     api 'com.github.bumptech.glide:glide:4.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'

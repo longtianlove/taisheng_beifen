@@ -210,7 +210,8 @@
                 android:id="@+id/ll_kajuan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginLeft="@dimen/magin_15"
+                android:layout_marginRight="@dimen/magin_15"
                 android:layout_marginTop="@dimen/magin_20"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -234,7 +235,6 @@
                 <ImageView
                     android:layout_width="@dimen/size_15"
                     android:layout_height="@dimen/size_15"
-                    android:layout_marginRight="@dimen/magin_12"
                     android:src="@drawable/jiantou_hui" />
             </LinearLayout>
 
@@ -248,7 +248,8 @@
                 android:id="@+id/ll_dingdan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginLeft="@dimen/magin_15"
+                android:layout_marginRight="@dimen/magin_15"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -270,7 +271,6 @@
                 <ImageView
                     android:layout_width="@dimen/size_15"
                     android:layout_height="@dimen/size_15"
-                    android:layout_marginRight="@dimen/magin_12"
                     android:src="@drawable/jiantou_hui" />
             </LinearLayout>
 
@@ -283,8 +283,8 @@
                 android:id="@+id/ll_mypingjia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/magin_12"
-
+                android:layout_marginLeft="@dimen/magin_15"
+                android:layout_marginRight="@dimen/magin_15"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -307,7 +307,6 @@
                 <ImageView
                     android:layout_width="@dimen/size_15"
                     android:layout_height="@dimen/size_15"
-                    android:layout_marginRight="@dimen/magin_12"
                     android:src="@drawable/jiantou_hui" />
             </LinearLayout>
 
@@ -321,7 +320,8 @@
                 android:id="@+id/ll_tousuzhongxin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginLeft="@dimen/magin_15"
+                android:layout_marginRight="@dimen/magin_15"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -343,7 +343,6 @@
                 <ImageView
                     android:layout_width="@dimen/size_15"
                     android:layout_height="@dimen/size_15"
-                    android:layout_marginRight="@dimen/magin_12"
                     android:src="@drawable/jiantou_hui" />
             </LinearLayout>
 
@@ -356,7 +355,8 @@
                 android:id="@+id/ll_yijianfankui"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginLeft="@dimen/magin_15"
+                android:layout_marginRight="@dimen/magin_15"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -378,7 +378,6 @@
                 <ImageView
                     android:layout_width="@dimen/size_15"
                     android:layout_height="@dimen/size_15"
-                    android:layout_marginRight="@dimen/magin_12"
                     android:src="@drawable/jiantou_hui" />
             </LinearLayout>
 
@@ -391,7 +390,8 @@
                 android:id="@+id/ll_aboutus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginLeft="@dimen/magin_15"
+                android:layout_marginRight="@dimen/magin_15"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -413,7 +413,6 @@
                 <ImageView
                     android:layout_width="@dimen/size_15"
                     android:layout_height="@dimen/size_15"
-                    android:layout_marginRight="@dimen/magin_12"
                     android:src="@drawable/jiantou_hui" />
             </LinearLayout>
 
@@ -428,7 +427,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="11dp"
-                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginLeft="@dimen/magin_15"
+                android:layout_marginRight="@dimen/magin_15"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -451,7 +451,6 @@
                 <ImageView
                     android:layout_width="@dimen/size_15"
                     android:layout_height="@dimen/size_15"
-                    android:layout_marginRight="@dimen/magin_12"
                     android:src="@drawable/jiantou_hui" />
             </LinearLayout>
         </LinearLayout>
