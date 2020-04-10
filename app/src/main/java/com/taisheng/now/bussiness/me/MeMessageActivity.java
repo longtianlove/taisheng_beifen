@@ -340,12 +340,7 @@ public class MeMessageActivity extends BaseHActivity implements ActivityCompat.O
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 
     @OnClick({R.id.ll_avatar, R.id.ll_nickname, R.id.ll_zhanghao, R.id.ll_bindphone, R.id.ll_updatepwd, R.id.btn_post})
     public void onViewClicked(View view) {

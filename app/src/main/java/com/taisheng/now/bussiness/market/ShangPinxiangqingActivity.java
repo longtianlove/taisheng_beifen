@@ -507,7 +507,7 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                             }
 
                         }
-                        //todo 规格个数
+                        // 规格个数
                         if (message.result.goodsSpecificationEntities != null && message.result.goodsSpecificationEntities.size() > 0) {
                             tv_guige.setText(message.result.goodsSpecificationEntities.get(0).getName());
                             guige_list = new ArrayList<>();

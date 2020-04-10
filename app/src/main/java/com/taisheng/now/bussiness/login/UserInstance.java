@@ -185,7 +185,7 @@ public class UserInstance {
         SPUtil.putWEIGHT(healthInfo.weight);
         SPUtil.putBLOODTYPE(healthInfo.bloodType);
 
-        //todo 随后写过敏史
+        // 随后写过敏史
     }
 
     public String getUid() {
