@@ -237,7 +237,7 @@ public class WatchMeTongxunluxinzengActivity extends BaseIvActivity implements A
                         public void onSuccess(Response<BaseBean> response, BaseBean message) {
                             switch (message.code) {
                                 case Constants.HTTP_SUCCESS:
-                                    Uiutils.showToast(getString(R.string.add_success));
+                                    Uiutils.showToast(getString(R.string.delete_success));
                                     WatchMeTongxunluxinzengActivity.this.finish();
                                     break;
                             }
