@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -321,7 +320,7 @@ public class FirstFragment extends BaseFragment {
                                     WatchInstance.getInstance().relationShip = bean1.deviceRelation;
                                     WatchInstance.getInstance().realName = bean1.holderName;
                                     WatchInstance.getInstance().idcard = bean1.idcard;
-                                    WatchInstance.getInstance().phoneNumber = bean1.phoneNumber;
+                                    WatchInstance.getInstance().phoneNumber = bean1.mobilePhone;
                                     WatchInstance.getInstance().createTime = bean1.createTime;
                                     WatchInstance.getInstance().headUrl = bean1.url;
                                     Intent intent = new Intent(getActivity(), WatchMainActivity.class);

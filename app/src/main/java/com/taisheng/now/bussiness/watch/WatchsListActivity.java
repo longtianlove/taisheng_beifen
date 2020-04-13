@@ -227,7 +227,7 @@ public class WatchsListActivity extends BaseIvActivity {
                     WatchInstance.getInstance().relationShip = bean.deviceRelation;
                     WatchInstance.getInstance().realName = bean.holderName;
                     WatchInstance.getInstance().idcard = bean.idcard;
-                    WatchInstance.getInstance().phoneNumber = bean.phoneNumber;
+                    WatchInstance.getInstance().phoneNumber = bean.mobilePhone;
 
                     WatchInstance.getInstance().createTime = bean.createTime;
                     WatchInstance.getInstance().headUrl = bean.url;
@@ -248,7 +248,7 @@ public class WatchsListActivity extends BaseIvActivity {
             if (!TextsUtils.isEmpty(bean.deviceRelation)){
                 util.tv_relationship.setText("(我是TA的" + bean.deviceRelation + ")");
             }
-            StringBuffer stringBuffer = new StringBuffer(bean.phoneNumber);
+            StringBuffer stringBuffer = new StringBuffer(bean.mobilePhone);
             stringBuffer.insert(3, " ");
             stringBuffer.insert(8, " ");
             util.tv_zhanghao.setText(getString(R.string.phonenum) + ":" + stringBuffer.toString());

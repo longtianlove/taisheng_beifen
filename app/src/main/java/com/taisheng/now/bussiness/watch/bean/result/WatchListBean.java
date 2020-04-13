@@ -2,7 +2,7 @@ package com.taisheng.now.bussiness.watch.bean.result;
 
 public class WatchListBean {
     public String holderName;
-    public String phoneNumber;
+    public String mobilePhone;
     public String createTime;
     public String nickName;
     public String idcard;
