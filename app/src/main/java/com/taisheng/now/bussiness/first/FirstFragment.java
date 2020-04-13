@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -154,19 +156,10 @@ public class FirstFragment extends BaseFragment {
         LinearLayoutManager layout = new LinearLayoutManager(mActivity);
         layout.setOrientation(LinearLayoutManager.HORIZONTAL);//设置为横向排列
         recyclerView.setLayoutManager(layout);
+        PagerSnapHelper  snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
 //        //添加Android自带的分割线
 //        recyclerView.addItemDecoration(new DividerItemDecoration());
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
         zhuanjiaAdapter = new ZhuanjiaAdapter();
         recyclerView.setAdapter(zhuanjiaAdapter);
 

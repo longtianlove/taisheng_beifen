@@ -212,7 +212,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/magin_15"
                 android:layout_marginRight="@dimen/magin_15"
-                android:layout_marginTop="@dimen/magin_20"
+                android:layout_marginTop="@dimen/magin_15"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -240,7 +240,7 @@
 
             <TextView
                 style="@style/my_line_h"
-                android:layout_margin="@dimen/magin_18"
+                android:layout_margin="@dimen/magin_10"
                 android:background="@color/coloreeeeee" />
 
 
@@ -276,7 +276,7 @@
 
             <TextView
                 style="@style/my_line_h"
-                android:layout_margin="@dimen/magin_18"
+                android:layout_margin="@dimen/magin_10"
                 android:background="@color/coloreeeeee" />
 
             <LinearLayout
@@ -312,7 +312,7 @@
 
             <TextView
                 style="@style/my_line_h"
-                android:layout_margin="@dimen/magin_18"
+                android:layout_margin="@dimen/magin_10"
                 android:background="@color/coloreeeeee" />
 
 
@@ -348,7 +348,7 @@
 
             <TextView
                 style="@style/my_line_h"
-                android:layout_margin="@dimen/magin_18"
+                android:layout_margin="@dimen/magin_10"
                 android:background="@color/coloreeeeee" />
 
             <LinearLayout
@@ -383,7 +383,7 @@
 
             <TextView
                 style="@style/my_line_h"
-                android:layout_margin="@dimen/magin_18"
+                android:layout_margin="@dimen/magin_10"
                 android:background="@color/coloreeeeee" />
 
             <LinearLayout
@@ -419,7 +419,7 @@
 
             <TextView
                 style="@style/my_line_h"
-                android:layout_margin="@dimen/magin_18"
+                android:layout_margin="@dimen/magin_10"
                 android:background="@color/coloreeeeee" />
 
             <LinearLayout
