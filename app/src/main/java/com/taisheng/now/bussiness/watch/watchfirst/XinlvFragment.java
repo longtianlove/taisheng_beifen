@@ -157,7 +157,8 @@ public class XinlvFragment extends BaseFragment {
                     case Constants.HTTP_SUCCESS:
                         if (message.result != null) {
                             WatchInstance.getInstance().watchHeart = message.result.heartNum + "";
-                            tvLabel.setVisibility(View.VISIBLE);
+                            tvLabel.setText("次/分");
+                            tvXinlv.setVisibility(View.VISIBLE);
                             tvXinlv.setText(WatchInstance.getInstance().watchHeart);
                         } else {
                             //todo 数据为空的时候修改UI

@@ -285,6 +285,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.WatchMainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".bussiness.watch.watchme.UpdateNickActivity"
