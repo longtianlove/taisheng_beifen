@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.taisheng.now.R;
+import com.taisheng.now.util.DoubleClickUtil;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
 
@@ -186,11 +187,11 @@ public class AmountView2 extends FrameLayout {
         reduceBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(amountEt.getText().toString()) > minValue) {
-                    amountEt.setText(String.valueOf(Integer.parseInt(TextsUtils.isEmptys(amountEt.getText().toString(), "1")) - defaultNum));
-                }
 
-                if (onChangeClick != null) {
+                if (onChangeClick != null&&!DoubleClickUtil.isDoubleClick()) {
+                    if (Integer.parseInt(amountEt.getText().toString()) > minValue) {
+                        amountEt.setText(String.valueOf(Integer.parseInt(TextsUtils.isEmptys(amountEt.getText().toString(), "1")) - defaultNum));
+                    }
                     int amount = Integer.parseInt(amountEt.getText().toString());
                     onChangeClick.onChangeds(2, amount);
                 }
@@ -201,8 +202,8 @@ public class AmountView2 extends FrameLayout {
             @Override
             public void onClick(View v) {
 //                if (Integer.parseInt(amountEt.getText().toString()) < maxValue) {
-                amountEt.setText(String.valueOf(Integer.parseInt(TextsUtils.isEmptys(amountEt.getText().toString(), "0")) + defaultNum));
-                if (onChangeClick != null) {
+                if (onChangeClick != null&&!DoubleClickUtil.isDoubleClick()) {
+                    amountEt.setText(String.valueOf(Integer.parseInt(TextsUtils.isEmptys(amountEt.getText().toString(), "0")) + defaultNum));
                     int amount = Integer.parseInt(amountEt.getText().toString());
                     onChangeClick.onChangeds(1, amount);
                 }

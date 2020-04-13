@@ -198,7 +198,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
         }
 
         DingdanInstance.getInstance().zongjia = totalPrice + "";
-        LogUtilH.e(DingdanInstance.getInstance().zongjia +"***3**");
+        LogUtilH.e(DingdanInstance.getInstance().zongjia + "***3**");
         DingdanInstance.getInstance().scoreGoods = scoreGoods;
 
         //跳转到支付界面
@@ -450,6 +450,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                             beanB.name = beanA.shoppingName;
                             beanB.goodsId = beanA.goodsId;
                             beanB.productId = beanA.productId;
+                            beanB.resultNumber = beanA.resultNumber;
 
 
                             if (scoreGoods == 1) {
@@ -519,9 +520,8 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
     }
 
     @Override
-    public void clicks(int type,int i, int value) {
+    public void clicks(int type, int i, int value) {
         ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(i);
-        shoppingCartBean.setCount(value);
         UpdateCartNumberPostBean updateCartNumberPostBean = new UpdateCartNumberPostBean();
         updateCartNumberPostBean.userId = UserInstance.getInstance().getUid();
         updateCartNumberPostBean.token = UserInstance.getInstance().getToken();
@@ -529,6 +529,16 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
         updateCartNumberPostBean.number = value;
         updateCartNumberPostBean.operateType = type;
         updateCartNumberPostBean.productId = shoppingCartBean.productId;
+        if (shoppingCartBean.getCount()<shoppingCartBean.resultNumber){
+
+        }else {
+            shoppingCartBean.setCount(shoppingCartBean.getCount());
+            shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
+            Uiutils.showToast("库存不足");
+            statistics(shoppingCartAdapter.isTure());
+            return;
+        }
+
         ApiUtils.getApiService_hasdialog().updateCartNumber(updateCartNumberPostBean).enqueue(new TaiShengCallback<BaseBean>() {
             @Override
             public void onSuccess(Response<BaseBean> response, BaseBean message) {
@@ -551,14 +561,14 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
                         statistics(shoppingCartAdapter.isTure());
                         break;
-                    case 500:
+                    default:
                         if (value > 0) {
                             shoppingCartBean.setCount(value - 1);
                         } else {
                             shoppingCartBean.setCount(1);
                         }
                         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
-                        ToastUtil.showAtCenter(message.message);
+                        Uiutils.showToast(message.message);
                         statistics(shoppingCartAdapter.isTure());
                         break;
 
@@ -567,7 +577,14 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
 
             @Override
             public void onFail(Call<BaseBean> call, Throwable t) {
-
+                if (value > 0) {
+                    shoppingCartBean.setCount(value - 1);
+                } else {
+                    shoppingCartBean.setCount(1);
+                }
+                shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
+                Uiutils.showToast("库存不足");
+                statistics(shoppingCartAdapter.isTure());
             }
         });
     }

@@ -18,6 +18,7 @@ import com.taisheng.now.R;
 import com.taisheng.now.bussiness.bean.result.xiadanshangpinBean;
 import com.taisheng.now.bussiness.market.DingdanInstance;
 import com.taisheng.now.bussiness.market.ShangPinxiangqingActivity;
+import com.taisheng.now.util.DoubleClickUtil;
 import com.taisheng.now.view.AmountView2;
 import com.th.j.commonlibrary.interfaces.ILvAmountView;
 import com.th.j.commonlibrary.utils.LogUtilH;
@@ -179,6 +180,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
         }
         holder.tvCommodityNum.setText(" X"+shoppingCartBean.getCount()+"");
+
         holder.av_num.setCurrentValue(shoppingCartBean.getCount());
 //        holder.tvCommodityShowNum.setText(shoppingCartBean.getCount()+"");
         //单选框按钮
@@ -261,11 +263,11 @@ public class ShoppingCartAdapter extends BaseAdapter {
         holder.av_num.setOnChangeClick(new AmountView2.OnChangeClick() {
             @Override
             public void onChangeds(int type,int value) {
-                if (amountView != null) {
-                    holder.av_num.setTag(position);
-                    int tag = (int) holder.av_num.getTag();
-                    amountView.clicks(type,tag, value);
-                }
+                    if (amountView != null) {
+                        holder.av_num.setTag(position);
+                        int tag = (int) holder.av_num.getTag();
+                        amountView.clicks(type,tag, value);
+                    }
             }
         });
 

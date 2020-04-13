@@ -25,6 +25,7 @@ public class NewShoppingCartBean {
     public String goodsId;
     public String goodsSn;
     public String updateTime;
+    public int resultNumber;
     public String userId;
     public List<String> specifications;
     public int number;
@@ -35,6 +36,14 @@ public class NewShoppingCartBean {
     public String checked;
     public String id;
     public String goodsName;
+
+    public int getResultNumber() {
+        return resultNumber;
+    }
+
+    public void setResultNumber(int resultNumber) {
+        this.resultNumber = resultNumber;
+    }
 
     public void setProductId(String productId) {
         this.productId = productId;

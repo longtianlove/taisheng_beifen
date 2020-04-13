@@ -16,6 +16,7 @@ public class ShoppingCartBean {
     public String goodsId;
 
     public  int dressSize;
+    public  int resultNumber;
     public  String attribute;
 
     public BigDecimal price;
@@ -26,7 +27,13 @@ public class ShoppingCartBean {
 
     public String productId;
 
+    public int getResultNumber() {
+        return resultNumber;
+    }
 
+    public void setResultNumber(int resultNumber) {
+        this.resultNumber = resultNumber;
+    }
 
     public String getAttribute() {
         return attribute;

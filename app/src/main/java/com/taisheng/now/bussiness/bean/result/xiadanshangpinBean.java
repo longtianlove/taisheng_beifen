@@ -10,6 +10,7 @@ public class xiadanshangpinBean {
     public boolean hotGoods;
     public String counterPrice;
     public int retailPrice;
+    public int resultNumber;
     public String number;
     public String productId;
 }
