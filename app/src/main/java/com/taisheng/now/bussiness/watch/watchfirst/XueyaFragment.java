@@ -140,7 +140,7 @@ public class XueyaFragment extends BaseFragment {
                                 XueyaResultBean xueyaResultBean = message.result.get(i);
                                 String[] split = xueyaResultBean.createTime.split(" ");
                                 String[] split1 = split[1].split(":");
-                                xListLine.add(split1[1] + "时");
+                                xListLine.add(split1[0] + "时");
                                 dataLine.add(Integer.valueOf(TextsUtils.isEmptys(xueyaResultBean.bloodPressureHigh + "", "0")));
                                 dataLine2.add(Integer.valueOf(TextsUtils.isEmptys(xueyaResultBean.bloodPressureLow + "", "0")));
                             }

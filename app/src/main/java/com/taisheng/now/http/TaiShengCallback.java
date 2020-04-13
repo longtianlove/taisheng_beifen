@@ -111,6 +111,9 @@ public abstract class TaiShengCallback<T extends BaseBean> implements Callback<T
                     }
                 } else {
                     onSuccess(response, message);
+                    if (Constants.HTTP_SUCCESS != message.code) {
+                        ToastUtil.showAtCenter("服务器异常---" + message.code);
+                    }
                 }
                 return;
             }
