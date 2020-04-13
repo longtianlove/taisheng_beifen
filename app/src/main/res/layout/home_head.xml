@@ -16,7 +16,7 @@
             android:id="@+id/bannerContaner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_180"
-            android:layout_margin="@dimen/magin_12" />
+            android:layout_marginBottom="@dimen/magin_12" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -265,11 +265,17 @@
                 android:textSize="@dimen/font12" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_zhuanjia"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite" />
+            android:descendantFocusability="blocksDescendants">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_zhuanjia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite" />
+        </RelativeLayout>
 
         <TextView
             style="@style/my_line_h"
@@ -338,8 +344,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/magin_8"
-                android:layout_marginTop="@dimen/magin_8"
                 android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginTop="@dimen/magin_8"
                 android:singleLine="true"
                 android:text="这里是视频名称这里是视频名称"
                 android:textColor="@color/color333333"
@@ -349,10 +355,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:paddingLeft="@dimen/magin_12"
-                android:paddingRight="@dimen/magin_12"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12">
 
                 <LinearLayout
                     android:layout_width="0dp"

@@ -6,6 +6,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_height="@dimen/size_title78"
@@ -46,8 +47,4 @@
         </com.taisheng.now.view.TaishengListView>
     </com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout>
 
-    <TextView
-        style="@style/my_line_h"
-        android:layout_height="@dimen/size_10"
-        android:background="@color/colorf6f6f6" />
 </LinearLayout>

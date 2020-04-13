@@ -1,16 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:padding="10dp"
+    android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="horizontal">
 
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/magin_12"
+        android:layout_marginRight="@dimen/magin_12"
+        android:layout_marginTop="@dimen/magin_10"
+        android:layout_marginBottom="@dimen/magin_2"
         android:background="@drawable/me_kapian_background"
         >
 
@@ -23,7 +24,7 @@
         <LinearLayout
             android:id="@+id/ll_all"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="@dimen/size_110"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -31,7 +32,8 @@
                 android:id="@+id/tv_discount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="@dimen/magin_12"
+                android:layout_marginLeft="@dimen/magin_12"
                 android:gravity="center"
                 android:text="130"
                 android:textColor="#ffff3b30"
@@ -40,6 +42,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -58,7 +62,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
-                    android:gravity="center"
                     android:text="满300元使用"
                     android:textColor="#ff666666"
                     android:textSize="11sp" />
@@ -79,8 +82,8 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="@dimen/magin_5"
+                android:layout_marginRight="@dimen/magin_5"
                 android:background="@drawable/line_vertical"
                 android:gravity="center"
                 android:layerType="software" />
@@ -90,7 +93,8 @@
                 android:id="@+id/tv_shiyong"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
                 android:background="@drawable/youhuijuanweishiyong_back"
                 android:gravity="center"
                 android:text="・使用"
