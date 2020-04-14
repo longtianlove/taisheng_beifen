@@ -208,7 +208,9 @@ public class LoginActivity extends BaseIvActivity implements LoginView {
             case R.id.tv_yanzhengma_change:
                 isPhone = true;
                 llShoujihao.setVisibility(View.VISIBLE);
+                etShoujihao.setText(TextsUtils.getTexts(etZhanghao));
                 llZhanghao.setVisibility(View.GONE);
+
                 break;
             case R.id.iv_shoujihao_guanbi:
                 etShoujihao.setText("");
@@ -238,6 +240,7 @@ public class LoginActivity extends BaseIvActivity implements LoginView {
             case R.id.tv_zhanghao_change:
                 isPhone = false;
                 llShoujihao.setVisibility(View.GONE);
+                etZhanghao.setText(TextsUtils.getTexts(etShoujihao));
                 llZhanghao.setVisibility(View.VISIBLE);
                 break;
         }

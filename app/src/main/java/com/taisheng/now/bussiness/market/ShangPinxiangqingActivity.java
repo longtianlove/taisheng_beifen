@@ -511,8 +511,8 @@ public class ShangPinxiangqingActivity extends BaseIvActivity {
                         if (message.result.goodsSpecificationEntities != null && message.result.goodsSpecificationEntities.size() > 0) {
                             tv_guige.setText(message.result.goodsSpecificationEntities.get(0).getName());
                             guige_list = new ArrayList<>();
-                            for (int i = 0; i < message.result.goodsSpecificationEntities.size(); i++) {
-                                ValueList tempVauleList = message.result.goodsSpecificationEntities.get(i).getValueList().get(0);
+                            for (int i = 0; i < message.result.goodsSpecificationEntities.get(0).getValueList().size(); i++) {
+                                ValueList tempVauleList = message.result.goodsSpecificationEntities.get(0).getValueList().get(i);
                                 guige_list.add(tempVauleList.getValue());
                             }
 

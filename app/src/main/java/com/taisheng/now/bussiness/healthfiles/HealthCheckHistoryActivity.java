@@ -52,7 +52,7 @@ public class HealthCheckHistoryActivity extends BaseIvActivity {
     ViewPager vpContent;
     private ZhongyitizhiFragment zhongyitizhiFragment1;
     private ZhongyitizhiFragment zhongyitizhiFragment2;
-//    private ZhongyitizhiFragment zhongyitizhiFragment3;
+    private ZhongyitizhiFragment zhongyitizhiFragment3;
     private DoctorTabAdapter adapter;
 
 
@@ -96,15 +96,22 @@ public class HealthCheckHistoryActivity extends BaseIvActivity {
         zhongyitizhiFragment1.assessmentType = "1";
         zhongyitizhiFragment2 = new ZhongyitizhiFragment();
         zhongyitizhiFragment2.assessmentType = "2";
-//        zhongyitizhiFragment3 = new ZhongyitizhiFragment();
-//        zhongyitizhiFragment3.assessmentType = "3";
 
         tabFragments.add(zhongyitizhiFragment1);
         tabFragments.add(zhongyitizhiFragment2);
-//        tabFragments.add(zhongyitizhiFragment3);
 
+        if (Constants.FEMALE == UserInstance.getInstance().userInfo.sex) {
+            zhongyitizhiFragment3 = new ZhongyitizhiFragment();
+            zhongyitizhiFragment3.assessmentType = "3";
+            tabFragments.add(zhongyitizhiFragment3);
+        }
 
-        final String[] stringArray = getResources().getStringArray(R.array.health_tab);
+        String[] stringArray = null;
+        if (Constants.FEMALE == UserInstance.getInstance().userInfo.sex) {
+            stringArray  = getResources().getStringArray(R.array.health_tab2);
+        }else {
+            stringArray  = getResources().getStringArray(R.array.health_tab);
+        }
         for (int i = 0; i < stringArray.length; i++) {
             listTitle.add(stringArray[i]);
         }
