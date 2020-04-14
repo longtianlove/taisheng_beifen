@@ -136,7 +136,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                                 shoppingCartBean.setCount(bean.number);
                                 shoppingCartBean.setImageUrl(bean.picUrl);
                                 shoppingCartBean.productId = bean.productId;
-
+                                shoppingCartBean.setResultNumber(bean.resultNumber);
                                 shoppingCartBeanList.add(shoppingCartBean);
                             }
                             shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
@@ -451,7 +451,7 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                             beanB.goodsId = beanA.goodsId;
                             beanB.productId = beanA.productId;
                             beanB.resultNumber = beanA.resultNumber;
-
+                            LogUtilH.e(beanA.resultNumber+"=beanA.resultNumber--");
 
                             if (scoreGoods == 1) {
 
@@ -529,7 +529,8 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
         updateCartNumberPostBean.number = value;
         updateCartNumberPostBean.operateType = type;
         updateCartNumberPostBean.productId = shoppingCartBean.productId;
-        if (shoppingCartBean.getCount()<shoppingCartBean.resultNumber){
+        LogUtilH.e(value+"=value--"+shoppingCartBean.resultNumber+"----"+shoppingCartBean.getCount());
+        if (value<=shoppingCartBean.resultNumber){
 
         }else {
             shoppingCartBean.setCount(shoppingCartBean.getCount());

@@ -27,7 +27,7 @@ import com.tencent.bugly.Bugly;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
-
+import com.th.j.commonlibrary.utils.LogUtilH;
 
 
 public class SampleAppLike extends DefaultApplicationLike {
@@ -50,6 +50,7 @@ public class SampleAppLike extends DefaultApplicationLike {
         super.onCreate();
         mcontext=getApplication();
         environment=Environment.Debug;
+        LogUtilH.setLogLevel(LogUtilH.LogLevel.DEBUG_LEVEL);
         ViewTarget.setTagId(R.id.glide_tag);//图片加载错误处理
 //        WeChatManagerInstance.getInstance().registToWx(mcontext);
         if (isMainProcess(getApplication())) {
