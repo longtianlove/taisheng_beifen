@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseIvActivity;
@@ -16,17 +17,22 @@ import com.taisheng.now.bussiness.watch.watchchat.WatchChatFragment;
 import com.taisheng.now.bussiness.watch.watchchat.WeChatActivity;
 import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstFragment;
 import com.taisheng.now.bussiness.watch.watchme.WatchMeFragment;
+import com.taisheng.now.bussiness.watch.watchme.WatchMeYujingxinxiXiangqingActivity;
 import com.taisheng.now.bussiness.watch.watchyujing.ThreadUtil;
 import com.taisheng.now.bussiness.watch.watchyujing.WatchYujingFragment;
 import com.taisheng.now.chat.ChatManagerInstance;
 import com.taisheng.now.evbusbean.WeChatMsg;
 import com.taisheng.now.map.TrackInstance;
+import com.taisheng.now.push.PushDataCenter;
 import com.taisheng.now.util.SPUtil;
 import com.th.j.commonlibrary.wight.BottomBar;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import androidx.core.content.ContextCompat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -44,7 +50,6 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
         setContentView(R.layout.watch_main);
         ButterKnife.bind(this);
         ChatManagerInstance.getInstance().init();
-        SPUtil.putHome(true);
         EventBus.getDefault().register(this);
         ThreadUtil.open_gps_donot_check_Thread(300000);
         TrackInstance.getInstance().init(this);
@@ -58,11 +63,6 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
 
     @Override
     public void addData() {
-
-    }
-
-    @Override
-    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
         tvTitle.setText(getString(R.string.device06));
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setText(getString(R.string.device07));
@@ -73,6 +73,11 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void setChangeTitle(TextView tvLeft, TextView tvTitle, TextView tvRight, ImageView ivRight, ImageView ivTitle) {
+
     }
 
     @Override
@@ -114,7 +119,7 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
 
     }
 
-    private void setTopWhite(){
+    private void setTopWhite() {
         Drawable drawable = getResources().getDrawable(R.drawable.icon_back_new);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         tvLeft.setCompoundDrawables(drawable, null, null, null);
@@ -153,10 +158,33 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
     public void finishClose(WeChatMsg weChatMsg) {
         bottomWatch.defaultIndext(0);
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         bottomWatch.defaultIndext(0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (PushDataCenter.fromXiaomi) {
+            bottomWatch.defaultIndext(3);
+            setTopWhite();
+            tvTitle.setText(getString(R.string.device04));
+            tvRight.setVisibility(View.GONE);
+            PushDataCenter.fromXiaomi = false;
+            if (PushDataCenter.formatBean != null) {
+                Intent intent = new Intent(WatchMainActivity.this, WatchMeYujingxinxiXiangqingActivity.class);
+                intent.putExtra("id", PushDataCenter.formatBean.yujingId);
+                intent.putExtra("warningType", PushDataCenter.formatBean.warningType);
+                intent.putExtra("message", PushDataCenter.formatBean.warningContent);
+                intent.putExtra("createTime", PushDataCenter.formatBean.createTime);
+                startActivity(intent);
+            }
+        }
+
+
     }
 
     @Override

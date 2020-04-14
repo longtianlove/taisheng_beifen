@@ -71,6 +71,10 @@ public class Constants {
         public static String WEB_SOCKET_URL = "ws://192.168.1.15:8879";*/
 
         public static class Watch {
+            //根据设备id获取设备信息
+            public static final String getDeviceInfo="jeecg-boot/app/watchDevice/getDeviceInfo";
+
+
             //上传语音
             public static final String microcharVoice = "jeecg-boot/app/microchar/getvoice";
 

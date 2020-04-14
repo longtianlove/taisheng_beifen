@@ -95,6 +95,7 @@ import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.BindDevicePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ChiyaolistPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
+import com.taisheng.now.bussiness.watch.bean.post.GetDeviceInfoPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.GetWatchPhoneBookPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.GetbloodpressurePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.GetheartratePostBean;
@@ -133,6 +134,7 @@ import com.taisheng.now.bussiness.watch.bean.result.NewMiandaraoListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewSosJijinlianxirenlIstResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ShiShiCollecgtionResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.TongxunluResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvAnriqiResultBean;
@@ -205,8 +207,6 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.querythedaybpxy)
     Call<BaseBean<XueYaDayResultBean>> querythedaybpxy(@Body ShishiCollectionBean bean);
-
-
 
 
     @POST(Constants.Url.Watch.xueya_querythismonth)
@@ -285,7 +285,7 @@ public interface ApiService {
 
 
     @POST(Constants.Url.Watch.setRemind)
-    Call<BaseBean>  setRemind(@Body SetChiyaoPostBean bean);
+    Call<BaseBean> setRemind(@Body SetChiyaoPostBean bean);
 
 
 //    @POST(Constants.Url.Watch.setWatchPhbx)
@@ -309,7 +309,6 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.watchSwitchConfig)
     Call<BaseBean> watchSwitchConfig(@Body KaiguanSettingPostBean bean);
-
 
 
     @POST(Constants.Url.Watch.phonebookswitch)
@@ -563,6 +562,12 @@ public interface ApiService {
     );
 
 
+    //根据设备id获取设备信息
+//    public static final String getDeviceInfo="jeecg-boot/app/watchDevice/getDeviceInfo";
+    @POST(Constants.Url.Watch.getDeviceInfo)
+    Call<BaseBean<WatchListBean>> getDeviceInfo(@Body GetDeviceInfoPostBean bean);
+
+
     //上传语音
     @Multipart
     @POST(Constants.Url.Watch.microcharVoice)
@@ -571,6 +576,8 @@ public interface ApiService {
             @Query("deviceId") String deviceId,
             @Part MultipartBody.Part file
     );
+
+    //
 
     //反馈
     @POST(Constants.Url.feedback)

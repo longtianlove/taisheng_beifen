@@ -334,7 +334,7 @@ public class MarketFragment extends BaseFragment {
 
             @Override
             public void onFail(Call<BaseBean<MallYouhuiquanResultBanner>> call, Throwable t) {
-                LogUtilH.e(t.toString() + "---------------1------1------------");
+//                LogUtilH.e(t.toString() + "---------------1------1------------");
             }
         });
     }
