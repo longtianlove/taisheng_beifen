@@ -65,6 +65,11 @@
         <item>@string/health_tab02</item>
 
     </string-array>
+    <string-array name="health_tab2">
+        <item>@string/health_tab01</item>
+        <item>@string/health_tab02</item>
+        <item>@string/health_tab03</item>
+    </string-array>
    <!-- <item>@string/health_tab03</item>-->
     <string-array name="secret_tab">
         <item>@string/secret01</item>
