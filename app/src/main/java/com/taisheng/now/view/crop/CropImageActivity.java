@@ -159,34 +159,40 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
 
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
     public void upLoadSucess(EventManage.uploadWatchImageSuccess event) {
+        switch (WatchInstance.getInstance().uploadimage_type) {
+            case "2":
+                finish();
+                break;
+            case "4":
+                UpdateWatchPostBean bean = new UpdateWatchPostBean();
+                bean.userId = UserInstance.getInstance().getUid();
+                bean.token = UserInstance.getInstance().getToken();
+                bean.deviceId = WatchInstance.getInstance().deviceId;
+                bean.deviceNickName = WatchInstance.getInstance().deviceNickName;
+                bean.headUrl = event.path;
+                bean.relationShip = WatchInstance.getInstance().relationShip;
 
-        UpdateWatchPostBean bean = new UpdateWatchPostBean();
-        bean.userId = UserInstance.getInstance().getUid();
-        bean.token = UserInstance.getInstance().getToken();
-        bean.deviceId = WatchInstance.getInstance().deviceId;
-        bean.deviceNickName = WatchInstance.getInstance().deviceNickName;
-        bean.headUrl = event.path;
-        bean.relationShip = WatchInstance.getInstance().relationShip;
+                ApiUtils.getApiService_hasdialog().updateDeviceInfo(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                        switch (message.code) {
+                            case Constants.HTTP_SUCCESS:
+                                WatchInstance.getInstance().headUrl = bean.headUrl;
+                                finish();
+                                break;
+                            default:
+                                finish();
+                                break;
+                        }
+                    }
 
-        ApiUtils.getApiService_hasdialog().updateDeviceInfo(bean).enqueue(new TaiShengCallback<BaseBean>() {
-            @Override
-            public void onSuccess(Response<BaseBean> response, BaseBean message) {
-                switch (message.code) {
-                    case Constants.HTTP_SUCCESS:
-                        WatchInstance.getInstance().headUrl = bean.headUrl;
-                        finish();
-                        break;
-                    default:
-                        finish();
-                        break;
-                }
-            }
+                    @Override
+                    public void onFail(Call<BaseBean> call, Throwable t) {
 
-            @Override
-            public void onFail(Call<BaseBean> call, Throwable t) {
-
-            }
-        });
+                    }
+                });
+                break;
+        }
 
 
     }
@@ -453,11 +459,14 @@ public class CropImageActivity extends MonitoredActivity implements CropImageVie
             case "1":
                 UserInstance.getInstance().uploadImage(clipImagePath);
                 break;
-            case "2":
+            case "2"://绑定设备
                 WatchInstance.getInstance().uploadImage_Watch(clipImagePath);
                 break;
             case "3":
                 WatchInstance.getInstance().uploadImage_Tongxunlu(clipImagePath);
+                break;
+            case "4":
+                WatchInstance.getInstance().uploadImage_Watch(clipImagePath);
                 break;
         }
 

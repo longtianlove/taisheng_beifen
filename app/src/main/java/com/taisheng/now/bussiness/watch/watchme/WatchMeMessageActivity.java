@@ -35,6 +35,7 @@ import com.taisheng.now.bussiness.login.LoginActivity;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.push.XMPushManagerInstance;
@@ -180,7 +181,7 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
     public void modifyAvatar() {
 
 //        WatchInstance.getInstance().isWtch = true;
-        WatchInstance.getInstance().uploadimage_type = "2";
+        WatchInstance.getInstance().uploadimage_type = "4";
         Intent intent = new Intent(this, SelectAvatarSourceDialog.class);
         startActivityForResult(intent, REQ_CODE_PHOTO_SOURCE);
     }
@@ -316,6 +317,8 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
         Crop.of(source, destination).asSquare().start(this, bundle);
     }
 
+
+
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
     public void uploadImageSuccess(EventManage.uploadWatchImageSuccess event) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -334,7 +337,7 @@ public class WatchMeMessageActivity extends BaseIvActivity implements ActivityCo
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
 
             case REQ_CODE_PHOTO_SOURCE:

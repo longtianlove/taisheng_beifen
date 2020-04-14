@@ -80,6 +80,8 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
 
     }
 
+    public  static int nowPosition=0;
+
     @Override
     public void onItem(int i) {
         switch (i) {
@@ -88,12 +90,13 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
                 tvTitle.setText(getString(R.string.device06));
                 tvRight.setVisibility(View.VISIBLE);
                 tvRight.setText(getString(R.string.device07));
-
+                nowPosition=0;
                 break;
             case 1:
                 setTopWhite();
                 tvTitle.setText(getString(R.string.device02));
                 tvRight.setVisibility(View.GONE);
+                nowPosition=1;
                 break;
             case 2:
                 setTopWhite();
@@ -106,6 +109,7 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
                 setTopWhite();
                 tvTitle.setText(getString(R.string.device04));
                 tvRight.setVisibility(View.GONE);
+                nowPosition=3;
                 break;
             case 4:
                 Drawable drawable = getResources().getDrawable(R.drawable.icon_back);
@@ -114,6 +118,7 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
                 tvTitle.setTextColor(ContextCompat.getColor(this, R.color.color333333));
                 tvTitle.setText(getString(R.string.device05));
                 tvRight.setVisibility(View.GONE);
+                nowPosition=4;
                 break;
         }
 
@@ -156,7 +161,45 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void finishClose(WeChatMsg weChatMsg) {
-        bottomWatch.defaultIndext(0);
+        bottomWatch.defaultIndext(nowPosition);
+        switch (nowPosition) {
+            case 0:
+                setTopWhite();
+                tvTitle.setText(getString(R.string.device06));
+                tvRight.setVisibility(View.VISIBLE);
+                tvRight.setText(getString(R.string.device07));
+                nowPosition=0;
+                break;
+            case 1:
+                setTopWhite();
+                tvTitle.setText(getString(R.string.device02));
+                tvRight.setVisibility(View.GONE);
+                nowPosition=1;
+                break;
+            case 2:
+                setTopWhite();
+                tvTitle.setText("");
+                tvRight.setVisibility(View.GONE);
+                Intent intent = new Intent(WatchMainActivity.this, WeChatActivity.class);
+                startActivity(intent);
+                break;
+            case 3:
+                setTopWhite();
+                tvTitle.setText(getString(R.string.device04));
+                tvRight.setVisibility(View.GONE);
+                nowPosition=3;
+                break;
+            case 4:
+                Drawable drawable = getResources().getDrawable(R.drawable.icon_back);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                tvLeft.setCompoundDrawables(drawable, null, null, null);
+                tvTitle.setTextColor(ContextCompat.getColor(this, R.color.color333333));
+                tvTitle.setText(getString(R.string.device05));
+                tvRight.setVisibility(View.GONE);
+                nowPosition=4;
+                break;
+        }
+
     }
 
     @Override
