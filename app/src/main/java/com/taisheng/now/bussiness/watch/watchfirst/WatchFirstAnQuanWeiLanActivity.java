@@ -45,6 +45,7 @@ import com.taisheng.now.map.MapLocationParser;
 import com.taisheng.now.map.MapPetAtHomeView;
 import com.taisheng.now.map.addressParseListener;
 import com.taisheng.now.util.DensityUtil;
+import com.taisheng.now.util.ListUtil;
 import com.taisheng.now.util.Uiutils;
 import com.th.j.commonlibrary.utils.LogUtilH;
 
@@ -364,7 +365,8 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 searchAddr.setAddr(reverseGeoCodeResult.getAddress());
                 addrList.add(searchAddr);
                 rvAddresslist.setVisibility(View.VISIBLE);
-                adapter.setMdatas(addrList);
+                List<BaiduSearchAddr> list = ListUtil.removeDuplicate(addrList);
+                adapter.setMdatas(list);
             }
         });
         //下面是传入对应的经纬度
