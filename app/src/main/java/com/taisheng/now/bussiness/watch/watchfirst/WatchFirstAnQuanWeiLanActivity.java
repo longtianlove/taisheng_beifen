@@ -3,6 +3,7 @@ package com.taisheng.now.bussiness.watch.watchfirst;
 import android.content.Context;
 import android.graphics.Point;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,6 +58,7 @@ import java.util.List;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -128,6 +130,18 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
             public void onClick(View v) {
                 if (!(latitude > 0)) {
                     Uiutils.showToast(getString(R.string.watch_msg39));
+                    return;
+                }
+                if (TextUtils.isEmpty(etFanwei.getText().toString())) {
+                    return;
+                }
+
+                if (Integer.parseInt(etFanwei.getText().toString()) > 3000) {
+                    Uiutils.showToast("不能超过3000米");
+                    return;
+                }
+                if(HomelocationInstance.radius<10||HomelocationInstance.radius>3000){
+                    Uiutils.showToast("安全半径范围在10-3000米");
                     return;
                 }
                 AnquanweiilanPostBean bean = new AnquanweiilanPostBean();
@@ -216,9 +230,12 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (Integer.parseInt(s.toString()) > 3000) {
-                    Uiutils.showToast("不能超过3000米");
-                }
+//                if (TextUtils.isEmpty(s)) {
+//                    return;
+//                }
+//                if (Integer.parseInt(s.toString()) > 3000) {
+//                    Uiutils.showToast("不能超过3000米");
+//                }
             }
 
             @Override

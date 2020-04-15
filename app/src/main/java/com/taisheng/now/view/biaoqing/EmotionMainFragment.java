@@ -63,14 +63,21 @@ import com.taisheng.now.chat.RemoteChatMessage;
 import com.taisheng.now.chat.websocket.WebSocketManager;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.Apputil;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -237,14 +244,13 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
         vMsgList.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
 
-
-        vMsgList.setOnTouchListener(new View.OnTouchListener(){
+        vMsgList.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
 
-                if( (event.getAction() ==  MotionEvent.ACTION_DOWN)
-                        && (view.getId() == R.id.msg_list) ) {
+                if ((event.getAction() == MotionEvent.ACTION_DOWN)
+                        && (view.getId() == R.id.msg_list)) {
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
                 return false;
@@ -321,6 +327,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
         }
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -358,7 +365,6 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                     source = FileProvider.getUriForFile(getActivity(), "com.taisheng.now.fileprovider", new File(Environment
                             .getExternalStorageDirectory(), "temp_picture.jpg"));
                 } else {
-                    // 选择图片后进入裁剪
                     File picture = new File(Environment.getExternalStorageDirectory()
                             , "temp_picture.jpg");
                     if (!picture.exists()) {
@@ -367,9 +373,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                     source = Uri.fromFile(picture);
                 }
 
-                uploadPicture(source.getPath());
-
-//                beginCrop(source, bundle);
+                dealPicture(source);
 
 
                 break;
@@ -377,6 +381,68 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
         }
     }
 
+
+    private String dirPath = Apputil.sdNormalPath + "/chatImage";// 存储裁剪图片目录
+
+
+    public void dealPicture(Uri source) {
+
+
+        InputStream is = null;
+
+        try {
+            is = getActivity().getContentResolver().openInputStream(source);
+
+            File dir = new File(dirPath);// 裁剪图片目录
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File file = new File(dir, getFileNameByTime());
+            BufferedOutputStream bos = null;
+            try {
+                bos = new BufferedOutputStream(new FileOutputStream(file));
+                int len = 0;
+                byte[] bys = new byte[1024];
+                while ((len = is.read(bys)) != -1) {
+                    bos.write(bys);
+                }
+                bos.flush();
+                uploadPicture(file.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+                CrashReport.postCatchedException(e);
+            } finally {
+                if (bos != null) {
+                    try {
+                        bos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            CrashReport.postCatchedException(e);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+    }
+
+    public static String getFileNameByTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        return dateFormat.format(new Date()) + ".jpg";
+    }
 
     /**
      * Try to return the absolute file path from the given Uri
@@ -418,28 +484,28 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", fImage.getName(), requestFile);
             ApiUtils.getApiService_hasdialog().uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
-                                                                  @Override
-                                                                  public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
-                                                                      switch (message.code) {
-                                                                          case Constants.HTTP_SUCCESS:
-                                                                              String path = message.result.path;
+                                                                            @Override
+                                                                            public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
+                                                                                switch (message.code) {
+                                                                                    case Constants.HTTP_SUCCESS:
+                                                                                        String path = message.result.path;
 
 
-                                                                              EventBus.getDefault().post(new EventManage.uploadChatPictureSuccess(path));
+                                                                                        EventBus.getDefault().post(new EventManage.uploadChatPictureSuccess(path));
 
-                                                                              sendImgMsg(path);
+                                                                                        sendImgMsg(path);
 
-                                                                              break;
-                                                                      }
+                                                                                        break;
+                                                                                }
 
 
-                                                                  }
+                                                                            }
 
-                                                                  @Override
-                                                                  public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
+                                                                            @Override
+                                                                            public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
 
-                                                                  }
-                                                              }
+                                                                            }
+                                                                        }
             );
 
         } catch (Exception e) {
@@ -778,10 +844,10 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
 //                                    // 小圆点
 ////  .setType(GPreviewBuilder.IndicatorType.Dot)
 //                                    .start();//启动
-                            String url= Constants.Url.File_Host + finalRawmessage;
-                            ArrayList<String> urls=new ArrayList<>();
+                            String url = Constants.Url.File_Host + finalRawmessage;
+                            ArrayList<String> urls = new ArrayList<>();
                             urls.add(url);
-                            ImageZoom.show(getActivity(), url,urls);
+                            ImageZoom.show(getActivity(), url, urls);
 
                         }
                     });
@@ -824,6 +890,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                     itemOtherHolder.vMsg.setVisibility(View.GONE);
                     itemOtherHolder.sdw_pic.setImageURI(Uri.parse(Constants.Url.File_Host + rawmessage));
                     String finalRawmessage = rawmessage;
+                    itemOtherHolder.sdw_pic.
                     itemOtherHolder.sdw_pic.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -856,8 +923,8 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                 } else {
                     itemOtherHolder.sdw_pic.setVisibility(View.GONE);
                     itemOtherHolder.vMsg.setVisibility(View.VISIBLE);
-                    String faceWords=mDatas.get(position).getMsg().toString();
-                    faceWords=faceWords.replace("face[","[");
+                    String faceWords = mDatas.get(position).getMsg().toString();
+                    faceWords = faceWords.replace("face[", "[");
                     itemOtherHolder.vMsg.setText(SpanStringUtils.megetEmotionContent(EmotionUtils.EMOTION_CLASSIC_TYPE,
                             getActivity(), (faceWords)));
                 }

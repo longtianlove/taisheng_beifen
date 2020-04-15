@@ -67,7 +67,7 @@ public class TrackInstance {
 // 设置精度过滤值(定位精度大于100米的过滤掉)
         processOption.setRadiusThreshold(100);
 // 设置交通方式为驾车
-        processOption.setTransportMode(TransportMode.driving);
+        processOption.setTransportMode(TransportMode.walking);
 // 设置纠偏选项
         historyTrackRequest.setProcessOption(processOption);
 

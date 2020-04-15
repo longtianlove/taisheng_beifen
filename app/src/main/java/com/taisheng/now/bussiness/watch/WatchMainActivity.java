@@ -24,7 +24,6 @@ import com.taisheng.now.chat.ChatManagerInstance;
 import com.taisheng.now.evbusbean.WeChatMsg;
 import com.taisheng.now.map.TrackInstance;
 import com.taisheng.now.push.PushDataCenter;
-import com.taisheng.now.util.SPUtil;
 import com.th.j.commonlibrary.wight.BottomBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,7 +51,7 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
         ChatManagerInstance.getInstance().init();
         EventBus.getDefault().register(this);
         ThreadUtil.open_gps_donot_check_Thread(300000);
-        TrackInstance.getInstance().init(this);
+
     }
 
     @Override
@@ -219,14 +218,14 @@ public class WatchMainActivity extends BaseIvActivity implements BottomBar.OnIte
             PushDataCenter.fromXiaomi = false;
             if (PushDataCenter.formatBean != null) {
                 Intent intent = new Intent(WatchMainActivity.this, WatchMeYujingxinxiXiangqingActivity.class);
-                intent.putExtra("id", PushDataCenter.formatBean.yujingId);
+                intent.putExtra("id", PushDataCenter.formatBean.warningId);
                 intent.putExtra("warningType", PushDataCenter.formatBean.warningType);
                 intent.putExtra("message", PushDataCenter.formatBean.warningContent);
                 intent.putExtra("createTime", PushDataCenter.formatBean.createTime);
                 startActivity(intent);
             }
         }
-
+        TrackInstance.getInstance().init(this);
 
     }
 
