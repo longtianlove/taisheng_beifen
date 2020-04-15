@@ -85,28 +85,7 @@
 				}
 
 			},
-			tooltip: {
-				trigger: 'item',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        },
-        formatter: function (params) {
-            var color = params.color;//图例颜色
-            var htmlStr ='<div style="font-size:30px;">';
-            /*htmlStr += params.name + '<br/>';//x轴的名称*/
-            
-            //为了保证和原来的效果一样，这里自己实现了一个点的效果
-            htmlStr += '<span style="margin-right:5px;display:inline-block;width:60px;height:60px;border-radius:5px;background-color:'+color+';"></span>';
-            
-            //添加一个汉字，这里你可以格式你的数字或者自定义文本内容
-            htmlStr += params.value + '次/分钟';
-            
-            htmlStr += '</div>';
-            
-            return htmlStr; 
-        }
 
-    },
     series: [{
 
     	type: 'line',
@@ -116,18 +95,22 @@
                 		color: 'rgba(255, 160, 55, 0.3)',
                 	},
     	itemStyle: {
-                		normal: {
-                			color: 'rgba(255, 197, 0, 1)',
-                			label: {
-                                show: true, //开启显示
-                                position: 'top', //在上方显示
-                                textStyle: { //数值样式
-                                	color: 'xyfont',
-                                	fontSize: 24
-                                }
-                            }
-                        }
-                    },
+    		normal: {
+    			color: 'rgba(255, 197, 0, 1)',
+    			lineStyle:{
+    				color: 'rgba(255, 160, 55, 0.3)',
+    			}
+    		}
+    	},
+    	label: {
+				show: true,
+				position: 'bottom',
+				formatter:function(params){ //标签内容
+                                       return  params.value+'\n次/分钟'
+                                   },
+				color: 'rgba(51, 51, 51, 1)',
+				fontSize: 30
+			},
 
     }]
 };
