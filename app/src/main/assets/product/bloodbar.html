@@ -23,13 +23,13 @@
 	<div id="main" style="width: 100%;height:100%;"></div>
 	<script type="text/javascript">
 
-	    var parityInfoSize = window.android.getXlistBarSize();
+		var parityInfoSize = window.android.getXlistBarSize();
         function loadX() {//放置x轴数据
         	var list = [];
-            for (var i = 0; i < parityInfoSize; i++) {
-            	list.push(window.android.getXlistBar(i));
-            }
-            return list;
+        	for (var i = 0; i < parityInfoSize; i++) {
+        		list.push(window.android.getXlistBar(i));
+        	}
+        	return list;
         }
 
         //通过ajax加载数据
@@ -38,167 +38,169 @@
         	option.series[1].data = [];
         	option.series[2].data = [];
         	option.series[3].data = [];
-             for (var i = 0; i < parityInfoSize; i++) {
-             	option.series[0].data.push(window.android.getDatasBar(i));
-             	option.series[1].data.push(window.android.getDatasBar2(i));
-             	option.series[2].data.push(window.android.getDatasBar3(i));
-             	option.series[3].data.push(window.android.getDatasBar4(i));
-             }
-         }
-
-
-
-
-		var dom = document.getElementById("main");
-		var myChart = echarts.init(dom);
-		var option = {
-			xAxis: {
-				type: 'category',
-				data:loadX(),
-				axisLabel: {
-					show: true,
-					textStyle: {
-						color: ['#333333'],
-						fontSize:30
-					}
-				},
-				axisLine: {
-					color: ['#333333'],
-
-					lineStyle:{
-						type : 'dotted',
-						color: ['#00C8AA'],
-					},
-				},
-			},
-			yAxis: {
-				type: 'value',
-				axisLine: {
-					show: false,
-				},
-				axisLabel: {
-					show: true,
-					textStyle: {
-						color: ['#333333'],
-						fontSize:30
-					}
-				},
-
-				splitLine: {
-					show: false,
-					lineStyle:{
-						color: ['#000000'],
-						width: 0.5,
-						type: 'dotted'
-					}
-				}
-
-			},
-
-			/*label: {
-				show: true, 
-				position: 'top',
-				color: ['#529FFB'],
-				fontSize: 30
-				
-				
-			},*/
-			tooltip: {
-				trigger: 'item',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        },
-        formatter: function (params) {
-            var color = params.color;//图例颜色
-            var htmlStr ='<div  style="font-size:30px;">';
-            /*htmlStr += params.name + '<br/>';//x轴的名称*/
-            
-            //为了保证和原来的效果一样，这里自己实现了一个点的效果
-            htmlStr += '<span style="margin-right:5px;display:inline-block;width:60px;height:60px;border-radius:5px;background-color:'+color+';"></span>';
-            
-            //添加一个汉字，这里你可以格式你的数字或者自定义文本内容
-            htmlStr += params.value + '次/分钟';
-            
-            htmlStr += '</div>';
-            
-            return htmlStr; 
+        	for (var i = 0; i < parityInfoSize; i++) {
+        		option.series[0].data.push(window.android.getDatasBar(i));
+        		option.series[1].data.push(window.android.getDatasBar2(i));
+        		option.series[2].data.push(window.android.getDatasBar3(i));
+        		option.series[3].data.push(window.android.getDatasBar4(i));
+        	}
         }
 
-    },
 
+
+
+        var dom = document.getElementById("main");
+        var myChart = echarts.init(dom);
+        var option = {
+        	xAxis: {
+        		type: 'category',
+        		data:loadX(),
+        		axisLabel: {
+        			show: true,
+        			textStyle: {
+        				color: ['#333333'],
+        				fontSize:30
+        			}
+        		},
+        		axisLine: {
+        			color: ['#333333'],
+
+        			lineStyle:{
+        				type : 'dotted',
+        				color: ['#00C8AA'],
+        			},
+        		},
+        	},
+        	yAxis: {
+        		type: 'value',
+        		axisLine: {
+        			show: false,
+        		},
+        		axisLabel: {
+        			show: true,
+        			textStyle: {
+        				color: ['#333333'],
+        				fontSize:30
+        			}
+        		},
+
+        		splitLine: {
+        			show: false,
+        			lineStyle:{
+        				color: ['#000000'],
+        				width: 0.5,
+        				type: 'dotted'
+        			}
+        		}
+
+        	},
 
     grid: {
     	left: '3%',
     	right: '10%',
     	bottom: '3%',
-    	top: '15%',
+    	top: '20%',
     	containLabel: true
     },
     legend: {
-        data: ['高压最大值', '高压最小值','低压最大值', '低压最小值'],
-        top: 'auto',
-        textStyle:{
-             fontSize:30,
-             padding: [10, 0, 0, 0]
-        },
+    	data: ['高压最大值', '高压最小值','低压最大值', '低压最小值'],
+    	top: 'auto',
+    	textStyle:{
+    		fontSize:30,
+    		padding: [10, 0, 0, 0]
+    	},
     },
     series: [
     {
-
-
     	type: 'bar',
     	name:'高压最大值',
 				stack: "num",//折叠显示
 				showBackground: false,
 				barGap:'20%',
-    	        barMaxWidth: 50,
+				barMaxWidth: 50,
 				itemStyle: {
 					color: 'rgba(255, 160, 55, 1)'
-				}
-
-
+				},
+				label: {
+					show: true,
+					position: 'top',
+				formatter:function(params){ //标签内容
+					return  params.value+'\n次/分钟'
+				},
+				color: 'rgba(51, 51, 51, 1)',
+				fontSize: 20
 			},
-			{
 
-				type: 'bar',
-				name:'高压最小值',
+
+		},
+		{
+
+			type: 'bar',
+			name:'高压最小值',
 				stack: "num",//折叠显示
 				showBackground: false,
-    	barMaxWidth: 50,
+				barMaxWidth: 50,
 				itemStyle: {
 					color:'rgba(255, 160, 55, 0.2)'
-				}
+				},
+				label: {
+					show: true,
+					position: 'top',
+				formatter:function(params){ //标签内容
+					return  params.value+'\n次/分钟'
+				},
+				color: 'rgba(51, 51, 51, 1)',
+				fontSize: 20
 			},
+		},
 
-			{
+		{
 
-				type: 'bar',
-				name:'低压最大值',
-				barGap:'20%',
-    	barMaxWidth: 50,
-				showBackground: false,
+			type: 'bar',
+			name:'低压最大值',
+			barGap:'20%',
+			barMaxWidth: 50,
+			showBackground: false,
 			stack: "nums",//折叠显示
 			itemStyle: {
 				color: 'rgba(255, 85, 78, 1)'
-			}
+			},
+			label: {
+				show: true,
+				position: 'top',
+				formatter:function(params){ //标签内容
+					return  params.value+'\n次/分钟'
+				},
+				color: 'rgba(51, 51, 51, 1)',
+				fontSize: 20
+			},
 		},
 		{
 			type: 'bar',
 			name:'低压最小值',
 				stack: "nums",//折叠显
 				showBackground: false,
-    	barMaxWidth: 50,
+				barMaxWidth: 50,
 				itemStyle: {
 					color:'rgba(255, 85, 78, 0.2)'
-				}
-			}
-			]
+				},
+				label: {
+					show: true,
+					position: 'top',
+				formatter:function(params){ //标签内容
+					return  params.value+'\n次/分钟'
+				},
+				color: 'rgba(51, 51, 51, 1)',
+				fontSize: 20
+			},
+		}
+		]
 
 
-		};
-		loadData(option)
-		myChart.setOption(option);
+	};
+	loadData(option)
+	myChart.setOption(option);
 
-	</script>
+</script>
 </body>
 </html>
