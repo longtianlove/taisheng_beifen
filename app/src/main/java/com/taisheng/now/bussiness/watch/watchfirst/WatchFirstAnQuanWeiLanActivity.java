@@ -191,6 +191,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String searchString = etSearch.getText().toString();
                 if ("".equals(searchString)) {
+                    rvAddresslist.setVisibility(View.GONE);
                     return;
                 }
                 mSuggestionSearch.requestSuggestion(new SuggestionSearchOption()
@@ -358,8 +359,8 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                     //未找到相关结果
                 }
                 List<SuggestionResult.SuggestionInfo> duggesLists = res.getAllSuggestions();
+                addrList = new ArrayList<>();
                 if (duggesLists.size() > 0) {
-                    addrList = new ArrayList<>();
                     for (int i = 0; i < duggesLists.size(); i++) {
                         suggestionBean = duggesLists.get(i);
                         if (suggestionBean.pt != null) {
@@ -370,8 +371,6 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 } else {
                     rvAddresslist.setVisibility(View.GONE);
                 }
-
-
                 //获取在线建议检索结果
             }
         };
