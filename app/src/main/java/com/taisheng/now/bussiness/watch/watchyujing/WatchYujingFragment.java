@@ -52,7 +52,7 @@ public class WatchYujingFragment extends BaseFragment {
 
 
 //        EventBus.getDefault().register(this);
-        initData_first();
+//        initData_first();
 
 
         return rootView;
@@ -166,6 +166,14 @@ public class WatchYujingFragment extends BaseFragment {
 
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PAGE_NO = 1;
+        initData();
+    }
+
     void initData() {
         YuJingListPostBean bean = new YuJingListPostBean();
         bean.userId = UserInstance.getInstance().getUid();
@@ -277,34 +285,13 @@ public class WatchYujingFragment extends BaseFragment {
             util.ll_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    YujingxinxiSetYiduPostBean bean1 = new YujingxinxiSetYiduPostBean();
-                    bean1.userId = UserInstance.getInstance().getUid();
-                    bean1.token = UserInstance.getInstance().getToken();
-                    bean1.id = bean.id;
-                    ApiUtils.getApiService().watchWarningupdateBykey(bean1).enqueue(new TaiShengCallback<BaseBean>() {
-                        @Override
-                        public void onSuccess(Response<BaseBean> response, BaseBean message) {
-                            switch (message.code) {
-                                case Constants.HTTP_SUCCESS:
                                     finalUtil.iv_weidu.setVisibility(View.INVISIBLE);
                                     Intent intent = new Intent(getActivity(), WatchMeYujingxinxiXiangqingActivity.class);
-                                    intent.putExtra("warningType", bean.warningContent);
+                                    intent.putExtra("id",bean.id);
+                                    intent.putExtra("warningType", bean.warningType);
                                     intent.putExtra("message", bean.warningContent);
                                     intent.putExtra("createTime", bean.createTime);
                                     startActivity(intent);
-                                    PAGE_NO = 1;
-                                    initData();
-                                    break;
-                            }
-                        }
-
-                        @Override
-                        public void onFail(Call<BaseBean> call, Throwable t) {
-
-                        }
-                    });
-
 
                 }
             });

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.base.BaseIvActivity;
+import com.taisheng.now.bussiness.watch.WatchMainActivity;
 import com.taisheng.now.evbusbean.WeChatMsg;
 import com.taisheng.now.view.biaoqing.Watch_EmotionMainFragment;
 import com.taisheng.now.view.chenjinshi.StatusBarUtil;
@@ -52,7 +53,7 @@ public class WeChatActivity extends BaseHActivity implements ActivityCompat.OnRe
         tvLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new WeChatMsg(0));
+                EventBus.getDefault().post(new WeChatMsg(WatchMainActivity.nowPosition));
                 WeChatActivity.this.finish();
             }
         });
@@ -81,6 +82,8 @@ public class WeChatActivity extends BaseHActivity implements ActivityCompat.OnRe
          * 按下返回键，如果表情显示，则隐藏，没有显示则回退页面
          */
         if (!emotionMainFragment.isInterceptBackPress()) {
+            EventBus.getDefault().post(new WeChatMsg(WatchMainActivity.nowPosition));
+            WeChatActivity.this.finish();
             super.onBackPressed();
         }
     }

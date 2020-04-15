@@ -62,6 +62,9 @@ public class WatchInstance {
 
     public ChiyaoBeann chiyaobean=new ChiyaoBeann();
 
+
+    public String temp_watch_headUrl;
+
     //设备上传头像信息
     public void uploadImage_Watch(final String path) {
         try {
@@ -77,8 +80,8 @@ public class WatchInstance {
                                                                       switch (message.code) {
                                                                           case Constants.HTTP_SUCCESS:
                                                                               String path = message.result.path;
-                                                                              headUrl = path;
-                                                                              SPUtil.putWatchAVATAR(headUrl);
+                                                                              temp_watch_headUrl = path;
+//                                                                              SPUtil.putWatchAVATAR(headUrl);
                                                                               EventBus.getDefault().post(new EventManage.uploadWatchImageSuccess(path));
                                                                               break;
                                                                       }

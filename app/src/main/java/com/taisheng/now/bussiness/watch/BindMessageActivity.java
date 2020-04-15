@@ -253,7 +253,7 @@ public class BindMessageActivity extends BaseIvActivity implements ActivityCompa
                 bean.deviceId = tv_device_bianhao.getText().toString();
                 bean.deviceNickName = et_nickname.getText().toString();
                 bean.relationShip = et_relative.getText().toString();
-                bean.headUrl = WatchInstance.getInstance().headUrl;
+                bean.headUrl = WatchInstance.getInstance().temp_watch_headUrl;
                 bean.realName = et_realname.getText().toString();
                 bean.idcard = et_idcard.getText().toString();
                 bean.phoneNumber = et_phonenumber.getText().toString();
@@ -267,6 +267,7 @@ public class BindMessageActivity extends BaseIvActivity implements ActivityCompa
                                 WatchInstance.getInstance().deviceId = message.result.deviceId;
                                 SPUtil.putDeviced(WatchInstance.getInstance().deviceId);
                                 WatchInstance.getInstance().createTime = message.result.createTime;
+                                WatchInstance.getInstance().headUrl=bean.headUrl;
                                 WatchInstance.getInstance().deviceNickName = bean.deviceNickName;
                                 WatchInstance.getInstance().relationShip = bean.relationShip;
                                 WatchInstance.getInstance().realName = bean.realName;
@@ -442,6 +443,7 @@ public class BindMessageActivity extends BaseIvActivity implements ActivityCompa
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
         switch (requestCode) {
 
             case REQ_CODE_PHOTO_SOURCE:
@@ -485,7 +487,7 @@ public class BindMessageActivity extends BaseIvActivity implements ActivityCompa
 
             case Crop.REQUEST_CROP:
 //                modifyBean.logo_url = PetInfoInstance.getInstance().getPackBean().logo_url;
-                Uri uri = Uri.parse(Constants.Url.File_Host + UserInstance.getInstance().userInfo.avatar);
+                Uri uri = Uri.parse(Constants.Url.File_Host + WatchInstance.getInstance().temp_watch_headUrl);
                 if (sdv_header == null) {
                     return;
                 }
