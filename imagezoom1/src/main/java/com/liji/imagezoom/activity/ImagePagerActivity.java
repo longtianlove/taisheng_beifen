@@ -37,6 +37,7 @@ public class ImagePagerActivity extends FragmentActivity {
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions
                 .Builder()
+                .considerExifParams(true)
                 .showImageForEmptyUri(R.drawable.empty_photo)
                 .showImageOnFail(R.drawable.empty_photo)
                 .cacheInMemory(true)

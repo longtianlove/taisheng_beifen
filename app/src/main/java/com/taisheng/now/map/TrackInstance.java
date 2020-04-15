@@ -43,9 +43,6 @@ public class TrackInstance {
 //        String deviceNumber = deviceId.substring(1, 3) + deviceId.substring(4, 6) + deviceId.substring(7, 10) + deviceId.substring(11, 14);
         // 设备标识
         String entityName = deviceId;
-//        String entityName="9613050381";
-        // 初始化轨迹服务
-        Trace mTrace = new Trace(serviceId, entityName, false);
 // 初始化轨迹服务客户端
         mTraceClient = new LBSTraceClient(context);
 
@@ -53,8 +50,24 @@ public class TrackInstance {
         // 创建历史轨迹请求实例
         historyTrackRequest = new HistoryTrackRequest(tag, serviceId, entityName);
 
-        //设置轨迹查询起止时间
 
+
+    }
+
+
+    public void queryHistoryTrack(Context context, BaiduMap mBaiduMap) {
+        //todo 此次上线前改为12
+        // 开始时间(单位：秒)
+        long startTime = System.currentTimeMillis() / 1000 - 24 * 60 * 60;
+//       long startTime=1575388800;
+        // 结束时间(单位：秒)
+        long endTime = System.currentTimeMillis() / 1000;
+//       long endTime = 1575475199;
+
+// 设置开始时间
+        historyTrackRequest.setStartTime(startTime);
+// 设置结束时间
+        historyTrackRequest.setEndTime(endTime);
 
 // 创建纠偏选项实例
         ProcessOption processOption = new ProcessOption();
@@ -73,28 +86,7 @@ public class TrackInstance {
 
 
 // 设置里程填充方式为驾车
-        historyTrackRequest.setSupplementMode(SupplementMode.driving);
-
-
-    }
-
-
-    public void queryHistoryTrack(Context context, BaiduMap mBaiduMap) {
-        Date startDate = new Date(2019, 12, 4);
-
-        // 开始时间(单位：秒)
-        long startTime = System.currentTimeMillis() / 1000 - 12 * 60 * 60;
-//       long startTime=1575388800;
-        // 结束时间(单位：秒)
-        long endTime = System.currentTimeMillis() / 1000;
-//       long endTime = 1575475199;
-
-// 设置开始时间
-        historyTrackRequest.setStartTime(startTime);
-// 设置结束时间
-        historyTrackRequest.setEndTime(endTime);
-
-
+        historyTrackRequest.setSupplementMode(SupplementMode.walking);
         // 设置需要纠偏
         historyTrackRequest.setProcessed(true);
         // 初始化轨迹监听器

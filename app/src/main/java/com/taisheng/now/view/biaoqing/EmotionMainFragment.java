@@ -7,8 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.opengl.GLES10;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -64,6 +67,8 @@ import com.taisheng.now.chat.websocket.WebSocketManager;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.Apputil;
+import com.taisheng.now.view.crop.CropUtil;
+import com.taisheng.now.view.crop.RotateBitmap;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
@@ -383,16 +388,10 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
 
 
     private String dirPath = Apputil.sdNormalPath + "/chatImage";// 存储裁剪图片目录
-
-
     public void dealPicture(Uri source) {
-
-
         InputStream is = null;
-
         try {
             is = getActivity().getContentResolver().openInputStream(source);
-
             File dir = new File(dirPath);// 裁剪图片目录
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -407,6 +406,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                     bos.write(bys);
                 }
                 bos.flush();
+//                rotateBitmap.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, bos);
                 uploadPicture(file.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -893,29 +893,34 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                     itemOtherHolder.sdw_pic.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //组织数据
-                            ArrayList<ThumbViewInfo> mThumbViewInfoList = new ArrayList<>(); // 这个最好定义成成员变量
-                            ThumbViewInfo item;
-                            mThumbViewInfoList.clear();
-//                            for (int i = 0;i < resultList.size(); i++) {
-                            Rect bounds = new Rect();
-                            //new ThumbViewInfo(图片地址);
-                            item = new ThumbViewInfo(Constants.Url.File_Host + finalRawmessage);
-                            item.setBounds(bounds);
-                            mThumbViewInfoList.add(item);
-//                            }
+//                            //组织数据
+//                            ArrayList<ThumbViewInfo> mThumbViewInfoList = new ArrayList<>(); // 这个最好定义成成员变量
+//                            ThumbViewInfo item;
+//                            mThumbViewInfoList.clear();
+////                            for (int i = 0;i < resultList.size(); i++) {
+//                            Rect bounds = new Rect();
+//                            //new ThumbViewInfo(图片地址);
+//                            item = new ThumbViewInfo(Constants.Url.File_Host + finalRawmessage);
+//                            item.setBounds(bounds);
+//                            mThumbViewInfoList.add(item);
+////                            }
+//
+////打开预览界面
+//                            GPreviewBuilder.from(getActivity())
+//                                    //是否使用自定义预览界面，当然8.0之后因为配置问题，必须要使用
+//                                    .to(ImageLookActivity.class)
+//                                    .setData(mThumbViewInfoList)
+//                                    .setCurrentIndex(0)
+//                                    .setSingleFling(true)
+//                                    .setType(GPreviewBuilder.IndicatorType.Number)
+//                                    // 小圆点
+////  .setType(GPreviewBuilder.IndicatorType.Dot)
+//                                    .start();//启动
 
-//打开预览界面
-                            GPreviewBuilder.from(getActivity())
-                                    //是否使用自定义预览界面，当然8.0之后因为配置问题，必须要使用
-                                    .to(ImageLookActivity.class)
-                                    .setData(mThumbViewInfoList)
-                                    .setCurrentIndex(0)
-                                    .setSingleFling(true)
-                                    .setType(GPreviewBuilder.IndicatorType.Number)
-                                    // 小圆点
-//  .setType(GPreviewBuilder.IndicatorType.Dot)
-                                    .start();//启动
+                            String url = Constants.Url.File_Host + finalRawmessage;
+                            ArrayList<String> urls = new ArrayList<>();
+                            urls.add(url);
+                            ImageZoom.show(getActivity(), url, urls);
                         }
                     });
 
