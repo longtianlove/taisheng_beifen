@@ -890,7 +890,6 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                     itemOtherHolder.vMsg.setVisibility(View.GONE);
                     itemOtherHolder.sdw_pic.setImageURI(Uri.parse(Constants.Url.File_Host + rawmessage));
                     String finalRawmessage = rawmessage;
-                    itemOtherHolder.sdw_pic.
                     itemOtherHolder.sdw_pic.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
