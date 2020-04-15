@@ -64,16 +64,23 @@ import com.taisheng.now.chat.RemoteChatMessage;
 import com.taisheng.now.chat.websocket.WebSocketManager;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.Apputil;
 import com.taisheng.now.yuyin.manager.MediaManager;
 import com.taisheng.now.yuyin.util.CommonsUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -449,7 +456,9 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                     source = Uri.fromFile(picture);
                 }
 
-                uploadPicture(source.getPath());
+
+                dealPicture(source);
+
 
 //                beginCrop(source, bundle);
 
@@ -457,6 +466,70 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                 break;
 
         }
+    }
+
+
+
+    private String dirPath = Apputil.sdNormalPath + "/watchchatImage";// 存储裁剪图片目录
+
+
+    public void dealPicture(Uri source) {
+
+
+        InputStream is = null;
+
+        try {
+            is = getActivity().getContentResolver().openInputStream(source);
+
+            File dir = new File(dirPath);// 裁剪图片目录
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File file = new File(dir, getFileNameByTime());
+            BufferedOutputStream bos = null;
+            try {
+                bos = new BufferedOutputStream(new FileOutputStream(file));
+                int len = 0;
+                byte[] bys = new byte[1024];
+                while ((len = is.read(bys)) != -1) {
+                    bos.write(bys);
+                }
+                bos.flush();
+                uploadPicture(file.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+                CrashReport.postCatchedException(e);
+            } finally {
+                if (bos != null) {
+                    try {
+                        bos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            CrashReport.postCatchedException(e);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+    }
+
+    public static String getFileNameByTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        return dateFormat.format(new Date()) + ".jpg";
     }
 
 

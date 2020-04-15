@@ -27,7 +27,7 @@ public class RemoteMessageBean {
 
 
     public String deviceId;
-    public String yujingId;
+    public String warningId;
     public String warningType;
     public String warningContent;
     public String createTime;
