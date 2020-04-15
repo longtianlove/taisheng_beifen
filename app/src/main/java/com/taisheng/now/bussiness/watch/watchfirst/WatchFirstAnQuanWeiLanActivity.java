@@ -45,8 +45,10 @@ import com.taisheng.now.map.MapLocationParser;
 import com.taisheng.now.map.MapPetAtHomeView;
 import com.taisheng.now.map.addressParseListener;
 import com.taisheng.now.util.DensityUtil;
+import com.taisheng.now.util.ListUtil;
 import com.taisheng.now.util.Uiutils;
 import com.th.j.commonlibrary.utils.LogUtilH;
+import com.th.j.commonlibrary.utils.TextsUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -107,12 +109,13 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
     public void initView() {
         setContentView(R.layout.activity_watchfirstanquanweilan);
         ButterKnife.bind(this);
-        initViews();
+
     }
 
     @Override
     public void initData() {
-
+        addrList=new ArrayList<>();
+        initViews();
     }
 
     @Override
@@ -205,13 +208,13 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String searchString = etSearch.getText().toString();
                 if ("".equals(searchString)) {
-                    return;
+                    rvAddresslist.setVisibility(View.GONE);
+                }else {
+                    mSuggestionSearch.requestSuggestion(new SuggestionSearchOption()
+                            .city(HomelocationInstance.getInstance().city)
+                            .citylimit(true)
+                            .keyword(searchString));
                 }
-                mSuggestionSearch.requestSuggestion(new SuggestionSearchOption()
-                        .city(HomelocationInstance.getInstance().city)
-                        .citylimit(true)
-                        .keyword(searchString));
-
             }
 
             @Override
@@ -361,9 +364,15 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 searchAddr.setPt(suggestionBean.getPt());
                 searchAddr.setKey(suggestionBean.getKey());
                 searchAddr.setAddr(reverseGeoCodeResult.getAddress());
+                LogUtilH.e(reverseGeoCodeResult.getAddress());
                 addrList.add(searchAddr);
-                rvAddresslist.setVisibility(View.VISIBLE);
-                adapter.setMdatas(addrList);
+                List<BaiduSearchAddr> list = removeDuplicate(addrList);
+                if (!TextsUtils.isEmpty(TextsUtils.getTexts(etSearch))){
+                    rvAddresslist.setVisibility(View.VISIBLE);
+                }else {
+                    rvAddresslist.setVisibility(View.GONE);
+                }
+                adapter.setMdatas(list);
             }
         });
         //下面是传入对应的经纬度
@@ -375,8 +384,8 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                     //未找到相关结果
                 }
                 List<SuggestionResult.SuggestionInfo> duggesLists = res.getAllSuggestions();
+                addrList.clear();
                 if (duggesLists.size() > 0) {
-                    addrList = new ArrayList<>();
                     for (int i = 0; i < duggesLists.size(); i++) {
                         suggestionBean = duggesLists.get(i);
                         if (suggestionBean.pt != null) {
@@ -387,8 +396,6 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 } else {
                     rvAddresslist.setVisibility(View.GONE);
                 }
-
-
                 //获取在线建议检索结果
             }
         };
@@ -476,5 +483,14 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         EventBus.getDefault().unregister(this);
     }
 
-
+    private List<BaiduSearchAddr>  removeDuplicate(List<BaiduSearchAddr> list)  {
+        for  ( int  i  =   0 ; i  <  list.size()  -   1 ; i ++ )  {
+            for  ( int  j  =  list.size()  -   1 ; j  >  i; j -- )  {
+                if  (list.get(j).getAddr().equals(list.get(i).getAddr()))  {
+                    list.remove(j);
+                }
+            }
+        }
+        return list;
+    }
 }
