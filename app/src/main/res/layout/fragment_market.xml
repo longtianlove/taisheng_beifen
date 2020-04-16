@@ -13,11 +13,31 @@
     <!--android:layout_height="match_parent"-->
     <!--android:orientation="vertical">-->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_230"
+        android:background="@drawable/icon_shangcheng_shouye"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/magin_80"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <include layout="@layout/includ_market_search"></include>
+
+        </LinearLayout>
+    </LinearLayout>
 
     <com.taisheng.now.view.refresh.MaterialDesignPtrFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ptr_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/magin_120"
         cube_ptr:ptr_duration_to_close="300"
         cube_ptr:ptr_duration_to_close_header="2000"
         cube_ptr:ptr_keep_header_when_refresh="true"
@@ -29,7 +49,6 @@
             android:id="@+id/scl_bag"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff"
             android:scrollbars="none">
 
             <LinearLayout
@@ -39,6 +58,7 @@
                 android:paddingBottom="@dimen/magin_15">
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_230"
                     android:background="@drawable/icon_shangcheng_shouye"
@@ -64,7 +84,6 @@
                     android:layout_marginBottom="@dimen/margin_1"
                     android:layout_marginLeft="@dimen/magin_12"
                     android:layout_marginRight="@dimen/magin_12"
-                    android:layout_marginTop="-105dp"
                     cube_ptr:cardCornerRadius="@dimen/radius_5"
                     cube_ptr:cardElevation="@dimen/magin_2">
 
