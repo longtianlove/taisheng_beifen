@@ -71,6 +71,9 @@ public class Constants {
         public static String WEB_SOCKET_URL = "ws://192.168.1.15:8879";*/
 
         public static class Watch {
+
+            //获取电子围栏
+            public static final String getElectronicFenceSetting="jeecg-boot/app/electronicFence/getElectronicFenceSetting";
             //根据设备id获取设备信息
             public static final String getDeviceInfo="jeecg-boot/app/watchDevice/getDeviceInfo";
 

@@ -122,6 +122,7 @@ import com.taisheng.now.bussiness.watch.bean.post.YujingxinxiSetYiduPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.BushuResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.ChiyaoLIstResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.DianziweilanReusultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetWatchPhoneBookResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetbloodpressureResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.GetheartrateResultBean;
@@ -566,6 +567,12 @@ public interface ApiService {
 //    public static final String getDeviceInfo="jeecg-boot/app/watchDevice/getDeviceInfo";
     @POST(Constants.Url.Watch.getDeviceInfo)
     Call<BaseBean<WatchListBean>> getDeviceInfo(@Body GetDeviceInfoPostBean bean);
+
+
+//    public static final String getElectronicFenceSetting="jeecg-boot/app/electronicFence/getElectronicFenceSetting";
+    @POST(Constants.Url.Watch.getElectronicFenceSetting)
+    Call<BaseBean<DianziweilanReusultBean>>  getElectronicFenceSetting(@Body BaseWatchBean bean);
+
 
 
     //上传语音

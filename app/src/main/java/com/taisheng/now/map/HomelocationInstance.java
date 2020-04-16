@@ -46,7 +46,7 @@ public class HomelocationInstance implements BDLocationListener {
 
     public static double phoneLatitude;
     public static double phoneLongitude;
-    public static int radius=10;
+    public static int radius=200;
 
     public static String city;
 

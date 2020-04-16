@@ -1,5 +1,7 @@
 package com.taisheng.now.map;
 
+import android.graphics.Color;
+
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
@@ -7,6 +9,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.CircleOptions;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -14,6 +17,7 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.CoordinateConverter;
@@ -79,7 +83,7 @@ public class NewMapInstance extends BDAbstractLocationListener {
         UiSettings UiSettings = mBaiduMap.getUiSettings();
         UiSettings.setRotateGesturesEnabled(false);//屏蔽旋转
         initLocation();
-        initPhoneMarker();
+//        initPhoneMarker();
     }
 
     public static double phoneLatitude;
@@ -154,7 +158,7 @@ public class NewMapInstance extends BDAbstractLocationListener {
         }
     }
 
-    public void setWatchCenter(){
+    public void setWatchCenter() {
         float f = mBaiduMap.getMaxZoomLevel();//19.0
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(shebeiLatLng, f - 2);
         mBaiduMap.animateMapStatus(u);
@@ -168,6 +172,30 @@ public class NewMapInstance extends BDAbstractLocationListener {
         mBaiduMap.clear();
         initStartMarker(shebeiLatLng);
         initPhoneMarker();
+        //电子围栏
+        initDianziweilan();
+
+    }
+
+
+    CircleOptions mCircleOptions;
+
+
+    public static double dianziweilanLatitude=-1;
+    public static double dianziweilanLongitude=-1;
+    public static int dianzieilanradius = 0;
+
+    void initDianziweilan() {
+        if (dianziweilanLatitude < 1 || dianziweilanLongitude < 1 || dianzieilanradius < 1) {
+            return;
+        }
+        mCircleOptions = new CircleOptions()
+                .center(converterLatLng(new LatLng(dianziweilanLatitude, dianziweilanLongitude))) // 圆心坐标
+                .radius((int) dianzieilanradius) // 半径 单位 米
+                .visible(true)
+                .stroke(new Stroke(2, Color.parseColor("#ffffff"))) // 设置边框 Stroke 参数 宽度单位像素默认5px 颜色
+                .fillColor(Color.parseColor("#1B2e68AA")); // 设置圆的填充颜色
+        mBaiduMap.addOverlay(mCircleOptions);
     }
 
 
@@ -195,6 +223,11 @@ public class NewMapInstance extends BDAbstractLocationListener {
 
 
 //        startLoc();
+
+
+        dianziweilanLongitude=-1;
+        dianziweilanLatitude=-1;
+        dianzieilanradius=0;
     }
 
 

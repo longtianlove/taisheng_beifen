@@ -117,6 +117,7 @@
                         android:inputType="number"
                         android:paddingLeft="@dimen/margin_5"
                         android:singleLine="true"
+                        android:maxLength="4"
                         android:textColor="@color/color333333"
                         android:textColorHint="@color/color999999"
                         android:textSize="@dimen/font14" />

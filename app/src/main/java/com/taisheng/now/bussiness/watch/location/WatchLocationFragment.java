@@ -2,6 +2,7 @@ package com.taisheng.now.bussiness.watch.location;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
+import com.taisheng.now.bussiness.watch.bean.result.DianziweilanReusultBean;
 import com.taisheng.now.bussiness.watch.bean.result.NewLocationBean;
 import com.taisheng.now.bussiness.watch.watchfirst.HistoryGuijiActivity;
 import com.taisheng.now.bussiness.watch.watchfirst.WatchFirstAnQuanWeiLanActivity;
@@ -88,7 +90,7 @@ public class WatchLocationFragment extends BaseFragment {
         });
         //获取地图控件引用
         mMapView = (MapView) rootView.findViewById(R.id.bmapView);
-        NewMapInstance.getInstance().init(mMapView);
+
 
         iv_dingwei = rootView.findViewById(R.id.iv_dingwei);
         iv_dingwei.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +133,22 @@ public class WatchLocationFragment extends BaseFragment {
             }
         });
 
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
+        NewMapInstance.getInstance().init(mMapView);
+        mMapView.onResume();
+        initData();
+    }
+    void initData(){
+
+
+
         BaseWatchBean bean = new BaseWatchBean();
         bean.userId = UserInstance.getInstance().getUid();
         bean.token = UserInstance.getInstance().getToken();
@@ -141,10 +159,14 @@ public class WatchLocationFragment extends BaseFragment {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
                         NewLocationBean newLocationBean = message.result;
-                        if (TextsUtils.isInteger(newLocationBean.latitude) && TextsUtils.isInteger(newLocationBean.latitude)) {
+//                        if (TextsUtils.isInteger(newLocationBean.latitude) && TextsUtils.isInteger(newLocationBean.latitude)) {
+                        try {
                             LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
                             NewMapInstance.shebeiLatLng = NewMapInstance.converterLatLng(latLng);
                             NewMapInstance.getInstance().refreshMap();
+//                        }
+                        } catch (Exception e) {
+                            Log.e("taishengkeji", "经纬度转double错误" + e.getMessage());
                         }
                         break;
                 }
@@ -156,16 +178,40 @@ public class WatchLocationFragment extends BaseFragment {
             }
         });
         NewMapInstance.getInstance().startLoc();
-    }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
-        mMapView.onResume();
+        BaseWatchBean bean1 = new BaseWatchBean();
+        bean1.userId = UserInstance.getInstance().getUid();
+        bean1.token = UserInstance.getInstance().getToken();
+        bean1.deviceId = WatchInstance.getInstance().deviceId;
+        //获取电子围栏
+        ApiUtils.getApiService_hasdialog().getElectronicFenceSetting(bean1).enqueue(new TaiShengCallback<BaseBean<DianziweilanReusultBean>>() {
+            @Override
+            public void onSuccess(Response<BaseBean<DianziweilanReusultBean>> response, BaseBean<DianziweilanReusultBean> message) {
 
+                switch (message.code) {
+                    case Constants.HTTP_SUCCESS:
+                        DianziweilanReusultBean bean2 = message.result;
+                        try {
+//                            LatLng latLng = new LatLng(Double.parseDouble(newLocationBean.latitude), Double.parseDouble(newLocationBean.longitude));
+//                            NewMapInstance.shebeiLatLng = NewMapInstance.converterLatLng(latLng);
+                            NewMapInstance.getInstance().dianziweilanLatitude = Double.parseDouble(bean2.latitude);
+                            NewMapInstance.getInstance().dianziweilanLongitude = Double.parseDouble(bean2.longitude);
+                            NewMapInstance.getInstance().dianzieilanradius = bean2.fenceRadius;
+                            NewMapInstance.getInstance().refreshMap();
+//                        }
+                        } catch (Exception e) {
+                            Log.e("taishengkeji", "经纬度转double错误2" + e.getMessage());
+                        }
+                        break;
+                }
+            }
 
+            @Override
+            public void onFail(Call<BaseBean<DianziweilanReusultBean>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
