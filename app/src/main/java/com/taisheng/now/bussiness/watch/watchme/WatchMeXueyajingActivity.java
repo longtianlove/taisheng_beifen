@@ -106,7 +106,7 @@ public class WatchMeXueyajingActivity extends BaseIvActivity implements Activity
                         tvGaoyazuida.setText(message.result.bloodPressureHighMax + "");
                         tvGaoyazuixiao.setText(message.result.bloodPressureHighMin + "");
                         tvDiyazuida.setText(message.result.bloodPressureLowMax + "");
-                        tvDiyazuixiao.setText(message.result.bloodPressureHighMin + "");
+                        tvDiyazuixiao.setText(message.result.bloodPressureLowMin + "");
                         tvMaiyaca.setText(message.result.bloodPressureDiffMax + "");
                         tvMaiyachazuixiaozhi.setText(message.result.bloodPressureDiffMin +"");
                         break;

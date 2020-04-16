@@ -51,7 +51,7 @@
                     android:layout_marginLeft="@dimen/margin_5"
                     android:layout_marginRight="@dimen/magin_12"
                     android:text="@string/watch_msg19"
-                    android:textColor="@color/color999999"
+                    android:textColor="#DFDCDC"
                     android:textSize="@dimen/font14" />
             </LinearLayout>
 
@@ -97,7 +97,7 @@
                     android:layout_marginLeft="@dimen/margin_5"
                     android:layout_marginRight="@dimen/magin_12"
                     android:text="@string/watch_msg19"
-                    android:textColor="@color/color999999"
+                    android:textColor="#DFDCDC"
                     android:textSize="@dimen/font14" />
             </LinearLayout>
 
@@ -142,7 +142,7 @@
                     android:layout_marginLeft="@dimen/margin_5"
                     android:layout_marginRight="@dimen/magin_12"
                     android:text="@string/watch_msg19"
-                    android:textColor="@color/color999999"
+                    android:textColor="#DFDCDC"
                     android:textSize="@dimen/font14" />
             </LinearLayout>
 
@@ -189,7 +189,7 @@
                     android:layout_marginLeft="@dimen/margin_5"
                     android:layout_marginRight="@dimen/magin_12"
                     android:text="@string/watch_msg19"
-                    android:textColor="@color/color999999"
+                    android:textColor="#DFDCDC"
                     android:textSize="@dimen/font14" />
             </LinearLayout>
 
@@ -234,7 +234,7 @@
                     android:layout_marginLeft="@dimen/margin_5"
                     android:layout_marginRight="@dimen/magin_12"
                     android:text="@string/watch_msg19"
-                    android:textColor="@color/color999999"
+                    android:textColor="#DFDCDC"
                     android:textSize="@dimen/font14" />
             </LinearLayout>
 
@@ -282,7 +282,7 @@
                     android:layout_marginLeft="@dimen/margin_5"
                     android:layout_marginRight="@dimen/magin_12"
                     android:text="@string/watch_msg19"
-                    android:textColor="@color/color999999"
+                    android:textColor="#DFDCDC"
                     android:textSize="@dimen/font14" />
             </LinearLayout>
 

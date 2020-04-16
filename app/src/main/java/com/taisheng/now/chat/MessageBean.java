@@ -2,8 +2,8 @@ package com.taisheng.now.chat;
 
 public class MessageBean {
     public int id;
-    public String conversationId;
-    public String fromId;
+    public String conversationId;//聊天的对象
+    public String fromId;//聊天内容来源
     public String msg;
     public String time;
 

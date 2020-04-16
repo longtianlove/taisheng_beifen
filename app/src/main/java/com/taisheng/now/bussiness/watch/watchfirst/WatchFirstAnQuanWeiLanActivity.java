@@ -143,8 +143,8 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                     Uiutils.showToast("不能超过3000米");
                     return;
                 }
-                if(HomelocationInstance.radius<10||HomelocationInstance.radius>3000){
-                    Uiutils.showToast("安全半径范围在10-3000米");
+                if(HomelocationInstance.radius<200||HomelocationInstance.radius>3000){
+                    Uiutils.showToast("安全半径范围在200-3000米");
                     return;
                 }
                 AnquanweiilanPostBean bean = new AnquanweiilanPostBean();
@@ -244,7 +244,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
             public void afterTextChanged(Editable s) {
                 String fanweiString = etFanwei.getText().toString();
                 if ("".equals(fanweiString)) {
-                    HomelocationInstance.radius = 10;
+                    HomelocationInstance.radius = 200;
                     return;
                 }
                 HomelocationInstance.radius = Integer.parseInt(fanweiString);

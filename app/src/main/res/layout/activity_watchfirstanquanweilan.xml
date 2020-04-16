@@ -128,7 +128,7 @@
                         android:layout_marginLeft="@dimen/magin_12"
                         android:layout_marginRight="@dimen/magin_12"
                         android:layout_marginTop="@dimen/magin_15"
-                        android:text="安全半径范围在10-3000米"
+                        android:text="安全半径范围在200-3000米"
                         android:textColor="@color/color999999"
                         android:textSize="@dimen/font14" />
 
