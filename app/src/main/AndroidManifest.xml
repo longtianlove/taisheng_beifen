@@ -271,9 +271,6 @@
             android:name=".bussiness.watch.BindMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".bussiness.watch.watchfirst.WatchFirstGuijiActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".bussiness.watch.watchfirst.HistoryGuijiActivity"
             android:screenOrientation="portrait" />
         <activity

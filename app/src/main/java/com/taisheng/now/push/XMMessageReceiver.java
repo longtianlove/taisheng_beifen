@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.taisheng.now.EventManage;
 import com.taisheng.now.application.SampleAppLike;
+import com.taisheng.now.application.SampleApplication;
 import com.taisheng.now.bussiness.MainActivity;
 import com.taisheng.now.util.Apputil;
 import com.taisheng.now.util.DeviceUtils;
@@ -55,8 +56,8 @@ public class XMMessageReceiver extends PushMessageReceiver {
         }
         try {
             PushDataCenter.getInstance().notifyData(mMessage);
-        }catch (Exception e){
-            Log.e("xmpush-parse_error",e.getLocalizedMessage());
+        } catch (Exception e) {
+            Log.e("xmpush-parse_error", e.getLocalizedMessage());
         }
 
 
@@ -65,6 +66,7 @@ public class XMMessageReceiver extends PushMessageReceiver {
     //通知消息推送被点击
     @Override
     public void onNotificationMessageClicked(Context context, MiPushMessage message) {
+
         mMessage = message.getContent();
         dealReport(mMessage, PUSHACTION_OPEN);
         LogUtil.e(TAG, mMessage);
@@ -75,11 +77,13 @@ public class XMMessageReceiver extends PushMessageReceiver {
         } else if (!TextUtils.isEmpty(message.getUserAccount())) {
             mUserAccount = message.getUserAccount();
         }
+
+        messageClick(context);
         PushDataCenter.getInstance().notifyData(mMessage);
 //        String url = getTargetUrl();
 //        com.chinahr.android.common.instance.UrlManager.getInstance().filterPushUrl(context, url, false);
         //判断逻辑
-        messageClick(context);
+
 
 
     }
@@ -100,10 +104,10 @@ public class XMMessageReceiver extends PushMessageReceiver {
         }
 //        setRedPoint(context);
         try {
-        DeviceUtils.vibrate(SampleAppLike.mcontext, 500);             //让手机振动500ms
-        if(DeviceUtils.isScreenLocked(SampleAppLike.mcontext))            //判断手机是否处于屏幕关闭状态
-            DeviceUtils.wakeScreen(SampleAppLike.mcontext);           //如果处于关闭屏幕状态则唤醒屏幕
-        }catch (Exception e){
+            DeviceUtils.vibrate(SampleAppLike.mcontext, 500);             //让手机振动500ms
+            if (DeviceUtils.isScreenLocked(SampleAppLike.mcontext))            //判断手机是否处于屏幕关闭状态
+                DeviceUtils.wakeScreen(SampleAppLike.mcontext);           //如果处于关闭屏幕状态则唤醒屏幕
+        } catch (Exception e) {
 
         }
     }
@@ -261,19 +265,24 @@ public class XMMessageReceiver extends PushMessageReceiver {
 
     void messageClick(Context context) {
         //判断app进程是否存活
-        if(Apputil.isAppAlive(context,"com.taisheng.now")){
+        if (Apputil.isAppAlive(context, "com.taisheng.now")) {
             //如果存活的话，就直接启动MainActivity，但要考虑一种情况，就是app的进程虽然仍然在
             //但Task栈已经空了，比如用户点击Back键退出应用，但进程还没有被系统回收，如果直接启动
             //DeviceActivity,再按Back键就不会返回MainActivity了。所以在启动
             //DeviceActivity前，要先启动MainActivity。
+
             Log.i("NotificationReceiver", "the app process is alive");
-//            Intent mainIntent = new Intent(context, MainActivity.class);
-//            //将MainAtivity的launchMode设置成SingleTask, 或者在下面flag中加上Intent.FLAG_CLEAR_TOP,
-//            //如果Task栈中有MainActivity的实例，就会把它移到栈顶，把在它之上的Activity都清理出栈，
-//            //如果Task栈不存在MainActivity实例，则在栈顶创建
-//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            context.startActivity(mainIntent);
-        }else{
+//            Log.e("NotificationReceiver",SampleAppLike.getCurrentActivity().getLocalClassName());
+            if (SampleAppLike.getCurrentActivity() == null) {
+                Intent mainIntent = new Intent(context, MainActivity.class);
+                //将MainAtivity的launchMode设置成SingleTask, 或者在下面flag中加上Intent.FLAG_CLEAR_TOP,
+                //如果Task栈中有MainActivity的实例，就会把它移到栈顶，把在它之上的Activity都清理出栈，
+                //如果Task栈不存在MainActivity实例，则在栈顶创建
+                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(mainIntent);
+            }
+
+        } else {
             //如果app进程已经被杀死，先重新启动app
             Log.i("NotificationReceiver", "the app process is dead");
             Intent launchIntent = context.getPackageManager().
