@@ -72,6 +72,7 @@ public class XinlvFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_xinlv, container, false);
         ButterKnife.bind(this, rootView);
+        tvHtmlLine=rootView.findViewById(R.id.tv_html_line);
         return rootView;
     }
 
