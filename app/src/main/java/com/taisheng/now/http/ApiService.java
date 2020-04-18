@@ -150,20 +150,29 @@ import com.taisheng.now.yuyin.util.Constant;
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 /**
  * Created by long
  */
 public interface ApiService {
+
+    //下载语音
+    @Streaming
+    @GET
+    Call<ResponseBody> downloadAudioFileWithDynamicUrlAsync(@Url String fileUrl);
 
 
     //重启
@@ -569,10 +578,9 @@ public interface ApiService {
     Call<BaseBean<WatchListBean>> getDeviceInfo(@Body GetDeviceInfoPostBean bean);
 
 
-//    public static final String getElectronicFenceSetting="jeecg-boot/app/electronicFence/getElectronicFenceSetting";
+    //    public static final String getElectronicFenceSetting="jeecg-boot/app/electronicFence/getElectronicFenceSetting";
     @POST(Constants.Url.Watch.getElectronicFenceSetting)
-    Call<BaseBean<DianziweilanReusultBean>>  getElectronicFenceSetting(@Body BaseWatchBean bean);
-
+    Call<BaseBean<DianziweilanReusultBean>> getElectronicFenceSetting(@Body BaseWatchBean bean);
 
 
     //上传语音

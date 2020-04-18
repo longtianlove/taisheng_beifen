@@ -64,6 +64,8 @@ public class Constants {
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
         public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
+        //todo 要改语音下载的地址
+        public static String AUDIO_HOST = "https://test.taishenghealth.com/";
         //测试服务器
        /* public static String Host = "http://192.168.1.12:8080/";//有视频的
         public static String File_Host = "http://49.234.71.12/jeecg-boot/sys/common/view/";
@@ -73,16 +75,16 @@ public class Constants {
         public static class Watch {
 
             //获取电子围栏
-            public static final String getElectronicFenceSetting="jeecg-boot/app/electronicFence/getElectronicFenceSetting";
+            public static final String getElectronicFenceSetting = "jeecg-boot/app/electronicFence/getElectronicFenceSetting";
             //根据设备id获取设备信息
-            public static final String getDeviceInfo="jeecg-boot/app/watchDevice/getDeviceInfo";
+            public static final String getDeviceInfo = "jeecg-boot/app/watchDevice/getDeviceInfo";
 
 
             //上传语音
             public static final String microcharVoice = "jeecg-boot/app/microchar/getvoice";
 
             //下载语音
-            public static final String downloadVoice="";
+            public static final String downloadVoice = "";
 
 
             //            绑定设备  deviceBinding
@@ -242,7 +244,6 @@ public class Constants {
 
             //            闹钟提醒-分页列表查询
             public static final String remindList = "jeecg-boot/app/remind/list";
-
 
 
             //            闹钟设置-闹钟参数设置
