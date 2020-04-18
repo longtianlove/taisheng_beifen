@@ -616,39 +616,39 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
     }
 
 
-    private void sendWenziMsg(String msg) {
-        String rawMessage = ",fhadmin-msg," + UserInstance.getInstance().getUid() + ",fh," + mTargetId + ",fh,"
-                + UserInstance.getInstance().getNickname() + ",fh,普通用户,fh," + UserInstance.getInstance().getRealname()
-                + ",fh,friend,fh," + UserInstance.getInstance().userInfo.avatar + ",fh," + msg;
-
-        WebSocketManager.getInstance().sendMessage(rawMessage);
-
-        RemoteChatMessage message = new RemoteChatMessage();
-        message.contentData = msg;
-        message.targetId = mTargetId;
-        message.fromId = UserInstance.getInstance().getUid();
-
-        HistoryBean historyBean = new HistoryBean();
-        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
-        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-        historyBean.setLastMsg(message.contentData);
-        historyBean.setConversationId(message.targetId);
-        historyBean.setNewMsgCount(1);
-        historyBean.doctorAvator = doctorAvator;
-        historyBean.doctorName = doctorName;
-        MLOC.addHistory(historyBean, true);
-
-        MessageBean messageBean = new MessageBean();
-        messageBean.setConversationId(message.targetId);
-        messageBean.setTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-        messageBean.setMsg(message.contentData);
-        messageBean.setFromId(message.fromId);
-        MLOC.saveMessage(messageBean);
-
-        ColorUtils.getColor(getActivity(), message.fromId);
-        mDatas.add(messageBean);
-        mAdapter.notifyDataSetChanged();
-    }
+//    private void sendWenziMsg(String msg) {
+//        String rawMessage = ",fhadmin-msg," + UserInstance.getInstance().getUid() + ",fh," + mTargetId + ",fh,"
+//                + UserInstance.getInstance().getNickname() + ",fh,普通用户,fh," + UserInstance.getInstance().getRealname()
+//                + ",fh,friend,fh," + UserInstance.getInstance().userInfo.avatar + ",fh," + msg;
+//
+//        WebSocketManager.getInstance().sendMessage(rawMessage);
+//
+//        RemoteChatMessage message = new RemoteChatMessage();
+//        message.contentData = msg;
+//        message.targetId = mTargetId;
+//        message.fromId = UserInstance.getInstance().getUid();
+//
+//        HistoryBean historyBean = new HistoryBean();
+//        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
+//        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+//        historyBean.setLastMsg(message.contentData);
+//        historyBean.setConversationId(message.targetId);
+//        historyBean.setNewMsgCount(1);
+//        historyBean.doctorAvator = doctorAvator;
+//        historyBean.doctorName = doctorName;
+//        MLOC.addHistory(historyBean, true);
+//
+//        MessageBean messageBean = new MessageBean();
+//        messageBean.setConversationId(message.targetId);
+//        messageBean.setTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+//        messageBean.setMsg(message.contentData);
+//        messageBean.setFromId(message.fromId);
+//        MLOC.saveMessage(messageBean);
+//
+//        ColorUtils.getColor(getActivity(), message.fromId);
+//        mDatas.add(messageBean);
+//        mAdapter.notifyDataSetChanged();
+//    }
 
     private void sendImgMsg(String path) {
         String pathString = "img[" + path + "]";
@@ -728,15 +728,15 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
         final RemoteChatMessage revMsg = (RemoteChatMessage) eventObj.message;
         if (revMsg.fromId.equals(mTargetId)) {
             String contentData = revMsg.contentData.replace("face[", "[");
-            HistoryBean historyBean = new HistoryBean();
-            historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
-            historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-            historyBean.setLastMsg(contentData);
-            historyBean.setConversationId(revMsg.fromId);
-            historyBean.setNewMsgCount(1);
-            historyBean.doctorName = doctorName;
-            historyBean.doctorAvator = doctorAvator;
-            MLOC.addHistory(historyBean, true);
+//            HistoryBean historyBean = new HistoryBean();
+//            historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
+//            historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+//            historyBean.setLastMsg(contentData);
+//            historyBean.setConversationId(revMsg.fromId);
+//            historyBean.setNewMsgCount(1);
+//            historyBean.doctorName = doctorName;
+//            historyBean.doctorAvator = doctorAvator;
+//            MLOC.addHistory(historyBean, true);
 
             MessageBean messageBean = new MessageBean();
             messageBean.setConversationId(revMsg.fromId);

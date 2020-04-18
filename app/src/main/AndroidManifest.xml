@@ -305,7 +305,10 @@
         <activity
             android:name=".bussiness.first.MoreShipinActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".chat.C2CActivity" />
+        <activity
+            android:name=".chat.C2CActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".bussiness.me.MyPingjiaActivity"
             android:screenOrientation="portrait" />

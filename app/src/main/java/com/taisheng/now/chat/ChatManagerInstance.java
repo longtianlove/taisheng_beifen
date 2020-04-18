@@ -48,7 +48,7 @@ public class ChatManagerInstance {
                     public void onConnected(Map<String, List<String>> headers) {
                         Log.e("longtianlove", "websocket-connect");
                         webSocketManager.sendMessage(",mobilefh-join," + UserInstance.getInstance().getUid());
-                       Thread thread= new Thread(new Runnable() {
+                        Thread thread = new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 while (true) {
@@ -57,7 +57,7 @@ public class ChatManagerInstance {
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
-                                    webSocketManager.sendMessage(",heartbeat,"+UserInstance.getInstance().getUid());
+                                    webSocketManager.sendMessage(",heartbeat," + UserInstance.getInstance().getUid());
                                 }
                             }
                         });
@@ -80,9 +80,13 @@ public class ChatManagerInstance {
                             historyBean.setLastMsg(message.contentData);
                             historyBean.setConversationId(message.fromId);
                             historyBean.setNewMsgCount(1);
-                            historyBean.doctorAvator= Constants.Url.File_Host+rawRemoteMessage.avatar;
-                            historyBean.doctorName=rawRemoteMessage.user_name;
-                            MLOC.addHistory(historyBean, false);
+                            historyBean.doctorAvator = Constants.Url.File_Host + rawRemoteMessage.avatar;
+                            historyBean.doctorName = rawRemoteMessage.user_name;
+                            if (!"2".equals(rawRemoteMessage.message_type)) {
+                                //不是手表消息才加入到聊天历史记录当中
+                                MLOC.addHistory(historyBean, false);
+                            }
+
 
                             MessageBean messageBean = new MessageBean();
                             messageBean.setConversationId(message.fromId);
@@ -91,9 +95,17 @@ public class ChatManagerInstance {
                             messageBean.setFromId(message.fromId);
                             MLOC.saveMessage(messageBean);
 
-                            EventManage.AEVENT_C2C_REV_MSG MSG = new EventManage.AEVENT_C2C_REV_MSG();
-                            MSG.message = message;
-                            EventBus.getDefault().post(MSG);
+                            if (!"2".equals(rawRemoteMessage.message_type)) {
+                                //如果是医生来的消息
+                                EventManage.AEVENT_C2C_REV_MSG MSG = new EventManage.AEVENT_C2C_REV_MSG();
+                                MSG.message = message;
+                                EventBus.getDefault().post(MSG);
+                            } else {
+                                //如果是手表来的消息
+                                EventManage.Watch_AEVENT_C2C_REV_MSG MSG = new EventManage.Watch_AEVENT_C2C_REV_MSG();
+                                MSG.message = message;
+                                EventBus.getDefault().post(MSG);
+                            }
                         } catch (Exception e) {
                             Log.e("longtianlove", "消息解析失败" + e.getMessage());
                         }

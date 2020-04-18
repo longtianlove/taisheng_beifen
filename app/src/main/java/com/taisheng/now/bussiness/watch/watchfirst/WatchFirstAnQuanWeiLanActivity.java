@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
@@ -366,6 +367,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 searchAddr.setAddr(reverseGeoCodeResult.getAddress());
                 LogUtilH.e(reverseGeoCodeResult.getAddress());
                 addrList.add(searchAddr);
+
                 List<BaiduSearchAddr> list = removeDuplicate(addrList);
                 if (!TextsUtils.isEmpty(TextsUtils.getTexts(etSearch))){
                     rvAddresslist.setVisibility(View.VISIBLE);
@@ -390,6 +392,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                         suggestionBean = duggesLists.get(i);
                         if (suggestionBean.pt != null) {
                             LatLng pt = suggestionBean.getPt();
+                            Log.e("taishengjiankang",suggestionBean.getPt().toString());
                             mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(pt));
                         }
                     }

@@ -49,7 +49,7 @@ public class SampleAppLike extends DefaultApplicationLike {
     public void onCreate() {
         super.onCreate();
         mcontext=getApplication();
-        environment=Environment.Debug;
+        environment=Environment.Release;
         LogUtilH.setLogLevel(LogUtilH.LogLevel.DEBUG_LEVEL);
         ViewTarget.setTagId(R.id.glide_tag);//图片加载错误处理
 //        WeChatManagerInstance.getInstance().registToWx(mcontext);

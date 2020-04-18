@@ -187,40 +187,40 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fYuyin);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", fYuyin.getName(), requestFile);
-            ApiUtils.getApiService().microcharVoice(UserInstance.getInstance().getUid(),WatchInstance.getInstance().deviceId,body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+            ApiUtils.getApiService().microcharVoice(UserInstance.getInstance().getUid(), WatchInstance.getInstance().deviceId, body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
-                                                                      @Override
-                                                                      public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
-                                                                          switch (message.code) {
-                                                                              case Constants.HTTP_SUCCESS:
+                                                                                                                                                 @Override
+                                                                                                                                                 public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
+                                                                                                                                                     switch (message.code) {
+                                                                                                                                                         case Constants.HTTP_SUCCESS:
 
-                                                                                  break;
+                                                                                                                                                             break;
 //                                                                              case 4031:
-                                                                              default:
-                                                                                  MessageBean messageBean = mDatas.get(mDatas.size() - 1);
-                                                                                  int length = messageBean.msg.length();
-                                                                                  messageBean.msg = messageBean.msg.substring(0, length - 2);
-                                                                                  messageBean.msg += "0]";
-                                                                                  MLOC.updateMessage(messageBean);
-                                                                                  mAdapter.notifyDataSetChanged();
-                                                                                  break;
+                                                                                                                                                         default:
+                                                                                                                                                             MessageBean messageBean = mDatas.get(mDatas.size() - 1);
+                                                                                                                                                             int length = messageBean.msg.length();
+                                                                                                                                                             messageBean.msg = messageBean.msg.substring(0, length - 2);
+                                                                                                                                                             messageBean.msg += "0]";
+                                                                                                                                                             MLOC.updateMessage(messageBean);
+                                                                                                                                                             mAdapter.notifyDataSetChanged();
+                                                                                                                                                             break;
 
 
-                                                                          }
+                                                                                                                                                     }
 
 
-                                                                      }
+                                                                                                                                                 }
 
-                                                                      @Override
-                                                                      public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
-                                                                          MessageBean messageBean = mDatas.get(mDatas.size() - 1);
-                                                                          int length = messageBean.msg.length();
-                                                                          messageBean.msg = messageBean.msg.substring(0, length - 2);
-                                                                          messageBean.msg += "0]";
-                                                                          MLOC.updateMessage(messageBean);
-                                                                          mAdapter.notifyDataSetChanged();
-                                                                      }
-                                                                  }
+                                                                                                                                                 @Override
+                                                                                                                                                 public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
+                                                                                                                                                     MessageBean messageBean = mDatas.get(mDatas.size() - 1);
+                                                                                                                                                     int length = messageBean.msg.length();
+                                                                                                                                                     messageBean.msg = messageBean.msg.substring(0, length - 2);
+                                                                                                                                                     messageBean.msg += "0]";
+                                                                                                                                                     MLOC.updateMessage(messageBean);
+                                                                                                                                                     mAdapter.notifyDataSetChanged();
+                                                                                                                                                 }
+                                                                                                                                             }
             );
 
         } catch (Exception e) {
@@ -469,7 +469,6 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
     }
 
 
-
     private String dirPath = Apputil.sdNormalPath + "/watchchatImage";// 存储裁剪图片目录
 
 
@@ -573,28 +572,28 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", fImage.getName(), requestFile);
             ApiUtils.getApiService_hasdialog().uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
-                                                                  @Override
-                                                                  public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
-                                                                      switch (message.code) {
-                                                                          case Constants.HTTP_SUCCESS:
-                                                                              String path = message.result.path;
+                                                                            @Override
+                                                                            public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
+                                                                                switch (message.code) {
+                                                                                    case Constants.HTTP_SUCCESS:
+                                                                                        String path = message.result.path;
 
 
-                                                                              EventBus.getDefault().post(new EventManage.uploadChatPictureSuccess(path));
+                                                                                        EventBus.getDefault().post(new EventManage.uploadChatPictureSuccess(path));
 
-                                                                              sendImgMsg(path);
+                                                                                        sendImgMsg(path);
 
-                                                                              break;
-                                                                      }
+                                                                                        break;
+                                                                                }
 
 
-                                                                  }
+                                                                            }
 
-                                                                  @Override
-                                                                  public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
+                                                                            @Override
+                                                                            public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
 
-                                                                  }
-                                                              }
+                                                                            }
+                                                                        }
             );
 
         } catch (Exception e) {
@@ -854,11 +853,11 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
-    public void recevieMessage(EventManage.AEVENT_C2C_REV_MSG eventObj) {
+    public void recevieMessage(EventManage.Watch_AEVENT_C2C_REV_MSG eventObj) {
         MLOC.d("IM_C2C", "||" + eventObj);
         final RemoteChatMessage revMsg = (RemoteChatMessage) eventObj.message;
-        if (revMsg.fromId.equals(mTargetId)) {
-            String contentData = revMsg.contentData.replace("face[", "[");
+
+        String contentData = revMsg.contentData.replace("face[", "[");
 //            HistoryBean historyBean = new HistoryBean();
 //            historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
 //            historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
@@ -869,14 +868,14 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 //            historyBean.doctorAvator = doctorAvator;
 //            MLOC.addHistory(historyBean, true);
 
-            MessageBean messageBean = new MessageBean();
-            messageBean.setConversationId(revMsg.fromId);
-            messageBean.setTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-            messageBean.setMsg(contentData);
-            messageBean.setFromId(revMsg.fromId);
+        MessageBean messageBean = new MessageBean();
+        messageBean.setConversationId(revMsg.fromId);
+        messageBean.setTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
+        messageBean.setMsg(contentData);
+        messageBean.setFromId(revMsg.fromId);
+        if (revMsg.fromId.equals(mTargetId)) {
             mDatas.add(messageBean);
             mAdapter.notifyDataSetChanged();
-
         }
     }
 
@@ -1021,34 +1020,34 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
                                 RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fYuyin);
                                 MultipartBody.Part body = MultipartBody.Part.createFormData("file", fYuyin.getName(), requestFile);
-                                ApiUtils.getApiService().microcharVoice(UserInstance.getInstance().getUid(),WatchInstance.getInstance().deviceId,body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+                                ApiUtils.getApiService().microcharVoice(UserInstance.getInstance().getUid(), WatchInstance.getInstance().deviceId, body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
-                                                                                          @Override
-                                                                                          public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
-                                                                                              switch (message.code) {
-                                                                                                  case Constants.HTTP_SUCCESS:
+                                                                                                                                                                     @Override
+                                                                                                                                                                     public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
+                                                                                                                                                                         switch (message.code) {
+                                                                                                                                                                             case Constants.HTTP_SUCCESS:
 
-                                                                                                      int length = mDatas.get(position).msg.length();
-                                                                                                      mDatas.get(position).msg = mDatas.get(position).msg.substring(0, length - 2);
-                                                                                                      mDatas.get(position).msg += "1]";
-                                                                                                      MLOC.updateMessage(mDatas.get(position));
-                                                                                                      break;
-                                                                                                  case 4031:
-                                                                                                      itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
-                                                                                                      break;
-                                                                                                  default:
-                                                                                                      itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
-                                                                                                      break;
-                                                                                              }
+                                                                                                                                                                                 int length = mDatas.get(position).msg.length();
+                                                                                                                                                                                 mDatas.get(position).msg = mDatas.get(position).msg.substring(0, length - 2);
+                                                                                                                                                                                 mDatas.get(position).msg += "1]";
+                                                                                                                                                                                 MLOC.updateMessage(mDatas.get(position));
+                                                                                                                                                                                 break;
+                                                                                                                                                                             case 4031:
+                                                                                                                                                                                 itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
+                                                                                                                                                                                 break;
+                                                                                                                                                                             default:
+                                                                                                                                                                                 itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
+                                                                                                                                                                                 break;
+                                                                                                                                                                         }
 
 
-                                                                                          }
+                                                                                                                                                                     }
 
-                                                                                          @Override
-                                                                                          public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
-                                                                                              itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
-                                                                                          }
-                                                                                      }
+                                                                                                                                                                     @Override
+                                                                                                                                                                     public void onFail(Call<BaseBean<PictureBean>> call, Throwable t) {
+                                                                                                                                                                         itemSelfHolder.iea_iv_sendfail.setVisibility(View.VISIBLE);
+                                                                                                                                                                     }
+                                                                                                                                                                 }
                                 );
 
                             } catch (Exception e) {

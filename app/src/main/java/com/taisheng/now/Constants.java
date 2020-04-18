@@ -81,6 +81,9 @@ public class Constants {
             //上传语音
             public static final String microcharVoice = "jeecg-boot/app/microchar/getvoice";
 
+            //下载语音
+            public static final String downloadVoice="";
+
 
             //            绑定设备  deviceBinding
             public static final String deviceBinding = "jeecg-boot/app/watchDevice/deviceBinding";

@@ -5,7 +5,6 @@
     android:background="#fff"
     android:orientation="vertical">
 
-    <ImageView style="@style/iv_title" />
 
     <TextView
         style="@style/my_line_h"
