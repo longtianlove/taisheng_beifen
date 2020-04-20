@@ -13,7 +13,7 @@ public class RawRemoteMessage {
     public String role_name;
     public String avatar;
     public String type;
-    public String message_type; //“1”代表和医生的聊天，“2”代表和手表的聊天
+    public String messageType; //“1”代表和医生的聊天，“2”代表和手表的聊天
     public String content;
     public String send_id;
     public String to_id;

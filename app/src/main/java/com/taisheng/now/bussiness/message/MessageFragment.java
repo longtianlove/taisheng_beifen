@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseFragment;
@@ -190,7 +191,7 @@ public class MessageFragment extends BaseFragment {
 //            itemSelfHolder.vHeadImage.setImageResource(MLOC.getHeadImage(getActivity(),userId));
 
             if (historyBean.doctorAvator != null && !"".equals(historyBean.doctorAvator)) {
-                Uri uri = Uri.parse(historyBean.doctorAvator);
+                Uri uri = Uri.parse(Constants.Url.File_Host+historyBean.doctorAvator);
                 itemSelfHolder.sdv_header.setImageURI(uri);
             }
             itemSelfHolder.vTime.setText(historyBean.getLastTime());

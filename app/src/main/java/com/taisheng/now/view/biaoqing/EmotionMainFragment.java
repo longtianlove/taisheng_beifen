@@ -934,7 +934,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                 }
 //                itemOtherHolder.vMsg.setText(mDatas.get(position).getMsg());
                 if (doctorAvator != null && !"".equals(doctorAvator)) {
-                    Uri uri = Uri.parse(doctorAvator);
+                    Uri uri = Uri.parse(Constants.Url.File_Host+doctorAvator);
                     itemOtherHolder.sdv_header.setImageURI(uri);
                 }
 //                itemOtherHolder.vHeadBg.setBackgroundColor(ColorUtils.getColor(C2CActivity.this,mDatas.get(position).getFromId()));

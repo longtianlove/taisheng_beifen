@@ -10,8 +10,6 @@ import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.chat.websocket.WebSocketManager;
 import com.taisheng.now.http.ApiUtils;
-import com.taisheng.now.http.TaiShengCallback;
-import com.taisheng.now.yuyin.util.Constant;
 import com.taisheng.now.yuyin.util.FileUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -96,9 +94,9 @@ public class ChatManagerInstance {
                             historyBean.setLastMsg(message.contentData);
                             historyBean.setConversationId(message.fromId);
                             historyBean.setNewMsgCount(1);
-                            historyBean.doctorAvator = Constants.Url.File_Host + rawRemoteMessage.avatar;
+                            historyBean.doctorAvator = rawRemoteMessage.avatar;
                             historyBean.doctorName = rawRemoteMessage.user_name;
-                            if (!"2".equals(rawRemoteMessage.message_type)) {
+                            if (!"2".equals(rawRemoteMessage.messageType)) {
                                 //不是手表消息才加入到聊天历史记录当中
                                 MLOC.addHistory(historyBean, false);
                             }
@@ -111,7 +109,7 @@ public class ChatManagerInstance {
                             messageBean.setFromId(message.fromId);
 
 
-                            if (!"2".equals(rawRemoteMessage.message_type)) {
+                            if (!"2".equals(rawRemoteMessage.messageType)) {
                                 //如果是医生来的消息
                                 MLOC.saveMessage(messageBean);
                                 EventManage.AEVENT_C2C_REV_MSG MSG = new EventManage.AEVENT_C2C_REV_MSG();

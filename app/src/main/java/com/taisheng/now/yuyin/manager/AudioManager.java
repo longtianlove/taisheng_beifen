@@ -74,10 +74,10 @@ public class AudioManager {
             // 设置meidaRecorder的音频源是麦克风
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             // 设置文件音频的输出格式为amr
-            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.RAW_AMR);
             // 设置音频的编码格式为amr。这里采用AAC主要为了适配IOS，保证在IOS上可以正常播放。
-            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-
+//            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             // 严格遵守google官方api给出的mediaRecorder的状态流程图
             mRecorder.prepare();
 
@@ -92,6 +92,8 @@ public class AudioManager {
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        }catch (Exception e){
             e.printStackTrace();
         }
 
