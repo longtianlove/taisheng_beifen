@@ -91,7 +91,9 @@ public class ImageDetailFragment extends Fragment {
             
             @Override
             public void onPhotoTap(View arg0, float arg1, float arg2) {
-                getActivity().finish();
+                if(getActivity()!=null) {
+                    getActivity().finish();
+                }
             }
         });
         

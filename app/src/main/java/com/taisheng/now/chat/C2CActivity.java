@@ -16,6 +16,7 @@ import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 
 import com.taisheng.now.base.BaseBean;
+import com.taisheng.now.base.BaseHActivity;
 import com.taisheng.now.base.BaseIvActivity;
 import com.taisheng.now.bussiness.bean.post.ConnectDoctorPostBean;
 import com.taisheng.now.bussiness.bean.result.ConnectDoctorResultBean;
@@ -34,7 +35,7 @@ import com.tencent.trtc.TRTCCloudDef;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class C2CActivity extends BaseIvActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class C2CActivity extends BaseHActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
 
     public static String mTargetId;

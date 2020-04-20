@@ -63,8 +63,14 @@ public class EventManage {
         }
     }
 
-    //收到消息
+    //医生收到消息
     public static class  AEVENT_C2C_REV_MSG{
+        public Object message;
+    }
+
+
+    //手表收到消息
+    public static class  Watch_AEVENT_C2C_REV_MSG{
         public Object message;
     }
 
