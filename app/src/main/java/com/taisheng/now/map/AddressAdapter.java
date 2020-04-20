@@ -39,6 +39,10 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.StateHol
         this.notifyDataSetChanged();
     }
 
+    public List<BaiduSearchAddr> getMdatas() {
+        return mdatas;
+    }
+
     @Override
     public StateHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new StateHolder(LayoutInflater.from(context).inflate(R.layout.item_address, parent, false));
@@ -51,6 +55,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.StateHol
 
         holder.tv_address.setText(searchAddr.getAddr());
         holder.tv_name.setText(searchAddr.getKey());
+
         if (position == 0) {
             holder.iv_dot.setBackgroundResource(R.drawable.circle_green);
         } else {

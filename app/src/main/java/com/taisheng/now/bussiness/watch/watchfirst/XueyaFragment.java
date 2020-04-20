@@ -215,7 +215,6 @@ public class XueyaFragment extends BaseFragment {
                         if (dataBar4 != null) {
                             dataBar4.clear();
                         }
-                        LogUtilH.e(message.result.records.size()+"血压月统计");
                         for (int i = 0; i < message.result.records.size(); i++) {
                             XueYaDayBean xueYaDayBean = message.result.records.get(i);
 
