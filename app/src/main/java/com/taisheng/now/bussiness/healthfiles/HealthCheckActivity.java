@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseHActivity;
+import com.taisheng.now.bussiness.login.UserInstance;
 
 import androidx.core.content.ContextCompat;
 import butterknife.BindView;
@@ -35,6 +37,11 @@ public class HealthCheckActivity extends BaseHActivity {
 
     @Override
     public void initData() {
+        if (Constants.FEMALE == UserInstance.getInstance().userInfo.sex) {
+            btnFukejiankang.setVisibility(View.VISIBLE);
+        } else {
+            btnFukejiankang.setVisibility(View.GONE);
+        }
 
     }
 

@@ -19,6 +19,8 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Projection;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.inner.GeoPoint;
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
@@ -46,6 +48,7 @@ import com.taisheng.now.map.MapPetAtHomeView;
 import com.taisheng.now.map.addressParseListener;
 import com.taisheng.now.util.DensityUtil;
 import com.taisheng.now.util.ListUtil;
+import com.taisheng.now.util.LogUtil;
 import com.taisheng.now.util.Uiutils;
 import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.TextsUtils;
@@ -103,6 +106,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
     private GeoCoder mSearch;
     private List<BaiduSearchAddr> addrList;
     private SuggestionResult.SuggestionInfo suggestionBean;
+    private List<SuggestionResult.SuggestionInfo> duggesLists;
 
 
     @Override
@@ -114,7 +118,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 
     @Override
     public void initData() {
-        addrList=new ArrayList<>();
+        addrList = new ArrayList<>();
         initViews();
     }
 
@@ -143,7 +147,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                     Uiutils.showToast("不能超过3000米");
                     return;
                 }
-                if(HomelocationInstance.radius<200||HomelocationInstance.radius>3000){
+                if (HomelocationInstance.radius < 200 || HomelocationInstance.radius > 3000) {
                     Uiutils.showToast("安全半径范围在200-3000米");
                     return;
                 }
@@ -209,7 +213,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 String searchString = etSearch.getText().toString();
                 if ("".equals(searchString)) {
                     rvAddresslist.setVisibility(View.GONE);
-                }else {
+                } else {
                     mSuggestionSearch.requestSuggestion(new SuggestionSearchOption()
                             .city(HomelocationInstance.getInstance().city)
                             .citylimit(true)
@@ -281,12 +285,8 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         });
         rvAddresslist.setAdapter(adapter);
 
-//        if(MIUIUtils.isMIUI()){
-//            mMapView. setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-//        }
         mBaiduMap = bmapView.getMap();
-//        UiSettings UiSettings =mBaiduMap.getUiSettings();
-//        UiSettings.setRotateGesturesEnabled(true);//打开旋转
+
         mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
             @Override
             public void onMapStatusChangeStart(MapStatus mapStatus) {
@@ -355,21 +355,34 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         mSearch.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
             @Override
             public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
-
+                LogUtilH.e(geoCodeResult.getAddress() + "geoCodeResult.getAddress()");
             }
 
             @Override
             public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
-                BaiduSearchAddr searchAddr = new BaiduSearchAddr();
-                searchAddr.setPt(suggestionBean.getPt());
-                searchAddr.setKey(suggestionBean.getKey());
-                searchAddr.setAddr(reverseGeoCodeResult.getAddress());
-                LogUtilH.e(reverseGeoCodeResult.getAddress());
-                addrList.add(searchAddr);
+                addrList.clear();
+                BaiduSearchAddr searchAddr = null;
+                if (reverseGeoCodeResult.getPoiList() != null) {
+                    for (int i = 0; i < reverseGeoCodeResult.getPoiList().size(); i++) {
+                        searchAddr = new BaiduSearchAddr();
+                        searchAddr.setPt(duggesLists.get(i).getPt());
+                        searchAddr.setKey(duggesLists.get(i).getKey());
+                        searchAddr.setAddr(reverseGeoCodeResult.getPoiList().get(i).address);
+                        addrList.add(searchAddr);
+                    }
+                } else {
+                    searchAddr = new BaiduSearchAddr();
+                    searchAddr.setPt(suggestionBean.getPt());
+                    searchAddr.setKey(suggestionBean.getKey());
+                    searchAddr.setAddr(reverseGeoCodeResult.getAddress());
+                    addrList.add(searchAddr);
+                    LogUtilH.e("1111111111");
+                }
+
                 List<BaiduSearchAddr> list = removeDuplicate(addrList);
-                if (!TextsUtils.isEmpty(TextsUtils.getTexts(etSearch))){
+                if (!TextsUtils.isEmpty(TextsUtils.getTexts(etSearch))) {
                     rvAddresslist.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     rvAddresslist.setVisibility(View.GONE);
                 }
                 adapter.setMdatas(list);
@@ -383,19 +396,23 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                     return;
                     //未找到相关结果
                 }
-                List<SuggestionResult.SuggestionInfo> duggesLists = res.getAllSuggestions();
+                duggesLists = res.getAllSuggestions();
                 addrList.clear();
                 if (duggesLists.size() > 0) {
                     for (int i = 0; i < duggesLists.size(); i++) {
                         suggestionBean = duggesLists.get(i);
                         if (suggestionBean.pt != null) {
                             LatLng pt = suggestionBean.getPt();
-                            mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(pt));
+                            mSearch.reverseGeoCode(new ReverseGeoCodeOption().radius(200).location(pt));
+                        } else {
+                            continue;
                         }
                     }
                 } else {
                     rvAddresslist.setVisibility(View.GONE);
                 }
+
+
                 //获取在线建议检索结果
             }
         };
@@ -483,10 +500,10 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         EventBus.getDefault().unregister(this);
     }
 
-    private List<BaiduSearchAddr>  removeDuplicate(List<BaiduSearchAddr> list)  {
-        for  ( int  i  =   0 ; i  <  list.size()  -   1 ; i ++ )  {
-            for  ( int  j  =  list.size()  -   1 ; j  >  i; j -- )  {
-                if  (list.get(j).getAddr().equals(list.get(i).getAddr()))  {
+    private List<BaiduSearchAddr> removeDuplicate(List<BaiduSearchAddr> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = list.size() - 1; j > i; j--) {
+                if (list.get(j).getKey().equals(list.get(i).getKey())) {
                     list.remove(j);
                 }
             }
