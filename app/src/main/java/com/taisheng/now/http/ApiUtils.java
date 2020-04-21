@@ -2,6 +2,8 @@ package com.taisheng.now.http;
 
 
 
+import android.app.Activity;
+
 import com.taisheng.now.Constants;
 import com.taisheng.now.application.SampleAppLike;
 import com.taisheng.now.util.Apputil;
@@ -43,6 +45,11 @@ public class ApiUtils {
      */
     public static ApiService getApiService_hasdialog() {
         DialogUtil.new_showProgress(SampleAppLike.getCurrentActivity(),"");
+        taishengApiService = getRetrofitClient(Constants.Url.Host).create(ApiService.class);
+        return taishengApiService;
+    }
+    public static ApiService getApiService_hasdialog(Activity activity) {
+        DialogUtil.new_showProgress(activity,"");
         taishengApiService = getRetrofitClient(Constants.Url.Host).create(ApiService.class);
         return taishengApiService;
     }

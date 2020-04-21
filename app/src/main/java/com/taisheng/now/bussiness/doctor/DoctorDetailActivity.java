@@ -579,7 +579,6 @@ public class DoctorDetailActivity extends BaseIvActivity implements ActivityComp
                 util = (Util) convertView.getTag();
             }
             DoctorCommentBean bean = mData.get(position);
-            LogUtilH.e(mData.size()+"---------mData.size()-------------------");
 
             String temp_url = Constants.Url.File_Host + bean.avatar;
             if (bean.avatar == null || "".equals(bean.avatar)) {

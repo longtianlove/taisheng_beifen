@@ -7,11 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.opengl.GLES10;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -24,12 +21,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,11 +44,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.facebook.drawee.view.SimpleDraweeView;
-
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.liji.imagezoom.util.ImageZoom;
-import com.previewlibrary.GPreviewBuilder;
-import com.previewlibrary.enitity.ThumbViewInfo;
 import com.taisheng.now.Constants;
 import com.taisheng.now.EventManage;
 import com.taisheng.now.R;
@@ -59,7 +63,6 @@ import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.chat.ColorUtils;
 import com.taisheng.now.chat.CoreDB;
 import com.taisheng.now.chat.HistoryBean;
-import com.taisheng.now.chat.ImageLookActivity;
 import com.taisheng.now.chat.MLOC;
 import com.taisheng.now.chat.MessageBean;
 import com.taisheng.now.chat.RemoteChatMessage;
@@ -67,9 +70,10 @@ import com.taisheng.now.chat.websocket.WebSocketManager;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.Apputil;
-import com.taisheng.now.view.crop.CropUtil;
-import com.taisheng.now.view.crop.RotateBitmap;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.th.j.commonlibrary.utils.LogUtilH;
+import com.th.j.commonlibrary.wight.CircleImageView;
+import com.th.j.commonlibrary.wight.RoundImgView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -240,11 +244,10 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
         mBottomRecyclerView = ((RecyclerView) layout.findViewById(R.id.recyclerview_horizontal));
 
         mDatas = new ArrayList<>();
-        mAdapter = new MyChatroomListAdapter();
+        mAdapter = new MyChatroomListAdapter(getActivity());
         vMsgList = (ListView) layout.findViewById(R.id.msg_list);
         vMsgList.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         vMsgList.setOnItemLongClickListener(this);
-        mAdapter = new MyChatroomListAdapter();
         vMsgList.setAdapter(mAdapter);
         vMsgList.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
@@ -280,8 +283,6 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
     private final int REQ_CODE_GET_PHOTO_FROM_TAKEPHOTO = 11;//拍照完
 
     public void modifyAvatar() {
-
-
         Intent intent = new Intent(getActivity(), SelectAvatarSourceDialog.class);
         startActivityForResult(intent, REQ_CODE_PHOTO_SOURCE);
     }
@@ -476,25 +477,19 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
 
     public void uploadPicture(String path) {
         try {
-
             //把Bitmap保存到sd卡中
             File fImage = new File(path);
-
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fImage);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", fImage.getName(), requestFile);
-            ApiUtils.getApiService_hasdialog().uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+            ApiUtils.getApiService_hasdialog(getActivity()).uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
                                                                             @Override
                                                                             public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {
                                                                                 switch (message.code) {
                                                                                     case Constants.HTTP_SUCCESS:
                                                                                         String path = message.result.path;
-
-
-                                                                                        EventBus.getDefault().post(new EventManage.uploadChatPictureSuccess(path));
-
                                                                                         sendImgMsg(path);
-
+                                                                                        EventBus.getDefault().post(new EventManage.uploadChatPictureSuccess(path));
                                                                                         break;
                                                                                 }
 
@@ -610,45 +605,10 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
         if (list != null && list.size() > 0) {
             mDatas.addAll(list);
         }
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setList(mDatas);
         vMsgList.setSelection(mAdapter.getCount() - 1);
 
     }
-
-
-//    private void sendWenziMsg(String msg) {
-//        String rawMessage = ",fhadmin-msg," + UserInstance.getInstance().getUid() + ",fh," + mTargetId + ",fh,"
-//                + UserInstance.getInstance().getNickname() + ",fh,普通用户,fh," + UserInstance.getInstance().getRealname()
-//                + ",fh,friend,fh," + UserInstance.getInstance().userInfo.avatar + ",fh," + msg;
-//
-//        WebSocketManager.getInstance().sendMessage(rawMessage);
-//
-//        RemoteChatMessage message = new RemoteChatMessage();
-//        message.contentData = msg;
-//        message.targetId = mTargetId;
-//        message.fromId = UserInstance.getInstance().getUid();
-//
-//        HistoryBean historyBean = new HistoryBean();
-//        historyBean.setType(CoreDB.HISTORY_TYPE_C2C);
-//        historyBean.setLastTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-//        historyBean.setLastMsg(message.contentData);
-//        historyBean.setConversationId(message.targetId);
-//        historyBean.setNewMsgCount(1);
-//        historyBean.doctorAvator = doctorAvator;
-//        historyBean.doctorName = doctorName;
-//        MLOC.addHistory(historyBean, true);
-//
-//        MessageBean messageBean = new MessageBean();
-//        messageBean.setConversationId(message.targetId);
-//        messageBean.setTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
-//        messageBean.setMsg(message.contentData);
-//        messageBean.setFromId(message.fromId);
-//        MLOC.saveMessage(messageBean);
-//
-//        ColorUtils.getColor(getActivity(), message.fromId);
-//        mDatas.add(messageBean);
-//        mAdapter.notifyDataSetChanged();
-//    }
 
     private void sendImgMsg(String path) {
         String pathString = "img[" + path + "]";
@@ -672,17 +632,16 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
         historyBean.doctorAvator = doctorAvator;
         historyBean.doctorName = doctorName;
         MLOC.addHistory(historyBean, true);
-
         MessageBean messageBean = new MessageBean();
         messageBean.setConversationId(message.targetId);
         messageBean.setTime(new SimpleDateFormat("MM-dd HH:mm").format(new java.util.Date()));
         messageBean.setMsg(message.contentData);
         messageBean.setFromId(message.fromId);
         MLOC.saveMessage(messageBean);
-
-        ColorUtils.getColor(getActivity(), message.fromId);
         mDatas.add(messageBean);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setList(mDatas);
+        ColorUtils.getColor(getActivity(), message.fromId);
+
     }
 
 
@@ -719,7 +678,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
 
         ColorUtils.getColor(getActivity(), message.fromId);
         mDatas.add(messageBean);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setList(mDatas);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 0)
@@ -744,7 +703,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
             messageBean.setMsg(contentData);
             messageBean.setFromId(revMsg.fromId);
             mDatas.add(messageBean);
-            mAdapter.notifyDataSetChanged();
+            mAdapter.setList(mDatas);
 
         }
     }
@@ -752,28 +711,31 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
 
     public class MyChatroomListAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
-
-        public MyChatroomListAdapter() {
+        private Context context;
+        private List<MessageBean> list;
+        public MyChatroomListAdapter( Context context) {
+            this.context=context;
             mInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        public void setList(List<MessageBean> list) {
+            this.list = list;
+            this.notifyDataSetChanged();
         }
 
         @Override
         public int getCount() {
-            if (mDatas == null) return 0;
-            return mDatas.size();
+            if (list == null) return 0;
+            return list.size();
         }
 
         @Override
         public Object getItem(int position) {
-            if (mDatas == null)
-                return null;
-            return mDatas.get(position);
+            return list.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            if (mDatas == null)
-                return 0;
             return position;
         }
 
@@ -784,71 +746,72 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
 
         @Override
         public int getItemViewType(int position) {
-            return mDatas.get(position).getFromId().equals(MLOC.userId) ? 0 : 1;
+            return list.get(position).getFromId().equals(MLOC.userId) ? 0 : 1;
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             int currLayoutType = getItemViewType(position);
             if (currLayoutType == 0) { //自己的信息
-                final ViewHolder itemSelfHolder;
+                ViewHolder itemSelfHolder;
                 if (convertView == null) {
                     itemSelfHolder = new ViewHolder();
                     convertView = mInflater.inflate(R.layout.item_chat_msg_list_right, null);
-                    itemSelfHolder.vUserId = (TextView) convertView.findViewById(R.id.item_user_id);
-                    itemSelfHolder.vMsg = (TextView) convertView.findViewById(R.id.item_msg);
+                    itemSelfHolder.vUserId =  convertView.findViewById(R.id.item_user_id);
+                    itemSelfHolder.vMsg = convertView.findViewById(R.id.item_msg);
                     itemSelfHolder.sdw_pic = convertView.findViewById(R.id.sdw_pic);
-//                    itemSelfHolder.vHeadBg = convertView.findViewById(R.id.head_bg);
+                    itemSelfHolder.jmui_sending_iv = convertView.findViewById(R.id.jmui_sending_iv);
                     itemSelfHolder.sdv_header = convertView.findViewById(R.id.sdv_header);
-//                    itemSelfHolder.vHeadCover = (CircularCoverView) convertView.findViewById(R.id.head_cover);
-//                    itemSelfHolder.vHeadImage = (ImageView) convertView.findViewById(R.id.head_img);
                     convertView.setTag(itemSelfHolder);
                 } else {
                     itemSelfHolder = (ViewHolder) convertView.getTag();
                 }
                 itemSelfHolder.vUserId.setText(UserInstance.getInstance().getNickname());
-                String rawmessage = mDatas.get(position).getMsg();
+                String rawmessage = list.get(position).getMsg();
                 if (rawmessage.startsWith("img[") && rawmessage.endsWith("]")) {
                     rawmessage = rawmessage.replace("img[", "");
                     rawmessage = rawmessage.replace("]", "");
                     itemSelfHolder.sdw_pic.setVisibility(View.VISIBLE);
                     itemSelfHolder.vMsg.setVisibility(View.GONE);
+                    itemSelfHolder.jmui_sending_iv.setVisibility(View.VISIBLE);
+                    itemSelfHolder.sdv_header.setVisibility(View.VISIBLE);
+                    Animation rotateAnimation  = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    rotateAnimation.setFillAfter(true);
+                    rotateAnimation.setDuration(1000);
+                    rotateAnimation.setRepeatCount(-1);
+                    rotateAnimation.setInterpolator(new LinearInterpolator());
+                    itemSelfHolder.jmui_sending_iv.startAnimation(rotateAnimation);
+                    String s= (String) itemSelfHolder.sdw_pic.getTag(R.id.glide_tag);
+                    Glide.with(context)
+                            .load(Constants.Url.File_Host + rawmessage)
+                            .apply(new RequestOptions()
+                                    .placeholder(R.drawable.article_default)
+                                    .error(R.drawable.article_default)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL))
+                            .listener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    return false;
+                                }
 
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    itemSelfHolder.jmui_sending_iv.setAnimation(null);
+                                    itemSelfHolder.jmui_sending_iv.setVisibility(View.GONE);
+                                    rotateAnimation.cancel();
+                                    return false;
+                                }
+                            })
+                            .into(itemSelfHolder.sdw_pic);
 
-                    itemSelfHolder.sdw_pic.setImageURI(Uri.parse(Constants.Url.File_Host + rawmessage));
                     String finalRawmessage = rawmessage;
                     itemSelfHolder.sdw_pic.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-//                            //组织数据
-//                            ArrayList<ThumbViewInfo> mThumbViewInfoList = new ArrayList<>(); // 这个最好定义成成员变量
-//                            ThumbViewInfo item;
-//                            mThumbViewInfoList.clear();
-////                            for (int i = 0;i < resultList.size(); i++) {
-//                            Rect bounds = new Rect();
-//                            //new ThumbViewInfo(图片地址);
-//                            item = new ThumbViewInfo(Constants.Url.File_Host + finalRawmessage);
-//                            item.setBounds(bounds);
-//                            mThumbViewInfoList.add(item);
-////                            }
-//
-////打开预览界面
-//                            GPreviewBuilder.from(getActivity())
-//                                    //是否使用自定义预览界面，当然8.0之后因为配置问题，必须要使用
-//                                    .to(ImageLookActivity.class)
-//                                    .setData(mThumbViewInfoList)
-//                                    .setCurrentIndex(0)
-//                                    .setSingleFling(true)
-//                                    .setType(GPreviewBuilder.IndicatorType.Number)
-//                                    // 小圆点
-////  .setType(GPreviewBuilder.IndicatorType.Dot)
-//                                    .start();//启动
                             String url = Constants.Url.File_Host + finalRawmessage;
                             ArrayList<String> urls = new ArrayList<>();
                             urls.add(url);
                             ImageZoom.show(getActivity(), url, urls);
-
                         }
                     });
 
@@ -856,67 +819,46 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                     itemSelfHolder.sdw_pic.setVisibility(View.GONE);
                     itemSelfHolder.vMsg.setVisibility(View.VISIBLE);
                     itemSelfHolder.vMsg.setText(SpanStringUtils.megetEmotionContent(EmotionUtils.EMOTION_CLASSIC_TYPE,
-                            getActivity(), (mDatas.get(position).getMsg()).toString()));
+                            context, (mDatas.get(position).getMsg()).toString()));
                 }
-
-                itemSelfHolder.sdv_header.setImageURI(Uri.parse(Constants.Url.File_Host + UserInstance.getInstance().userInfo.avatar));
-//                itemSelfHolder.vHeadBg.setBackgroundColor(ColorUtils.getColor(C2CActivity.this,mDatas.get(position).getFromId()));
-//                itemSelfHolder.vHeadCover.setCoverColor(Color.parseColor("#f6f6f6"));
-//                int cint = DensityUtil.dip2px(C2CActivity.this,20);
-//                itemSelfHolder.vHeadCover.setRadians(cint, cint, cint, cint,0);
-//                itemSelfHolder.vHeadImage.setImageResource(MLOC.getHeadImage(C2CActivity.this,mDatas.get(position).getFromId()));
+                Glide.with(context)
+                        .load(Constants.Url.File_Host + UserInstance.getInstance().userInfo.avatar)
+                        .apply(new RequestOptions()
+                                .placeholder(R.drawable.article_default)
+                                .error(R.drawable.article_default)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(itemSelfHolder.sdv_header);
             } else if (currLayoutType == 1) {//别人的信息
                 final ViewHolder itemOtherHolder;
                 if (convertView == null) {
                     itemOtherHolder = new ViewHolder();
                     convertView = mInflater.inflate(R.layout.item_chat_msg_list_left, null);
-                    itemOtherHolder.vUserId = (TextView) convertView.findViewById(R.id.item_user_id);
-                    itemOtherHolder.vMsg = (TextView) convertView.findViewById(R.id.item_msg);
+                    itemOtherHolder.vUserId =  convertView.findViewById(R.id.item_user_id);
+                    itemOtherHolder.vMsg =  convertView.findViewById(R.id.item_msg);
                     itemOtherHolder.sdw_pic = convertView.findViewById(R.id.sdw_pic);
-//                    itemOtherHolder.vHeadBg = convertView.findViewById(R.id.head_bg);
                     itemOtherHolder.sdv_header = convertView.findViewById(R.id.sdv_header);
-//                    itemOtherHolder.vHeadCover = (CircularCoverView) convertView.findViewById(R.id.head_cover);
-//                    itemOtherHolder.vHeadImage = (ImageView) convertView.findViewById(R.id.head_img);
                     convertView.setTag(itemOtherHolder);
                 } else {
                     itemOtherHolder = (ViewHolder) convertView.getTag();
                 }
                 itemOtherHolder.vUserId.setText(doctorName);
-                String rawmessage = mDatas.get(position).getMsg();
+                String rawmessage = list.get(position).getMsg();
                 if (rawmessage.startsWith("img[") && rawmessage.endsWith("]")) {
                     rawmessage = rawmessage.replace("img[", "");
                     rawmessage = rawmessage.replace("]", "");
                     itemOtherHolder.sdw_pic.setVisibility(View.VISIBLE);
                     itemOtherHolder.vMsg.setVisibility(View.GONE);
-                    itemOtherHolder.sdw_pic.setImageURI(Uri.parse(Constants.Url.File_Host + rawmessage));
+                    Glide.with(context)
+                            .load(Constants.Url.File_Host + rawmessage)
+                            .apply(new RequestOptions()
+                                    .placeholder(R.drawable.article_default)
+                                    .error(R.drawable.article_default)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL))
+                            .into(itemOtherHolder.sdw_pic);
                     String finalRawmessage = rawmessage;
                     itemOtherHolder.sdw_pic.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-//                            //组织数据
-//                            ArrayList<ThumbViewInfo> mThumbViewInfoList = new ArrayList<>(); // 这个最好定义成成员变量
-//                            ThumbViewInfo item;
-//                            mThumbViewInfoList.clear();
-////                            for (int i = 0;i < resultList.size(); i++) {
-//                            Rect bounds = new Rect();
-//                            //new ThumbViewInfo(图片地址);
-//                            item = new ThumbViewInfo(Constants.Url.File_Host + finalRawmessage);
-//                            item.setBounds(bounds);
-//                            mThumbViewInfoList.add(item);
-////                            }
-//
-////打开预览界面
-//                            GPreviewBuilder.from(getActivity())
-//                                    //是否使用自定义预览界面，当然8.0之后因为配置问题，必须要使用
-//                                    .to(ImageLookActivity.class)
-//                                    .setData(mThumbViewInfoList)
-//                                    .setCurrentIndex(0)
-//                                    .setSingleFling(true)
-//                                    .setType(GPreviewBuilder.IndicatorType.Number)
-//                                    // 小圆点
-////  .setType(GPreviewBuilder.IndicatorType.Dot)
-//                                    .start();//启动
-
                             String url = Constants.Url.File_Host + finalRawmessage;
                             ArrayList<String> urls = new ArrayList<>();
                             urls.add(url);
@@ -927,21 +869,20 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                 } else {
                     itemOtherHolder.sdw_pic.setVisibility(View.GONE);
                     itemOtherHolder.vMsg.setVisibility(View.VISIBLE);
-                    String faceWords = mDatas.get(position).getMsg().toString();
+                    String faceWords = list.get(position).getMsg().toString();
                     faceWords = faceWords.replace("face[", "[");
                     itemOtherHolder.vMsg.setText(SpanStringUtils.megetEmotionContent(EmotionUtils.EMOTION_CLASSIC_TYPE,
                             getActivity(), (faceWords)));
                 }
-//                itemOtherHolder.vMsg.setText(mDatas.get(position).getMsg());
                 if (doctorAvator != null && !"".equals(doctorAvator)) {
-                    Uri uri = Uri.parse(doctorAvator);
-                    itemOtherHolder.sdv_header.setImageURI(uri);
+                    Glide.with(context)
+                            .load(doctorAvator)
+                            .apply(new RequestOptions()
+                                    .placeholder(R.drawable.article_default)
+                                    .error(R.drawable.article_default)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL))
+                            .into(itemOtherHolder.sdv_header);
                 }
-//                itemOtherHolder.vHeadBg.setBackgroundColor(ColorUtils.getColor(C2CActivity.this,mDatas.get(position).getFromId()));
-//                itemOtherHolder.vHeadCover.setCoverColor(Color.parseColor("#f6f6f6"));
-//                int cint = DensityUtil.dip2px(C2CActivity.this,20);
-//                itemOtherHolder.vHeadCover.setRadians(cint, cint, cint, cint,0);
-//                itemOtherHolder.vHeadImage.setImageResource(MLOC.getHeadImage(C2CActivity.this,mDatas.get(position).getFromId()));
             }
             return convertView;
         }
@@ -952,8 +893,9 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
     public class ViewHolder {
         public TextView vUserId;
         public TextView vMsg;
-        public SimpleDraweeView sdw_pic;
-        public SimpleDraweeView sdv_header;
+        public RoundImgView sdw_pic;
+        public ImageView jmui_sending_iv;
+        public CircleImageView sdv_header;
     }
 
     @Override

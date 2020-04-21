@@ -570,7 +570,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fImage);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", fImage.getName(), requestFile);
-            ApiUtils.getApiService_hasdialog().uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
+            ApiUtils.getApiService_hasdialog(getActivity()).uploadLogo(body).enqueue(new TaiShengCallback<BaseBean<PictureBean>>() {
 
                                                                             @Override
                                                                             public void onSuccess(Response<BaseBean<PictureBean>> response, BaseBean<PictureBean> message) {

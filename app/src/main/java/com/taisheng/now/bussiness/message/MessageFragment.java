@@ -62,13 +62,8 @@ public class MessageFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_message, container, false);
-
         initView(rootView);
-
-
         EventBus.getDefault().register(this);
-        initData();
-
         return rootView;
     }
 
@@ -100,12 +95,6 @@ public class MessageFragment extends BaseFragment {
         });
         ll_noresult = rootView.findViewById(R.id.ll_noresult);
     }
-
-    void initData() {
-
-
-    }
-
 
     @Override
     public void onResume() {
@@ -197,7 +186,6 @@ public class MessageFragment extends BaseFragment {
             String rawmessage=historyBean.getLastMsg();
             if(rawmessage.startsWith("img[")&&rawmessage.endsWith("]")){
                 itemSelfHolder.vMessage.setText("[图片]");
-
             }else{
                 itemSelfHolder.vMessage.setText(rawmessage);
             }

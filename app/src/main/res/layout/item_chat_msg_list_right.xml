@@ -1,100 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:round="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="right"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="3dp"
         android:gravity="right|center_vertical"
-        >
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="5dp"
             android:layout_marginLeft="50dp"
-            android:gravity="right|center_vertical">
+            android:layout_marginTop="@dimen/magin_10"
+            android:gravity="right|center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/magin_10"
+            android:paddingRight="@dimen/magin_12">
+
             <TextView
                 android:id="@+id/item_user_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#cccccc"
-                android:textStyle="bold"
-                android:textSize="12sp"
                 android:text="demo_9999"
-                />
+                android:textColor="#cccccc"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/item_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#ff333333"
-                android:textSize="12sp"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/bg_popo_right"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
                 android:text="mmm"
+                android:textColor="#ff333333"
+                android:textSize="12sp" />
 
-                />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:padding="@dimen/magin_5"
+                android:layout_height="wrap_content">
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdw_pic"
-                android:layout_width="100dp"
-                android:layout_height="140dp"
-                android:gravity="center"
-                android:scaleType="fitXY"
-                fresco:actualImageScaleType="focusCrop"
-                fresco:fadeDuration="50"
-                fresco:failureImage="@drawable/article_default"
-                fresco:failureImageScaleType="centerInside"
-                fresco:placeholderImage="@drawable/article_default"
-                fresco:placeholderImageScaleType="fitCenter" />
+                <com.th.j.commonlibrary.wight.RoundImgView
+                    android:id="@+id/sdw_pic"
+                    android:layout_width="@dimen/size_100"
+                    android:layout_height="@dimen/size_140"
+                    android:scaleType="fitXY"
+                    round:leftDownCorner="true"
+                    round:leftUpCorner="true"
+                    round:rightDownCorner="true"
+                    round:rightUpCorner="true"
+                    round:roundHeight2="@dimen/radius_5"
+                    round:roundWidth2="@dimen/radius_5" />
+
+                <ImageView
+                    android:id="@+id/jmui_sending_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:src="@drawable/jmui_sending_img"
+                 />
+            </FrameLayout>
 
         </LinearLayout>
 
-        <!--<RelativeLayout-->
-        <!--android:id="@+id/head_bg"-->
-        <!--android:layout_width="40dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:layout_margin="16dp"-->
-        <!--android:orientation="vertical"-->
-        <!--android:gravity="center">-->
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.th.j.commonlibrary.wight.CircleImageView
             android:id="@+id/sdv_header"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="13dp"
-            android:gravity="center"
-            android:scaleType="fitXY"
-            fresco:actualImageScaleType="focusCrop"
-            fresco:fadeDuration="300"
-            fresco:failureImage="@drawable/article_default"
-            fresco:failureImageScaleType="centerInside"
-            fresco:placeholderImage="@drawable/article_default"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:roundedCornerRadius="25dp" />
-        <!--<com.taisheng.now.chat.CircularCoverView-->
-        <!--android:id="@+id/head_cover"-->
-        <!--android:layout_width="56dp"-->
-        <!--android:layout_height="56dp"-->
-        <!--android:layout_centerInParent="true"/>-->
-        <!--<ImageView-->
-        <!--android:id="@+id/head_img"-->
-        <!--android:layout_width="30dp"-->
-        <!--android:layout_height="30dp"-->
-        <!--android:layout_centerInParent="true"/>-->
-        <!--</RelativeLayout>-->
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_marginRight="@dimen/magin_12"
+            android:scaleType="fitXY" />
     </LinearLayout>
 
 </LinearLayout>
