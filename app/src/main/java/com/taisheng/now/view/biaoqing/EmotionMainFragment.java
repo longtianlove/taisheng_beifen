@@ -780,7 +780,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                     rotateAnimation.setRepeatCount(-1);
                     rotateAnimation.setInterpolator(new LinearInterpolator());
                     itemSelfHolder.jmui_sending_iv.startAnimation(rotateAnimation);
-                    String s= (String) itemSelfHolder.sdw_pic.getTag(R.id.glide_tag);
+//                    String s= (String) itemSelfHolder.sdw_pic.getTag(R.id.glide_tag);
                     Glide.with(context)
                             .load(Constants.Url.File_Host + rawmessage)
                             .apply(new RequestOptions()
