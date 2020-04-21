@@ -68,6 +68,10 @@ public class WatchMeXinlvyujingbianjiActivity extends BaseIvActivity implements 
                     Uiutils.showToast(getString(R.string.please_input));
                     return;
                 }
+                if (Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuidazhi)) < Integer.parseInt(TextsUtils.getTexts(tvXinlvpingzuixiaozhi))) {
+                    Uiutils.showToast("心率最大值不能小于心率最小值");
+                    return;
+                }
                 XinlvXueyaYujingBean bean = new XinlvXueyaYujingBean();
                 bean.userId = UserInstance.getInstance().getUid();
                 bean.token = UserInstance.getInstance().getToken();

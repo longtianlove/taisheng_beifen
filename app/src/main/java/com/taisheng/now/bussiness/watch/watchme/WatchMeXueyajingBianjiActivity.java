@@ -15,10 +15,12 @@ import com.taisheng.now.bussiness.watch.WatchInstance;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.ToastUtil;
 import com.taisheng.now.util.Uiutils;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
 import androidx.core.app.ActivityCompat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -76,8 +78,21 @@ public class WatchMeXueyajingBianjiActivity extends BaseIvActivity implements Ac
             case R.id.tv_save:
                 if (TextsUtils.isEmpty(TextsUtils.getTexts(tvGaoyazuida)) || TextsUtils.isEmpty(TextsUtils.getTexts(tvGaoyazuixiao)) ||
                         TextsUtils.isEmpty(TextsUtils.getTexts(tvDiyazuida)) || TextsUtils.isEmpty(TextsUtils.getTexts(tvDiyazuixiao))
-                        || TextsUtils.isEmpty(TextsUtils.getTexts(tvMaiyaca))|| TextUtils.isEmpty(TextsUtils.getTexts(tvMaiyachazuixiaozhi))) {
+                        || TextsUtils.isEmpty(TextsUtils.getTexts(tvMaiyaca)) || TextUtils.isEmpty(TextsUtils.getTexts(tvMaiyachazuixiaozhi))) {
                     Uiutils.showToast(getString(R.string.please_input));
+                    return;
+                }
+                if (Integer.parseInt(TextsUtils.getTexts(tvGaoyazuida)) < Integer.parseInt(TextsUtils.getTexts(tvGaoyazuixiao))) {
+                    Uiutils.showToast("高压最大值不能小于高压最小值");
+                    return;
+                }
+
+                if (Integer.parseInt(TextsUtils.getTexts(tvDiyazuida)) < Integer.parseInt(TextsUtils.getTexts(tvDiyazuixiao))) {
+                    Uiutils.showToast("低压最大值不能小于低压最小值");
+                    return;
+                }
+                if (Integer.parseInt(TextsUtils.getTexts(tvMaiyaca)) < Integer.parseInt(TextsUtils.getTexts(tvMaiyachazuixiaozhi))) {
+                    Uiutils.showToast("脉压差最大值不能小于脉压差最小值");
                     return;
                 }
 
