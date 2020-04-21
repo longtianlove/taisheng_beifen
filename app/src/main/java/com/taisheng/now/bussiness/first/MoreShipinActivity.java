@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.shuyu.gsyvideoplayer.listener.GSYVideoProgressListener;
 import com.taisheng.now.Constants;
 import com.taisheng.now.R;
 import com.taisheng.now.base.BaseBean;
@@ -399,6 +400,37 @@ public class MoreShipinActivity extends BaseHActivity {
             util.gsyVideoPlayer.setShowFullAnimation(true);
             //小屏时不触摸滑动
             util.gsyVideoPlayer.setIsTouchWiget(false);
+
+            Util finalUtil2 = util;
+            util.gsyVideoPlayer.setGSYVideoProgressListener(new GSYVideoProgressListener() {
+                @Override
+                public void onProgress(int progress, int secProgress, int currentPosition, int duration) {
+                    if (bean.noplay) {
+                        bean.noplay = false;
+                        VideoOperatePostBean mbean = new VideoOperatePostBean();
+                        mbean.userId = UserInstance.getInstance().getUid();
+                        mbean.token = UserInstance.getInstance().getToken();
+                        mbean.id = bean.id;
+                        mbean.operateType = "play";
+
+                        ApiUtils.getApiService().videoOperate(mbean).enqueue(new TaiShengCallback<BaseBean>() {
+                            @Override
+                            public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                                switch (message.code) {
+                                    case Constants.HTTP_SUCCESS:
+                                        finalUtil2.tv_shipinbofangshu.setText(++bean.videoPlayTimes + "");
+                                        break;
+                                }
+                            }
+
+                            @Override
+                            public void onFail(Call<BaseBean> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                }
+            });
 
 
             util.tv_shipintitle.setText(bean.videoTitle);

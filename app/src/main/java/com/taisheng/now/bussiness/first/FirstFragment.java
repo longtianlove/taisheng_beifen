@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.shuyu.gsyvideoplayer.listener.GSYVideoProgressListener;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.taisheng.now.Constants;
@@ -155,7 +156,7 @@ public class FirstFragment extends BaseFragment {
         LinearLayoutManager layout = new LinearLayoutManager(mActivity);
         layout.setOrientation(LinearLayoutManager.HORIZONTAL);//设置为横向排列
         recyclerView.setLayoutManager(layout);
-        PagerSnapHelper  snapHelper = new PagerSnapHelper();
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
 //        //添加Android自带的分割线
 //        recyclerView.addItemDecoration(new DividerItemDecoration());
@@ -551,7 +552,35 @@ public class FirstFragment extends BaseFragment {
 //            }
 //        });
 //        videoPlayer.startPlayLogic();
+        videoPlayer.setGSYVideoProgressListener(new GSYVideoProgressListener() {
+            @Override
+            public void onProgress(int progress, int secProgress, int currentPosition, int duration) {
+                if (noplay) {
+                    noplay = false;
+                    VideoOperatePostBean bean = new VideoOperatePostBean();
+                    bean.userId = UserInstance.getInstance().getUid();
+                    bean.token = UserInstance.getInstance().getToken();
+                    bean.id = shipinId;
+                    bean.operateType = "play";
 
+                    ApiUtils.getApiService().videoOperate(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                        @Override
+                        public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                            switch (message.code) {
+                                case Constants.HTTP_SUCCESS:
+                                    tv_shipinbofangshu.setText(++videoPlayTimes + "");
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onFail(Call<BaseBean> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        });
 
     }
 
@@ -566,6 +595,7 @@ public class FirstFragment extends BaseFragment {
 
 
     String shipinId;
+    boolean noplay = true;
 
 
     void initData_first() {
@@ -779,7 +809,7 @@ public class FirstFragment extends BaseFragment {
                             ShipinBean bean = message.result.records.get(0);
                             shipinId = bean.id;
                             source1 = bean.videoUrl;
-                            videoPlayer.setUp(bean.videoUrl, true, "测试视频");
+                            videoPlayer.setUp(bean.videoUrl, true, "");
                             Glide.with(getActivity())
                                     .load(bean.videoBanner)
                                     .apply(new RequestOptions().error(R.mipmap.health01).placeholder(R.mipmap.health01))
@@ -803,6 +833,7 @@ public class FirstFragment extends BaseFragment {
                                 tv_shipinguanzhu.setSelected(true);
                                 iv_shipinguanzhu.setSelected(true);
                             }
+                            videoPlayTimes = bean.videoPlayTimes;
                             tv_shipinbofangshu.setText(bean.videoPlayTimes + "");
                         } else {
 //                            //没有消息
@@ -840,7 +871,7 @@ public class FirstFragment extends BaseFragment {
                             ShipinBean bean = message.result.records.get(0);
                             shipinId = bean.id;
                             source1 = bean.videoUrl;
-                            videoPlayer.setUp(bean.videoUrl, true, "测试视频");
+                            videoPlayer.setUp(bean.videoUrl, true, "");
                             Glide.with(getActivity())
                                     .load(bean.videoBanner)
                                     .apply(new RequestOptions().error(R.mipmap.health01).placeholder(R.mipmap.health01))
@@ -864,7 +895,9 @@ public class FirstFragment extends BaseFragment {
                                 tv_shipinguanzhu.setSelected(true);
                                 iv_shipinguanzhu.setSelected(true);
                             }
+                            videoPlayTimes = bean.videoPlayTimes;
                             tv_shipinbofangshu.setText(bean.videoPlayTimes + "");
+
                         } else {
 //                            //没有消息
 
@@ -883,6 +916,11 @@ public class FirstFragment extends BaseFragment {
 
     }
 
+    /**
+     * 播放次数
+     */
+
+    public Integer videoPlayTimes;
 
     void getHotArticle_first() {
 
@@ -1092,8 +1130,9 @@ public class FirstFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 //        videoPlayer.onVideoResume();
+        noplay = true;
         videoPlayer.setEnlargeImageRes(R.drawable.icon_full);
-        videoPlayer.setUp(source1, true, "测试视频");
+        videoPlayer.setUp(source1, true, "");
 
 
     }
