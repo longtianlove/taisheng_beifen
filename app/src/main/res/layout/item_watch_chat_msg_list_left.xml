@@ -109,15 +109,7 @@
                     android:src="@drawable/yuyin_tixing_red"
                     />
 
-                <ImageView
-                    android:id="@+id/iea_iv_red"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="4dp"
-                    android:src="@drawable/yuyin_tixing_red"
 
-                    />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -164,7 +156,15 @@
                     android:textColor="#686666"
                     android:textSize="16dp"/>
 
+                <ImageView
+                    android:id="@+id/iea_iv_red"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="4dp"
+                    android:src="@drawable/yuyin_tixing_red"
 
+                    />
             </LinearLayout>
         </LinearLayout>
 

@@ -67,4 +67,6 @@ public class ShipinBean {
      * 收藏标记
      */
     public String userCollected;
+
+    public boolean noplay=true;
 }

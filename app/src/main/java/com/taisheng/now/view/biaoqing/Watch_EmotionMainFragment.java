@@ -603,8 +603,6 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 
 
     private void initData() {
-        doctorName = WatchInstance.getInstance().realName;
-        doctorAvator = WatchInstance.getInstance().headUrl;
 
         replaceFragment();
         List<ImageModel> list = new ArrayList<>();
@@ -696,6 +694,8 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
     @Override
     public void onResume() {
         super.onResume();
+        doctorName = WatchInstance.getInstance().realName;
+        doctorAvator = WatchInstance.getInstance().headUrl;
         mDatas.clear();
         mTargetId = WatchInstance.getInstance().deviceId;
         List<MessageBean> list = MLOC.getMessageList(mTargetId);
@@ -874,6 +874,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
         messageBean.setMsg(contentData);
         messageBean.setFromId(revMsg.fromId);
         if (revMsg.fromId.equals(mTargetId)) {
+            //只刷新当前手表的聊天窗口
             mDatas.add(messageBean);
             mAdapter.notifyDataSetChanged();
         }
@@ -1118,8 +1119,6 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 //                itemSelfHolder.vHeadCover.setRadians(cint, cint, cint, cint,0);
 //                itemSelfHolder.vHeadImage.setImageResource(MLOC.getHeadImage(C2CActivity.this,mDatas.get(position).getFromId()));
             } else if (currLayoutType == 1) {//别人的信息
-
-                //todo 语音所有的都没写，
                 final ViewHolder itemOtherHolder;
                 if (convertView == null) {
                     itemOtherHolder = new ViewHolder();
@@ -1313,7 +1312,7 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
                 }
 //                itemOtherHolder.vMsg.setText(mDatas.get(position).getMsg());
                 if (doctorAvator != null && !"".equals(doctorAvator)) {
-                    Uri uri = Uri.parse(doctorAvator);
+                    Uri uri = Uri.parse(Constants.Url.File_Host+doctorAvator);
                     itemOtherHolder.sdv_header.setImageURI(uri);
                 }
 //                itemOtherHolder.vHeadBg.setBackgroundColor(ColorUtils.getColor(C2CActivity.this,mDatas.get(position).getFromId()));

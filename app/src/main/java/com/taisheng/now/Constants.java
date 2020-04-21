@@ -24,7 +24,7 @@ public class Constants {
     public final static int LOGIN_VERIFYCODE_FAIL = 1004;//验证码不正确，请重新输入
     public final static int LOGIN_VERIFYCODE_OVERDUE_FAIL = 1007;//"验证码已过期，请重新获取！"
     public final static int LOGIN_USERNAME_NOT_EXISTENCE = 1002;//账号不存在,请切换手机号登陆！
-    public final static int LOGIN_PASSWORD_ERROR = 101;//密码错误
+    public final static int LOGIN_PASSWORD_ERROR = 1001;//密码错误
     public final static int USER_NOTEXIST = 404002;
     public final static int USER_FREEZE = 401020;//用户冻结
     public final static int USER_ACCOUNT_SOURCE_ERROR = 401021;//用户来源错误
@@ -63,9 +63,13 @@ public class Constants {
         public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
+        
+
         public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
-        //todo 要改语音下载的地址
-        public static String AUDIO_HOST = "https://test.taishenghealth.com/";
+//        public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
+
+
+        public static String AUDIO_HOST = Host + "jeecg-boot/app/microchar/download/";
         //测试服务器
        /* public static String Host = "http://192.168.1.12:8080/";//有视频的
         public static String File_Host = "http://49.234.71.12/jeecg-boot/sys/common/view/";

@@ -71,7 +71,6 @@ import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.Apputil;
 import com.tencent.bugly.crashreport.CrashReport;
-import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.wight.CircleImageView;
 import com.th.j.commonlibrary.wight.RoundImgView;
 
@@ -882,6 +881,7 @@ public class EmotionMainFragment extends BaseFragment implements AdapterView.OnI
                                     .error(R.drawable.article_default)
                                     .diskCacheStrategy(DiskCacheStrategy.ALL))
                             .into(itemOtherHolder.sdv_header);
+
                 }
             }
             return convertView;
