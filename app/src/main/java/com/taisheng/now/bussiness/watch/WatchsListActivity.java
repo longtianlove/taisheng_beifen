@@ -253,11 +253,11 @@ public class WatchsListActivity extends BaseIvActivity {
             stringBuffer.insert(8, " ");
             util.tv_zhanghao.setText(getString(R.string.phonenum) + ":" + stringBuffer.toString());
             util.tv_time.setText(getString(R.string.activation_time) + ":" + bean.createTime);
-            if (position == 0) {
-                util.tv_default.setVisibility(View.VISIBLE);
-            } else {
-                util.tv_default.setVisibility(View.GONE);
-            }
+//            if (position == 0) {
+//                util.tv_default.setVisibility(View.VISIBLE);
+//            } else {
+//                util.tv_default.setVisibility(View.GONE);
+//            }
             return convertView;
         }
 
