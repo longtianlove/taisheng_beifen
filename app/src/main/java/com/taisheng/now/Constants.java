@@ -63,7 +63,7 @@ public class Constants {
         public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
-        
+
 
         public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
 //        public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
@@ -77,6 +77,12 @@ public class Constants {
         public static String WEB_SOCKET_URL = "ws://192.168.1.15:8879";*/
 
         public static class Watch {
+
+            //            Watch-测量血压接口
+            public static final String watchbloodMeasurement = "jeecg-boot/app/watchblood/measurement";
+            //            Watch-测量心率接口
+            public static final String heartrateMeasuring = "jeecg-boot/app/heartrate/Measuring";
+
 
             //获取电子围栏
             public static final String getElectronicFenceSetting = "jeecg-boot/app/electronicFence/getElectronicFenceSetting";

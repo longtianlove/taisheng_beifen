@@ -328,8 +328,8 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                             tvYoufei.setText(getString(R.string.mony_code) + youfei);
 //                            tv_zongjia.setText(getString(R.string.mony_code) + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
                             BigDecimal temp = new BigDecimal(DingdanInstance.getInstance().zongjia);
-                            BigDecimal temp1 = temp.add(new BigDecimal(youfei));
-                            BigDecimal temp2 = temp1.subtract(new BigDecimal(discount));
+//                            BigDecimal temp1 = temp.add(new BigDecimal(youfei));
+                            BigDecimal temp2 = temp.subtract(new BigDecimal(discount));
 
                             tvZongjia.setText(getString(R.string.mony_code) + temp2);
 
@@ -366,8 +366,8 @@ public class DingdanjiesuanActivity extends BaseIvActivity {
                 tvJianyouhuijuan.setText("-" + getString(R.string.mony_code) + discount);
 //                tv_zongjia.setText(getString(R.string.mony_code) + (Double.parseDouble(DingdanInstance.getInstance().zongjia) - Double.parseDouble(discount) + Double.parseDouble(youfei)));
                 BigDecimal temp = new BigDecimal(DingdanInstance.getInstance().zongjia);
-                BigDecimal temp1 = temp.add(new BigDecimal(youfei));
-                BigDecimal temp2 = temp1.subtract(new BigDecimal(discount));
+//                BigDecimal temp1 = temp.add(new BigDecimal(youfei));
+                BigDecimal temp2 = temp.subtract(new BigDecimal(discount));
                 tvZongjia.setText(getString(R.string.mony_code) + temp2);
                 break;
         }

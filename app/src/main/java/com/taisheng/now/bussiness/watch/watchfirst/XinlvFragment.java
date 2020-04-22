@@ -20,6 +20,7 @@ import com.taisheng.now.base.BaseBean;
 import com.taisheng.now.base.BaseFragment;
 import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.bussiness.watch.WatchInstance;
+import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
 import com.taisheng.now.bussiness.watch.bean.post.GetheartratePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ObtainBpxyHeartStepListDTOPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ShishiCollectionBean;
@@ -32,6 +33,7 @@ import com.taisheng.now.bussiness.watch.bean.result.XinLvResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvAnriqiResultBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.ToastUtil;
 import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
@@ -55,6 +57,7 @@ public class XinlvFragment extends BaseFragment {
     WebView tvHtmlLine;
     @BindView(R.id.tv_html_bar)
     WebView tvHtmlBar;
+    TextView tv_yuanchengceliang;
     private Date today = new Date();
     private Date nowshow = new Date();
     private int beforeDayNum = 0;
@@ -71,6 +74,34 @@ public class XinlvFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_xinlv, container, false);
+        tv_yuanchengceliang = rootView.findViewById(R.id.tv_yuanchengceliang);
+        tv_yuanchengceliang.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //远程测量接口
+                BaseWatchBean bean = new BaseWatchBean();
+                bean.userId = UserInstance.getInstance().getUid();
+                bean.token = UserInstance.getInstance().getToken();
+                bean.deviceId = WatchInstance.getInstance().deviceId;
+                ApiUtils.getApiService_hasdialog().heartrateMeasuring(bean).enqueue(new TaiShengCallback<BaseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseBean> response, BaseBean message) {
+                        switch (message.code) {
+                            case Constants.HTTP_SUCCESS:
+                                ToastUtil.showAtCenter("指令发送成功");
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Call<BaseBean> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        });
         ButterKnife.bind(this, rootView);
         tvHtmlLine=rootView.findViewById(R.id.tv_html_line);
         return rootView;
