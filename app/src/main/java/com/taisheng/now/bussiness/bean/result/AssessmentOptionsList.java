@@ -18,5 +18,5 @@ public class AssessmentOptionsList {
     public String remarks;
     public String subjectdbType;
     public String status;
-
+    public boolean isCheck;
 }

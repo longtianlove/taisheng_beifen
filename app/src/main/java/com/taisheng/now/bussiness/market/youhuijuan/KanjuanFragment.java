@@ -137,7 +137,10 @@ public class KanjuanFragment extends BaseFragment {
                                 list_kajuan.setLoadAllFooterVisible(true);
                             }
                         }else {
-
+                            //没有消息
+                            list_kajuan.setHasLoadMore(false);
+                            list_kajuan.setLoadAllViewText("暂时只有这么多优惠券");
+                            list_kajuan.setLoadAllFooterVisible(true);
                         }
                         break;
                 }
