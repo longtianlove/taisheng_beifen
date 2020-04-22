@@ -583,6 +583,14 @@ public interface ApiService {
     Call<BaseBean<DianziweilanReusultBean>> getElectronicFenceSetting(@Body BaseWatchBean bean);
 
 
+    @POST(Constants.Url.Watch.watchbloodMeasurement)
+    Call<BaseBean> watchbloodMeasurement(@Body BaseWatchBean bean);
+
+
+    @POST(Constants.Url.Watch.heartrateMeasuring)
+    Call<BaseBean> heartrateMeasuring(@Body BaseWatchBean bean);
+
+
     //上传语音
     @Multipart
     @POST(Constants.Url.Watch.microcharVoice)
