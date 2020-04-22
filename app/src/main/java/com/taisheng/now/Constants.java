@@ -60,12 +60,12 @@ public class Constants {
         //测试
 //        public static String Host = "http://192.168.1.19:8080/";
 //        public static String Host = "http://193.112.19.18:8080/";
-        public static String Host = "https://test.taishenghealth.com/";
+                public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
 
 
-        public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
+                public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
 //        public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
 
 
@@ -77,6 +77,13 @@ public class Constants {
         public static String WEB_SOCKET_URL = "ws://192.168.1.15:8879";*/
 
         public static class Watch {
+
+            //获取校准历史
+            public static final String jiaozhunLishi="jeecg-boot/app/watchblood/bloodCheckList";
+
+            //            Watch-血压校准接口
+            public static final String calibration = "jeecg-boot/app/watchblood/calibration";
+
 
             //            Watch-测量血压接口
             public static final String watchbloodMeasurement = "jeecg-boot/app/watchblood/measurement";
