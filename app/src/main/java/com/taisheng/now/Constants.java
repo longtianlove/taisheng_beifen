@@ -10,7 +10,6 @@ public class Constants {
 
     public final static String DEFAULT_TAG = "taisheng";
     public final static String BUGLY_APP_ID = "24b876d82d";
-    //todo 需要修改
     //腾讯视频appid
     public final static int SDKAPPID = 1400229730;
 
@@ -36,7 +35,6 @@ public class Constants {
     public final static int DEVICE_NOT_EXIST = 600002;//设备信息不存在
 
 
-
     //男女0是男，1是女
     public final static int MALE = 0;
     public final static int FEMALE = 1;
@@ -50,29 +48,33 @@ public class Constants {
 
     public static class Url {
 
-        //手表服务器
-//      public static String Host = "http://193.112.19.18:8080/";
-//      public static String File_Host = "http://193.112.19.18:8080/jeecg-boot/sys/common/view/";
-//      public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
-        //正式服务器
-       /* public static String Host = "https://taishenghealth.com/";
-        public static String Host = "http://192.168.1.19:8080/";
-        public static String File_Host = "https://taishenghealth.com/image-video/";
-        public static String File_Host_head = "https://taishenghealth.com/image-video/";
-        public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";*/
-        //测试
-//        public static String Host = "http://192.168.1.19:8080/";
-//        public static String Host = "http://193.112.19.18:8080/";
-        public static String Host = "https://test.taishenghealth.com/";
+
+        //todo 上线改host
+        //正式服务器          49.233.76.254
+//        public static String Host = "https://taishenghealth.com/";
+//        public static String File_Host = "https://taishenghealth.com/image-video/";
+//        public static String File_Host_head = "https://taishenghealth.com/image-video/";
+//        public static String WEB_SOCKET_URL = "wss://taishenghealth.com/jeecg-wss/";
+//        public static String AUDIO_HOST = Host + "jeecg-boot/app/microchar/download/";
+
+        //测试域名test         49.234.71.11
+//        public static String Host = "https://test.taishenghealth.com/";
+//        public static String File_Host = "https://test.taishenghealth.com/image-video/";
+//        public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
+//        public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
+//        public static String AUDIO_HOST = Host + "jeecg-boot/app/microchar/download/";
+
+        //window             193.112.19.18
+        public static String Host = "http://193.112.19.18:8080/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
-
-
-        public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
-//        public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
-
-
+        public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
         public static String AUDIO_HOST = Host + "jeecg-boot/app/microchar/download/";
+
+
+
+        //public static String Host = "http://192.168.1.19:8080/";
+
         //测试服务器
        /* public static String Host = "http://192.168.1.12:8080/";//有视频的
         public static String File_Host = "http://49.234.71.12/jeecg-boot/sys/common/view/";
@@ -355,7 +357,7 @@ public class Constants {
             /**
              * 文章内容
              */
-            //todo 上线改host
+
 //            public static final String articleContent=Host+"jeecg-boot/app/article/v2/h5/articleDetail?articleId=";
             public static final String articleContent = Host + "jeecg-boot/app/article/v2/h5/articleDetail?articleId=";
 

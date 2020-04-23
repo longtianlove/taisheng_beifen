@@ -56,7 +56,7 @@ public class TrackInstance {
 
 
     public void queryHistoryTrack(Context context, BaiduMap mBaiduMap) {
-        //todo 此次上线前改为12
+
         // 开始时间(单位：秒)
         long startTime = System.currentTimeMillis() / 1000 - 24 * 60 * 60;
 //       long startTime=1575388800;

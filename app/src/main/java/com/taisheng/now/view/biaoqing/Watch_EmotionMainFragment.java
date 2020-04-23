@@ -1070,7 +1070,6 @@ public class Watch_EmotionMainFragment extends BaseFragment implements AdapterVi
 //                            record.setPlayed(true);
 //
 
-//                            //todo  更新数据库
 //                            notifyDataSetChanged();
                             //这里更新数据库小红点。这里不知道为什么可以强转建议复习复习基础~
 //                            ((ExampleActivity) mContext).getMgr().updateRecord(record);
