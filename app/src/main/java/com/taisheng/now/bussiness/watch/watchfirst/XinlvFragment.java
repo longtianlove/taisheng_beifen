@@ -193,7 +193,7 @@ public class XinlvFragment extends BaseFragment {
                             tvXinlv.setVisibility(View.VISIBLE);
                             tvXinlv.setText(WatchInstance.getInstance().watchHeart);
                         } else {
-                            //todo 数据为空的时候修改UI
+
                             tvLabel.setText("暂无数据");
                             tvXinlv.setVisibility(View.GONE);
                         }

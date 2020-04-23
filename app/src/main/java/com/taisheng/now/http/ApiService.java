@@ -92,6 +92,7 @@ import com.taisheng.now.bussiness.bean.result.market.ShangPinResultBeann;
 import com.taisheng.now.bussiness.watch.bean.post.AllSettingPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.AnquanweiilanPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.BaseWatchBean;
+import com.taisheng.now.bussiness.watch.bean.post.BaseWatchListPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.BindDevicePostBean;
 import com.taisheng.now.bussiness.watch.bean.post.ChiyaolistPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.DianhuabenPostbean;
@@ -117,6 +118,7 @@ import com.taisheng.now.bussiness.watch.bean.post.UnbindPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UpdateSosContactSettingPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.UpdateWatchPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.XinlvXueyaYujingPostBean;
+import com.taisheng.now.bussiness.watch.bean.post.XueyajiaozhunBean;
 import com.taisheng.now.bussiness.watch.bean.post.YuJingListPostBean;
 import com.taisheng.now.bussiness.watch.bean.post.YujingxinxiSetYiduPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.AllSettingResultBean;
@@ -142,6 +144,7 @@ import com.taisheng.now.bussiness.watch.bean.result.XinlvAnriqiResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XinlvXueyaYujingBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueYaDayResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.XueyaResultBean;
+import com.taisheng.now.bussiness.watch.bean.result.XueyajiaozhuAllResultBean;
 import com.taisheng.now.bussiness.watch.bean.result.YujingResultBean;
 import com.taisheng.now.test.WechatResultBean;
 import com.taisheng.now.yuyin.util.Constant;
@@ -585,6 +588,16 @@ public interface ApiService {
 
     @POST(Constants.Url.Watch.watchbloodMeasurement)
     Call<BaseBean> watchbloodMeasurement(@Body BaseWatchBean bean);
+
+
+
+    @POST(Constants.Url.Watch.calibration)
+    Call<BaseBean> calibration(@Body XueyajiaozhunBean bean);
+
+
+
+    @POST(Constants.Url.Watch.jiaozhunLishi)
+    Call<BaseBean<XueyajiaozhuAllResultBean>> jiaozhunLishi(@Body BaseWatchListPostBean bean);
 
 
     @POST(Constants.Url.Watch.heartrateMeasuring)

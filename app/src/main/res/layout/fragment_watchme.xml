@@ -189,6 +189,27 @@
                 android:textColor="@color/color666666"
                 android:textSize="@dimen/font14" />
 
+            <TextView
+                style="@style/my_line_h"
+                android:layout_marginLeft="@dimen/magin_12"
+                android:layout_marginRight="@dimen/magin_12"
+                android:background="@color/coloreeeeee" />
+
+            <TextView
+                android:id="@+id/ll_xueyajiaozhun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_xinlv"
+                android:drawablePadding="@dimen/magin_15"
+                android:drawableRight="@drawable/jiantou_hui"
+                android:paddingBottom="@dimen/magin_15"
+                android:paddingLeft="@dimen/magin_12"
+                android:paddingRight="@dimen/magin_12"
+                android:paddingTop="@dimen/magin_15"
+                android:text="血压校准"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/font14" />
+
 
             <TextView
                 style="@style/my_line_h"

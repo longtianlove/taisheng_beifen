@@ -67,12 +67,23 @@ public class WatchMeFragment extends BaseFragment {
     @BindView(R.id.ll_huifuchuchang)
     TextView llHuifuchuchang;
 
+    View ll_xueyajiaozhun;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_watchme, container, false);
+        ll_xueyajiaozhun = rootView.findViewById(R.id.ll_xueyajiaozhun);
+        ll_xueyajiaozhun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), WatchMeXueyajiaozhunActivity.class);
+                startActivity(intent);
+
+            }
+        });
         ButterKnife.bind(this, rootView);
         initData();
         return rootView;
@@ -105,7 +116,7 @@ public class WatchMeFragment extends BaseFragment {
                 break;
             case R.id.ll_sos:
                 if (intent == null) {
-                     intent = new Intent(getActivity(), WatchMejinjilianxirenActivity.class);
+                    intent = new Intent(getActivity(), WatchMejinjilianxirenActivity.class);
                 }
                 break;
             case R.id.ll_xueya:
@@ -182,7 +193,6 @@ public class WatchMeFragment extends BaseFragment {
             }
         });
     }
-
 
 
     private void initData() {
