@@ -25,6 +25,7 @@ import com.taisheng.now.bussiness.login.UserInstance;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
 import com.taisheng.now.util.DialogUtil;
+import com.th.j.commonlibrary.utils.LogUtilH;
 import com.th.j.commonlibrary.utils.TextsUtils;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class HealthQuestionActivity extends BaseHActivity implements AdapterView
     private HealthQuestionAdapter adapter;
     private List<AssessmentOptionsList> data;
     List<Records> records;
-    private Handler handler=new Handler();
+
     @Override
     public void initView() {
         setContentView(R.layout.activity_health_question);
@@ -73,8 +74,8 @@ public class HealthQuestionActivity extends BaseHActivity implements AdapterView
         subjectdbType = "1";
         answersResult = "";
         position = 0;
-        records=new ArrayList<>();
-        data=new ArrayList<>();
+        records = new ArrayList<>();
+        data = new ArrayList<>();
         adapter = new HealthQuestionAdapter(this);
         lvTopic.setAdapter(adapter);
         lvTopic.setOnItemClickListener(this);
@@ -93,11 +94,11 @@ public class HealthQuestionActivity extends BaseHActivity implements AdapterView
             public void onSuccess(Response<BaseBean<QuestionResultBean>> response, BaseBean<QuestionResultBean> message) {
                 switch (message.code) {
                     case Constants.HTTP_SUCCESS:
-                        if (message.result.records!=null&&message.result.records.size()>0){
-                            records=message.result.records;
+                        if (message.result.records != null && message.result.records.size() > 0) {
+                            records = message.result.records;
                             updatePosition(0);
                             tvQuestion.setText(records.get(0).name);
-                            if (message.result.records.get(0).assessmentOptionsList!=null&&message.result.records.size()>0){
+                            if (message.result.records.get(0).assessmentOptionsList != null && message.result.records.size() > 0) {
                                 data.addAll(message.result.records.get(0).assessmentOptionsList);
                                 adapter.setData(data);
                             }
@@ -131,25 +132,25 @@ public class HealthQuestionActivity extends BaseHActivity implements AdapterView
             tvNowPostion.setText("" + i);
         }
         tvAllSize.setText("/" + records.size());
-        tvQuestion.setText(records.get(i-1).name);
+        tvQuestion.setText(records.get(i - 1).name);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        data.get(i).isCheck=true;
+        data.get(i).isCheck = true;
         adapter.setData(data);
-        handler.postDelayed(new Runnable() {
+        runOnUiThread(new Runnable() {
+            @Override
             public void run() {
                 if (position < records.size()) {
-                    DialogUtil.closeProgress();
                     data.clear();
-                    if (records!=null&&records.size()>0){
+                    if (records != null && records.size() > 0) {
                         position++;
                         String result = "";
                         if (position < records.size()) {
                             updatePosition(position);
-                            tvQuestion.setText(records.get(position).name);
-                            if (records.get(position).assessmentOptionsList!=null&&records.size()>0){
+                            tvQuestion.setText(records.get(position).name + "(   )");
+                            if (records.get(position).assessmentOptionsList != null && records.size() > 0) {
                                 result = records.get(position).assessmentOptionsList.get(i).id;
                                 data.addAll(records.get(position).assessmentOptionsList);
                                 adapter.setData(data);
@@ -186,7 +187,7 @@ public class HealthQuestionActivity extends BaseHActivity implements AdapterView
                     }
                 }
             }
-        }, 100);   //1秒
+        });
 
     }
 
