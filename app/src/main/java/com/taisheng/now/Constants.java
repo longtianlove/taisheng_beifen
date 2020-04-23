@@ -32,6 +32,9 @@ public class Constants {
     public final static int TOKEN_DIFFERENCE = 401023;//token异常,数据库token和用户参数token不一致
     public final static int DOCTOR_NOEXIST = 70000;//医生不存在
     public final static int DOCTOR_BUSY = 70001;//医生忙碌中,请稍后联系
+    public final static int DEVICE_OFFLINE = 600001;//设备不在线
+    public final static int DEVICE_NOT_EXIST = 600002;//设备信息不存在
+
 
 
     //男女0是男，1是女
@@ -60,12 +63,12 @@ public class Constants {
         //测试
 //        public static String Host = "http://192.168.1.19:8080/";
 //        public static String Host = "http://193.112.19.18:8080/";
-                public static String Host = "https://test.taishenghealth.com/";
+        public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
 
 
-                public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
+        public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
 //        public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
 
 
@@ -79,7 +82,7 @@ public class Constants {
         public static class Watch {
 
             //获取校准历史
-            public static final String jiaozhunLishi="jeecg-boot/app/watchblood/bloodCheckList";
+            public static final String jiaozhunLishi = "jeecg-boot/app/watchblood/bloodCheckList";
 
             //            Watch-血压校准接口
             public static final String calibration = "jeecg-boot/app/watchblood/calibration";

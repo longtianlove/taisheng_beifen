@@ -95,6 +95,17 @@ public abstract class TaiShengCallback<T extends BaseBean> implements Callback<T
                     SampleAppLike.mcontext.startActivity(intent);
                     return;
                 }
+                if (message.code == Constants.DEVICE_OFFLINE) {
+                    ToastUtil.showTost("手表不在线");
+                    return;
+                }
+
+                if (message.code == Constants.DEVICE_NOT_EXIST) {
+                    ToastUtil.showTost("手表信息不存在");
+                    return;
+                }
+
+
                 if (SampleAppLike.environment == Environment.Release) {
                     //上线状态下：此处加了统一对网络请求的异常捕获，不让用户崩溃。然后上传异常信息到bugly。
                     try {
