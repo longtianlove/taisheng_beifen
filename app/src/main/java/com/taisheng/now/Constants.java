@@ -1,7 +1,5 @@
 package com.taisheng.now;
 
-import android.widget.SimpleCursorTreeAdapter;
-
 /**
  * Created by long on 17/4/6.
  */
@@ -72,7 +70,6 @@ public class Constants {
 //        public static String AUDIO_HOST = Host + "jeecg-boot/app/microchar/download/";
 
 
-
         //public static String Host = "http://192.168.1.19:8080/";
 
         //测试服务器
@@ -104,8 +101,6 @@ public class Constants {
 
             //上传语音
             public static final String microcharVoice = "jeecg-boot/app/microchar/getvoice";
-
-
 
 
             //            绑定设备  deviceBinding

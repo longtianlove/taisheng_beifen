@@ -14,7 +14,9 @@ import com.taisheng.now.bussiness.watch.bean.post.GetDeviceInfoPostBean;
 import com.taisheng.now.bussiness.watch.bean.result.WatchListBean;
 import com.taisheng.now.http.ApiUtils;
 import com.taisheng.now.http.TaiShengCallback;
+import com.taisheng.now.util.DateUtils;
 import com.taisheng.now.util.SPUtil;
+import com.taisheng.now.view.AppDialog;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -81,6 +83,7 @@ public class PushDataCenter {
         if (formatBean == null) {
             return;
         }
+        formatBean.createTime= DateUtils.timeStamp2Date(formatBean.createTime,"yyyy-MM-dd HH:mm:ss");
 
         GetDeviceInfoPostBean bean = new GetDeviceInfoPostBean();
         bean.userId = UserInstance.getInstance().getUid();
