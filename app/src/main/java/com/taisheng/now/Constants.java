@@ -58,18 +58,18 @@ public class Constants {
 //        public static String AUDIO_HOST = Host + "jeecg-boot/app/microchar/download/";
 
         //测试域名test         49.234.71.11
-//        public static String Host = "https://test.taishenghealth.com/";
-//        public static String File_Host = "https://test.taishenghealth.com/image-video/";
-//        public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
-//        public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
-//        public static String AUDIO_HOST = Host + "jeecg-boot/app/microchar/download/";
-
-        //window             193.112.19.18
-        public static String Host = "http://193.112.19.18:8080/";
+        public static String Host = "https://test.taishenghealth.com/";
         public static String File_Host = "https://test.taishenghealth.com/image-video/";
         public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
-        public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
+        public static String WEB_SOCKET_URL = "wss://test.taishenghealth.com/jeecg-wss/";
         public static String AUDIO_HOST = Host + "jeecg-boot/app/microchar/download/";
+
+        //window             193.112.19.18
+//        public static String Host = "http://193.112.19.18:8080/";
+//        public static String File_Host = "https://test.taishenghealth.com/image-video/";
+//        public static String File_Host_head = "https://test.taishenghealth.com/image-video/";
+//        public static String WEB_SOCKET_URL = "ws://193.112.19.18:8879";
+//        public static String AUDIO_HOST = Host + "jeecg-boot/app/microchar/download/";
 
 
 

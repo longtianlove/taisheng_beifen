@@ -110,9 +110,9 @@ public abstract class TaiShengCallback<T extends BaseBean> implements Callback<T
                     //上线状态下：此处加了统一对网络请求的异常捕获，不让用户崩溃。然后上传异常信息到bugly。
                     try {
                         onSuccess(response, message);
-                        if (Constants.HTTP_SUCCESS != message.code) {
-                            ToastUtil.showAtCenter("服务器异常---" + message.code);
-                        }
+//                        if (Constants.HTTP_SUCCESS != message.code) {
+//                            ToastUtil.showAtCenter("服务器异常---" + message.code);
+//                        }
                     } catch (Exception e) {
 //                        DialogUtil.closeProgress();
                         Log.e("taishengcallback", e.getMessage());
