@@ -118,6 +118,9 @@ public class NewMapInstance extends BDAbstractLocationListener {
 
     //设备位置
     public void initStartMarker(LatLng latLng) {
+        if (latLng == null) {
+            return;
+        }
         startbitmapDescriptor = BitmapDescriptorFactory.fromView(new ShebeiAvaterView(SampleAppLike.mcontext));
         OverlayOptions options = new MarkerOptions()
                 .anchor(0.5f, 1f)
@@ -181,8 +184,8 @@ public class NewMapInstance extends BDAbstractLocationListener {
     CircleOptions mCircleOptions;
 
 
-    public static double dianziweilanLatitude=-1;
-    public static double dianziweilanLongitude=-1;
+    public static double dianziweilanLatitude = -1;
+    public static double dianziweilanLongitude = -1;
     public static int dianzieilanradius = 0;
 
     void initDianziweilan() {
@@ -225,9 +228,9 @@ public class NewMapInstance extends BDAbstractLocationListener {
 //        startLoc();
 
 
-        dianziweilanLongitude=-1;
-        dianziweilanLatitude=-1;
-        dianzieilanradius=0;
+        dianziweilanLongitude = -1;
+        dianziweilanLatitude = -1;
+        dianzieilanradius = 0;
     }
 
 

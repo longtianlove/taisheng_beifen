@@ -61,13 +61,12 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.StateHol
         } else {
             holder.iv_dot.setBackgroundResource(R.drawable.circle_grey);
         }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
                                                @Override
                                                public void onClick(View view) {
-                                                   holder.itemView.setTag(position);
                                                    mposition = position;
-                                                   int i= (int) holder.itemView.getTag();
-                                                   onItemClickListener.OnItemClick( holder.itemView, holder, i);
+                                                   onItemClickListener.OnItemClick(view, holder, holder.getAdapterPosition());
 
                                                }
                                            }
