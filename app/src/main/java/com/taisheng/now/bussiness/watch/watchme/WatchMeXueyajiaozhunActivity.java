@@ -99,7 +99,7 @@ public class WatchMeXueyajiaozhunActivity extends BaseIvActivity implements Acti
                             //有消息
                             PAGE_NO++;
                             madapter.mData.addAll(message.result.records);
-                            if (message.result.records.size() < 10 && message.result.records.size() > 0) {
+                            if (message.result.records.size() < 20 && message.result.records.size() > 0) {
                                 lv_history.setHasLoadMore(false);
                                 lv_history.setLoadAllViewText("暂时只有这么多结果");
                                 lv_history.setLoadAllFooterVisible(true);
@@ -133,7 +133,7 @@ public class WatchMeXueyajiaozhunActivity extends BaseIvActivity implements Acti
 
 
     int PAGE_NO = 1;
-    int PAGE_SIZE = 10;
+    int PAGE_SIZE = 20;
 
     void getHistoryMore() {
         BaseWatchListPostBean bean = new BaseWatchListPostBean();
@@ -154,7 +154,7 @@ public class WatchMeXueyajiaozhunActivity extends BaseIvActivity implements Acti
                             //有消息
                             PAGE_NO++;
                             madapter.mData.addAll(message.result.records);
-                            if (message.result.records.size() < 10) {
+                            if (message.result.records.size() < 20) {
                                 lv_history.setHasLoadMore(false);
                                 lv_history.setLoadAllViewText("暂时只有这么多结果");
                                 lv_history.setLoadAllFooterVisible(true);
