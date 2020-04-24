@@ -100,7 +100,7 @@ public class HealthQuestionActivity extends BaseHActivity implements AdapterView
                             tvQuestion.setText(records.get(0).name);
                             if (message.result.records.get(0).assessmentOptionsList != null && message.result.records.size() > 0) {
                                 data.addAll(message.result.records.get(0).assessmentOptionsList);
-                                adapter.setData(data);
+                                adapter.setData2(data);
                             }
                         }
                         break;
@@ -137,59 +137,60 @@ public class HealthQuestionActivity extends BaseHActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        data.get(i).isCheck = true;
-        adapter.setData(data);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (position < records.size()) {
-                    data.clear();
-                    if (records != null && records.size() > 0) {
-                        position++;
-                        String result = "";
-                        if (position < records.size()) {
-                            updatePosition(position);
-                            tvQuestion.setText(records.get(position).name + "(   )");
-                            if (records.get(position).assessmentOptionsList != null && records.size() > 0) {
-                                result = records.get(position).assessmentOptionsList.get(i).id;
-                                data.addAll(records.get(position).assessmentOptionsList);
-                                adapter.setData(data);
-                            }
-                            answersResult = answersResult + result + ",";
-                        } else {
-                            answersResult = answersResult.substring(0, answersResult.length() - 1);
-                            AnswerPostBean bean = new AnswerPostBean();
-                            bean.userId = UserInstance.getInstance().getUid();
-                            bean.token = UserInstance.getInstance().getToken();
-                            bean.ids = answersResult;
-                            ApiUtils.getApiService_hasdialog().saveAnswer(bean).enqueue(new TaiShengCallback<BaseBean<AnswerResultBean>>() {
-                                @Override
-                                public void onSuccess(Response<BaseBean<AnswerResultBean>> response, BaseBean<AnswerResultBean> message) {
-                                    DialogUtil.closeProgress();
-                                    switch (message.code) {
-                                        case Constants.HTTP_SUCCESS:
-                                            Intent intent = new Intent(HealthQuestionActivity.this, HealthCheckResultActivity.class);
-                                            intent.putExtra("completeBatch", message.result.completeBatch);
-                                            intent.putExtra("remarks", message.result.remarks);
-                                            intent.putExtra("score", message.result.score);
-                                            startActivity(intent);
-                                            finish();
-                                            break;
+        if (i < data.size()) {
+            data.get(i).isCheck = true;
+            adapter.setData2(data);
+            adapter.setIndext(i);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (position < records.size()) {
+                        data.clear();
+                        if (records != null && records.size() > 0) {
+                            position++;
+                            String result = "";
+                            if (position < records.size()) {
+                                updatePosition(position);
+                                tvQuestion.setText(records.get(position).name + "(   )");
+                                if (records.get(position).assessmentOptionsList != null && records.size() > 0) {
+                                    result = records.get(position).assessmentOptionsList.get(i).id;
+                                    data.addAll(records.get(position).assessmentOptionsList);
+                                    adapter.setData2(data);
+                                    adapter.setIndext(-1);
+                                }
+                                answersResult = answersResult + result + ",";
+                            } else {
+                                answersResult = answersResult.substring(0, answersResult.length() - 1);
+                                AnswerPostBean bean = new AnswerPostBean();
+                                bean.userId = UserInstance.getInstance().getUid();
+                                bean.token = UserInstance.getInstance().getToken();
+                                bean.ids = answersResult;
+                                ApiUtils.getApiService_hasdialog().saveAnswer(bean).enqueue(new TaiShengCallback<BaseBean<AnswerResultBean>>() {
+                                    @Override
+                                    public void onSuccess(Response<BaseBean<AnswerResultBean>> response, BaseBean<AnswerResultBean> message) {
+                                        switch (message.code) {
+                                            case Constants.HTTP_SUCCESS:
+                                                Intent intent = new Intent(HealthQuestionActivity.this, HealthCheckResultActivity.class);
+                                                intent.putExtra("completeBatch", message.result.completeBatch);
+                                                intent.putExtra("remarks", message.result.remarks);
+                                                intent.putExtra("score", message.result.score);
+                                                startActivity(intent);
+                                                finish();
+                                                break;
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onFail(Call<BaseBean<AnswerResultBean>> call, Throwable t) {
-                                    DialogUtil.closeProgress();
-                                }
-                            });
+                                    @Override
+                                    public void onFail(Call<BaseBean<AnswerResultBean>> call, Throwable t) {
+
+                                    }
+                                });
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
 
+        }
     }
-
-
 }

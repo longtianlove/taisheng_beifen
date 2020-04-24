@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taisheng.now.Constants;
@@ -476,6 +477,17 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                 break;
             case R.id.tv_settlement:
                 if (shoppingCartAdapter.isTure()) {
+                    if (scoreGoods == 1) {
+                        if (DingdanInstance.getInstance().putongshangpindingdanList.isEmpty()) {
+                            Uiutils.showToast("请选择商品");
+                            return;
+                        }
+                    } else {
+                        if (DingdanInstance.getInstance().jifenshangpindingdanList.isEmpty()) {
+                            Uiutils.showToast("请选择商品");
+                            return;
+                        }
+                    }
                     StringBuffer stringBuffer = new StringBuffer();
                     List<Integer> indext = new ArrayList<>();
                     for (int i = 0; i < shoppingCartBeanList.size(); i++) {
@@ -498,6 +510,11 @@ public class GouwucheFragment extends BaseFragment implements ShoppingCartAdapte
                                     if (indext.size() > 0) {
                                         for (int i = indext.size() - 1; i >= 0; i--) {
                                             shoppingCartBeanList.remove((int) indext.get(i));
+                                            if (scoreGoods == 1) {
+                                                DingdanInstance.getInstance().putongshangpindingdanList.remove((int) indext.get(i));
+                                            } else {
+                                                DingdanInstance.getInstance().jifenshangpindingdanList.remove((int) indext.get(i));
+                                            }
                                         }
                                     }
                                     shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);

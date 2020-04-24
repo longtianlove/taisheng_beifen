@@ -35,7 +35,7 @@ public class WatchFirstFragment extends BaseFragment {
 
     public static int selectTab = 0;
 
-
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
