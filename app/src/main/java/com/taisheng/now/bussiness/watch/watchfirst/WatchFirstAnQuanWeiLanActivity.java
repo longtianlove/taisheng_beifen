@@ -108,6 +108,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
     private List<BaiduSearchAddr> addrList;
     private SuggestionResult.SuggestionInfo suggestionBean;
     private List<SuggestionResult.SuggestionInfo> duggesLists;
+    private String addr;
 
 
     @Override
@@ -192,6 +193,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 break;
             case R.id.btn_cancel:
                 etSearch.setText("");
+                addr = "";
                 rvAddresslist.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
@@ -211,7 +213,8 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String searchString = etSearch.getText().toString();
+                String searchString = s.toString();
+                addr = s.toString();
                 if ("".equals(searchString)) {
                     rvAddresslist.setVisibility(View.GONE);
                 } else {
@@ -264,24 +267,31 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
         adapter.setOnItemClickListener(new AddressAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, AddressAdapter.StateHolder holder, int position) {
-                HomelocationInstance.getInstance().setCenter(addrList.get(position).getPt(), 1000);
-                HomelocationInstance.getInstance().refreshMap();
-//                if (position != -1) {
-//                    iv_selected.setVisibility(View.GONE);
+//                try {
+                    if (position < addrList.size()) {
+                        HomelocationInstance.getInstance().setCenter(addrList.get(position).getPt(), 1000);
+                        HomelocationInstance.getInstance().refreshMap();
+    //                if (position != -1) {
+    //                    iv_selected.setVisibility(View.GONE);
+    //                }
+                        etSearch.setHint(addrList.get(position).getAddr());
+                        addr = addrList.get(position).getAddr();
+                        rvAddresslist.setVisibility(View.GONE);
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (imm != null) {
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        }
+                        LatLng pt = addrList.get(position).getPt();
+                        if (pt != null) {
+                            double[] temp = HomelocationInstance.bd09_To_Gcj02(pt.latitude, pt.longitude);
+    //                    HomelocationInstance.getInstance().setCenter(poiInfos.get(0).location, 1000);
+                            latitude = temp[0];
+                            longitude = temp[1];
+                        }
+                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
 //                }
-                etSearch.setText(addrList.get(position).getAddr());
-                rvAddresslist.setVisibility(View.GONE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-                LatLng pt = addrList.get(position).getPt();
-                if (pt != null) {
-                    double[] temp = HomelocationInstance.bd09_To_Gcj02(pt.latitude, pt.longitude);
-//                    HomelocationInstance.getInstance().setCenter(poiInfos.get(0).location, 1000);
-                    latitude = temp[0];
-                    longitude = temp[1];
-                }
             }
         });
         rvAddresslist.setAdapter(adapter);
@@ -381,7 +391,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 }
 
                 List<BaiduSearchAddr> list = removeDuplicate(addrList);
-                if (!TextsUtils.isEmpty(TextsUtils.getTexts(etSearch))) {
+                if (!TextsUtils.isEmpty(addr)) {
                     rvAddresslist.setVisibility(View.VISIBLE);
                 } else {
                     rvAddresslist.setVisibility(View.GONE);
