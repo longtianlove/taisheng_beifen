@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <!--<ScrollView-->
@@ -58,11 +59,11 @@
                 android:paddingBottom="@dimen/magin_15">
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_230"
                     android:background="@drawable/icon_shangcheng_shouye"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -81,9 +82,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/size_160"
-                    android:layout_marginBottom="@dimen/margin_1"
                     android:layout_marginLeft="@dimen/magin_12"
                     android:layout_marginRight="@dimen/magin_12"
+                    android:layout_marginBottom="@dimen/margin_1"
                     cube_ptr:cardCornerRadius="@dimen/radius_5"
                     cube_ptr:cardElevation="@dimen/magin_2">
 
@@ -97,8 +98,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginRight="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
                     <!--android:background="@drawable/me_kapian_background"-->
@@ -212,8 +213,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="15dp"
+                        android:layout_marginBottom="5dp"
                         android:src="@drawable/icon_youhuijuan" />
 
 
