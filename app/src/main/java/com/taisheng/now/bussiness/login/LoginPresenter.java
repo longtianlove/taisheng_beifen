@@ -149,6 +149,9 @@ public class LoginPresenter {
                         case Constants.LOGIN_PASSWORD_ERROR:
                             ToastUtil.showTost("密码错误");
                             break;
+                        case Constants.LOGIN_VERIFYCODE_NOTEXIST:
+                            ToastUtil.showTost("验证码发送失败,请重新发送");
+                            break;
                         default:
                             ToastUtil.showTost("网络出错");
 
