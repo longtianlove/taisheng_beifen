@@ -234,7 +234,7 @@ public class RecommendShareActivity extends BaseIvActivity {
         if (platform != null) {
             oks.setPlatform(platform);
         }
-        oks.setTitle("全民健康");
+        oks.setTitle("优享健康");
         // titleUrl QQ和QQ空间跳转链接
 //        oks.setTitleUrl(Constants.Url.Article.articleContent+articleId);
         // text是分享文本，所有平台都需要这个字段

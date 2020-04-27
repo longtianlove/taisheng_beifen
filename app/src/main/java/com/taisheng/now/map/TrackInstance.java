@@ -98,7 +98,8 @@ public class TrackInstance {
 
                 int total = response.getTotal();
                 if (StatusCodes.SUCCESS != response.getStatus()) {
-                    Toast.makeText(context, "结果为：" + response.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "位置信息还未上传", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, "结果为：" + response.getMessage(), Toast.LENGTH_SHORT).show();
                 } else if (0 == total) {
                     Toast.makeText(context, "未查询到历史轨迹", Toast.LENGTH_SHORT).show();
                 } else {
