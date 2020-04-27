@@ -240,12 +240,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (TextUtils.isEmpty(s)) {
-//                    return;
-//                }
-//                if (Integer.parseInt(s.toString()) > 3000) {
-//                    Uiutils.showToast("不能超过3000米");
-//                }
+
             }
 
             @Override
