@@ -108,6 +108,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
     private List<BaiduSearchAddr> addrList;
     private SuggestionResult.SuggestionInfo suggestionBean;
     private List<SuggestionResult.SuggestionInfo> duggesLists;
+    private String addr;
 
 
     @Override
@@ -192,6 +193,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 break;
             case R.id.btn_cancel:
                 etSearch.setText("");
+                addr = "";
                 rvAddresslist.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
@@ -211,7 +213,8 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String searchString = etSearch.getText().toString();
+                String searchString = s.toString();
+                addr = s.toString();
                 if ("".equals(searchString)) {
                     rvAddresslist.setVisibility(View.GONE);
                 } else {
@@ -377,7 +380,7 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 }
 
                 List<BaiduSearchAddr> list = removeDuplicate(addrList);
-                if (!TextsUtils.isEmpty(TextsUtils.getTexts(etSearch))) {
+                if (!TextsUtils.isEmpty(addr)) {
                     rvAddresslist.setVisibility(View.VISIBLE);
                 } else {
                     rvAddresslist.setVisibility(View.GONE);
@@ -396,15 +399,16 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
                 duggesLists = res.getAllSuggestions();
                 addrList.clear();
                 if (duggesLists.size() > 0) {
-                    for (int i = 0; i < duggesLists.size(); i++) {
-                        suggestionBean = duggesLists.get(i);
+//                    for (int i = 0; i < duggesLists.size(); i++) {
+                        suggestionBean = duggesLists.get(0);
                         if (suggestionBean.pt != null) {
                             LatLng pt = suggestionBean.getPt();
                             mSearch.reverseGeoCode(new ReverseGeoCodeOption().radius(200).location(pt));
-                        } else {
-                            continue;
                         }
-                    }
+//                        else {
+//                            continue;
+//                        }
+//                    }
                 } else {
                     rvAddresslist.setVisibility(View.GONE);
                 }
