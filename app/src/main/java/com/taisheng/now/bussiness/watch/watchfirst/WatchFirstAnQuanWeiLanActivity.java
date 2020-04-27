@@ -267,7 +267,8 @@ public class WatchFirstAnQuanWeiLanActivity extends BaseIvActivity implements Ac
 //                if (position != -1) {
 //                    iv_selected.setVisibility(View.GONE);
 //                }
-                etSearch.setText(addrList.get(position).getAddr());
+                etSearch.setHint(addrList.get(position).getAddr());
+                addr=addrList.get(position).getAddr();
                 rvAddresslist.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
